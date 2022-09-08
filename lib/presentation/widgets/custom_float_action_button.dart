@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'custom_bottom_sheet.dart';
+
 
 
 class CustomFloatActionButton extends StatelessWidget {
@@ -14,7 +16,19 @@ class CustomFloatActionButton extends StatelessWidget {
         icon: Icon(Icons.send),
         label: Text('Send', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         onPressed: () {
-
+          showModalBottomSheet(
+              backgroundColor: Colors.redAccent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+              ),
+              context: context,
+              isScrollControlled: true,
+              builder: (context) {
+                return FractionallySizedBox(
+                  heightFactor: 0.9,
+                  child: CustomBottomSheet(),
+                );
+              });
         }
     );
   }
