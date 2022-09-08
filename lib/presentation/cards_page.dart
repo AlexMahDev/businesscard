@@ -1,4 +1,5 @@
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
+import 'package:businesscard/presentation/widgets/custom_float_action_button.dart';
 import 'package:flutter/material.dart';
 
 
@@ -8,14 +9,13 @@ class CardsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             SizedBox(
-              height: 300,
+              height: 250,
                 child: Image.asset('lib/assets/images/qr_code.png')
             ),
 
@@ -135,11 +135,7 @@ class CardsPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: const CustomFloatActionButton(), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

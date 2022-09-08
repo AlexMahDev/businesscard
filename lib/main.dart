@@ -1,4 +1,5 @@
 import 'package:businesscard/presentation/cards_page.dart';
+import 'package:businesscard/presentation/widgets/bottom_navigation_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -24,9 +25,10 @@ class MyApp extends StatelessWidget {
         ),
       ),
       title: 'Flutter Demo',
-      home: const CardsPage()
+      home: const CustomBottomNavigationBar()
     );
   }
 }
+
 
 
