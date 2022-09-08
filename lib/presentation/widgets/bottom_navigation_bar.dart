@@ -27,7 +27,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
+      //appBar: const CustomAppBar(),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

@@ -15,11 +15,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red, ///redAccent
+        //primaryColor: Colors.redAccent,
         fontFamily: 'OpenSans',
         appBarTheme: AppBarTheme(
           centerTitle: true,
-          iconTheme: IconThemeData(color: Colors.redAccent),
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+          ),
+          iconTheme: IconThemeData(
+              color: Colors.redAccent,
+            size: 30
+          ),
           foregroundColor: Colors.black, //<-- SEE HERE
           //titleTextStyle: TextStyle()
         ),

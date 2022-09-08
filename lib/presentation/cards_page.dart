@@ -2,6 +2,8 @@ import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_float_action_button.dart';
 import 'package:flutter/material.dart';
 
+import 'create_card_page.dart';
+
 
 class CardsPage extends StatelessWidget {
   const CardsPage({Key? key}) : super(key: key);
@@ -9,6 +11,32 @@ class CardsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(
+        title: Text('Cards'),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          splashRadius: 20,
+          onPressed: () {
+            print('gg');
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            splashRadius: 20,
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => const CreateCardPage()));
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.edit),
+            splashRadius: 20,
+            onPressed: () {
+              print('gg');
+            },
+          ),
+        ],
+      ),
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
