@@ -30,7 +30,7 @@ class CreateCardPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -296,6 +296,96 @@ class CreateCardPage extends StatelessWidget {
               ),
             ),
 
+            Container(
+              margin: EdgeInsets.all(50),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.all(Radius.circular(10))
+              ),
+              child: FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Tap a field below to add it', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(Icons.add, size: 30)
+                  ],
+                ),
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+              color: Colors.redAccent[100],
+              child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 80,
+                        height: 100,
+                        child: Column(
+                          //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.redAccent,
+                              child: Icon(Icons.phone, color: Colors.white),
+                            ),
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
+                            Expanded(child: Center(child: Text('Phone Number', textAlign: TextAlign.center, style: TextStyle(fontSize: 17))))
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 80,
+                        height: 100,
+                        child: Column(
+                          //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.redAccent,
+                              child: Icon(Icons.email, color: Colors.white),
+                            ),
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
+                            Expanded(child: Center(child: Text('Email', textAlign: TextAlign.center, style: TextStyle(fontSize: 17))))
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 80,
+                        height: 100,
+                        child: Column(
+                          //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.redAccent,
+                              child: Icon(Icons.link, color: Colors.white),
+                            ),
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
+                            Expanded(child: Center(child: Text('Link', textAlign: TextAlign.center, style: TextStyle(fontSize: 17))))
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            )
 
           ],
         ),
