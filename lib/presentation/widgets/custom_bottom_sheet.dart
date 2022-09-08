@@ -39,7 +39,7 @@ class CustomBottomSheet extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           color: Colors.white),
-                      child: Image.asset('lib/assets/images/qr_code.png')),
+                      child: Image.asset('assets/images/qr_code.png')),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
