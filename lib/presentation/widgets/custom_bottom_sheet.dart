@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/share_card_bloc.dart';
+import '../../blocs/share_card_bloc/share_card_bloc.dart';
 import 'change_card_method_bar.dart';
 
 class CustomBottomSheet extends StatelessWidget {
