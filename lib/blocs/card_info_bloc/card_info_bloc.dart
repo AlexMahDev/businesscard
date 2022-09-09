@@ -18,7 +18,27 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
 
     await Future.delayed(const Duration(seconds: 5), () {});
 
-    CardModel card = CardModel(fullName: 'Alexander Makhrachyov', jobTitle: 'Head Of Mobile', department: 'Mobile', companyName: 'Innowise', headLine: 'Hi!', phoneNumber: 'phoneNumber', email: 'email', link: 'link', linkedIn: 'linkedIn', gitHub: 'gitHub', telegram: 'telegram');
+    List<Map<String, Map<String, dynamic>>> listOfCards = [
+
+      {
+        "generalInfo": {
+          "Full_Name": "Alexander Makhrachyov",
+          "Job_Title": "Head Of Mobile",
+          "Department": "Mobile",
+          "Company_Name": "Innowise",
+          "Headline": "Hi!"
+        },
+        "extraInfo": {
+          "Email": "myemail@gmail.com",
+        },
+
+      }
+
+    ];
+
+    CardModel card = CardModel.fromJson(listOfCards[0]);
+
+
 
     // Map<String, Map<String, String>> data =
     //

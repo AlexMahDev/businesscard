@@ -116,7 +116,7 @@ class CardsPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(state.card.fullName,
+                            Text(state.card.generalInfo.listOfFields[0].value,
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold)),
