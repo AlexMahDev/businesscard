@@ -1,23 +1,5 @@
 
 
-List<Map<String, Map<String, String>>> listOfCards = [
-
-  {
-    "generalInfo": {
-      "Full_Name": "Alexander Makhrachyov",
-      "Job_Title": "Head Of Mobile",
-      "Department": "Mobile",
-      "Company_Name": "Innowise",
-      "Headline": "Hi!"
-    },
-    "extraInfo": {
-      "Email": "myemail@gmail.com",
-    },
-
-  }
-
-];
-
 // Map<String, Map<String, String>> data =
 //
 // {
@@ -102,54 +84,117 @@ List<Map<String, Map<String, String>>> listOfCards = [
 
 
 
+// List<Map<String, Map<String, dynamic>>> listOfCards = [
+//
+//   {
+//     "generalInfo": {
+//       "Full_Name": "Alexander Makhrachyov",
+//       "Job_Title": "Head Of Mobile",
+//       "Department": "Mobile",
+//       "Company_Name": "Innowise",
+//       "Headline": "Hi!"
+//     },
+//     "extraInfo": {
+//       "Email": "myemail@gmail.com",
+//     },
+//
+//   }
+//
+// ];
+
 class CardModel {
 
-  GeneralInfo generalInfo;
-  ExtraInfo extraInfo;
+  SettingsModel settings;
+  GeneralInfoModel generalInfo;
+  ExtraInfoModel extraInfo;
 
 
   CardModel({
+    required this.settings,
     required this.generalInfo,
     required this.extraInfo
   });
 
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
-      generalInfo: GeneralInfo.fromJson(json['generalInfo']),
-      extraInfo: ExtraInfo.fromJson(json['extraInfo'])
+      settings: SettingsModel.fromJson(json['settings']),
+      generalInfo: GeneralInfoModel.fromJson(json['generalInfo']),
+      extraInfo: ExtraInfoModel.fromJson(json['extraInfo'])
   );
 
   Map<String, dynamic> toJson() =>
       {
+        "settings": settings,
         "generalInfo": generalInfo,
         "extraInfo": extraInfo
       };
 }
 
 
-class GeneralInfo {
+class SettingsModel {
 
-  final List<TextFieldModel> listOfFields;
+  final String cardTitle;
+  final String cardColor;
 
-  GeneralInfo({required this.listOfFields});
+  SettingsModel({required this.cardTitle, required this.cardColor});
+
+  factory SettingsModel.fromJson(Map<String, dynamic> json) => SettingsModel(
+    cardTitle: json["cardTitle"],
+    cardColor: json["cardColor"],
+  );
+
+}
 
 
-  factory GeneralInfo.fromJson(Map<String, dynamic> json) => GeneralInfo(
-      //listOfFields: json.entries.map((e) => FieldModel.fromJson(e)).toList()
-      listOfFields: json.keys.map((key) => TextFieldModel.fromJson(key, json[key])).toList()
-    //extraInfo: json["extraInfo"]
+class GeneralInfoModel {
+
+  final String firstName;
+  final String middleName;
+  final String lastName;
+  final String jobTitle;
+  final String department;
+  final String companyName;
+  final String headLine;
+
+  GeneralInfoModel({required this.firstName, required this.middleName, required this.lastName, required this.jobTitle, required this.department, required this.companyName, required this.headLine});
+
+
+  factory GeneralInfoModel.fromJson(Map<String, dynamic> json) => GeneralInfoModel(
+      firstName: json["firstName"],
+      middleName: json["middleName"],
+      lastName: json["lastName"],
+      jobTitle: json["jobTitle"],
+      department: json["department"],
+      companyName: json["companyName"],
+      headLine: json["headLine"],
   );
 
 
 }
 
-class ExtraInfo {
+// class GeneralInfoModel {
+//
+//   final List<TextFieldModel> listOfFields;
+//
+//   GeneralInfoModel({required this.listOfFields});
+//
+//
+//   factory GeneralInfoModel.fromJson(Map<String, dynamic> json) => GeneralInfoModel(
+//       //listOfFields: json.entries.map((e) => FieldModel.fromJson(e)).toList()
+//       listOfFields: json.keys.map((key) => TextFieldModel.fromJson(key, json[key])).toList()
+//     //extraInfo: json["extraInfo"]
+//   );
+//
+//
+// }
+
+class ExtraInfoModel {
 
   final List<TextFieldModel> listOfFields;
 
-  ExtraInfo({required this.listOfFields});
+  ExtraInfoModel({required this.listOfFields});
 
 
-  factory ExtraInfo.fromJson(Map<String, dynamic> json) => ExtraInfo(
+  factory ExtraInfoModel.fromJson(Map<String, dynamic> json) => ExtraInfoModel(
       listOfFields: json.keys.map((key) => TextFieldModel.fromJson(key, json[key])).toList()
     //extraInfo: json["extraInfo"]
   );
@@ -159,13 +204,13 @@ class ExtraInfo {
 
 class TextFieldModel {
 
-  final String title;
+  final String key;
   final String value;
 
-  TextFieldModel({required this.title, required this.value});
+  TextFieldModel({required this.key, required this.value});
 
   factory TextFieldModel.fromJson(String title, String value) => TextFieldModel(
-      title: title,
+      key: title,
       value: value
   );
 

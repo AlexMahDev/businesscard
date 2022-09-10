@@ -21,15 +21,21 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
     List<Map<String, Map<String, dynamic>>> listOfCards = [
 
       {
+        "settings": {
+          "cardTitle": "Job",
+          "cardColor": "red",
+        },
         "generalInfo": {
-          "Full_Name": "Alexander Makhrachyov",
-          "Job_Title": "Head Of Mobile",
-          "Department": "Mobile",
-          "Company_Name": "Innowise",
-          "Headline": "Hi!"
+          "firstName": "Alexander",
+          "middleName": "Mikhailovich",
+          "lastName": "Makhrachyov",
+          "jobTitle": "Head Of Mobile",
+          "department": "Mobile",
+          "companyName": "Innowise",
+          "headLine": "Hi!"
         },
         "extraInfo": {
-          "Email": "myemail@gmail.com",
+          "email": "myemail@gmail.com",
         },
 
       }

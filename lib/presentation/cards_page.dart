@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'create_card_page.dart';
+import 'edit_card_page.dart';
 
 class CardsPage extends StatelessWidget {
   const CardsPage({Key? key}) : super(key: key);
@@ -43,7 +44,8 @@ class CardsPage extends StatelessWidget {
             icon: const Icon(Icons.edit),
             splashRadius: 20,
             onPressed: () {
-              print('gg');
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => const EditCardPage()));
             },
           ),
         ],
@@ -111,80 +113,189 @@ class CardsPage extends StatelessWidget {
                         height: 40,
                       ),
 
+
+
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(state.card.generalInfo.listOfFields[0].value,
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold)),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text('Innowise',
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.grey)),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text('Head Of Mobile Department',
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.grey)),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: Colors.black,
-                                  child:
-                                      Icon(Icons.email, color: Colors.white),
-                                ),
-                                Expanded(
-                                  child: ListTile(
-                                    title: Text('testemail@gmail.com'),
-                                    subtitle: Text('email'),
-                                  ),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: Colors.black,
-                                  child:
-                                      Icon(Icons.phone, color: Colors.white),
-                                ),
-                                Expanded(
-                                  child: ListTile(
-                                    title: Text('+375441234567'),
-                                    subtitle: Text('mobile'),
-                                  ),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: Colors.black,
-                                  child: Icon(Icons.web, color: Colors.white),
-                                ),
-                                Expanded(
-                                  child: ListTile(
-                                    title: Text('https://innowise-group.com'),
-                                    subtitle: Text('company website'),
-                                  ),
-                                )
-                              ],
-                            )
+
+                            if(state.card.generalInfo.firstName.isNotEmpty || state.card.generalInfo.middleName.isNotEmpty || state.card.generalInfo.lastName.isNotEmpty)
+                              GeneralTextWidget(
+                                  label: 'fullName',
+                                  value: '${state.card.generalInfo.firstName} ${state.card.generalInfo.middleName} ${state.card.generalInfo.lastName}'.trim()
+                              ),
+
+                            if(state.card.generalInfo.jobTitle.isNotEmpty)
+                              GeneralTextWidget(
+                                  value: state.card.generalInfo.jobTitle
+                              ),
+
+                            if(state.card.generalInfo.department.isNotEmpty)
+                              GeneralTextWidget(
+                                  value: state.card.generalInfo.department
+                              ),
+
+                            if(state.card.generalInfo.companyName.isNotEmpty)
+                              GeneralTextWidget(
+                                  value: state.card.generalInfo.companyName
+                              ),
+
+                            if(state.card.generalInfo.headLine.isNotEmpty)
+                              GeneralTextWidget(
+                                  label: 'headline',
+                                  value: state.card.generalInfo.headLine
+                              ),
                           ],
                         ),
                       ),
+
+
+
+
+
+                      // ListView.separated(
+                      //   physics: NeverScrollableScrollPhysics(),
+                      //   shrinkWrap: true,
+                      //   padding: EdgeInsets.symmetric(horizontal: 15),
+                      //   itemCount: state.card.generalInfo.listOfFields.length,
+                      //   //padding: EdgeInsets.only(top: 15),
+                      //   itemBuilder: (BuildContext context, int index) {
+                      //
+                      //     //final controller = _getControllerOf(data[index]);
+                      //
+                      //     // final textField = TextField(
+                      //     //   controller: controller,
+                      //     //   decoration: InputDecoration(
+                      //     //     border: OutlineInputBorder(),
+                      //     //     labelText: "name${index + 1}",
+                      //     //   ),
+                      //     // );
+                      //     return GeneralTextWidget (
+                      //       title: state.card.generalInfo.listOfFields[index].key,
+                      //       value: state.card.generalInfo.listOfFields[index].value
+                      //     );
+                      //
+                      //
+                      //     //   CustomTextField(
+                      //     //     controller: _getControllerOf(data["extraInfo"]!.keys.elementAt(index)),
+                      //     //     hintText: data["extraInfo"]!.keys.elementAt(index)
+                      //     // );
+                      //     //   Container(
+                      //     //   child: TextField(
+                      //     //     controller: _getControllerOf(data.keys.elementAt(index)),
+                      //     //     decoration: InputDecoration(
+                      //     //       border: OutlineInputBorder(),
+                      //     //       labelText: data[index],
+                      //     //     ),
+                      //     //   ),
+                      //     //   padding: EdgeInsets.only(bottom: 10),
+                      //     // );
+                      //   }, separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
+                      // ),
+
+
+                      SizedBox(
+                        height: 10,
+                      ),
+
+                      ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        itemCount: state.card.extraInfo.listOfFields.length,
+                        //padding: EdgeInsets.only(top: 15),
+                        itemBuilder: (BuildContext context, int index) {
+
+                          //final controller = _getControllerOf(data[index]);
+
+                          // final textField = TextField(
+                          //   controller: controller,
+                          //   decoration: InputDecoration(
+                          //     border: OutlineInputBorder(),
+                          //     labelText: "name${index + 1}",
+                          //   ),
+                          // );
+                          return ExtraTextWidget (
+                              label: state.card.extraInfo.listOfFields[index].key,
+                              value: state.card.extraInfo.listOfFields[index].value
+                          );
+
+
+                          //   CustomTextField(
+                          //     controller: _getControllerOf(data["extraInfo"]!.keys.elementAt(index)),
+                          //     hintText: data["extraInfo"]!.keys.elementAt(index)
+                          // );
+                          //   Container(
+                          //   child: TextField(
+                          //     controller: _getControllerOf(data.keys.elementAt(index)),
+                          //     decoration: InputDecoration(
+                          //       border: OutlineInputBorder(),
+                          //       labelText: data[index],
+                          //     ),
+                          //   ),
+                          //   padding: EdgeInsets.only(bottom: 10),
+                          // );
+                        }, separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
+                      ),
+
+
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 15),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       Row(
+                      //         children: [
+                      //           CircleAvatar(
+                      //             radius: 20,
+                      //             backgroundColor: Colors.black,
+                      //             child:
+                      //                 Icon(Icons.email, color: Colors.white),
+                      //           ),
+                      //           Expanded(
+                      //             child: ListTile(
+                      //               title: Text('testemail@gmail.com'),
+                      //               subtitle: Text('email'),
+                      //             ),
+                      //           )
+                      //         ],
+                      //       ),
+                      //       Row(
+                      //         children: [
+                      //           CircleAvatar(
+                      //             radius: 20,
+                      //             backgroundColor: Colors.black,
+                      //             child:
+                      //                 Icon(Icons.phone, color: Colors.white),
+                      //           ),
+                      //           Expanded(
+                      //             child: ListTile(
+                      //               title: Text('+375441234567'),
+                      //               subtitle: Text('mobile'),
+                      //             ),
+                      //           )
+                      //         ],
+                      //       ),
+                      //       Row(
+                      //         children: [
+                      //           CircleAvatar(
+                      //             radius: 20,
+                      //             backgroundColor: Colors.black,
+                      //             child: Icon(Icons.web, color: Colors.white),
+                      //           ),
+                      //           Expanded(
+                      //             child: ListTile(
+                      //               title: Text('https://innowise-group.com'),
+                      //               subtitle: Text('company website'),
+                      //             ),
+                      //           )
+                      //         ],
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
 
                       SizedBox(
                         height: 100,
@@ -241,6 +352,70 @@ class CardsPage extends StatelessWidget {
         },
       ),
       //floatingActionButton: const CustomFloatActionButton(), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+
+class GeneralTextWidget extends StatelessWidget {
+
+  final String label;
+  final String value;
+
+  const GeneralTextWidget({Key? key, this.label = '', required this.value}) : super(key: key);
+
+  TextStyle getTextStyle() {
+    if(label == "fullName") {
+      return TextStyle(fontSize: 28, fontWeight: FontWeight.bold);
+    } else if (label == "headline") {
+      return TextStyle(fontSize: 18, color: Colors.grey);
+    } else {
+      return TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
+    }
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Text(value, style: getTextStyle()),
+    );
+  }
+}
+
+class ExtraTextWidget extends StatelessWidget {
+
+  final String label;
+  final String value;
+
+  const ExtraTextWidget({Key? key, required this.label, required this.value}) : super(key: key);
+
+  Widget getIcon() {
+    if(label == "email") {
+      return Icon(Icons.email, color: Colors.white);
+    } else {
+      return Icon(Icons.accessibility, color: Colors.white);
+    }
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        CircleAvatar(
+          radius: 20,
+          backgroundColor: Colors.black,
+          child: getIcon()
+        ),
+        Expanded(
+          child: ListTile(
+            title: Text(value, style: TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text(label),
+          ),
+        )
+      ],
     );
   }
 }
