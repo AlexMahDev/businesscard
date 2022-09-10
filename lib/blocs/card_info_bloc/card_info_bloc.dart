@@ -38,11 +38,36 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
           "email": "myemail@gmail.com",
         },
 
+      },
+
+      {
+        "settings": {
+          "cardTitle": "Job",
+          "cardColor": "red",
+        },
+        "generalInfo": {
+          "firstName": "Alexander",
+          "middleName": "Mikhailovich",
+          "lastName": "test",
+          "jobTitle": "test",
+          "department": "Mobile",
+          "companyName": "test",
+          "headLine": "Hi!"
+        },
+        "extraInfo": {
+          "email": "test@gmail.com",
+        },
+
       }
 
     ];
 
-    CardModel card = CardModel.fromJson(listOfCards[0]);
+
+    List<CardModel> cards = List.from(listOfCards.map((card) => CardModel.fromJson(card)));
+
+
+
+    //CardModel card = CardModel.fromJson(listOfCards[0]);
 
 
 
@@ -62,7 +87,7 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
     //
     // };
 
-    emit(CardInfoLoadedState(card));
+    emit(CardInfoLoadedState(cards));
 
 
   }

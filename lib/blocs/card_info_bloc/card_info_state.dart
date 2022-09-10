@@ -10,9 +10,9 @@ class CardInfoLoadingState extends CardInfoState {}
 
 class CardInfoLoadedState extends CardInfoState {
 
-  final CardModel card;
+  final List<CardModel> cards;
 
-  CardInfoLoadedState(this.card);
+  CardInfoLoadedState(this.cards);
 
 }
 
