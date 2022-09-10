@@ -50,14 +50,14 @@ class _CardsPageState extends State<CardsPage> {
             splashRadius: 20,
             onPressed: () {
 
-              final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
-              final state = cardInfoBloc.state;
-
-              if (state is CardInfoLoadedState) {
-                List<CardModel> cards = state.cards;
-                cards.add(CardModel(settings: SettingsModel(cardTitle: '', cardColor: ''), generalInfo: GeneralInfoModel(firstName: '', middleName: '', lastName: '', jobTitle: '', department: '', companyName: '', headLine: ''), extraInfo: ExtraInfoModel(listOfFields: [])));
-                cardInfoBloc.add(AddCardEvent(cards));
-              }
+              // final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+              // final state = cardInfoBloc.state;
+              //
+              // if (state is CardInfoLoadedState) {
+              //   List<CardModel> cards = state.cards;
+              //   cards.add(CardModel(settings: SettingsModel(cardTitle: '', cardColor: ''), generalInfo: GeneralInfoModel(firstName: '', middleName: '', lastName: '', jobTitle: '', department: '', companyName: '', headLine: ''), extraInfo: ExtraInfoModel(listOfFields: [])));
+              //   cardInfoBloc.add(AddCardEvent(cards));
+              // }
 
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => const CreateCardPage()));

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:businesscard/blocs/card_info_bloc/card_info_bloc.dart';
 import 'package:businesscard/blocs/full_name_dropdown_bloc/full_name_dropdown_bloc.dart';
+import 'package:businesscard/blocs/new_card_bloc/new_card_bloc.dart';
 import 'package:businesscard/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import 'package:businesscard/blocs/text_clear_button_bloc/text_clear_button_bloc.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
@@ -193,6 +194,9 @@ class _CreateCardPageState extends State<CreateCardPage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<NewCardBloc>(
+          create: (BuildContext context) => NewCardBloc(),
+        ),
         BlocProvider<SelectCardColorBloc>(
           create: (BuildContext context) => SelectCardColorBloc(),
         ),
@@ -211,6 +215,39 @@ class _CreateCardPageState extends State<CreateCardPage> {
               icon: const Icon(Icons.check),
               splashRadius: 20,
               onPressed: () {
+
+                final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+                final cardColorBloc = BlocProvider.of<SelectCardColorBloc>(context);
+
+                final cardsInfoState = cardsInfoBloc.state;
+
+                print(cardColorBloc.state.toString());
+
+
+                if (cardsInfoState is CardInfoLoadedState) {
+
+                    List<CardModel> currentCards = cardsInfoState.cards;
+
+                    CardModel newCard = CardModel(settings: SettingsModel(cardTitle: cardTitle.text, cardColor: cardColorBloc.state.toString()), generalInfo: GeneralInfoModel(firstName: firstName.text, middleName: middleName.text, lastName: lastName.text, jobTitle: jobTitle.text, department: department.text, companyName: companyName.text, headLine: headLine.text), extraInfo: ExtraInfoModel(listOfFields: []));
+
+                    _controllerMap.forEach((key, value) {
+                      newCard.extraInfo.listOfFields.add(TextFieldModel(key: key, value: value.text));
+                    });
+
+                    currentCards.add(newCard);
+
+                    // newCard.settings = SettingsModel(cardTitle: cardTitle.text, cardColor: cardColorBloc.state.toString());
+                    // newCard.generalInfo = GeneralInfoModel(firstName: firstName.text, middleName: middleName.text, lastName: lastName.text, jobTitle: jobTitle.text, department: department.text, companyName: companyName.text, headLine: headLine.text);
+                    // newCard.extraInfo.listOfFields.clear();
+                    // _controllerMap.forEach((key, value) {
+                    //   newCard.extraInfo.listOfFields.add(TextFieldModel(key: key, value: value.text));
+                    // });
+
+                    cardsInfoBloc.add(AddCardEvent(currentCards));
+
+                }
+
+
                 Navigator.of(context).pop();
               },
             ),
@@ -407,10 +444,10 @@ class _CreateCardPageState extends State<CreateCardPage> {
                 // ),
 
                 ///DYNAMIC TEXT FIELDS
-                BlocBuilder<CardInfoBloc, CardInfoState>(
+                BlocBuilder<NewCardBloc, NewCardState>(
                   builder: (context, state) {
-                    if (state is CardInfoLoadedState &&
-                        state.cards.last.extraInfo.listOfFields.isNotEmpty) {
+                    if (state is NewCardInitialState &&
+                        state.card.extraInfo.listOfFields.isNotEmpty) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15.0, vertical: 30),
@@ -418,7 +455,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount:
-                          state.cards.last.extraInfo.listOfFields.length,
+                          state.card.extraInfo.listOfFields.length,
                           //padding: EdgeInsets.only(top: 15),
                           itemBuilder: (BuildContext context, int index) {
                             //final controller = _getControllerOf(data[index]);
@@ -431,9 +468,9 @@ class _CreateCardPageState extends State<CreateCardPage> {
                             //   ),
                             // );
                             return CustomTextField(
-                                controller: _getControllerOf(state.cards.last
+                                controller: _getControllerOf(state.card
                                     .extraInfo.listOfFields[index].key),
-                                hintText: state.cards.last.extraInfo
+                                hintText: state.card.extraInfo
                                     .listOfFields[index].key);
                             //   Container(
                             //   child: TextField(
@@ -483,91 +520,95 @@ class _CreateCardPageState extends State<CreateCardPage> {
                         title: 'Phone Number',
                         icon: Icons.phone,
                         onPressed: () {
-                          print('fff');
-                          final cardInfoBloc =
-                          BlocProvider.of<CardInfoBloc>(context);
-                          final state = cardInfoBloc.state;
 
-                          if (state is CardInfoLoadedState) {
-                            List<CardModel> cards = state.cards;
-                            cards.last.extraInfo.listOfFields.add(
+                          final newCardBloc =
+                          BlocProvider.of<NewCardBloc>(context);
+                          final state = newCardBloc.state;
+
+                          if (state is NewCardInitialState) {
+                            CardModel card = state.card;
+                            card.extraInfo.listOfFields.add(
                                 TextFieldModel(key: 'phoneNumber', value: ''));
-                            cardInfoBloc.add(AddExtraInfoEvent(cards));
+                            newCardBloc.add(AddCardInfoEvent(card));
                           }
                         }),
                     email: ExtraInfoWidget(
                         title: 'Email',
                         icon: Icons.email,
                         onPressed: () {
-                          final cardInfoBloc =
-                          BlocProvider.of<CardInfoBloc>(context);
-                          final state = cardInfoBloc.state;
 
-                          if (state is CardInfoLoadedState) {
-                            List<CardModel> cards = state.cards;
-                            cards.last.extraInfo.listOfFields
-                                .add(TextFieldModel(key: 'email', value: ''));
-                            cardInfoBloc.add(AddExtraInfoEvent(cards));
+                          final newCardBloc =
+                          BlocProvider.of<NewCardBloc>(context);
+                          final state = newCardBloc.state;
+
+                          if (state is NewCardInitialState) {
+                            CardModel card = state.card;
+                            card.extraInfo.listOfFields.add(
+                                TextFieldModel(key: 'email', value: ''));
+                            newCardBloc.add(AddCardInfoEvent(card));
                           }
                         }),
                     link: ExtraInfoWidget(
                         title: 'Link',
                         icon: Icons.link,
                         onPressed: () {
-                          final cardInfoBloc =
-                          BlocProvider.of<CardInfoBloc>(context);
-                          final state = cardInfoBloc.state;
 
-                          if (state is CardInfoLoadedState) {
-                            List<CardModel> cards = state.cards;
-                            cards.last.extraInfo.listOfFields
-                                .add(TextFieldModel(key: 'link', value: ''));
-                            cardInfoBloc.add(AddExtraInfoEvent(cards));
+                          final newCardBloc =
+                          BlocProvider.of<NewCardBloc>(context);
+                          final state = newCardBloc.state;
+
+                          if (state is NewCardInitialState) {
+                            CardModel card = state.card;
+                            card.extraInfo.listOfFields.add(
+                                TextFieldModel(key: 'link', value: ''));
+                            newCardBloc.add(AddCardInfoEvent(card));
                           }
                         }),
                     linkedIn: ExtraInfoWidget(
                         title: 'LinkedIn',
                         icon: Icons.web,
                         onPressed: () {
-                          final cardInfoBloc =
-                          BlocProvider.of<CardInfoBloc>(context);
-                          final state = cardInfoBloc.state;
+                          final newCardBloc =
+                          BlocProvider.of<NewCardBloc>(context);
+                          final state = newCardBloc.state;
 
-                          if (state is CardInfoLoadedState) {
-                            List<CardModel> cards = state.cards;
-                            cards.last.extraInfo.listOfFields.add(
+                          if (state is NewCardInitialState) {
+                            CardModel card = state.card;
+                            card.extraInfo.listOfFields.add(
                                 TextFieldModel(key: 'linkedIn', value: ''));
-                            cardInfoBloc.add(AddExtraInfoEvent(cards));
+                            newCardBloc.add(AddCardInfoEvent(card));
                           }
                         }),
                     github: ExtraInfoWidget(
                         title: 'GitHub',
                         icon: Icons.web,
                         onPressed: () {
-                          final cardInfoBloc =
-                          BlocProvider.of<CardInfoBloc>(context);
-                          final state = cardInfoBloc.state;
 
-                          if (state is CardInfoLoadedState) {
-                            List<CardModel> cards = state.cards;
-                            cards.last.extraInfo.listOfFields
-                                .add(TextFieldModel(key: 'gitHub', value: ''));
-                            cardInfoBloc.add(AddExtraInfoEvent(cards));
+                          final newCardBloc =
+                          BlocProvider.of<NewCardBloc>(context);
+                          final state = newCardBloc.state;
+
+                          if (state is NewCardInitialState) {
+                            CardModel card = state.card;
+                            card.extraInfo.listOfFields.add(
+                                TextFieldModel(key: 'gitHub', value: ''));
+                            newCardBloc.add(AddCardInfoEvent(card));
                           }
                         }),
                     telegram: ExtraInfoWidget(
                         title: 'Telegram',
                         icon: Icons.web,
                         onPressed: () {
-                          final cardInfoBloc =
-                          BlocProvider.of<CardInfoBloc>(context);
-                          final state = cardInfoBloc.state;
 
-                          if (state is CardInfoLoadedState) {
-                            List<CardModel> cards = state.cards;
-                            cards.last.extraInfo.listOfFields.add(
+                          final newCardBloc =
+                          BlocProvider.of<NewCardBloc>(context);
+                          final state = newCardBloc.state;
+
+                          if (state is NewCardInitialState) {
+                            CardModel card = state.card;
+                            card.extraInfo.listOfFields.add(
                                 TextFieldModel(key: 'telegram', value: ''));
-                            cardInfoBloc.add(AddExtraInfoEvent(cards));
+                            newCardBloc.add(AddCardInfoEvent(card));
                           }
                         }))
               ],
