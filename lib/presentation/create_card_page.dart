@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:businesscard/blocs/card_info_bloc/card_info_bloc.dart';
 import 'package:businesscard/blocs/full_name_dropdown_bloc/full_name_dropdown_bloc.dart';
 import 'package:businesscard/blocs/select_card_color_bloc/select_card_color_bloc.dart';
+import 'package:businesscard/blocs/text_clear_button_bloc/text_clear_button_bloc.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -301,13 +302,13 @@ class _CreateCardPageState extends State<CreateCardPage> {
                       GestureDetector(
                         onTap: () {
                           final fullNameDropdownBloc =
-                              BlocProvider.of<FullNameDropdownBloc>(context);
+                          BlocProvider.of<FullNameDropdownBloc>(context);
 
                           final fullNameDropdownState =
                               fullNameDropdownBloc.state;
 
                           if (fullNameDropdownState
-                              is FullNameDropdownCloseState) {
+                          is FullNameDropdownCloseState) {
                             fullNameDropdownBloc
                                 .add(FullNameDropdownOpenEvent());
                           } else {
@@ -408,15 +409,16 @@ class _CreateCardPageState extends State<CreateCardPage> {
                 ///DYNAMIC TEXT FIELDS
                 BlocBuilder<CardInfoBloc, CardInfoState>(
                   builder: (context, state) {
-
-                    if(state is CardInfoLoadedState && state.cards.last.extraInfo.listOfFields.isNotEmpty) {
+                    if (state is CardInfoLoadedState &&
+                        state.cards.last.extraInfo.listOfFields.isNotEmpty) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15.0, vertical: 30),
                         child: ListView.separated(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: state.cards.last.extraInfo.listOfFields.length,
+                          itemCount:
+                          state.cards.last.extraInfo.listOfFields.length,
                           //padding: EdgeInsets.only(top: 15),
                           itemBuilder: (BuildContext context, int index) {
                             //final controller = _getControllerOf(data[index]);
@@ -429,9 +431,10 @@ class _CreateCardPageState extends State<CreateCardPage> {
                             //   ),
                             // );
                             return CustomTextField(
-                                controller: _getControllerOf(state.cards.last.extraInfo.listOfFields[index].key),
-                                hintText: state.cards.last.extraInfo.listOfFields[index].key
-                            );
+                                controller: _getControllerOf(state.cards.last
+                                    .extraInfo.listOfFields[index].key),
+                                hintText: state.cards.last.extraInfo
+                                    .listOfFields[index].key);
                             //   Container(
                             //   child: TextField(
                             //     controller: _getControllerOf(data.keys.elementAt(index)),
@@ -442,7 +445,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                             //   ),
                             //   padding: EdgeInsets.only(bottom: 10),
                             // );
-                            },
+                          },
                           separatorBuilder: (BuildContext context, int index) =>
                               SizedBox(height: 15),
                         ),
@@ -450,7 +453,6 @@ class _CreateCardPageState extends State<CreateCardPage> {
                     }
 
                     return Container();
-
                   },
                 ),
 
@@ -476,81 +478,98 @@ class _CreateCardPageState extends State<CreateCardPage> {
                   ),
                 ),
 
-
                 ExtraInfoFooterWidget(
-                  phoneNumber: ExtraInfoWidget(
-                      title: 'Phone Number', 
-                      icon: Icons.phone, 
-                      onPressed: () {
+                    phoneNumber: ExtraInfoWidget(
+                        title: 'Phone Number',
+                        icon: Icons.phone,
+                        onPressed: () {
+                          print('fff');
+                          final cardInfoBloc =
+                          BlocProvider.of<CardInfoBloc>(context);
+                          final state = cardInfoBloc.state;
 
-                        print('fff');
-                        final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
-                        final state = cardInfoBloc.state;
+                          if (state is CardInfoLoadedState) {
+                            List<CardModel> cards = state.cards;
+                            cards.last.extraInfo.listOfFields.add(
+                                TextFieldModel(key: 'phoneNumber', value: ''));
+                            cardInfoBloc.add(AddExtraInfoEvent(cards));
+                          }
+                        }),
+                    email: ExtraInfoWidget(
+                        title: 'Email',
+                        icon: Icons.email,
+                        onPressed: () {
+                          final cardInfoBloc =
+                          BlocProvider.of<CardInfoBloc>(context);
+                          final state = cardInfoBloc.state;
 
-                        if (state is CardInfoLoadedState) {
-                          List<CardModel> cards = state.cards;
-                          cards.last.extraInfo.listOfFields.add(TextFieldModel(key: 'phoneNumber', value: ''));
-                          cardInfoBloc.add(AddExtraInfoEvent(cards));
-                        }
-                      }
-                  ),
-                  email: ExtraInfoWidget(title: 'Email', icon: Icons.email,
-                      onPressed: () {
-                        final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
-                        final state = cardInfoBloc.state;
+                          if (state is CardInfoLoadedState) {
+                            List<CardModel> cards = state.cards;
+                            cards.last.extraInfo.listOfFields
+                                .add(TextFieldModel(key: 'email', value: ''));
+                            cardInfoBloc.add(AddExtraInfoEvent(cards));
+                          }
+                        }),
+                    link: ExtraInfoWidget(
+                        title: 'Link',
+                        icon: Icons.link,
+                        onPressed: () {
+                          final cardInfoBloc =
+                          BlocProvider.of<CardInfoBloc>(context);
+                          final state = cardInfoBloc.state;
 
-                        if (state is CardInfoLoadedState) {
-                          List<CardModel> cards = state.cards;
-                          cards.last.extraInfo.listOfFields.add(TextFieldModel(key: 'email', value: ''));
-                          cardInfoBloc.add(AddExtraInfoEvent(cards));
-                        }
-                      }),
-                  link: ExtraInfoWidget(title: 'Link', icon: Icons.link,
-                      onPressed: () {
-                        final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
-                        final state = cardInfoBloc.state;
+                          if (state is CardInfoLoadedState) {
+                            List<CardModel> cards = state.cards;
+                            cards.last.extraInfo.listOfFields
+                                .add(TextFieldModel(key: 'link', value: ''));
+                            cardInfoBloc.add(AddExtraInfoEvent(cards));
+                          }
+                        }),
+                    linkedIn: ExtraInfoWidget(
+                        title: 'LinkedIn',
+                        icon: Icons.web,
+                        onPressed: () {
+                          final cardInfoBloc =
+                          BlocProvider.of<CardInfoBloc>(context);
+                          final state = cardInfoBloc.state;
 
-                        if (state is CardInfoLoadedState) {
-                          List<CardModel> cards = state.cards;
-                          cards.last.extraInfo.listOfFields.add(TextFieldModel(key: 'link', value: ''));
-                          cardInfoBloc.add(AddExtraInfoEvent(cards));
-                        }
-                      }),
-                  linkedIn: ExtraInfoWidget(title: 'LinkedIn', icon: Icons.web,
-                      onPressed: () {
-                        final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
-                        final state = cardInfoBloc.state;
+                          if (state is CardInfoLoadedState) {
+                            List<CardModel> cards = state.cards;
+                            cards.last.extraInfo.listOfFields.add(
+                                TextFieldModel(key: 'linkedIn', value: ''));
+                            cardInfoBloc.add(AddExtraInfoEvent(cards));
+                          }
+                        }),
+                    github: ExtraInfoWidget(
+                        title: 'GitHub',
+                        icon: Icons.web,
+                        onPressed: () {
+                          final cardInfoBloc =
+                          BlocProvider.of<CardInfoBloc>(context);
+                          final state = cardInfoBloc.state;
 
-                        if (state is CardInfoLoadedState) {
-                          List<CardModel> cards = state.cards;
-                          cards.last.extraInfo.listOfFields.add(TextFieldModel(key: 'linkedIn', value: ''));
-                          cardInfoBloc.add(AddExtraInfoEvent(cards));
-                        }
-                      }),
-                  github: ExtraInfoWidget(title: 'GitHub', icon: Icons.web,
-                      onPressed: () {
-                        final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
-                        final state = cardInfoBloc.state;
+                          if (state is CardInfoLoadedState) {
+                            List<CardModel> cards = state.cards;
+                            cards.last.extraInfo.listOfFields
+                                .add(TextFieldModel(key: 'gitHub', value: ''));
+                            cardInfoBloc.add(AddExtraInfoEvent(cards));
+                          }
+                        }),
+                    telegram: ExtraInfoWidget(
+                        title: 'Telegram',
+                        icon: Icons.web,
+                        onPressed: () {
+                          final cardInfoBloc =
+                          BlocProvider.of<CardInfoBloc>(context);
+                          final state = cardInfoBloc.state;
 
-                        if (state is CardInfoLoadedState) {
-                          List<CardModel> cards = state.cards;
-                          cards.last.extraInfo.listOfFields.add(TextFieldModel(key: 'gitHub', value: ''));
-                          cardInfoBloc.add(AddExtraInfoEvent(cards));
-                        }
-                      }),
-                  telegram: ExtraInfoWidget(title: 'Telegram', icon: Icons.web,
-                      onPressed: () {
-                        final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
-                        final state = cardInfoBloc.state;
-
-                        if (state is CardInfoLoadedState) {
-                          List<CardModel> cards = state.cards;
-                          cards.last.extraInfo.listOfFields.add(TextFieldModel(key: 'telegram', value: ''));
-                          cardInfoBloc.add(AddExtraInfoEvent(cards));
-                        }
-                      })
-                )
-
+                          if (state is CardInfoLoadedState) {
+                            List<CardModel> cards = state.cards;
+                            cards.last.extraInfo.listOfFields.add(
+                                TextFieldModel(key: 'telegram', value: ''));
+                            cardInfoBloc.add(AddExtraInfoEvent(cards));
+                          }
+                        }))
               ],
             ),
           ),
@@ -560,10 +579,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
   }
 }
 
-
-
 class ExtraInfoFooterWidget extends StatelessWidget {
-
   final ExtraInfoWidget phoneNumber;
   final ExtraInfoWidget email;
   final ExtraInfoWidget link;
@@ -571,7 +587,14 @@ class ExtraInfoFooterWidget extends StatelessWidget {
   final ExtraInfoWidget github;
   final ExtraInfoWidget telegram;
 
-  const ExtraInfoFooterWidget({Key? key, required this.phoneNumber, required this.email, required this.link, required this.linkedIn, required this.github, required this.telegram}) : super(key: key);
+  const ExtraInfoFooterWidget({Key? key,
+    required this.phoneNumber,
+    required this.email,
+    required this.link,
+    required this.linkedIn,
+    required this.github,
+    required this.telegram})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -584,11 +607,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              phoneNumber,
-              email,
-              link
-            ],
+            children: [phoneNumber, email, link],
           ),
           SizedBox(
             height: 25,
@@ -596,11 +615,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              linkedIn,
-              github,
-              telegram
-            ],
+            children: [linkedIn, github, telegram],
           )
         ],
       ),
@@ -608,14 +623,16 @@ class ExtraInfoFooterWidget extends StatelessWidget {
   }
 }
 
-
 class ExtraInfoWidget extends StatelessWidget {
-
   final String title;
   final IconData icon;
   final VoidCallback onPressed;
 
-  const ExtraInfoWidget({Key? key, required this.title, required this.icon, required this.onPressed}) : super(key: key);
+  const ExtraInfoWidget({Key? key,
+    required this.title,
+    required this.icon,
+    required this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -646,7 +663,6 @@ class ExtraInfoWidget extends StatelessWidget {
     );
   }
 }
-
 
 class ChooseColorWidget extends StatelessWidget {
   final Color color;
@@ -796,30 +812,66 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final bool enabled;
 
-  const CustomTextField(
-      {Key? key,
-      required this.controller,
-      required this.hintText,
-      this.enabled = true})
+  const CustomTextField({Key? key,
+    required this.controller,
+    required this.hintText,
+    this.enabled = true})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      enabled: enabled,
-      decoration: InputDecoration(
-        //contentPadding: EdgeInsets.all(0),
-        suffixIcon: IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.highlight_remove_outlined),
-          splashRadius: 20,
-        ),
-        hintText: hintText,
-        //labelText: 'Name *',
-      ),
+    return BlocProvider<TextClearButtonBloc>(
+      create: (context) => TextClearButtonBloc(),
+      child: Builder(
+        builder: (context) {
+          return TextFormField(
+            controller: controller,
+            enabled: enabled,
+            decoration: InputDecoration(
+              //contentPadding: EdgeInsets.all(0),
+              suffixIcon: BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
+                builder: (context, state) {
+                  if (state is ClearButtonEnableState) {
+                    return IconButton(
+                      onPressed: () {
+                        controller.clear();
+                        final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(
+                            context);
+                        clearButtonBloc.add(ClearButtonDisableEvent());
+                      },
+                      icon: Icon(Icons.highlight_remove_outlined),
+                      splashRadius: 20,
+                    );
+                  }
 
-      //textAlign: TextAlign.center,
+                  return SizedBox();
+                },
+              ),
+              hintText: hintText,
+              //labelText: 'Name *',
+            ),
+            onTap: () {
+              if (controller.text.isNotEmpty) {
+                final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(
+                    context);
+                clearButtonBloc.add(ClearButtonEnableEvent());
+              }
+            },
+            onChanged: (text) {
+              if (controller.text.isEmpty) {
+                final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(
+                    context);
+                clearButtonBloc.add(ClearButtonDisableEvent());
+              } else if (controller.text.length == 1) {
+                final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(
+                    context);
+                clearButtonBloc.add(ClearButtonEnableEvent());
+              }
+            },
+            //textAlign: TextAlign.center,
+          );
+        }
+      ),
     );
   }
 }
