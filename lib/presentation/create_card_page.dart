@@ -7,6 +7,8 @@ import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../data/models/card_model.dart';
+
 // class CreateCardPage extends StatefulWidget {
 //   const CreateCardPage({Key? key}) : super(key: key);
 //
@@ -159,7 +161,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
   TextEditingController _getControllerOf(String name) {
     var controller = _controllerMap[name];
     if (controller == null) {
-      controller = TextEditingController(text: name);
+      controller = TextEditingController();
       _controllerMap[name] = controller;
     }
     //print(_controllerMap.length);
@@ -407,7 +409,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                 BlocBuilder<CardInfoBloc, CardInfoState>(
                   builder: (context, state) {
 
-                    if(state is CardInfoLoadedState) {
+                    if(state is CardInfoLoadedState && state.cards.last.extraInfo.listOfFields.isNotEmpty) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15.0, vertical: 30),
@@ -428,7 +430,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                             // );
                             return CustomTextField(
                                 controller: _getControllerOf(state.cards.last.extraInfo.listOfFields[index].key),
-                                hintText: state.cards.last.extraInfo.listOfFields[index].value
+                                hintText: state.cards.last.extraInfo.listOfFields[index].key
                             );
                             //   Container(
                             //   child: TextField(
@@ -474,162 +476,81 @@ class _CreateCardPageState extends State<CreateCardPage> {
                   ),
                 ),
 
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 35, vertical: 30),
-                  color: Colors.redAccent.withOpacity(0.2),
-                  child: Column(
-                    //crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 90,
-                            height: 100,
-                            child: Column(
-                              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: Colors.redAccent,
-                                  child: Icon(Icons.phone, color: Colors.white),
-                                ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                Expanded(
-                                    child: Center(
-                                        child: Text('Phone Number',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 17))))
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: 90,
-                            height: 100,
-                            child: Column(
-                              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: Colors.redAccent,
-                                  child: Icon(Icons.email, color: Colors.white),
-                                ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                Expanded(
-                                    child: Center(
-                                        child: Text('Email',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 17))))
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: 90,
-                            height: 100,
-                            child: Column(
-                              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: Colors.redAccent,
-                                  child: Icon(Icons.link, color: Colors.white),
-                                ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                Expanded(
-                                    child: Center(
-                                        child: Text('Link',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 17))))
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 90,
-                            height: 100,
-                            child: Column(
-                              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: Colors.redAccent,
-                                  child: Icon(Icons.phone, color: Colors.white),
-                                ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                Expanded(
-                                    child: Center(
-                                        child: Text('LinkedIn',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 17))))
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: 90,
-                            height: 100,
-                            child: Column(
-                              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: Colors.redAccent,
-                                  child: Icon(Icons.email, color: Colors.white),
-                                ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                Expanded(
-                                    child: Center(
-                                        child: Text('GitHub',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 17))))
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: 90,
-                            height: 100,
-                            child: Column(
-                              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: Colors.redAccent,
-                                  child: Icon(Icons.link, color: Colors.white),
-                                ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                Expanded(
-                                    child: Center(
-                                        child: Text('Telegram',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 17))))
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+
+                ExtraInfoFooterWidget(
+                  phoneNumber: ExtraInfoWidget(
+                      title: 'Phone Number', 
+                      icon: Icons.phone, 
+                      onPressed: () {
+
+                        print('fff');
+                        final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+                        final state = cardInfoBloc.state;
+
+                        if (state is CardInfoLoadedState) {
+                          List<CardModel> cards = state.cards;
+                          cards.last.extraInfo.listOfFields.add(TextFieldModel(key: 'phoneNumber', value: ''));
+                          cardInfoBloc.add(AddExtraInfoEvent(cards));
+                        }
+                      }
                   ),
+                  email: ExtraInfoWidget(title: 'Email', icon: Icons.email,
+                      onPressed: () {
+                        final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+                        final state = cardInfoBloc.state;
+
+                        if (state is CardInfoLoadedState) {
+                          List<CardModel> cards = state.cards;
+                          cards.last.extraInfo.listOfFields.add(TextFieldModel(key: 'email', value: ''));
+                          cardInfoBloc.add(AddExtraInfoEvent(cards));
+                        }
+                      }),
+                  link: ExtraInfoWidget(title: 'Link', icon: Icons.link,
+                      onPressed: () {
+                        final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+                        final state = cardInfoBloc.state;
+
+                        if (state is CardInfoLoadedState) {
+                          List<CardModel> cards = state.cards;
+                          cards.last.extraInfo.listOfFields.add(TextFieldModel(key: 'link', value: ''));
+                          cardInfoBloc.add(AddExtraInfoEvent(cards));
+                        }
+                      }),
+                  linkedIn: ExtraInfoWidget(title: 'LinkedIn', icon: Icons.web,
+                      onPressed: () {
+                        final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+                        final state = cardInfoBloc.state;
+
+                        if (state is CardInfoLoadedState) {
+                          List<CardModel> cards = state.cards;
+                          cards.last.extraInfo.listOfFields.add(TextFieldModel(key: 'linkedIn', value: ''));
+                          cardInfoBloc.add(AddExtraInfoEvent(cards));
+                        }
+                      }),
+                  github: ExtraInfoWidget(title: 'GitHub', icon: Icons.web,
+                      onPressed: () {
+                        final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+                        final state = cardInfoBloc.state;
+
+                        if (state is CardInfoLoadedState) {
+                          List<CardModel> cards = state.cards;
+                          cards.last.extraInfo.listOfFields.add(TextFieldModel(key: 'gitHub', value: ''));
+                          cardInfoBloc.add(AddExtraInfoEvent(cards));
+                        }
+                      }),
+                  telegram: ExtraInfoWidget(title: 'Telegram', icon: Icons.web,
+                      onPressed: () {
+                        final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+                        final state = cardInfoBloc.state;
+
+                        if (state is CardInfoLoadedState) {
+                          List<CardModel> cards = state.cards;
+                          cards.last.extraInfo.listOfFields.add(TextFieldModel(key: 'telegram', value: ''));
+                          cardInfoBloc.add(AddExtraInfoEvent(cards));
+                        }
+                      })
                 )
+
               ],
             ),
           ),
@@ -638,6 +559,94 @@ class _CreateCardPageState extends State<CreateCardPage> {
     );
   }
 }
+
+
+
+class ExtraInfoFooterWidget extends StatelessWidget {
+
+  final ExtraInfoWidget phoneNumber;
+  final ExtraInfoWidget email;
+  final ExtraInfoWidget link;
+  final ExtraInfoWidget linkedIn;
+  final ExtraInfoWidget github;
+  final ExtraInfoWidget telegram;
+
+  const ExtraInfoFooterWidget({Key? key, required this.phoneNumber, required this.email, required this.link, required this.linkedIn, required this.github, required this.telegram}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 35, vertical: 30),
+      color: Colors.redAccent.withOpacity(0.2),
+      child: Column(
+        //crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              phoneNumber,
+              email,
+              link
+            ],
+          ),
+          SizedBox(
+            height: 25,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              linkedIn,
+              github,
+              telegram
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+
+class ExtraInfoWidget extends StatelessWidget {
+
+  final String title;
+  final IconData icon;
+  final VoidCallback onPressed;
+
+  const ExtraInfoWidget({Key? key, required this.title, required this.icon, required this.onPressed}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: SizedBox(
+        width: 90,
+        height: 100,
+        child: Column(
+          //mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.redAccent,
+              child: Icon(icon, color: Colors.white),
+            ),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            Expanded(
+                child: Center(
+                    child: Text(title,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 17))))
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 
 class ChooseColorWidget extends StatelessWidget {
   final Color color;
@@ -683,104 +692,104 @@ class ChooseColorWidget extends StatelessWidget {
   }
 }
 
-class GeneralTextFields extends StatelessWidget {
-  final TextEditingController controller;
-
-  const GeneralTextFields({Key? key, required this.controller})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            final fullNameDropdownBloc =
-                BlocProvider.of<FullNameDropdownBloc>(context);
-
-            final fullNameDropdownState = fullNameDropdownBloc.state;
-
-            if (fullNameDropdownState is FullNameDropdownCloseState) {
-              fullNameDropdownBloc.add(FullNameDropdownOpenEvent());
-            } else {
-              fullNameDropdownBloc.add(FullNameDropdownCloseEvent());
-            }
-          },
-          child: Row(
-            children: [
-              Expanded(
-                child: CustomTextField(
-                    hintText: 'Full Name',
-                    enabled: false,
-                    controller: controller),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              BlocBuilder<FullNameDropdownBloc, FullNameDropdownState>(
-                builder: (context, state) {
-                  if (state is FullNameDropdownOpenState) {
-                    return Icon(Icons.keyboard_arrow_up,
-                        size: 50, color: Colors.redAccent);
-                  }
-                  if (state is FullNameDropdownCloseState) {
-                    return Icon(Icons.keyboard_arrow_down,
-                        size: 50, color: Colors.redAccent);
-                  }
-
-                  return Container();
-                },
-              )
-            ],
-          ),
-        ),
-        BlocBuilder<FullNameDropdownBloc, FullNameDropdownState>(
-          builder: (context, state) {
-            if (state is FullNameDropdownOpenState) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 20, top: 15),
-                child: Column(
-                  children: [
-                    CustomTextField(
-                        hintText: 'First Name', controller: controller),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    CustomTextField(
-                        hintText: 'Middle Name', controller: controller),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    CustomTextField(
-                        hintText: 'Last Name', controller: controller),
-                  ],
-                ),
-              );
-            }
-
-            return Container();
-          },
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        CustomTextField(hintText: 'Job Title', controller: controller),
-        SizedBox(
-          height: 15,
-        ),
-        CustomTextField(hintText: 'Department', controller: controller),
-        SizedBox(
-          height: 15,
-        ),
-        CustomTextField(hintText: 'Company Name', controller: controller),
-        SizedBox(
-          height: 15,
-        ),
-        CustomTextField(hintText: 'Headline', controller: controller)
-      ],
-    );
-  }
-}
+// class GeneralTextFields extends StatelessWidget {
+//   final TextEditingController controller;
+//
+//   const GeneralTextFields({Key? key, required this.controller})
+//       : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         GestureDetector(
+//           onTap: () {
+//             final fullNameDropdownBloc =
+//                 BlocProvider.of<FullNameDropdownBloc>(context);
+//
+//             final fullNameDropdownState = fullNameDropdownBloc.state;
+//
+//             if (fullNameDropdownState is FullNameDropdownCloseState) {
+//               fullNameDropdownBloc.add(FullNameDropdownOpenEvent());
+//             } else {
+//               fullNameDropdownBloc.add(FullNameDropdownCloseEvent());
+//             }
+//           },
+//           child: Row(
+//             children: [
+//               Expanded(
+//                 child: CustomTextField(
+//                     hintText: 'Full Name',
+//                     enabled: false,
+//                     controller: controller),
+//               ),
+//               SizedBox(
+//                 width: 20,
+//               ),
+//               BlocBuilder<FullNameDropdownBloc, FullNameDropdownState>(
+//                 builder: (context, state) {
+//                   if (state is FullNameDropdownOpenState) {
+//                     return Icon(Icons.keyboard_arrow_up,
+//                         size: 50, color: Colors.redAccent);
+//                   }
+//                   if (state is FullNameDropdownCloseState) {
+//                     return Icon(Icons.keyboard_arrow_down,
+//                         size: 50, color: Colors.redAccent);
+//                   }
+//
+//                   return Container();
+//                 },
+//               )
+//             ],
+//           ),
+//         ),
+//         BlocBuilder<FullNameDropdownBloc, FullNameDropdownState>(
+//           builder: (context, state) {
+//             if (state is FullNameDropdownOpenState) {
+//               return Padding(
+//                 padding: const EdgeInsets.only(left: 20, top: 15),
+//                 child: Column(
+//                   children: [
+//                     CustomTextField(
+//                         hintText: 'First Name', controller: controller),
+//                     SizedBox(
+//                       height: 15,
+//                     ),
+//                     CustomTextField(
+//                         hintText: 'Middle Name', controller: controller),
+//                     SizedBox(
+//                       height: 15,
+//                     ),
+//                     CustomTextField(
+//                         hintText: 'Last Name', controller: controller),
+//                   ],
+//                 ),
+//               );
+//             }
+//
+//             return Container();
+//           },
+//         ),
+//         SizedBox(
+//           height: 15,
+//         ),
+//         CustomTextField(hintText: 'Job Title', controller: controller),
+//         SizedBox(
+//           height: 15,
+//         ),
+//         CustomTextField(hintText: 'Department', controller: controller),
+//         SizedBox(
+//           height: 15,
+//         ),
+//         CustomTextField(hintText: 'Company Name', controller: controller),
+//         SizedBox(
+//           height: 15,
+//         ),
+//         CustomTextField(hintText: 'Headline', controller: controller)
+//       ],
+//     );
+//   }
+// }
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;

@@ -5,10 +5,18 @@ abstract class CardInfoEvent {}
 
 class GetCardInfoEvent extends CardInfoEvent {}
 
-class AddCardInfoEvent extends CardInfoEvent {
+class AddCardEvent extends CardInfoEvent {
 
   final List<CardModel> cards;
 
-  AddCardInfoEvent(this.cards);
+  AddCardEvent(this.cards);
+
+}
+
+class AddExtraInfoEvent extends CardInfoEvent {
+
+  final List<CardModel> cards;
+
+  AddExtraInfoEvent(this.cards);
 
 }

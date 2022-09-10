@@ -56,7 +56,7 @@ class _CardsPageState extends State<CardsPage> {
               if (state is CardInfoLoadedState) {
                 List<CardModel> cards = state.cards;
                 cards.add(CardModel(settings: SettingsModel(cardTitle: '', cardColor: ''), generalInfo: GeneralInfoModel(firstName: '', middleName: '', lastName: '', jobTitle: '', department: '', companyName: '', headLine: ''), extraInfo: ExtraInfoModel(listOfFields: [])));
-                cardInfoBloc.add(AddCardInfoEvent(cards));
+                cardInfoBloc.add(AddCardEvent(cards));
               }
 
               Navigator.of(context).push(MaterialPageRoute(
