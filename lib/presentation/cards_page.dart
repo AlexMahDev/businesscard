@@ -4,6 +4,7 @@ import 'package:businesscard/presentation/widgets/custom_float_action_button.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../data/models/card_model.dart';
 import 'create_card_page.dart';
 import 'edit_card_page.dart';
 
@@ -48,8 +49,19 @@ class _CardsPageState extends State<CardsPage> {
             icon: const Icon(Icons.add),
             splashRadius: 20,
             onPressed: () {
+
+              final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+              final state = cardInfoBloc.state;
+
+              if (state is CardInfoLoadedState) {
+                List<CardModel> cards = state.cards;
+                cards.add(CardModel(settings: SettingsModel(cardTitle: '', cardColor: ''), generalInfo: GeneralInfoModel(firstName: '', middleName: '', lastName: '', jobTitle: '', department: '', companyName: '', headLine: ''), extraInfo: ExtraInfoModel(listOfFields: [])));
+                cardInfoBloc.add(AddCardInfoEvent(cards));
+              }
+
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => const CreateCardPage()));
+
 
               // Navigator.of(context).push(MaterialPageRoute(
               //     builder: (BuildContext context) => BlocProvider<CardInfoBloc>.value(

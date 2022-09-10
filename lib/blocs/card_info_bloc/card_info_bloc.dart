@@ -10,6 +10,7 @@ part 'card_info_state.dart';
 class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
   CardInfoBloc() : super(CardInfoInitialState()) {
     on<GetCardInfoEvent>(_getCardInfo);
+    on<AddCardInfoEvent>(_addCardInfo);
   }
 
   _getCardInfo(CardInfoEvent event, Emitter<CardInfoState> emit) async {
@@ -89,6 +90,17 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
 
     emit(CardInfoLoadedState(cards));
 
+  }
+
+
+  _addCardInfo(AddCardInfoEvent event, Emitter<CardInfoState> emit) async {
+
+
+    //List<CardModel> cards = List.from(listOfCards.map((card) => CardModel.fromJson(card)));
+
+    emit(CardInfoLoadedState(event.cards));
 
   }
+
+
 }

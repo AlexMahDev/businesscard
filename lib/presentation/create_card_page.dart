@@ -7,8 +7,6 @@ import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
-
 // class CreateCardPage extends StatefulWidget {
 //   const CreateCardPage({Key? key}) : super(key: key);
 //
@@ -118,7 +116,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 //   }
 // }
 
-
 class CreateCardPage extends StatefulWidget {
   const CreateCardPage({Key? key}) : super(key: key);
 
@@ -127,15 +124,31 @@ class CreateCardPage extends StatefulWidget {
 }
 
 class _CreateCardPageState extends State<CreateCardPage> {
-
   final Map<String, TextEditingController> _controllerMap = {};
 
+  late final TextEditingController cardTitle;
+  late final TextEditingController fullName;
+  late final TextEditingController firstName;
+  late final TextEditingController middleName;
+  late final TextEditingController lastName;
+  late final TextEditingController jobTitle;
+  late final TextEditingController department;
+  late final TextEditingController companyName;
+  late final TextEditingController headLine;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _controllerMap["name"] = TextEditingController();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    cardTitle = TextEditingController();
+    fullName = TextEditingController();
+    firstName = TextEditingController();
+    middleName = TextEditingController();
+    lastName = TextEditingController();
+    jobTitle = TextEditingController();
+    department = TextEditingController();
+    companyName = TextEditingController();
+    headLine = TextEditingController();
+  }
 
   @override
   void dispose() {
@@ -160,22 +173,18 @@ class _CreateCardPageState extends State<CreateCardPage> {
   //   "Link": "hello.com"
   // };
 
-  Map<String, Map<String, String>> data =
-
-  {
-    "generalInfo": {
-      "Name": "Alexander",
-      "Department": "Mobile",
-      "Link": "hello.com"
-    },
-    "extraInfo": {
-      "Name": "Alexander",
-      "Department": "Mobile",
-      "Link": "hello.com"
-    },
-
-  };
-
+  // Map<String, Map<String, String>> data = {
+  //   "generalInfo": {
+  //     "Name": "Alexander",
+  //     "Department": "Mobile",
+  //     "Link": "hello.com"
+  //   },
+  //   "extraInfo": {
+  //     "Name": "Alexander",
+  //     "Department": "Mobile",
+  //     "Link": "hello.com"
+  //   },
+  // };
 
   @override
   Widget build(BuildContext context) {
@@ -218,20 +227,9 @@ class _CreateCardPageState extends State<CreateCardPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      //contentPadding: EdgeInsets.all(0),
-                      suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.highlight_remove_outlined),
-                        splashRadius: 20,
-                      ),
+                  child: CustomTextField(
                       hintText: 'Set a title (e.g. Work or Personal)',
-                      //labelText: 'Name *',
-                    ),
-
-                    //textAlign: TextAlign.center,
-                  ),
+                      controller: cardTitle),
                 ),
 
                 // SizedBox(
@@ -293,55 +291,165 @@ class _CreateCardPageState extends State<CreateCardPage> {
                   ],
                 ),
 
-
-
-
-
-
-                ///STATIC TEXT FIELDS
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 15.0, vertical: 30),
-                  child: GeneralTextFields(controller: TextEditingController())
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          final fullNameDropdownBloc =
+                              BlocProvider.of<FullNameDropdownBloc>(context);
+
+                          final fullNameDropdownState =
+                              fullNameDropdownBloc.state;
+
+                          if (fullNameDropdownState
+                              is FullNameDropdownCloseState) {
+                            fullNameDropdownBloc
+                                .add(FullNameDropdownOpenEvent());
+                          } else {
+                            fullNameDropdownBloc
+                                .add(FullNameDropdownCloseEvent());
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: CustomTextField(
+                                  hintText: 'Full Name',
+                                  enabled: false,
+                                  controller: fullName),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            BlocBuilder<FullNameDropdownBloc,
+                                FullNameDropdownState>(
+                              builder: (context, state) {
+                                if (state is FullNameDropdownOpenState) {
+                                  return Icon(Icons.keyboard_arrow_up,
+                                      size: 50, color: Colors.redAccent);
+                                }
+                                if (state is FullNameDropdownCloseState) {
+                                  return Icon(Icons.keyboard_arrow_down,
+                                      size: 50, color: Colors.redAccent);
+                                }
+
+                                return Container();
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      BlocBuilder<FullNameDropdownBloc, FullNameDropdownState>(
+                        builder: (context, state) {
+                          if (state is FullNameDropdownOpenState) {
+                            return Padding(
+                              padding: const EdgeInsets.only(left: 20, top: 15),
+                              child: Column(
+                                children: [
+                                  CustomTextField(
+                                      hintText: 'First Name',
+                                      controller: firstName),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  CustomTextField(
+                                      hintText: 'Middle Name',
+                                      controller: middleName),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  CustomTextField(
+                                      hintText: 'Last Name',
+                                      controller: lastName),
+                                ],
+                              ),
+                            );
+                          }
+
+                          return Container();
+                        },
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      CustomTextField(
+                          hintText: 'Job Title', controller: jobTitle),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      CustomTextField(
+                          hintText: 'Department', controller: department),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      CustomTextField(
+                          hintText: 'Company Name', controller: companyName),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      CustomTextField(
+                          hintText: 'Headline', controller: headLine)
+                    ],
+                  ),
                 ),
 
+                // ///STATIC TEXT FIELDS
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(
+                //       horizontal: 15.0, vertical: 30),
+                //   child: GeneralTextFields(controller: TextEditingController())
+                // ),
 
                 ///DYNAMIC TEXT FIELDS
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 30),
-                  child: ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: data["extraInfo"]!.length,
-                    //padding: EdgeInsets.only(top: 15),
-                    itemBuilder: (BuildContext context, int index) {
+                BlocBuilder<CardInfoBloc, CardInfoState>(
+                  builder: (context, state) {
 
-                      //final controller = _getControllerOf(data[index]);
+                    if(state is CardInfoLoadedState) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15.0, vertical: 30),
+                        child: ListView.separated(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: state.cards.last.extraInfo.listOfFields.length,
+                          //padding: EdgeInsets.only(top: 15),
+                          itemBuilder: (BuildContext context, int index) {
+                            //final controller = _getControllerOf(data[index]);
 
-                      // final textField = TextField(
-                      //   controller: controller,
-                      //   decoration: InputDecoration(
-                      //     border: OutlineInputBorder(),
-                      //     labelText: "name${index + 1}",
-                      //   ),
-                      // );
-                      return CustomTextField(
-                          controller: _getControllerOf(data["extraInfo"]!.keys.elementAt(index)),
-                          hintText: data["extraInfo"]!.keys.elementAt(index)
+                            // final textField = TextField(
+                            //   controller: controller,
+                            //   decoration: InputDecoration(
+                            //     border: OutlineInputBorder(),
+                            //     labelText: "name${index + 1}",
+                            //   ),
+                            // );
+                            return CustomTextField(
+                                controller: _getControllerOf(state.cards.last.extraInfo.listOfFields[index].key),
+                                hintText: state.cards.last.extraInfo.listOfFields[index].value
+                            );
+                            //   Container(
+                            //   child: TextField(
+                            //     controller: _getControllerOf(data.keys.elementAt(index)),
+                            //     decoration: InputDecoration(
+                            //       border: OutlineInputBorder(),
+                            //       labelText: data[index],
+                            //     ),
+                            //   ),
+                            //   padding: EdgeInsets.only(bottom: 10),
+                            // );
+                            },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              SizedBox(height: 15),
+                        ),
                       );
-                      //   Container(
-                      //   child: TextField(
-                      //     controller: _getControllerOf(data.keys.elementAt(index)),
-                      //     decoration: InputDecoration(
-                      //       border: OutlineInputBorder(),
-                      //       labelText: data[index],
-                      //     ),
-                      //   ),
-                      //   padding: EdgeInsets.only(bottom: 10),
-                      // );
-                    }, separatorBuilder: (BuildContext context, int index) => SizedBox(height: 15),
-                  ),
+                    }
+
+                    return Container();
+
+                  },
                 ),
 
                 Container(
@@ -575,12 +683,11 @@ class ChooseColorWidget extends StatelessWidget {
   }
 }
 
-
 class GeneralTextFields extends StatelessWidget {
-
   final TextEditingController controller;
 
-  const GeneralTextFields({Key? key, required this.controller}) : super(key: key);
+  const GeneralTextFields({Key? key, required this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -589,37 +696,34 @@ class GeneralTextFields extends StatelessWidget {
         GestureDetector(
           onTap: () {
             final fullNameDropdownBloc =
-            BlocProvider.of<FullNameDropdownBloc>(
-                context);
+                BlocProvider.of<FullNameDropdownBloc>(context);
 
-            final fullNameDropdownState =
-                fullNameDropdownBloc.state;
+            final fullNameDropdownState = fullNameDropdownBloc.state;
 
-            if (fullNameDropdownState
-            is FullNameDropdownCloseState) {
-              fullNameDropdownBloc
-                  .add(FullNameDropdownOpenEvent());
+            if (fullNameDropdownState is FullNameDropdownCloseState) {
+              fullNameDropdownBloc.add(FullNameDropdownOpenEvent());
             } else {
-              fullNameDropdownBloc
-                  .add(FullNameDropdownCloseEvent());
+              fullNameDropdownBloc.add(FullNameDropdownCloseEvent());
             }
           },
           child: Row(
             children: [
               Expanded(
-                child: CustomTextField(hintText: 'Full Name', enabled: false, controller: controller),
+                child: CustomTextField(
+                    hintText: 'Full Name',
+                    enabled: false,
+                    controller: controller),
               ),
               SizedBox(
                 width: 20,
               ),
-              BlocBuilder<FullNameDropdownBloc,
-                  FullNameDropdownState>(
+              BlocBuilder<FullNameDropdownBloc, FullNameDropdownState>(
                 builder: (context, state) {
-                  if(state is FullNameDropdownOpenState) {
+                  if (state is FullNameDropdownOpenState) {
                     return Icon(Icons.keyboard_arrow_up,
                         size: 50, color: Colors.redAccent);
                   }
-                  if(state is FullNameDropdownCloseState) {
+                  if (state is FullNameDropdownCloseState) {
                     return Icon(Icons.keyboard_arrow_down,
                         size: 50, color: Colors.redAccent);
                   }
@@ -630,24 +734,25 @@ class GeneralTextFields extends StatelessWidget {
             ],
           ),
         ),
-        BlocBuilder<FullNameDropdownBloc,
-            FullNameDropdownState>(
+        BlocBuilder<FullNameDropdownBloc, FullNameDropdownState>(
           builder: (context, state) {
             if (state is FullNameDropdownOpenState) {
               return Padding(
-                padding:
-                const EdgeInsets.only(left: 20, top: 15),
+                padding: const EdgeInsets.only(left: 20, top: 15),
                 child: Column(
                   children: [
-                    CustomTextField(hintText: 'First Name', controller: controller),
+                    CustomTextField(
+                        hintText: 'First Name', controller: controller),
                     SizedBox(
                       height: 15,
                     ),
-                    CustomTextField(hintText: 'Middle Name', controller: controller),
+                    CustomTextField(
+                        hintText: 'Middle Name', controller: controller),
                     SizedBox(
                       height: 15,
                     ),
-                    CustomTextField(hintText: 'Last Name', controller: controller),
+                    CustomTextField(
+                        hintText: 'Last Name', controller: controller),
                   ],
                 ),
               );
@@ -677,14 +782,17 @@ class GeneralTextFields extends StatelessWidget {
   }
 }
 
-
 class CustomTextField extends StatelessWidget {
-
   final TextEditingController controller;
   final String hintText;
   final bool enabled;
 
-  const CustomTextField({Key? key, required this.controller, required this.hintText, this.enabled = true}) : super(key: key);
+  const CustomTextField(
+      {Key? key,
+      required this.controller,
+      required this.hintText,
+      this.enabled = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -706,9 +814,6 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
-
-
-
 
 // class CreateCardPage extends StatelessWidget {
 //   const CreateCardPage({Key? key}) : super(key: key);
@@ -1265,5 +1370,3 @@ class CustomTextField extends StatelessWidget {
 //     );
 //   }
 // }
-
-
