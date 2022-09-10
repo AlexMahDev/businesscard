@@ -133,7 +133,7 @@ class CardModel {
 class SettingsModel {
 
   final String cardTitle;
-  final String cardColor;
+  final int cardColor;
 
   SettingsModel({required this.cardTitle, required this.cardColor});
 

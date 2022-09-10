@@ -25,7 +25,7 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
       {
         "settings": {
           "cardTitle": "Job",
-          "cardColor": "red",
+          "cardColor": 4294922834,
         },
         "generalInfo": {
           "firstName": "Alexander",
@@ -45,7 +45,7 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
       {
         "settings": {
           "cardTitle": "Job",
-          "cardColor": "red",
+          "cardColor": 4294922834,
         },
         "generalInfo": {
           "firstName": "Alexander",

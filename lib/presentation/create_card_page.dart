@@ -228,7 +228,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
 
                     List<CardModel> currentCards = cardsInfoState.cards;
 
-                    CardModel newCard = CardModel(settings: SettingsModel(cardTitle: cardTitle.text, cardColor: cardColorBloc.state.toString()), generalInfo: GeneralInfoModel(firstName: firstName.text, middleName: middleName.text, lastName: lastName.text, jobTitle: jobTitle.text, department: department.text, companyName: companyName.text, headLine: headLine.text), extraInfo: ExtraInfoModel(listOfFields: []));
+                    CardModel newCard = CardModel(settings: SettingsModel(cardTitle: cardTitle.text, cardColor: cardColorBloc.state.value), generalInfo: GeneralInfoModel(firstName: firstName.text, middleName: middleName.text, lastName: lastName.text, jobTitle: jobTitle.text, department: department.text, companyName: companyName.text, headLine: headLine.text), extraInfo: ExtraInfoModel(listOfFields: []));
 
                     _controllerMap.forEach((key, value) {
                       newCard.extraInfo.listOfFields.add(TextFieldModel(key: key, value: value.text));

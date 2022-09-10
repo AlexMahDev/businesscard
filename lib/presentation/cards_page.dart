@@ -94,6 +94,7 @@ class _CardsPageState extends State<CardsPage> {
                     controller: pageController,
                     itemCount: state.cards.length,
                     itemBuilder: (context, position) {
+                      print(state.cards[position].settings.cardColor);
                       return SingleChildScrollView(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -253,7 +254,8 @@ class _CardsPageState extends State<CardsPage> {
                                 // );
                                 return ExtraTextWidget (
                                     label: state.cards[position].extraInfo.listOfFields[index].key,
-                                    value: state.cards[position].extraInfo.listOfFields[index].value
+                                    value: state.cards[position].extraInfo.listOfFields[index].value,
+                                    color: state.cards[position].settings.cardColor
                                 );
 
 
@@ -775,8 +777,9 @@ class ExtraTextWidget extends StatelessWidget {
 
   final String label;
   final String value;
+  final int color;
 
-  const ExtraTextWidget({Key? key, required this.label, required this.value}) : super(key: key);
+  const ExtraTextWidget({Key? key, required this.label, required this.value, required this.color}) : super(key: key);
 
   Widget getIcon() {
     if(label == "email") {
@@ -793,7 +796,7 @@ class ExtraTextWidget extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 20,
-          backgroundColor: Colors.black,
+          backgroundColor: Color(color),
           child: getIcon()
         ),
         Expanded(
