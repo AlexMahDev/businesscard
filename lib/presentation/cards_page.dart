@@ -43,11 +43,12 @@ class _CardsPageState extends State<CardsPage> {
               if (cardInfoState is CardInfoLoadedState) {
                 return BlocBuilder<CardPageBloc, int>(
                   builder: (context, cardPageState) {
-                    return Text(cardInfoState.cards[cardPageState].settings.cardTitle);
+                    return Text(
+                        cardInfoState.cards[cardPageState].settings.cardTitle);
                   },
                 );
               }
-              return Text('');
+              return Text('Cards');
             },
           ),
           leading: IconButton(
@@ -58,35 +59,52 @@ class _CardsPageState extends State<CardsPage> {
             },
           ),
           actions: [
-            IconButton(
-              icon: const Icon(Icons.add),
-              splashRadius: 20,
-              onPressed: () {
-                // final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
-                // final state = cardInfoBloc.state;
-                //
-                // if (state is CardInfoLoadedState) {
-                //   List<CardModel> cards = state.cards;
-                //   cards.add(CardModel(settings: SettingsModel(cardTitle: '', cardColor: ''), generalInfo: GeneralInfoModel(firstName: '', middleName: '', lastName: '', jobTitle: '', department: '', companyName: '', headLine: ''), extraInfo: ExtraInfoModel(listOfFields: [])));
-                //   cardInfoBloc.add(AddCardEvent(cards));
-                // }
+            BlocBuilder<CardInfoBloc, CardInfoState>(
+              builder: (context, state) {
+                if (state is CardInfoLoadedState) {
+                  return IconButton(
+                    icon: const Icon(Icons.add),
+                    splashRadius: 20,
+                    onPressed: () {
+                      // final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+                      // final state = cardInfoBloc.state;
+                      //
+                      // if (state is CardInfoLoadedState) {
+                      //   List<CardModel> cards = state.cards;
+                      //   cards.add(CardModel(settings: SettingsModel(cardTitle: '', cardColor: ''), generalInfo: GeneralInfoModel(firstName: '', middleName: '', lastName: '', jobTitle: '', department: '', companyName: '', headLine: ''), extraInfo: ExtraInfoModel(listOfFields: [])));
+                      //   cardInfoBloc.add(AddCardEvent(cards));
+                      // }
 
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => const CreateCardPage()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                          const CreateCardPage()));
 
-                // Navigator.of(context).push(MaterialPageRoute(
-                //     builder: (BuildContext context) => BlocProvider<CardInfoBloc>.value(
-                //           value: BlocProvider.of<CardInfoBloc>(context),
-                //           child: const CreateCardPage(),
-                //         )));
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (BuildContext context) => BlocProvider<CardInfoBloc>.value(
+                      //           value: BlocProvider.of<CardInfoBloc>(context),
+                      //           child: const CreateCardPage(),
+                      //         )));
+                    },
+                  );
+                }
+                return Container();
               },
             ),
-            IconButton(
-              icon: const Icon(Icons.edit),
-              splashRadius: 20,
-              onPressed: () {
-                // Navigator.of(context).push(MaterialPageRoute(
-                //     builder: (BuildContext context) => const EditCardPage()));
+            BlocBuilder<CardInfoBloc, CardInfoState>(
+              builder: (context, state) {
+                if(state is CardInfoLoadedState) {
+                  return IconButton(
+                    icon: const Icon(Icons.edit),
+                    splashRadius: 20,
+                    onPressed: () {
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (BuildContext context) => const EditCardPage()));
+                    },
+                  );
+                }
+
+                return Container();
+
               },
             ),
           ],
@@ -105,8 +123,8 @@ class _CardsPageState extends State<CardsPage> {
                     controller: pageController,
                     itemCount: state.cards.length,
                     onPageChanged: (page) {
-                      final cardPageBloc = BlocProvider.of<CardPageBloc>(
-                          context);
+                      final cardPageBloc =
+                      BlocProvider.of<CardPageBloc>(context);
 
                       cardPageBloc.add(ChangeCardPageEvent(page));
 
@@ -151,7 +169,9 @@ class _CardsPageState extends State<CardsPage> {
                                         child: Image.asset(
                                             'assets/images/innowise-logo.png')),
                                     Divider(
-                                      color: Color(state.cards[position].settings.cardColor).withOpacity(0.2),
+                                      color: Color(state.cards[position]
+                                          .settings.cardColor)
+                                          .withOpacity(0.2),
                                       thickness: 5,
                                     ),
                                   ],
@@ -416,8 +436,8 @@ class _CardsPageState extends State<CardsPage> {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 15.0),
                               child: CustomFloatActionButton(
-                                  color: state.cards[cardPageState].settings
-                                      .cardColor),
+                                  color: state
+                                      .cards[cardPageState].settings.cardColor),
                             )
                           ],
                         ),
