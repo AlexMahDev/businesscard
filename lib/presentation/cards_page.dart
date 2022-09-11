@@ -32,6 +32,44 @@ class _CardsPageState extends State<CardsPage> {
     super.dispose();
   }
 
+  String getHintText(String key) {
+
+    if(key == 'phoneNumber') {
+      return 'Phone Number';
+    } else if(key == 'email'){
+      return 'Email';
+    } else if(key == 'link'){
+      return 'Link';
+    } else if(key == 'linkedIn'){
+      return 'LinkedIn';
+    } else if(key == 'gitHub'){
+      return 'GitHub';
+    } else if(key == 'telegram'){
+      return 'Telegram';
+    } else {
+      return '';
+    }
+
+  }
+
+  Widget getIcon(String key) {
+    if(key == 'phoneNumber') {
+      return Icon(Icons.phone, color: Colors.white);
+    } else if(key == 'email'){
+      return Icon(Icons.email, color: Colors.white);
+    } else if(key == 'link'){
+      return Icon(Icons.link, color: Colors.white);
+    } else if(key == 'linkedIn'){
+      return Image.asset('assets/images/icons/linkedin-icon.png', color: Colors.white, height: 20);
+    } else if(key == 'gitHub'){
+      return Image.asset('assets/images/icons/github-icon.png', color: Colors.white, height: 20);
+    } else if(key == 'telegram'){
+      return Icon(Icons.telegram, color: Colors.white);
+    } else {
+      return Icon(Icons.add_circle_outline_rounded, color: Colors.white);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CardPageBloc>(
@@ -66,24 +104,11 @@ class _CardsPageState extends State<CardsPage> {
                     icon: const Icon(Icons.add),
                     splashRadius: 20,
                     onPressed: () {
-                      // final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
-                      // final state = cardInfoBloc.state;
-                      //
-                      // if (state is CardInfoLoadedState) {
-                      //   List<CardModel> cards = state.cards;
-                      //   cards.add(CardModel(settings: SettingsModel(cardTitle: '', cardColor: ''), generalInfo: GeneralInfoModel(firstName: '', middleName: '', lastName: '', jobTitle: '', department: '', companyName: '', headLine: ''), extraInfo: ExtraInfoModel(listOfFields: [])));
-                      //   cardInfoBloc.add(AddCardEvent(cards));
-                      // }
 
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (BuildContext context) =>
                           const CreateCardPage()));
 
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (BuildContext context) => BlocProvider<CardInfoBloc>.value(
-                      //           value: BlocProvider.of<CardInfoBloc>(context),
-                      //           child: const CreateCardPage(),
-                      //         )));
                     },
                   );
                 }
@@ -128,18 +153,6 @@ class _CardsPageState extends State<CardsPage> {
 
                       cardPageBloc.add(ChangeCardPageEvent(page));
 
-                      // final changeCardBloc =
-                      //     BlocProvider.of<ChangeCardBloc>(context);
-                      // changeCardBloc.add(IsCardsExistEvent(page));
-
-                      //
-                      // changeCardBloc.add(NewCardPageEvent(page));
-
-                      // if(cardInfoState is CardInfoLoadedState) {
-                      //   final int color = cardInfoState.cards[page].settings.cardColor;
-                      //   final changeCardBloc = BlocProvider.of<ChangeCardBloc>(context);
-                      //   changeCardBloc.add(NewCardPageEvent(page, color));
-                      // }
                     },
                     itemBuilder: (context, position) {
                       //print(state.cards[position].settings.cardColor);
@@ -153,10 +166,6 @@ class _CardsPageState extends State<CardsPage> {
                                 child:
                                 Image.asset('assets/images/qr_code.png')),
 
-                            // SizedBox(
-                            //     height: 120,
-                            //     child: Image.asset('lib/assets/images/innowise-logo.png')
-                            // ),
 
                             Stack(
                               clipBehavior: Clip.none,
@@ -246,45 +255,6 @@ class _CardsPageState extends State<CardsPage> {
                               ),
                             ),
 
-                            // ListView.separated(
-                            //   physics: NeverScrollableScrollPhysics(),
-                            //   shrinkWrap: true,
-                            //   padding: EdgeInsets.symmetric(horizontal: 15),
-                            //   itemCount: state.card.generalInfo.listOfFields.length,
-                            //   //padding: EdgeInsets.only(top: 15),
-                            //   itemBuilder: (BuildContext context, int index) {
-                            //
-                            //     //final controller = _getControllerOf(data[index]);
-                            //
-                            //     // final textField = TextField(
-                            //     //   controller: controller,
-                            //     //   decoration: InputDecoration(
-                            //     //     border: OutlineInputBorder(),
-                            //     //     labelText: "name${index + 1}",
-                            //     //   ),
-                            //     // );
-                            //     return GeneralTextWidget (
-                            //       title: state.card.generalInfo.listOfFields[index].key,
-                            //       value: state.card.generalInfo.listOfFields[index].value
-                            //     );
-                            //
-                            //
-                            //     //   CustomTextField(
-                            //     //     controller: _getControllerOf(data["extraInfo"]!.keys.elementAt(index)),
-                            //     //     hintText: data["extraInfo"]!.keys.elementAt(index)
-                            //     // );
-                            //     //   Container(
-                            //     //   child: TextField(
-                            //     //     controller: _getControllerOf(data.keys.elementAt(index)),
-                            //     //     decoration: InputDecoration(
-                            //     //       border: OutlineInputBorder(),
-                            //     //       labelText: data[index],
-                            //     //     ),
-                            //     //   ),
-                            //     //   padding: EdgeInsets.only(bottom: 10),
-                            //     // );
-                            //   }, separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
-                            // ),
 
                             SizedBox(
                               height: 10,
@@ -298,98 +268,26 @@ class _CardsPageState extends State<CardsPage> {
                                   .listOfFields.length,
                               //padding: EdgeInsets.only(top: 15),
                               itemBuilder: (BuildContext context, int index) {
-                                //final controller = _getControllerOf(data[index]);
 
-                                // final textField = TextField(
-                                //   controller: controller,
-                                //   decoration: InputDecoration(
-                                //     border: OutlineInputBorder(),
-                                //     labelText: "name${index + 1}",
-                                //   ),
-                                // );
                                 return ExtraTextWidget(
-                                    label: state.cards[position].extraInfo
-                                        .listOfFields[index].key,
+                                    label: getHintText(state.cards[position].extraInfo
+                                        .listOfFields[index].key),
                                     value: state.cards[position].extraInfo
                                         .listOfFields[index].value,
                                     color: state
-                                        .cards[position].settings.cardColor);
+                                        .cards[position].settings.cardColor, 
+                                  icon: getIcon(state.cards[position].extraInfo
+                                      .listOfFields[index].key)
+                                );
+                                
 
-                                //   CustomTextField(
-                                //     controller: _getControllerOf(data["extraInfo"]!.keys.elementAt(index)),
-                                //     hintText: data["extraInfo"]!.keys.elementAt(index)
-                                // );
-                                //   Container(
-                                //   child: TextField(
-                                //     controller: _getControllerOf(data.keys.elementAt(index)),
-                                //     decoration: InputDecoration(
-                                //       border: OutlineInputBorder(),
-                                //       labelText: data[index],
-                                //     ),
-                                //   ),
-                                //   padding: EdgeInsets.only(bottom: 10),
-                                // );
                               },
                               separatorBuilder:
                                   (BuildContext context, int index) =>
                                   SizedBox(height: 10),
                             ),
 
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(horizontal: 15),
-                            //   child: Column(
-                            //     crossAxisAlignment: CrossAxisAlignment.start,
-                            //     children: [
-                            //       Row(
-                            //         children: [
-                            //           CircleAvatar(
-                            //             radius: 20,
-                            //             backgroundColor: Colors.black,
-                            //             child:
-                            //                 Icon(Icons.email, color: Colors.white),
-                            //           ),
-                            //           Expanded(
-                            //             child: ListTile(
-                            //               title: Text('testemail@gmail.com'),
-                            //               subtitle: Text('email'),
-                            //             ),
-                            //           )
-                            //         ],
-                            //       ),
-                            //       Row(
-                            //         children: [
-                            //           CircleAvatar(
-                            //             radius: 20,
-                            //             backgroundColor: Colors.black,
-                            //             child:
-                            //                 Icon(Icons.phone, color: Colors.white),
-                            //           ),
-                            //           Expanded(
-                            //             child: ListTile(
-                            //               title: Text('+375441234567'),
-                            //               subtitle: Text('mobile'),
-                            //             ),
-                            //           )
-                            //         ],
-                            //       ),
-                            //       Row(
-                            //         children: [
-                            //           CircleAvatar(
-                            //             radius: 20,
-                            //             backgroundColor: Colors.black,
-                            //             child: Icon(Icons.web, color: Colors.white),
-                            //           ),
-                            //           Expanded(
-                            //             child: ListTile(
-                            //               title: Text('https://innowise-group.com'),
-                            //               subtitle: Text('company website'),
-                            //             ),
-                            //           )
-                            //         ],
-                            //       )
-                            //     ],
-                            //   ),
-                            // ),
+
 
                             SizedBox(
                               height: 100,
@@ -457,354 +355,6 @@ class _CardsPageState extends State<CardsPage> {
   }
 }
 
-// class CardsPage extends StatelessWidget {
-//   const CardsPage({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//
-//     //final cardInfoBloc = CardInfoBloc()..add(GetCardInfoEvent());
-//
-//     return Scaffold(
-//       appBar: CustomAppBar(
-//         title: Text('Cards'),
-//         leading: IconButton(
-//           icon: const Icon(Icons.menu),
-//           splashRadius: 20,
-//           onPressed: () {
-//             print('gg');
-//           },
-//         ),
-//         actions: [
-//           IconButton(
-//             icon: const Icon(Icons.add),
-//             splashRadius: 20,
-//             onPressed: () {
-//               Navigator.of(context).push(MaterialPageRoute(
-//                   builder: (BuildContext context) => const CreateCardPage()));
-//
-//               // Navigator.of(context).push(MaterialPageRoute(
-//               //     builder: (BuildContext context) => BlocProvider<CardInfoBloc>.value(
-//               //           value: BlocProvider.of<CardInfoBloc>(context),
-//               //           child: const CreateCardPage(),
-//               //         )));
-//             },
-//           ),
-//           IconButton(
-//             icon: const Icon(Icons.edit),
-//             splashRadius: 20,
-//             onPressed: () {
-//               Navigator.of(context).push(MaterialPageRoute(
-//                   builder: (BuildContext context) => const EditCardPage()));
-//             },
-//           ),
-//         ],
-//       ),
-//       body: BlocBuilder<CardInfoBloc, CardInfoState>(
-//         builder: (context, state) {
-//           if (state is CardInfoLoadingState) {
-//             return Center(child: CircularProgressIndicator());
-//           }
-//
-//           if (state is CardInfoLoadedState) {
-//             return Stack(
-//               alignment: Alignment.bottomCenter,
-//               children: [
-//                 SingleChildScrollView(
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.start,
-//                     crossAxisAlignment: CrossAxisAlignment.stretch,
-//                     children: <Widget>[
-//                       SizedBox(
-//                           height: 250,
-//                           child: Image.asset('assets/images/qr_code.png')),
-//
-//                       // SizedBox(
-//                       //     height: 120,
-//                       //     child: Image.asset('lib/assets/images/innowise-logo.png')
-//                       // ),
-//
-//                       Stack(
-//                         clipBehavior: Clip.none,
-//                         alignment: Alignment.bottomRight,
-//                         children: [
-//                           Column(
-//                             children: [
-//                               SizedBox(
-//                                   height: 120,
-//                                   child: Image.asset(
-//                                       'assets/images/innowise-logo.png')),
-//                               Divider(
-//                                 thickness: 5,
-//                               ),
-//                             ],
-//                           ),
-//                           Positioned(
-//                             top: 90,
-//                             right: 15,
-//                             child: Row(
-//                               mainAxisAlignment: MainAxisAlignment.end,
-//                               children: [
-//                                 ClipOval(
-//                                   child: Image.asset(
-//                                     'assets/images/avatar.jpg',
-//                                     width: 80,
-//                                     height: 80,
-//                                     fit: BoxFit.cover,
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                           )
-//                         ],
-//                       ),
-//
-//                       SizedBox(
-//                         height: 40,
-//                       ),
-//
-//
-//
-//                       Padding(
-//                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
-//                         child: Column(
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: [
-//
-//                             if(state.card.generalInfo.firstName.isNotEmpty || state.card.generalInfo.middleName.isNotEmpty || state.card.generalInfo.lastName.isNotEmpty)
-//                               GeneralTextWidget(
-//                                   label: 'fullName',
-//                                   value: '${state.card.generalInfo.firstName} ${state.card.generalInfo.middleName} ${state.card.generalInfo.lastName}'.trim()
-//                               ),
-//
-//                             if(state.card.generalInfo.jobTitle.isNotEmpty)
-//                               GeneralTextWidget(
-//                                   value: state.card.generalInfo.jobTitle
-//                               ),
-//
-//                             if(state.card.generalInfo.department.isNotEmpty)
-//                               GeneralTextWidget(
-//                                   value: state.card.generalInfo.department
-//                               ),
-//
-//                             if(state.card.generalInfo.companyName.isNotEmpty)
-//                               GeneralTextWidget(
-//                                   value: state.card.generalInfo.companyName
-//                               ),
-//
-//                             if(state.card.generalInfo.headLine.isNotEmpty)
-//                               GeneralTextWidget(
-//                                   label: 'headline',
-//                                   value: state.card.generalInfo.headLine
-//                               ),
-//                           ],
-//                         ),
-//                       ),
-//
-//
-//
-//
-//
-//                       // ListView.separated(
-//                       //   physics: NeverScrollableScrollPhysics(),
-//                       //   shrinkWrap: true,
-//                       //   padding: EdgeInsets.symmetric(horizontal: 15),
-//                       //   itemCount: state.card.generalInfo.listOfFields.length,
-//                       //   //padding: EdgeInsets.only(top: 15),
-//                       //   itemBuilder: (BuildContext context, int index) {
-//                       //
-//                       //     //final controller = _getControllerOf(data[index]);
-//                       //
-//                       //     // final textField = TextField(
-//                       //     //   controller: controller,
-//                       //     //   decoration: InputDecoration(
-//                       //     //     border: OutlineInputBorder(),
-//                       //     //     labelText: "name${index + 1}",
-//                       //     //   ),
-//                       //     // );
-//                       //     return GeneralTextWidget (
-//                       //       title: state.card.generalInfo.listOfFields[index].key,
-//                       //       value: state.card.generalInfo.listOfFields[index].value
-//                       //     );
-//                       //
-//                       //
-//                       //     //   CustomTextField(
-//                       //     //     controller: _getControllerOf(data["extraInfo"]!.keys.elementAt(index)),
-//                       //     //     hintText: data["extraInfo"]!.keys.elementAt(index)
-//                       //     // );
-//                       //     //   Container(
-//                       //     //   child: TextField(
-//                       //     //     controller: _getControllerOf(data.keys.elementAt(index)),
-//                       //     //     decoration: InputDecoration(
-//                       //     //       border: OutlineInputBorder(),
-//                       //     //       labelText: data[index],
-//                       //     //     ),
-//                       //     //   ),
-//                       //     //   padding: EdgeInsets.only(bottom: 10),
-//                       //     // );
-//                       //   }, separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
-//                       // ),
-//
-//
-//                       SizedBox(
-//                         height: 10,
-//                       ),
-//
-//                       ListView.separated(
-//                         physics: NeverScrollableScrollPhysics(),
-//                         shrinkWrap: true,
-//                         padding: EdgeInsets.symmetric(horizontal: 15),
-//                         itemCount: state.card.extraInfo.listOfFields.length,
-//                         //padding: EdgeInsets.only(top: 15),
-//                         itemBuilder: (BuildContext context, int index) {
-//
-//                           //final controller = _getControllerOf(data[index]);
-//
-//                           // final textField = TextField(
-//                           //   controller: controller,
-//                           //   decoration: InputDecoration(
-//                           //     border: OutlineInputBorder(),
-//                           //     labelText: "name${index + 1}",
-//                           //   ),
-//                           // );
-//                           return ExtraTextWidget (
-//                               label: state.card.extraInfo.listOfFields[index].key,
-//                               value: state.card.extraInfo.listOfFields[index].value
-//                           );
-//
-//
-//                           //   CustomTextField(
-//                           //     controller: _getControllerOf(data["extraInfo"]!.keys.elementAt(index)),
-//                           //     hintText: data["extraInfo"]!.keys.elementAt(index)
-//                           // );
-//                           //   Container(
-//                           //   child: TextField(
-//                           //     controller: _getControllerOf(data.keys.elementAt(index)),
-//                           //     decoration: InputDecoration(
-//                           //       border: OutlineInputBorder(),
-//                           //       labelText: data[index],
-//                           //     ),
-//                           //   ),
-//                           //   padding: EdgeInsets.only(bottom: 10),
-//                           // );
-//                         }, separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
-//                       ),
-//
-//
-//                       // Padding(
-//                       //   padding: const EdgeInsets.symmetric(horizontal: 15),
-//                       //   child: Column(
-//                       //     crossAxisAlignment: CrossAxisAlignment.start,
-//                       //     children: [
-//                       //       Row(
-//                       //         children: [
-//                       //           CircleAvatar(
-//                       //             radius: 20,
-//                       //             backgroundColor: Colors.black,
-//                       //             child:
-//                       //                 Icon(Icons.email, color: Colors.white),
-//                       //           ),
-//                       //           Expanded(
-//                       //             child: ListTile(
-//                       //               title: Text('testemail@gmail.com'),
-//                       //               subtitle: Text('email'),
-//                       //             ),
-//                       //           )
-//                       //         ],
-//                       //       ),
-//                       //       Row(
-//                       //         children: [
-//                       //           CircleAvatar(
-//                       //             radius: 20,
-//                       //             backgroundColor: Colors.black,
-//                       //             child:
-//                       //                 Icon(Icons.phone, color: Colors.white),
-//                       //           ),
-//                       //           Expanded(
-//                       //             child: ListTile(
-//                       //               title: Text('+375441234567'),
-//                       //               subtitle: Text('mobile'),
-//                       //             ),
-//                       //           )
-//                       //         ],
-//                       //       ),
-//                       //       Row(
-//                       //         children: [
-//                       //           CircleAvatar(
-//                       //             radius: 20,
-//                       //             backgroundColor: Colors.black,
-//                       //             child: Icon(Icons.web, color: Colors.white),
-//                       //           ),
-//                       //           Expanded(
-//                       //             child: ListTile(
-//                       //               title: Text('https://innowise-group.com'),
-//                       //               subtitle: Text('company website'),
-//                       //             ),
-//                       //           )
-//                       //         ],
-//                       //       )
-//                       //     ],
-//                       //   ),
-//                       // ),
-//
-//                       SizedBox(
-//                         height: 100,
-//                       )
-//                     ],
-//                   ),
-//                 ),
-//                 Container(
-//                   height: 80,
-//                   color: Colors.white.withOpacity(0.6),
-//                   child: Row(
-//                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                     children: [
-//                       Expanded(
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                             Container(
-//                               width: 10.0,
-//                               height: 10.0,
-//                               decoration: BoxDecoration(
-//                                 color: Colors.black,
-//                                 shape: BoxShape.circle,
-//                                 border: Border.all(color: Colors.black),
-//                               ),
-//                             ),
-//                             SizedBox(
-//                               width: 10,
-//                             ),
-//                             Container(
-//                               width: 10.0,
-//                               height: 10.0,
-//                               decoration: BoxDecoration(
-//                                 color: Colors.transparent,
-//                                 shape: BoxShape.circle,
-//                                 border: Border.all(color: Colors.black),
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                       Padding(
-//                         padding: EdgeInsets.symmetric(horizontal: 15.0),
-//                         child: CustomFloatActionButton(),
-//                       )
-//                     ],
-//                   ),
-//                 )
-//               ],
-//             );
-//           }
-//
-//           return Container();
-//         },
-//       ),
-//       //floatingActionButton: const CustomFloatActionButton(), // This trailing comma makes auto-formatting nicer for build methods.
-//     );
-//   }
-// }
 
 class GeneralTextWidget extends StatelessWidget {
   final String label;
@@ -833,28 +383,23 @@ class GeneralTextWidget extends StatelessWidget {
 }
 
 class ExtraTextWidget extends StatelessWidget {
+
   final String label;
   final String value;
   final int color;
+  final Widget icon;
 
   const ExtraTextWidget(
-      {Key? key, required this.label, required this.value, required this.color})
+      {Key? key, required this.label, required this.value, required this.color, required this.icon})
       : super(key: key);
 
-  Widget getIcon() {
-    if (label == "email") {
-      return Icon(Icons.email, color: Colors.white);
-    } else {
-      return Icon(Icons.accessibility, color: Colors.white);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         CircleAvatar(
-            radius: 20, backgroundColor: Color(color), child: getIcon()),
+            radius: 20, backgroundColor: Color(color), child: icon),
         Expanded(
           child: ListTile(
             title: Text(value, style: TextStyle(fontWeight: FontWeight.bold)),
