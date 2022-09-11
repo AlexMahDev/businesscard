@@ -215,38 +215,47 @@ class _CreateCardPageState extends State<CreateCardPage> {
               icon: const Icon(Icons.check),
               splashRadius: 20,
               onPressed: () {
-
                 final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(context);
-                final cardColorBloc = BlocProvider.of<SelectCardColorBloc>(context);
+                final cardColorBloc =
+                BlocProvider.of<SelectCardColorBloc>(context);
 
                 final cardsInfoState = cardsInfoBloc.state;
 
                 print(cardColorBloc.state.toString());
 
-
                 if (cardsInfoState is CardInfoLoadedState) {
+                  List<CardModel> currentCards = cardsInfoState.cards;
 
-                    List<CardModel> currentCards = cardsInfoState.cards;
+                  CardModel newCard = CardModel(
+                      settings: SettingsModel(
+                          cardTitle: cardTitle.text,
+                          cardColor: cardColorBloc.state.value),
+                      generalInfo: GeneralInfoModel(
+                          firstName: firstName.text,
+                          middleName: middleName.text,
+                          lastName: lastName.text,
+                          jobTitle: jobTitle.text,
+                          department: department.text,
+                          companyName: companyName.text,
+                          headLine: headLine.text),
+                      extraInfo: ExtraInfoModel(listOfFields: []));
 
-                    CardModel newCard = CardModel(settings: SettingsModel(cardTitle: cardTitle.text, cardColor: cardColorBloc.state.value), generalInfo: GeneralInfoModel(firstName: firstName.text, middleName: middleName.text, lastName: lastName.text, jobTitle: jobTitle.text, department: department.text, companyName: companyName.text, headLine: headLine.text), extraInfo: ExtraInfoModel(listOfFields: []));
+                  _controllerMap.forEach((key, value) {
+                    newCard.extraInfo.listOfFields
+                        .add(TextFieldModel(key: key, value: value.text));
+                  });
 
-                    _controllerMap.forEach((key, value) {
-                      newCard.extraInfo.listOfFields.add(TextFieldModel(key: key, value: value.text));
-                    });
+                  currentCards.add(newCard);
 
-                    currentCards.add(newCard);
+                  // newCard.settings = SettingsModel(cardTitle: cardTitle.text, cardColor: cardColorBloc.state.toString());
+                  // newCard.generalInfo = GeneralInfoModel(firstName: firstName.text, middleName: middleName.text, lastName: lastName.text, jobTitle: jobTitle.text, department: department.text, companyName: companyName.text, headLine: headLine.text);
+                  // newCard.extraInfo.listOfFields.clear();
+                  // _controllerMap.forEach((key, value) {
+                  //   newCard.extraInfo.listOfFields.add(TextFieldModel(key: key, value: value.text));
+                  // });
 
-                    // newCard.settings = SettingsModel(cardTitle: cardTitle.text, cardColor: cardColorBloc.state.toString());
-                    // newCard.generalInfo = GeneralInfoModel(firstName: firstName.text, middleName: middleName.text, lastName: lastName.text, jobTitle: jobTitle.text, department: department.text, companyName: companyName.text, headLine: headLine.text);
-                    // newCard.extraInfo.listOfFields.clear();
-                    // _controllerMap.forEach((key, value) {
-                    //   newCard.extraInfo.listOfFields.add(TextFieldModel(key: key, value: value.text));
-                    // });
-
-                    cardsInfoBloc.add(AddCardEvent(currentCards));
-
+                  cardsInfoBloc.add(AddCardEvent(currentCards));
                 }
-
 
                 Navigator.of(context).pop();
               },
@@ -444,52 +453,59 @@ class _CreateCardPageState extends State<CreateCardPage> {
                 // ),
 
                 ///DYNAMIC TEXT FIELDS
-                BlocBuilder<NewCardBloc, NewCardState>(
+                BlocBuilder<SelectCardColorBloc, Color>(
                   builder: (context, state) {
-                    if (state is NewCardInitialState &&
-                        state.card.extraInfo.listOfFields.isNotEmpty) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 30),
-                        child: ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount:
-                          state.card.extraInfo.listOfFields.length,
-                          //padding: EdgeInsets.only(top: 15),
-                          itemBuilder: (BuildContext context, int index) {
-                            //final controller = _getControllerOf(data[index]);
+                    return BlocBuilder<NewCardBloc, NewCardState>(
+                      builder: (context, state) {
+                        if (state is NewCardInitialState &&
+                            state.card.extraInfo.listOfFields.isNotEmpty) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 30),
+                            child: ListView.separated(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount:
+                              state.card.extraInfo.listOfFields.length,
+                              //padding: EdgeInsets.only(top: 15),
+                              itemBuilder: (BuildContext context, int index) {
+                                //final controller = _getControllerOf(data[index]);
 
-                            // final textField = TextField(
-                            //   controller: controller,
-                            //   decoration: InputDecoration(
-                            //     border: OutlineInputBorder(),
-                            //     labelText: "name${index + 1}",
-                            //   ),
-                            // );
-                            return CustomTextField(
-                                controller: _getControllerOf(state.card
-                                    .extraInfo.listOfFields[index].key),
-                                hintText: state.card.extraInfo
-                                    .listOfFields[index].key);
-                            //   Container(
-                            //   child: TextField(
-                            //     controller: _getControllerOf(data.keys.elementAt(index)),
-                            //     decoration: InputDecoration(
-                            //       border: OutlineInputBorder(),
-                            //       labelText: data[index],
-                            //     ),
-                            //   ),
-                            //   padding: EdgeInsets.only(bottom: 10),
-                            // );
-                          },
-                          separatorBuilder: (BuildContext context, int index) =>
-                              SizedBox(height: 15),
-                        ),
-                      );
-                    }
+                                // final textField = TextField(
+                                //   controller: controller,
+                                //   decoration: InputDecoration(
+                                //     border: OutlineInputBorder(),
+                                //     labelText: "name${index + 1}",
+                                //   ),
+                                // );
+                                return CustomTextField(
+                                  controller: _getControllerOf(state
+                                      .card.extraInfo.listOfFields[index].key),
+                                  hintText: state
+                                      .card.extraInfo.listOfFields[index].key,
+                                  withIcon: true,
+                                );
+                                //   Container(
+                                //   child: TextField(
+                                //     controller: _getControllerOf(data.keys.elementAt(index)),
+                                //     decoration: InputDecoration(
+                                //       border: OutlineInputBorder(),
+                                //       labelText: data[index],
+                                //     ),
+                                //   ),
+                                //   padding: EdgeInsets.only(bottom: 10),
+                                // );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) =>
+                                  SizedBox(height: 15),
+                            ),
+                          );
+                        }
 
-                    return Container();
+                        return Container();
+                      },
+                    );
                   },
                 ),
 
@@ -515,102 +531,105 @@ class _CreateCardPageState extends State<CreateCardPage> {
                   ),
                 ),
 
-                ExtraInfoFooterWidget(
-                    phoneNumber: ExtraInfoWidget(
-                        title: 'Phone Number',
-                        icon: Icons.phone,
-                        onPressed: () {
+                BlocBuilder<SelectCardColorBloc, Color>(
+                  builder: (context, state) {
+                    return ExtraInfoFooterWidget(
+                        phoneNumber: ExtraInfoWidget(
+                            title: 'Phone Number',
+                            icon: Icons.phone,
+                            onPressed: () {
+                              final newCardBloc =
+                              BlocProvider.of<NewCardBloc>(context);
+                              final state = newCardBloc.state;
 
-                          final newCardBloc =
-                          BlocProvider.of<NewCardBloc>(context);
-                          final state = newCardBloc.state;
+                              if (state is NewCardInitialState) {
+                                CardModel card = state.card;
+                                card.extraInfo.listOfFields.add(
+                                    TextFieldModel(
+                                        key: 'phoneNumber', value: ''));
+                                newCardBloc.add(AddCardInfoEvent(card));
+                              }
+                            }),
+                        email: ExtraInfoWidget(
+                            title: 'Email',
+                            icon: Icons.email,
+                            onPressed: () {
+                              final newCardBloc =
+                              BlocProvider.of<NewCardBloc>(context);
+                              final state = newCardBloc.state;
 
-                          if (state is NewCardInitialState) {
-                            CardModel card = state.card;
-                            card.extraInfo.listOfFields.add(
-                                TextFieldModel(key: 'phoneNumber', value: ''));
-                            newCardBloc.add(AddCardInfoEvent(card));
-                          }
-                        }),
-                    email: ExtraInfoWidget(
-                        title: 'Email',
-                        icon: Icons.email,
-                        onPressed: () {
+                              if (state is NewCardInitialState) {
+                                CardModel card = state.card;
+                                card.extraInfo.listOfFields
+                                    .add(
+                                    TextFieldModel(key: 'email', value: ''));
+                                newCardBloc.add(AddCardInfoEvent(card));
+                              }
+                            }),
+                        link: ExtraInfoWidget(
+                            title: 'Link',
+                            icon: Icons.link,
+                            onPressed: () {
+                              final newCardBloc =
+                              BlocProvider.of<NewCardBloc>(context);
+                              final state = newCardBloc.state;
 
-                          final newCardBloc =
-                          BlocProvider.of<NewCardBloc>(context);
-                          final state = newCardBloc.state;
+                              if (state is NewCardInitialState) {
+                                CardModel card = state.card;
+                                card.extraInfo.listOfFields
+                                    .add(
+                                    TextFieldModel(key: 'link', value: ''));
+                                newCardBloc.add(AddCardInfoEvent(card));
+                              }
+                            }),
+                        linkedIn: ExtraInfoWidget(
+                            title: 'LinkedIn',
+                            icon: Icons.web,
+                            onPressed: () {
+                              final newCardBloc =
+                              BlocProvider.of<NewCardBloc>(context);
+                              final state = newCardBloc.state;
 
-                          if (state is NewCardInitialState) {
-                            CardModel card = state.card;
-                            card.extraInfo.listOfFields.add(
-                                TextFieldModel(key: 'email', value: ''));
-                            newCardBloc.add(AddCardInfoEvent(card));
-                          }
-                        }),
-                    link: ExtraInfoWidget(
-                        title: 'Link',
-                        icon: Icons.link,
-                        onPressed: () {
+                              if (state is NewCardInitialState) {
+                                CardModel card = state.card;
+                                card.extraInfo.listOfFields.add(
+                                    TextFieldModel(key: 'linkedIn', value: ''));
+                                newCardBloc.add(AddCardInfoEvent(card));
+                              }
+                            }),
+                        github: ExtraInfoWidget(
+                            title: 'GitHub',
+                            icon: Icons.web,
+                            onPressed: () {
+                              final newCardBloc =
+                              BlocProvider.of<NewCardBloc>(context);
+                              final state = newCardBloc.state;
 
-                          final newCardBloc =
-                          BlocProvider.of<NewCardBloc>(context);
-                          final state = newCardBloc.state;
+                              if (state is NewCardInitialState) {
+                                CardModel card = state.card;
+                                card.extraInfo.listOfFields
+                                    .add(
+                                    TextFieldModel(key: 'gitHub', value: ''));
+                                newCardBloc.add(AddCardInfoEvent(card));
+                              }
+                            }),
+                        telegram: ExtraInfoWidget(
+                            title: 'Telegram',
+                            icon: Icons.web,
+                            onPressed: () {
+                              final newCardBloc =
+                              BlocProvider.of<NewCardBloc>(context);
+                              final state = newCardBloc.state;
 
-                          if (state is NewCardInitialState) {
-                            CardModel card = state.card;
-                            card.extraInfo.listOfFields.add(
-                                TextFieldModel(key: 'link', value: ''));
-                            newCardBloc.add(AddCardInfoEvent(card));
-                          }
-                        }),
-                    linkedIn: ExtraInfoWidget(
-                        title: 'LinkedIn',
-                        icon: Icons.web,
-                        onPressed: () {
-                          final newCardBloc =
-                          BlocProvider.of<NewCardBloc>(context);
-                          final state = newCardBloc.state;
-
-                          if (state is NewCardInitialState) {
-                            CardModel card = state.card;
-                            card.extraInfo.listOfFields.add(
-                                TextFieldModel(key: 'linkedIn', value: ''));
-                            newCardBloc.add(AddCardInfoEvent(card));
-                          }
-                        }),
-                    github: ExtraInfoWidget(
-                        title: 'GitHub',
-                        icon: Icons.web,
-                        onPressed: () {
-
-                          final newCardBloc =
-                          BlocProvider.of<NewCardBloc>(context);
-                          final state = newCardBloc.state;
-
-                          if (state is NewCardInitialState) {
-                            CardModel card = state.card;
-                            card.extraInfo.listOfFields.add(
-                                TextFieldModel(key: 'gitHub', value: ''));
-                            newCardBloc.add(AddCardInfoEvent(card));
-                          }
-                        }),
-                    telegram: ExtraInfoWidget(
-                        title: 'Telegram',
-                        icon: Icons.web,
-                        onPressed: () {
-
-                          final newCardBloc =
-                          BlocProvider.of<NewCardBloc>(context);
-                          final state = newCardBloc.state;
-
-                          if (state is NewCardInitialState) {
-                            CardModel card = state.card;
-                            card.extraInfo.listOfFields.add(
-                                TextFieldModel(key: 'telegram', value: ''));
-                            newCardBloc.add(AddCardInfoEvent(card));
-                          }
-                        }))
+                              if (state is NewCardInitialState) {
+                                CardModel card = state.card;
+                                card.extraInfo.listOfFields.add(
+                                    TextFieldModel(key: 'telegram', value: ''));
+                                newCardBloc.add(AddCardInfoEvent(card));
+                              }
+                            }));
+                  },
+                )
               ],
             ),
           ),
@@ -639,9 +658,11 @@ class ExtraInfoFooterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectCardColor = BlocProvider.of<SelectCardColorBloc>(context);
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 35, vertical: 30),
-      color: Colors.redAccent.withOpacity(0.2),
+      color: selectCardColor.state.withOpacity(0.2),
       child: Column(
         //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -677,6 +698,8 @@ class ExtraInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectCardColor = BlocProvider.of<SelectCardColorBloc>(context);
+
     return GestureDetector(
       onTap: onPressed,
       child: SizedBox(
@@ -687,7 +710,7 @@ class ExtraInfoWidget extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 20,
-              backgroundColor: Colors.redAccent,
+              backgroundColor: selectCardColor.state,
               child: Icon(icon, color: Colors.white),
             ),
             // SizedBox(
@@ -852,67 +875,92 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final bool enabled;
+  final bool withIcon;
 
   const CustomTextField({Key? key,
     required this.controller,
     required this.hintText,
-    this.enabled = true})
+    this.enabled = true,
+    this.withIcon = false})
       : super(key: key);
+
+  Widget getIcon() {
+    if (hintText == "email") {
+      return Icon(Icons.email, color: Colors.white);
+    } else {
+      return Icon(Icons.accessibility, color: Colors.white);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final cardColorBloc = BlocProvider.of<SelectCardColorBloc>(context);
+
     return BlocProvider<TextClearButtonBloc>(
       create: (context) => TextClearButtonBloc(),
-      child: Builder(
-        builder: (context) {
-          return TextFormField(
-            controller: controller,
-            enabled: enabled,
-            decoration: InputDecoration(
-              //contentPadding: EdgeInsets.all(0),
-              suffixIcon: BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
-                builder: (context, state) {
-                  if (state is ClearButtonEnableState) {
-                    return IconButton(
-                      onPressed: () {
-                        controller.clear();
-                        final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(
-                            context);
-                        clearButtonBloc.add(ClearButtonDisableEvent());
-                      },
-                      icon: Icon(Icons.highlight_remove_outlined),
-                      splashRadius: 20,
-                    );
-                  }
-
-                  return SizedBox();
-                },
+      child: Builder(builder: (context) {
+        return Row(
+          children: [
+            if (withIcon)
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: cardColorBloc.state,
+                    child: getIcon()),
               ),
-              hintText: hintText,
-              //labelText: 'Name *',
+            Expanded(
+              child: TextFormField(
+                controller: controller,
+                enabled: enabled,
+                decoration: InputDecoration(
+                  //contentPadding: EdgeInsets.all(0),
+                  suffixIcon:
+                  BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
+                    builder: (context, state) {
+                      if (state is ClearButtonEnableState) {
+                        return IconButton(
+                          onPressed: () {
+                            controller.clear();
+                            final clearButtonBloc =
+                            BlocProvider.of<TextClearButtonBloc>(context);
+                            clearButtonBloc.add(ClearButtonDisableEvent());
+                          },
+                          icon: Icon(Icons.highlight_remove_outlined),
+                          splashRadius: 20,
+                        );
+                      }
+
+                      return SizedBox();
+                    },
+                  ),
+                  hintText: hintText,
+                  //labelText: 'Name *',
+                ),
+                onTap: () {
+                  if (controller.text.isNotEmpty) {
+                    final clearButtonBloc =
+                    BlocProvider.of<TextClearButtonBloc>(context);
+                    clearButtonBloc.add(ClearButtonEnableEvent());
+                  }
+                },
+                onChanged: (text) {
+                  if (controller.text.isEmpty) {
+                    final clearButtonBloc =
+                    BlocProvider.of<TextClearButtonBloc>(context);
+                    clearButtonBloc.add(ClearButtonDisableEvent());
+                  } else if (controller.text.length == 1) {
+                    final clearButtonBloc =
+                    BlocProvider.of<TextClearButtonBloc>(context);
+                    clearButtonBloc.add(ClearButtonEnableEvent());
+                  }
+                },
+                //textAlign: TextAlign.center,
+              ),
             ),
-            onTap: () {
-              if (controller.text.isNotEmpty) {
-                final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(
-                    context);
-                clearButtonBloc.add(ClearButtonEnableEvent());
-              }
-            },
-            onChanged: (text) {
-              if (controller.text.isEmpty) {
-                final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(
-                    context);
-                clearButtonBloc.add(ClearButtonDisableEvent());
-              } else if (controller.text.length == 1) {
-                final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(
-                    context);
-                clearButtonBloc.add(ClearButtonEnableEvent());
-              }
-            },
-            //textAlign: TextAlign.center,
-          );
-        }
-      ),
+          ],
+        );
+      }),
     );
   }
 }
