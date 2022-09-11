@@ -370,16 +370,14 @@ class _CreateCardPageState extends State<CreateCardPage> {
                   builder: (context, state) {
                     return BlocBuilder<NewCardBloc, NewCardState>(
                       builder: (context, state) {
-                        if (state is NewCardInitialState &&
-                            state.card.extraInfo.listOfFields.isNotEmpty) {
+                        if (state is NewCardInitialState && _controllerMap.isNotEmpty) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 30),
                             child: ListView.separated(
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount:
-                              state.card.extraInfo.listOfFields.length,
+                              itemCount: _controllerMap.length,
                               //padding: EdgeInsets.only(top: 15),
                               itemBuilder: (BuildContext context, int index) {
                                 //final controller = _getControllerOf(data[index]);
@@ -392,12 +390,17 @@ class _CreateCardPageState extends State<CreateCardPage> {
                                 //   ),
                                 // );
                                 return CustomTextField(
-                                  controller: _getControllerOf(state
-                                      .card.extraInfo.listOfFields[index].key),
-                                  hintText: getHintText(state
-                                      .card.extraInfo.listOfFields[index].key),
-                                  icon: getIcon(state
-                                      .card.extraInfo.listOfFields[index].key),
+                                  controller: _getControllerOf(_controllerMap.keys.elementAt(index)),
+                                  hintText: getHintText(_controllerMap.keys.elementAt(index)),
+                                  icon: getIcon(_controllerMap.keys.elementAt(index)),
+                                  onTextFieldRemove: () {
+
+                                    _controllerMap.remove(_controllerMap.keys.elementAt(index));
+                                    final newCardBloc = BlocProvider.of<NewCardBloc>(context);
+                                    CardModel card = state.card;
+                                    newCardBloc.add(AddCardInfoEvent(card));
+
+                                  },
                                 );
                                 //   Container(
                                 //   child: TextField(
@@ -457,10 +460,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
+                                _controllerMap['phoneNumber'] = TextEditingController();
                                 CardModel card = state.card;
-                                card.extraInfo.listOfFields.add(
-                                    TextFieldModel(
-                                        key: 'phoneNumber', value: ''));
                                 newCardBloc.add(AddCardInfoEvent(card));
                               }
                             }),
@@ -473,10 +474,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
+                                _controllerMap['email'] = TextEditingController();
                                 CardModel card = state.card;
-                                card.extraInfo.listOfFields
-                                    .add(
-                                    TextFieldModel(key: 'email', value: ''));
                                 newCardBloc.add(AddCardInfoEvent(card));
                               }
                             }),
@@ -489,10 +488,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
+                                _controllerMap['link'] = TextEditingController();
                                 CardModel card = state.card;
-                                card.extraInfo.listOfFields
-                                    .add(
-                                    TextFieldModel(key: 'link', value: ''));
                                 newCardBloc.add(AddCardInfoEvent(card));
                               }
                             }),
@@ -505,9 +502,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
+                                _controllerMap['linkedIn'] = TextEditingController();
                                 CardModel card = state.card;
-                                card.extraInfo.listOfFields.add(
-                                    TextFieldModel(key: 'linkedIn', value: ''));
                                 newCardBloc.add(AddCardInfoEvent(card));
                               }
                             }),
@@ -520,10 +516,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
+                                _controllerMap['gitHub'] = TextEditingController();
                                 CardModel card = state.card;
-                                card.extraInfo.listOfFields
-                                    .add(
-                                    TextFieldModel(key: 'gitHub', value: ''));
                                 newCardBloc.add(AddCardInfoEvent(card));
                               }
                             }),
@@ -536,9 +530,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
+                                _controllerMap['telegram'] = TextEditingController();
                                 CardModel card = state.card;
-                                card.extraInfo.listOfFields.add(
-                                    TextFieldModel(key: 'telegram', value: ''));
                                 newCardBloc.add(AddCardInfoEvent(card));
                               }
                             }));
@@ -554,6 +547,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
 }
 
 class ExtraInfoFooterWidget extends StatelessWidget {
+
   final ExtraInfoWidget phoneNumber;
   final ExtraInfoWidget email;
   final ExtraInfoWidget link;
@@ -694,13 +688,15 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final bool enabled;
 
+
   final Widget? icon;
+  final VoidCallback? onTextFieldRemove;
 
 
   const CustomTextField({Key? key,
     required this.controller,
     required this.hintText,
-    this.enabled = true, this.icon})
+    this.enabled = true, this.icon, this.onTextFieldRemove})
       : super(key: key);
 
   @override
@@ -769,6 +765,12 @@ class CustomTextField extends StatelessWidget {
                 //textAlign: TextAlign.center,
               ),
             ),
+            if(icon != null)
+              IconButton(
+                  splashRadius: 20,
+                  onPressed: onTextFieldRemove,
+                  icon: Icon(Icons.remove_circle_outline)
+              )
           ],
         );
       }),
