@@ -1,18 +1,24 @@
+import 'package:businesscard/blocs/card_page_bloc/card_page_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'custom_bottom_sheet.dart';
 
 
 
 class CustomFloatActionButton extends StatelessWidget {
-  const CustomFloatActionButton({Key? key}) : super(key: key);
+
+  final int color;
+
+  const CustomFloatActionButton({Key? key, required this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return FloatingActionButton.extended(
       elevation: 5,
       extendedPadding: EdgeInsets.symmetric(horizontal: 25),
-      backgroundColor: Colors.black,
+      backgroundColor: Color(color),
         icon: Icon(Icons.send),
         label: Text('Send', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         onPressed: () {
