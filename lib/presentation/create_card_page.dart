@@ -215,13 +215,13 @@ class _CreateCardPageState extends State<CreateCardPage> {
               icon: const Icon(Icons.check),
               splashRadius: 20,
               onPressed: () {
+
                 final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(context);
                 final cardColorBloc =
                 BlocProvider.of<SelectCardColorBloc>(context);
 
                 final cardsInfoState = cardsInfoBloc.state;
 
-                print(cardColorBloc.state.toString());
 
                 if (cardsInfoState is CardInfoLoadedState) {
                   List<CardModel> currentCards = cardsInfoState.cards;
@@ -244,6 +244,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                     newCard.extraInfo.listOfFields
                         .add(TextFieldModel(key: key, value: value.text));
                   });
+
 
                   currentCards.add(newCard);
 

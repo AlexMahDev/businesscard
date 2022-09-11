@@ -38,7 +38,18 @@ class _CardsPageState extends State<CardsPage> {
       create: (context) => CardPageBloc(),
       child: Scaffold(
         appBar: CustomAppBar(
-          title: Text('Cards'),
+          title: BlocBuilder<CardInfoBloc, CardInfoState>(
+            builder: (context, cardInfoState) {
+              if (cardInfoState is CardInfoLoadedState) {
+                return BlocBuilder<CardPageBloc, int>(
+                  builder: (context, cardPageState) {
+                    return Text(cardInfoState.cards[cardPageState].settings.cardTitle);
+                  },
+                );
+              }
+              return Text('');
+            },
+          ),
           leading: IconButton(
             icon: const Icon(Icons.menu),
             splashRadius: 20,
@@ -391,7 +402,8 @@ class _CardsPageState extends State<CardsPage> {
                                         decoration: BoxDecoration(
                                           color: cardNumber != cardPageState
                                               ? Colors.black
-                                              : Color(state.cards[cardPageState].settings.cardColor),
+                                              : Color(state.cards[cardPageState]
+                                              .settings.cardColor),
                                           shape: BoxShape.circle,
                                           //border: Border.all(color: Colors.black),
                                         ),
@@ -402,7 +414,9 @@ class _CardsPageState extends State<CardsPage> {
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 15.0),
-                              child: CustomFloatActionButton(color: state.cards[cardPageState].settings.cardColor),
+                              child: CustomFloatActionButton(
+                                  color: state.cards[cardPageState].settings
+                                      .cardColor),
                             )
                           ],
                         ),
