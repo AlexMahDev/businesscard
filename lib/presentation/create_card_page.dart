@@ -40,6 +40,18 @@ class _CreateCardPageState extends State<CreateCardPage> {
     firstName = TextEditingController();
     middleName = TextEditingController();
     lastName = TextEditingController();
+    firstName.addListener(() {
+      fullName.text = '${firstName.text} ${middleName.text} ${lastName.text}'.trim();
+    });
+    lastName.addListener(() {
+      fullName.text = '${firstName.text} ${middleName.text} ${lastName.text}'.trim();
+    });
+    middleName.addListener(() {
+      fullName.text = '${firstName.text} ${middleName.text} ${lastName.text}'.trim();
+    });
+    // firstName = TextEditingController();
+    // middleName = TextEditingController();
+    // lastName = TextEditingController();
     jobTitle = TextEditingController();
     department = TextEditingController();
     companyName = TextEditingController();
