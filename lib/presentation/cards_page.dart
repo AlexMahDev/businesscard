@@ -151,6 +151,7 @@ class _CardsPageState extends State<CardsPage> {
                                         child: Image.asset(
                                             'assets/images/innowise-logo.png')),
                                     Divider(
+                                      color: Color(state.cards[position].settings.cardColor).withOpacity(0.2),
                                       thickness: 5,
                                     ),
                                   ],

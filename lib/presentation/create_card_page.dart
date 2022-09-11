@@ -228,7 +228,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
 
                   CardModel newCard = CardModel(
                       settings: SettingsModel(
-                          cardTitle: cardTitle.text,
+                          cardTitle: cardTitle.text.isNotEmpty ? cardTitle.text : 'Card',
                           cardColor: cardColorBloc.state.value),
                       generalInfo: GeneralInfoModel(
                           firstName: firstName.text,
