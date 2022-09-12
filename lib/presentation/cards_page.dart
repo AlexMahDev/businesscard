@@ -82,7 +82,7 @@ class _CardsPageState extends State<CardsPage> {
                 return BlocBuilder<CardPageBloc, int>(
                   builder: (context, cardPageState) {
                     return Text(
-                        cardInfoState.cards[cardPageState].settings.cardTitle);
+                        cardInfoState.cards[cardPageState].generalInfo.cardTitle);
                   },
                 );
               }

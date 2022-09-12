@@ -50,7 +50,7 @@ class _EditCardPageState extends State<EditCardPage> {
     super.initState();
     profileImageBloc = ImageBloc();
     companyLogoImageBloc = ImageBloc();
-    cardTitle = TextEditingController(text: widget.card.settings.cardTitle);
+    cardTitle = TextEditingController(text: widget.card.generalInfo.cardTitle);
     fullName = TextEditingController(text: '${widget.card.generalInfo.firstName} ${widget.card.generalInfo.middleName} ${widget.card.generalInfo.lastName}'.trim());
     firstName = TextEditingController(text: widget.card.generalInfo.firstName);
     middleName = TextEditingController(text: widget.card.generalInfo.middleName);
@@ -147,11 +147,11 @@ class _EditCardPageState extends State<EditCardPage> {
 
                   CardModel newCard = CardModel(
                       settings: SettingsModel(
+                          cardColor: cardColorBloc.state),
+                      generalInfo: GeneralInfoModel(
                           cardTitle: cardTitle.text.isNotEmpty
                               ? cardTitle.text
                               : 'Card',
-                          cardColor: cardColorBloc.state),
-                      generalInfo: GeneralInfoModel(
                           firstName: firstName.text,
                           middleName: middleName.text,
                           lastName: lastName.text,

@@ -24,10 +24,11 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
 
       {
         "settings": {
-          "cardTitle": "Job",
+          //"cardTitle": "Job",
           "cardColor": 4294922834,
         },
         "generalInfo": {
+          "cardTitle": "Job",
           "firstName": "Alexander",
           "middleName": "Mikhailovich",
           "lastName": "Makhrachyov",
@@ -44,10 +45,10 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
 
       {
         "settings": {
-          "cardTitle": "Job",
           "cardColor": 4294922834,
         },
         "generalInfo": {
+          "cardTitle": "Job",
           "firstName": "Alexander",
           "middleName": "Mikhailovich",
           "lastName": "test",

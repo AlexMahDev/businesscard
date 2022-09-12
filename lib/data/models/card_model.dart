@@ -132,13 +132,11 @@ class CardModel {
 
 class SettingsModel {
 
-  final String cardTitle;
   final int cardColor;
 
-  SettingsModel({required this.cardTitle, required this.cardColor});
+  SettingsModel({required this.cardColor});
 
   factory SettingsModel.fromJson(Map<String, dynamic> json) => SettingsModel(
-    cardTitle: json["cardTitle"],
     cardColor: json["cardColor"],
   );
 
@@ -147,6 +145,7 @@ class SettingsModel {
 
 class GeneralInfoModel {
 
+  final String cardTitle;
   final String firstName;
   final String middleName;
   final String lastName;
@@ -155,10 +154,11 @@ class GeneralInfoModel {
   final String companyName;
   final String headLine;
 
-  GeneralInfoModel({required this.firstName, required this.middleName, required this.lastName, required this.jobTitle, required this.department, required this.companyName, required this.headLine});
+  GeneralInfoModel({required this.cardTitle, required this.firstName, required this.middleName, required this.lastName, required this.jobTitle, required this.department, required this.companyName, required this.headLine});
 
 
   factory GeneralInfoModel.fromJson(Map<String, dynamic> json) => GeneralInfoModel(
+      cardTitle: json["cardTitle"],
       firstName: json["firstName"],
       middleName: json["middleName"],
       lastName: json["lastName"],
