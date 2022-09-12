@@ -8,12 +8,12 @@ import 'package:meta/meta.dart';
 part 'select_card_color_event.dart';
 part 'select_card_color_state.dart';
 
-class SelectCardColorBloc extends Bloc<SelectCardColorEvent, Color> {
-  SelectCardColorBloc() : super(Colors.redAccent) {
+class SelectCardColorBloc extends Bloc<SelectCardColorEvent, int> {
+  SelectCardColorBloc() : super(4294922834) {
     on<SelectCardColorEvent>(_selectColor);
   }
 
-  _selectColor(SelectCardColorEvent event, Emitter<Color> emit) {
+  _selectColor(SelectCardColorEvent event, Emitter<int> emit) {
 
     emit(event.color);
 

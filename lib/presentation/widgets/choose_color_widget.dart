@@ -10,7 +10,7 @@ class ChooseColorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SelectCardColorBloc, Color>(
+    return BlocBuilder<SelectCardColorBloc, int>(
       builder: (context, state) {
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -20,17 +20,17 @@ class ChooseColorWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                ColorWidget(color: Colors.redAccent),
-                ColorWidget(color: Colors.orange),
-                ColorWidget(color: Colors.yellow),
-                ColorWidget(color: Colors.brown),
-                ColorWidget(color: Colors.green),
-                ColorWidget(color: Colors.lightBlueAccent),
-                ColorWidget(color: Colors.blue),
-                ColorWidget(color: Colors.purple),
-                ColorWidget(color: Colors.purpleAccent),
-                ColorWidget(color: Colors.black),
-                ColorWidget(color: Colors.grey)
+                ColorWidget(color: 4294922834), //Colors.redAccent
+                ColorWidget(color: 4294940672), //Colors.orange
+                ColorWidget(color: 4294961979), //Colors.yellow
+                ColorWidget(color: 4286141768), //Colors.brown
+                ColorWidget(color: 4283215696), //Colors.green
+                ColorWidget(color: 4282434815), //Colors.lightBlueAccent
+                ColorWidget(color: 4280391411), //Colors.blue
+                ColorWidget(color: 4288423856), //Colors.purple
+                ColorWidget(color: 4292886779), //Colors.purpleAccent
+                ColorWidget(color: 4278190080), //Colors.black
+                ColorWidget(color: 4288585374) //Colors.grey
               ],
             ),
           ),
@@ -42,7 +42,7 @@ class ChooseColorWidget extends StatelessWidget {
 
 class ColorWidget extends StatelessWidget {
 
-  final Color color;
+  final int color;
 
   const ColorWidget({Key? key, required this.color}) : super(key: key);
 
@@ -73,7 +73,7 @@ class ColorWidget extends StatelessWidget {
               width: 30.0,
               height: 30.0,
               decoration: BoxDecoration(
-                color: color,
+                color: Color(color),
                 shape: BoxShape.circle,
                 //border: Border.all(color: Colors.black),
               ),

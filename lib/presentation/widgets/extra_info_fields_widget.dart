@@ -61,7 +61,7 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SelectCardColorBloc, Color>(
+    return BlocBuilder<SelectCardColorBloc, int>(
       builder: (context, state) {
         return BlocBuilder<TextFieldBloc, TextFieldState>(
           builder: (context, state) {

@@ -35,7 +35,7 @@ class CustomTextField extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 15.0),
                 child: CircleAvatar(
                     radius: 20,
-                    backgroundColor: cardColorBloc.state,
+                    backgroundColor: Color(cardColorBloc.state),
                     child: icon),
               ),
             Expanded(

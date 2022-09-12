@@ -185,7 +185,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                           cardTitle: cardTitle.text.isNotEmpty
                               ? cardTitle.text
                               : 'Card',
-                          cardColor: cardColorBloc.state.value),
+                          cardColor: cardColorBloc.state),
                       generalInfo: GeneralInfoModel(
                           firstName: firstName.text,
                           middleName: middleName.text,

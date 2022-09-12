@@ -150,7 +150,7 @@ class _EditCardPageState extends State<EditCardPage> {
                           cardTitle: cardTitle.text.isNotEmpty
                               ? cardTitle.text
                               : 'Card',
-                          cardColor: cardColorBloc.state.value),
+                          cardColor: cardColorBloc.state),
                       generalInfo: GeneralInfoModel(
                           firstName: firstName.text,
                           middleName: middleName.text,
@@ -233,7 +233,7 @@ class _EditCardPageState extends State<EditCardPage> {
                     editTitle: 'Edit Company Logo',
                     removeTitle: 'Remove Company Logo'),
 
-                
+
 
                 GeneralInfoFieldsWidget(
                   fullName: CustomTextField(

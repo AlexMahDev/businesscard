@@ -14,11 +14,11 @@ class ExtraInfoFooterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SelectCardColorBloc, Color>(
+    return BlocBuilder<SelectCardColorBloc, int>(
       builder: (context, state) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 35, vertical: 30),
-          color: state.withOpacity(0.2),
+          color: Color(state).withOpacity(0.2),
           child: Column(
             //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -173,7 +173,7 @@ class ExtraInfoWidget extends StatelessWidget {
           children: [
             CircleAvatar(
                 radius: 20,
-                backgroundColor: selectCardColor.state,
+                backgroundColor: Color(selectCardColor.state),
                 child: icon),
             // SizedBox(
             //   height: 10,
