@@ -121,7 +121,6 @@ class _CreateCardPageState extends State<CreateCardPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return MultiBlocProvider(
       providers: [
         BlocProvider<NewCardBloc>(
@@ -137,11 +136,9 @@ class _CreateCardPageState extends State<CreateCardPage> {
         //   create: (BuildContext context) => imageBloc
         // ),
         BlocProvider<ImageBloc>(
-            create: (BuildContext context) => profileImageBloc
-        ),
+            create: (BuildContext context) => profileImageBloc),
         BlocProvider<ImageBloc>(
-            create: (BuildContext context) => companyLogoImageBloc
-        ),
+            create: (BuildContext context) => companyLogoImageBloc),
 
         // BlocProvider<CardInfoBloc>(
         //   create: (BuildContext context) =>  CardInfoBloc(),
@@ -157,7 +154,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
               onPressed: () {
                 final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(context);
                 final cardColorBloc =
-                BlocProvider.of<SelectCardColorBloc>(context);
+                    BlocProvider.of<SelectCardColorBloc>(context);
 
                 final cardsInfoState = cardsInfoBloc.state;
 
@@ -253,7 +250,6 @@ class _CreateCardPageState extends State<CreateCardPage> {
                   },
                 ),
 
-
                 BlocBuilder<ImageBloc, ImageState>(
                   bloc: profileImageBloc,
                   builder: (context, state) {
@@ -262,8 +258,9 @@ class _CreateCardPageState extends State<CreateCardPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          if(state is ImagePickLoadedState)
-                            Expanded(child: Image.file(state.image)),
+                          if (state is ImagePickLoadedState)
+                            Expanded(
+                                child: Image.file(state.image, height: 200)),
                           Padding(
                             padding: const EdgeInsets.only(left: 15.0),
                             child: Column(
@@ -276,26 +273,29 @@ class _CreateCardPageState extends State<CreateCardPage> {
                                       builder: (BuildContext context) {
                                         return BlocProvider.value(
                                           value: profileImageBloc,
-                                          child: ImagePickSourceBottomSheet(imageBloc: profileImageBloc),
+                                          child: ImagePickSourceBottomSheet(
+                                              imageBloc: profileImageBloc),
                                         );
                                       },
                                     );
                                   },
-                                  child: Text(state is ImagePickLoadedState ?
-                                  'Edit Profile Picture' : 'Add Profile Picture',
+                                  child: Text(
+                                    state is ImagePickLoadedState
+                                        ? 'Edit Profile Picture'
+                                        : 'Add Profile Picture',
                                     style: TextStyle(
                                         color: Colors.redAccent,
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                if(state is ImagePickLoadedState)
+                                if (state is ImagePickLoadedState)
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 20.0),
+                                    padding: const EdgeInsets.only(top: 20.0),
                                     child: GestureDetector(
                                       onTap: () {
-                                        profileImageBloc.add(RemoveImageEvent());
+                                        profileImageBloc
+                                            .add(RemoveImageEvent());
                                       },
                                       child: Text(
                                         'Remove Profile Picture',
@@ -327,8 +327,9 @@ class _CreateCardPageState extends State<CreateCardPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          if(state is ImagePickLoadedState)
-                            Expanded(child: Image.file(state.image)),
+                          if (state is ImagePickLoadedState)
+                            Expanded(
+                                child: Image.file(state.image, height: 200)),
                           Padding(
                             padding: const EdgeInsets.only(left: 15.0),
                             child: Column(
@@ -339,25 +340,28 @@ class _CreateCardPageState extends State<CreateCardPage> {
                                       context: context,
                                       backgroundColor: Colors.transparent,
                                       builder: (BuildContext context) {
-                                        return ImagePickSourceBottomSheet(imageBloc: companyLogoImageBloc);
+                                        return ImagePickSourceBottomSheet(
+                                            imageBloc: companyLogoImageBloc);
                                       },
                                     );
                                   },
-                                  child: Text(state is ImagePickLoadedState ?
-                                  'Edit Company Logo' : 'Add Company Logo',
+                                  child: Text(
+                                    state is ImagePickLoadedState
+                                        ? 'Edit Company Logo'
+                                        : 'Add Company Logo',
                                     style: TextStyle(
                                         color: Colors.redAccent,
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                if(state is ImagePickLoadedState)
+                                if (state is ImagePickLoadedState)
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 20.0),
+                                    padding: const EdgeInsets.only(top: 20.0),
                                     child: GestureDetector(
                                       onTap: () {
-                                        companyLogoImageBloc.add(RemoveImageEvent());
+                                        companyLogoImageBloc
+                                            .add(RemoveImageEvent());
                                       },
                                       child: Text(
                                         'Remove Company Logo',
@@ -385,13 +389,13 @@ class _CreateCardPageState extends State<CreateCardPage> {
                       GestureDetector(
                         onTap: () {
                           final fullNameDropdownBloc =
-                          BlocProvider.of<FullNameDropdownBloc>(context);
+                              BlocProvider.of<FullNameDropdownBloc>(context);
 
                           final fullNameDropdownState =
                               fullNameDropdownBloc.state;
 
                           if (fullNameDropdownState
-                          is FullNameDropdownCloseState) {
+                              is FullNameDropdownCloseState) {
                             fullNameDropdownBloc
                                 .add(FullNameDropdownOpenEvent());
                           } else {
@@ -525,7 +529,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                                     _controllerMap.remove(
                                         _controllerMap.keys.elementAt(index));
                                     final newCardBloc =
-                                    BlocProvider.of<NewCardBloc>(context);
+                                        BlocProvider.of<NewCardBloc>(context);
                                     CardModel card = state.card;
                                     newCardBloc.add(AddCardInfoEvent(card));
                                   },
@@ -543,7 +547,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                               },
                               separatorBuilder:
                                   (BuildContext context, int index) =>
-                                  SizedBox(height: 15),
+                                      SizedBox(height: 15),
                             ),
                           );
                         }
@@ -584,7 +588,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                             icon: Icon(Icons.phone, color: Colors.white),
                             onPressed: () {
                               final newCardBloc =
-                              BlocProvider.of<NewCardBloc>(context);
+                                  BlocProvider.of<NewCardBloc>(context);
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
@@ -599,7 +603,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                             icon: Icon(Icons.email, color: Colors.white),
                             onPressed: () {
                               final newCardBloc =
-                              BlocProvider.of<NewCardBloc>(context);
+                                  BlocProvider.of<NewCardBloc>(context);
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
@@ -614,7 +618,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                             icon: Icon(Icons.link, color: Colors.white),
                             onPressed: () {
                               final newCardBloc =
-                              BlocProvider.of<NewCardBloc>(context);
+                                  BlocProvider.of<NewCardBloc>(context);
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
@@ -632,7 +636,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                                 height: 20),
                             onPressed: () {
                               final newCardBloc =
-                              BlocProvider.of<NewCardBloc>(context);
+                                  BlocProvider.of<NewCardBloc>(context);
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
@@ -650,7 +654,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                                 height: 20),
                             onPressed: () {
                               final newCardBloc =
-                              BlocProvider.of<NewCardBloc>(context);
+                                  BlocProvider.of<NewCardBloc>(context);
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
@@ -665,7 +669,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                             icon: Icon(Icons.telegram, color: Colors.white),
                             onPressed: () {
                               final newCardBloc =
-                              BlocProvider.of<NewCardBloc>(context);
+                                  BlocProvider.of<NewCardBloc>(context);
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
@@ -686,12 +690,11 @@ class _CreateCardPageState extends State<CreateCardPage> {
   }
 }
 
-
 class ImagePickSourceBottomSheet extends StatelessWidget {
-
   final ImageBloc imageBloc;
 
-  const ImagePickSourceBottomSheet({Key? key, required this.imageBloc}) : super(key: key);
+  const ImagePickSourceBottomSheet({Key? key, required this.imageBloc})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -700,24 +703,18 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
     return SizedBox(
       height: 250,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: 10, vertical: 35),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 35),
         child: Column(
-          mainAxisAlignment:
-          MainAxisAlignment.end,
-          crossAxisAlignment:
-          CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
               height: 110,
               decoration: BoxDecoration(
-                  color: Colors.white
-                      .withOpacity(0.9),
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(10))),
+                  color: Colors.white.withOpacity(0.9),
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
               child: Column(
-                crossAxisAlignment:
-                CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
                     child: GestureDetector(
@@ -726,12 +723,9 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       child: Center(
-                          child: Text(
-                              'Select from photo library',
+                          child: Text('Select from photo library',
                               style: TextStyle(
-                                  color: Colors
-                                      .redAccent,
-                                  fontSize: 18))),
+                                  color: Colors.redAccent, fontSize: 18))),
                     ),
                   ),
                   Divider(
@@ -744,12 +738,9 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       child: Center(
-                          child: Text(
-                              'Take photo',
+                          child: Text('Take photo',
                               style: TextStyle(
-                                  color: Colors
-                                      .redAccent,
-                                  fontSize: 18))),
+                                  color: Colors.redAccent, fontSize: 18))),
                     ),
                   ),
                 ],
@@ -766,16 +757,12 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                 height: 55,
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius:
-                    BorderRadius.all(
-                        Radius.circular(10))),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Center(
                     child: Text('Cancel',
                         style: TextStyle(
-                            color:
-                            Colors.redAccent,
-                            fontWeight:
-                            FontWeight.bold,
+                            color: Colors.redAccent,
+                            fontWeight: FontWeight.bold,
                             fontSize: 18))),
               ),
             ),
@@ -799,7 +786,6 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
   }
 }
 
-
 class ExtraInfoFooterWidget extends StatelessWidget {
   final ExtraInfoWidget phoneNumber;
   final ExtraInfoWidget email;
@@ -808,13 +794,14 @@ class ExtraInfoFooterWidget extends StatelessWidget {
   final ExtraInfoWidget github;
   final ExtraInfoWidget telegram;
 
-  const ExtraInfoFooterWidget({Key? key,
-    required this.phoneNumber,
-    required this.email,
-    required this.link,
-    required this.linkedIn,
-    required this.github,
-    required this.telegram})
+  const ExtraInfoFooterWidget(
+      {Key? key,
+      required this.phoneNumber,
+      required this.email,
+      required this.link,
+      required this.linkedIn,
+      required this.github,
+      required this.telegram})
       : super(key: key);
 
   @override
@@ -851,10 +838,11 @@ class ExtraInfoWidget extends StatelessWidget {
   final Widget icon;
   final VoidCallback onPressed;
 
-  const ExtraInfoWidget({Key? key,
-    required this.title,
-    required this.icon,
-    required this.onPressed})
+  const ExtraInfoWidget(
+      {Key? key,
+      required this.title,
+      required this.icon,
+      required this.onPressed})
       : super(key: key);
 
   @override
@@ -940,12 +928,13 @@ class CustomTextField extends StatelessWidget {
   final Widget? icon;
   final VoidCallback? onTextFieldRemove;
 
-  const CustomTextField({Key? key,
-    required this.controller,
-    required this.hintText,
-    this.enabled = true,
-    this.icon,
-    this.onTextFieldRemove})
+  const CustomTextField(
+      {Key? key,
+      required this.controller,
+      required this.hintText,
+      this.enabled = true,
+      this.icon,
+      this.onTextFieldRemove})
       : super(key: key);
 
   @override
@@ -972,14 +961,14 @@ class CustomTextField extends StatelessWidget {
                 decoration: InputDecoration(
                   //contentPadding: EdgeInsets.all(0),
                   suffixIcon:
-                  BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
+                      BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
                     builder: (context, state) {
                       if (state is ClearButtonEnableState) {
                         return IconButton(
                           onPressed: () {
                             controller.clear();
                             final clearButtonBloc =
-                            BlocProvider.of<TextClearButtonBloc>(context);
+                                BlocProvider.of<TextClearButtonBloc>(context);
                             clearButtonBloc.add(ClearButtonDisableEvent());
                           },
                           icon: Icon(Icons.highlight_remove_outlined),
@@ -996,18 +985,18 @@ class CustomTextField extends StatelessWidget {
                 onTap: () {
                   if (controller.text.isNotEmpty) {
                     final clearButtonBloc =
-                    BlocProvider.of<TextClearButtonBloc>(context);
+                        BlocProvider.of<TextClearButtonBloc>(context);
                     clearButtonBloc.add(ClearButtonEnableEvent());
                   }
                 },
                 onChanged: (text) {
                   if (controller.text.isEmpty) {
                     final clearButtonBloc =
-                    BlocProvider.of<TextClearButtonBloc>(context);
+                        BlocProvider.of<TextClearButtonBloc>(context);
                     clearButtonBloc.add(ClearButtonDisableEvent());
                   } else if (controller.text.length == 1) {
                     final clearButtonBloc =
-                    BlocProvider.of<TextClearButtonBloc>(context);
+                        BlocProvider.of<TextClearButtonBloc>(context);
                     clearButtonBloc.add(ClearButtonEnableEvent());
                   }
                 },
