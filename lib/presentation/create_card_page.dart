@@ -9,9 +9,11 @@ import 'package:businesscard/blocs/text_field_bloc/text_field_bloc.dart';
 import 'package:businesscard/presentation/widgets/choose_color_widget.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_text_field_widget.dart';
+import 'package:businesscard/presentation/widgets/extra_info_fields_widget.dart';
 import 'package:businesscard/presentation/widgets/extra_info_footer_widget.dart';
 import 'package:businesscard/presentation/widgets/general_info_fields_widget.dart';
 import 'package:businesscard/presentation/widgets/image_section_widget.dart';
+import 'package:businesscard/presentation/widgets/tap_field_below_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -85,53 +87,53 @@ class _CreateCardPageState extends State<CreateCardPage> {
     super.dispose();
   }
 
-  TextEditingController _getControllerOf(String name) {
-    var controller = _controllerMap[name];
-    if (controller == null) {
-      controller = TextEditingController();
-      _controllerMap[name] = controller;
-    }
-    //print(_controllerMap.length);
-    return controller;
-  }
-
-  String getHintText(String key) {
-    if (key == 'phoneNumber') {
-      return 'Phone Number';
-    } else if (key == 'email') {
-      return 'Email';
-    } else if (key == 'link') {
-      return 'Link';
-    } else if (key == 'linkedIn') {
-      return 'LinkedIn';
-    } else if (key == 'gitHub') {
-      return 'GitHub';
-    } else if (key == 'telegram') {
-      return 'Telegram';
-    } else {
-      return '';
-    }
-  }
-
-  Widget getIcon(String key) {
-    if (key == 'phoneNumber') {
-      return Icon(Icons.phone, color: Colors.white);
-    } else if (key == 'email') {
-      return Icon(Icons.email, color: Colors.white);
-    } else if (key == 'link') {
-      return Icon(Icons.link, color: Colors.white);
-    } else if (key == 'linkedIn') {
-      return Image.asset('assets/images/icons/linkedin-icon.png',
-          color: Colors.white, height: 20);
-    } else if (key == 'gitHub') {
-      return Image.asset('assets/images/icons/github-icon.png',
-          color: Colors.white, height: 20);
-    } else if (key == 'telegram') {
-      return Icon(Icons.telegram, color: Colors.white);
-    } else {
-      return Icon(Icons.add_circle_outline_rounded, color: Colors.white);
-    }
-  }
+  // TextEditingController _getControllerOf(String name) {
+  //   var controller = _controllerMap[name];
+  //   if (controller == null) {
+  //     controller = TextEditingController();
+  //     _controllerMap[name] = controller;
+  //   }
+  //   //print(_controllerMap.length);
+  //   return controller;
+  // }
+  //
+  // String getHintText(String key) {
+  //   if (key == 'phoneNumber') {
+  //     return 'Phone Number';
+  //   } else if (key == 'email') {
+  //     return 'Email';
+  //   } else if (key == 'link') {
+  //     return 'Link';
+  //   } else if (key == 'linkedIn') {
+  //     return 'LinkedIn';
+  //   } else if (key == 'gitHub') {
+  //     return 'GitHub';
+  //   } else if (key == 'telegram') {
+  //     return 'Telegram';
+  //   } else {
+  //     return '';
+  //   }
+  // }
+  //
+  // Widget getIcon(String key) {
+  //   if (key == 'phoneNumber') {
+  //     return Icon(Icons.phone, color: Colors.white);
+  //   } else if (key == 'email') {
+  //     return Icon(Icons.email, color: Colors.white);
+  //   } else if (key == 'link') {
+  //     return Icon(Icons.link, color: Colors.white);
+  //   } else if (key == 'linkedIn') {
+  //     return Image.asset('assets/images/icons/linkedin-icon.png',
+  //         color: Colors.white, height: 20);
+  //   } else if (key == 'gitHub') {
+  //     return Image.asset('assets/images/icons/github-icon.png',
+  //         color: Colors.white, height: 20);
+  //   } else if (key == 'telegram') {
+  //     return Icon(Icons.telegram, color: Colors.white);
+  //   } else {
+  //     return Icon(Icons.add_circle_outline_rounded, color: Colors.white);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +173,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
               onPressed: () {
                 final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(context);
                 final cardColorBloc =
-                BlocProvider.of<SelectCardColorBloc>(context);
+                    BlocProvider.of<SelectCardColorBloc>(context);
 
                 final cardsInfoState = cardsInfoBloc.state;
 
@@ -269,15 +271,21 @@ class _CreateCardPageState extends State<CreateCardPage> {
                 //   },
                 // ),
 
-                ImageSectionWidget(imageBloc: profileImageBloc),
-
+                ImageSectionWidget(
+                    imageBloc: profileImageBloc,
+                    addTitle: 'Add Profile Picture',
+                    editTitle: 'Edit Profile Picture',
+                    removeTitle: 'Remove Profile Picture'),
 
                 SizedBox(
                   height: 30,
                 ),
 
-                ImageSectionWidget(imageBloc: companyLogoImageBloc),
-
+                ImageSectionWidget(
+                    imageBloc: companyLogoImageBloc,
+                    addTitle: 'Add Company Logo',
+                    editTitle: 'Edit Company Logo',
+                    removeTitle: 'Remove Company Logo'),
 
                 GeneralInfoFieldsWidget(
                   fullName: CustomTextField(
@@ -285,14 +293,11 @@ class _CreateCardPageState extends State<CreateCardPage> {
                       enabled: false,
                       controller: fullName),
                   firstName: CustomTextField(
-                      hintText: 'First Name',
-                      controller: firstName),
+                      hintText: 'First Name', controller: firstName),
                   middleName: CustomTextField(
-                      hintText: 'Middle Name',
-                      controller: middleName),
+                      hintText: 'Middle Name', controller: middleName),
                   lastName: CustomTextField(
-                      hintText: 'Last Name',
-                      controller: lastName),
+                      hintText: 'Last Name', controller: lastName),
                   jobTitle: CustomTextField(
                       hintText: 'Job Title', controller: jobTitle),
                   department: CustomTextField(
@@ -303,7 +308,6 @@ class _CreateCardPageState extends State<CreateCardPage> {
                       hintText: 'Headline', controller: headLine),
                 ),
 
-
                 // ///STATIC TEXT FIELDS
                 // Padding(
                 //   padding: const EdgeInsets.symmetric(
@@ -312,90 +316,9 @@ class _CreateCardPageState extends State<CreateCardPage> {
                 // ),
 
                 ///DYNAMIC TEXT FIELDS
-                BlocBuilder<SelectCardColorBloc, Color>(
-                  builder: (context, state) {
-                    return BlocBuilder<TextFieldBloc, TextFieldState>(
-                      builder: (context, state) {
-                        if (state is TextFieldInitialState &&
-                            _controllerMap.isNotEmpty) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15.0, vertical: 30),
-                            child: ListView.separated(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: _controllerMap.length,
-                              //padding: EdgeInsets.only(top: 15),
-                              itemBuilder: (BuildContext context, int index) {
-                                //final controller = _getControllerOf(data[index]);
+                ExtraInfoFieldsWidget(controllerMap: _controllerMap),
 
-                                // final textField = TextField(
-                                //   controller: controller,
-                                //   decoration: InputDecoration(
-                                //     border: OutlineInputBorder(),
-                                //     labelText: "name${index + 1}",
-                                //   ),
-                                // );
-                                return CustomTextField(
-                                  controller: _getControllerOf(
-                                      _controllerMap.keys.elementAt(index)),
-                                  hintText: getHintText(
-                                      _controllerMap.keys.elementAt(index)),
-                                  icon: getIcon(
-                                      _controllerMap.keys.elementAt(index)),
-                                  onTextFieldRemove: () {
-                                    _controllerMap.remove(
-                                        _controllerMap.keys.elementAt(index));
-                                    final textFieldBloc = BlocProvider.of<
-                                        TextFieldBloc>(context);
-                                    textFieldBloc.add(AddTextFieldEvent());
-                                  },
-                                );
-                                //   Container(
-                                //   child: TextField(
-                                //     controller: _getControllerOf(data.keys.elementAt(index)),
-                                //     decoration: InputDecoration(
-                                //       border: OutlineInputBorder(),
-                                //       labelText: data[index],
-                                //     ),
-                                //   ),
-                                //   padding: EdgeInsets.only(bottom: 10),
-                                // );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) =>
-                                  SizedBox(height: 15),
-                            ),
-                          );
-                        }
-
-                        return Container();
-                      },
-                    );
-                  },
-                ),
-
-                Container(
-                  margin: EdgeInsets.all(50),
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: FittedBox(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Tap a field below to add it',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20)),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(Icons.add, size: 30)
-                      ],
-                    ),
-                  ),
-                ),
+                TapFieldBelowWidget(),
 
                 ExtraInfoFooterWidget(controllerMap: _controllerMap)
               ],
@@ -406,7 +329,6 @@ class _CreateCardPageState extends State<CreateCardPage> {
     );
   }
 }
-
 
 // class GeneralInfoFieldsWidget extends StatelessWidget {
 //

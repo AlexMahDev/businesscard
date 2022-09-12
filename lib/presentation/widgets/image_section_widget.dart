@@ -8,8 +8,11 @@ import '../create_card_page.dart';
 class ImageSectionWidget extends StatelessWidget {
 
   final ImageBloc imageBloc;
+  final String addTitle;
+  final String editTitle;
+  final String removeTitle;
 
-  const ImageSectionWidget({Key? key, required this.imageBloc})
+  const ImageSectionWidget({Key? key, required this.imageBloc, required this.addTitle, required this.editTitle, required this.removeTitle})
       : super(key: key);
 
   @override
@@ -44,8 +47,8 @@ class ImageSectionWidget extends StatelessWidget {
                       },
                       child: Text(
                         state is ImagePickLoadedState
-                            ? 'Edit Profile Picture'
-                            : 'Add Profile Picture',
+                            ? editTitle
+                            : addTitle,
                         style: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 17,
@@ -61,7 +64,7 @@ class ImageSectionWidget extends StatelessWidget {
                                 .add(RemoveImageEvent());
                           },
                           child: Text(
-                            'Remove Profile Picture',
+                            removeTitle,
                             style: TextStyle(
                                 color: Colors.redAccent,
                                 fontSize: 17,

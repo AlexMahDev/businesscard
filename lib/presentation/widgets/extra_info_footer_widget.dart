@@ -35,9 +35,11 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                         final state = textFieldBloc.state;
 
                         if (state is TextFieldInitialState) {
-                          controllerMap['phoneNumber'] =
-                              TextEditingController();
-                          textFieldBloc.add(AddTextFieldEvent());
+                          if(controllerMap['phoneNumber'] == null) {
+                            controllerMap['phoneNumber'] =
+                                TextEditingController();
+                            textFieldBloc.add(AddTextFieldEvent());
+                          }
                         }
                       }),
                   ExtraInfoWidget(
@@ -49,9 +51,11 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                         final state = textFieldBloc.state;
 
                         if (state is TextFieldInitialState) {
-                          controllerMap['email'] =
-                              TextEditingController();
-                          textFieldBloc.add(AddTextFieldEvent());
+                          if(controllerMap['email'] == null) {
+                            controllerMap['email'] =
+                                TextEditingController();
+                            textFieldBloc.add(AddTextFieldEvent());
+                          }
                         }
                       }),
                   ExtraInfoWidget(
@@ -63,9 +67,11 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                         final state = textFieldBloc.state;
 
                         if (state is TextFieldInitialState) {
-                          controllerMap['link'] =
-                              TextEditingController();
-                          textFieldBloc.add(AddTextFieldEvent());
+                          if(controllerMap['link'] == null) {
+                            controllerMap['link'] =
+                                TextEditingController();
+                            textFieldBloc.add(AddTextFieldEvent());
+                          }
                         }
                       }),
                 ],
@@ -89,9 +95,11 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                         final state = textFieldBloc.state;
 
                         if (state is TextFieldInitialState) {
-                          controllerMap['linkedIn'] =
-                              TextEditingController();
-                          textFieldBloc.add(AddTextFieldEvent());
+                          if(controllerMap['linkedIn'] == null) {
+                            controllerMap['linkedIn'] =
+                                TextEditingController();
+                            textFieldBloc.add(AddTextFieldEvent());
+                          }
                         }
                       }),
                   ExtraInfoWidget(
@@ -106,9 +114,11 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                         final state = textFieldBloc.state;
 
                         if (state is TextFieldInitialState) {
-                          controllerMap['gitHub'] =
-                              TextEditingController();
-                          textFieldBloc.add(AddTextFieldEvent());
+                          if(controllerMap['gitHub'] == null) {
+                            controllerMap['gitHub'] =
+                                TextEditingController();
+                            textFieldBloc.add(AddTextFieldEvent());
+                          }
                         }
                       }),
                   ExtraInfoWidget(
@@ -120,9 +130,11 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                         final state = textFieldBloc.state;
 
                         if (state is TextFieldInitialState) {
-                          controllerMap['telegram'] =
-                              TextEditingController();
-                          textFieldBloc.add(AddTextFieldEvent());
+                          if(controllerMap['telegram'] == null) {
+                            controllerMap['telegram'] =
+                                TextEditingController();
+                            textFieldBloc.add(AddTextFieldEvent());
+                          }
                         }
                       }),
                 ],
