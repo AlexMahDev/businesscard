@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:businesscard/blocs/card_info_bloc/card_info_bloc.dart';
 import 'package:businesscard/blocs/full_name_dropdown_bloc/full_name_dropdown_bloc.dart';
 import 'package:businesscard/blocs/image_bloc/image_bloc.dart';
-import 'package:businesscard/blocs/new_card_bloc/new_card_bloc.dart';
 import 'package:businesscard/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import 'package:businesscard/blocs/text_clear_button_bloc/text_clear_button_bloc.dart';
+import 'package:businesscard/blocs/text_field_bloc/text_field_bloc.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -123,8 +123,11 @@ class _CreateCardPageState extends State<CreateCardPage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<NewCardBloc>(
-          create: (BuildContext context) => NewCardBloc(),
+        // BlocProvider<NewCardBloc>(
+        //   create: (BuildContext context) => NewCardBloc(),
+        // ),
+        BlocProvider<TextFieldBloc>(
+          create: (BuildContext context) => TextFieldBloc(),
         ),
         BlocProvider<SelectCardColorBloc>(
           create: (BuildContext context) => SelectCardColorBloc(),
@@ -496,9 +499,9 @@ class _CreateCardPageState extends State<CreateCardPage> {
                 ///DYNAMIC TEXT FIELDS
                 BlocBuilder<SelectCardColorBloc, Color>(
                   builder: (context, state) {
-                    return BlocBuilder<NewCardBloc, NewCardState>(
+                    return BlocBuilder<TextFieldBloc, TextFieldState>(
                       builder: (context, state) {
-                        if (state is NewCardInitialState &&
+                        if (state is TextFieldInitialState &&
                             _controllerMap.isNotEmpty) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(
@@ -528,10 +531,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                                   onTextFieldRemove: () {
                                     _controllerMap.remove(
                                         _controllerMap.keys.elementAt(index));
-                                    final newCardBloc =
-                                        BlocProvider.of<NewCardBloc>(context);
-                                    CardModel card = state.card;
-                                    newCardBloc.add(AddCardInfoEvent(card));
+                                    final textFieldBloc = BlocProvider.of<TextFieldBloc>(context);
+                                    textFieldBloc.add(AddTextFieldEvent());
                                   },
                                 );
                                 //   Container(
@@ -587,45 +588,42 @@ class _CreateCardPageState extends State<CreateCardPage> {
                             title: 'Phone Number',
                             icon: Icon(Icons.phone, color: Colors.white),
                             onPressed: () {
-                              final newCardBloc =
-                                  BlocProvider.of<NewCardBloc>(context);
-                              final state = newCardBloc.state;
+                              final textFieldBloc =
+                                  BlocProvider.of<TextFieldBloc>(context);
+                              final state = textFieldBloc.state;
 
-                              if (state is NewCardInitialState) {
+                              if (state is TextFieldInitialState) {
                                 _controllerMap['phoneNumber'] =
                                     TextEditingController();
-                                CardModel card = state.card;
-                                newCardBloc.add(AddCardInfoEvent(card));
+                                textFieldBloc.add(AddTextFieldEvent());
                               }
                             }),
                         email: ExtraInfoWidget(
                             title: 'Email',
                             icon: Icon(Icons.email, color: Colors.white),
                             onPressed: () {
-                              final newCardBloc =
-                                  BlocProvider.of<NewCardBloc>(context);
-                              final state = newCardBloc.state;
+                              final textFieldBloc =
+                              BlocProvider.of<TextFieldBloc>(context);
+                              final state = textFieldBloc.state;
 
-                              if (state is NewCardInitialState) {
+                              if (state is TextFieldInitialState) {
                                 _controllerMap['email'] =
                                     TextEditingController();
-                                CardModel card = state.card;
-                                newCardBloc.add(AddCardInfoEvent(card));
+                                textFieldBloc.add(AddTextFieldEvent());
                               }
                             }),
                         link: ExtraInfoWidget(
                             title: 'Link',
                             icon: Icon(Icons.link, color: Colors.white),
                             onPressed: () {
-                              final newCardBloc =
-                                  BlocProvider.of<NewCardBloc>(context);
-                              final state = newCardBloc.state;
+                              final textFieldBloc =
+                              BlocProvider.of<TextFieldBloc>(context);
+                              final state = textFieldBloc.state;
 
-                              if (state is NewCardInitialState) {
+                              if (state is TextFieldInitialState) {
                                 _controllerMap['link'] =
                                     TextEditingController();
-                                CardModel card = state.card;
-                                newCardBloc.add(AddCardInfoEvent(card));
+                                textFieldBloc.add(AddTextFieldEvent());
                               }
                             }),
                         linkedIn: ExtraInfoWidget(
@@ -635,15 +633,14 @@ class _CreateCardPageState extends State<CreateCardPage> {
                                 color: Colors.white,
                                 height: 20),
                             onPressed: () {
-                              final newCardBloc =
-                                  BlocProvider.of<NewCardBloc>(context);
-                              final state = newCardBloc.state;
+                              final textFieldBloc =
+                              BlocProvider.of<TextFieldBloc>(context);
+                              final state = textFieldBloc.state;
 
-                              if (state is NewCardInitialState) {
+                              if (state is TextFieldInitialState) {
                                 _controllerMap['linkedIn'] =
                                     TextEditingController();
-                                CardModel card = state.card;
-                                newCardBloc.add(AddCardInfoEvent(card));
+                                textFieldBloc.add(AddTextFieldEvent());
                               }
                             }),
                         github: ExtraInfoWidget(
@@ -653,30 +650,28 @@ class _CreateCardPageState extends State<CreateCardPage> {
                                 color: Colors.white,
                                 height: 20),
                             onPressed: () {
-                              final newCardBloc =
-                                  BlocProvider.of<NewCardBloc>(context);
-                              final state = newCardBloc.state;
+                              final textFieldBloc =
+                              BlocProvider.of<TextFieldBloc>(context);
+                              final state = textFieldBloc.state;
 
-                              if (state is NewCardInitialState) {
+                              if (state is TextFieldInitialState) {
                                 _controllerMap['gitHub'] =
                                     TextEditingController();
-                                CardModel card = state.card;
-                                newCardBloc.add(AddCardInfoEvent(card));
+                                textFieldBloc.add(AddTextFieldEvent());
                               }
                             }),
                         telegram: ExtraInfoWidget(
                             title: 'Telegram',
                             icon: Icon(Icons.telegram, color: Colors.white),
                             onPressed: () {
-                              final newCardBloc =
-                                  BlocProvider.of<NewCardBloc>(context);
-                              final state = newCardBloc.state;
+                              final textFieldBloc =
+                              BlocProvider.of<TextFieldBloc>(context);
+                              final state = textFieldBloc.state;
 
-                              if (state is NewCardInitialState) {
+                              if (state is TextFieldInitialState) {
                                 _controllerMap['telegram'] =
                                     TextEditingController();
-                                CardModel card = state.card;
-                                newCardBloc.add(AddCardInfoEvent(card));
+                                textFieldBloc.add(AddTextFieldEvent());
                               }
                             }));
                   },
