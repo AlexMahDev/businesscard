@@ -122,8 +122,8 @@ class _CardsPageState extends State<CardsPage> {
                     icon: const Icon(Icons.edit),
                     splashRadius: 20,
                     onPressed: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (BuildContext context) => const EditCardPage()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => EditCardPage(card: state.cards[pageController.page?.round() ?? 0])));
                     },
                   );
                 }

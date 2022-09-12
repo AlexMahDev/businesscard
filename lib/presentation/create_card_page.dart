@@ -67,6 +67,15 @@ class _CreateCardPageState extends State<CreateCardPage> {
 
   @override
   void dispose() {
+    cardTitle.dispose();
+    fullName.dispose();
+    firstName.dispose();
+    middleName.dispose();
+    lastName.dispose();
+    jobTitle.dispose();
+    department.dispose();
+    companyName.dispose();
+    headLine.dispose();
     _controllerMap.forEach((_, controller) => controller.dispose());
     super.dispose();
   }

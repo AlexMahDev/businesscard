@@ -13,16 +13,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/text_field_bloc/text_field_bloc.dart';
 import '../data/models/card_model.dart';
 
-
 class EditCardPage extends StatefulWidget {
-  const EditCardPage({Key? key}) : super(key: key);
+
+  final CardModel card;
+
+  const EditCardPage({Key? key,required this.card}) : super(key: key);
 
   @override
   State<EditCardPage> createState() => _EditCardPageState();
 }
 
 class _EditCardPageState extends State<EditCardPage> {
-
   final Map<String, TextEditingController> _controllerMap = {};
 
   late final TextEditingController cardTitle;
@@ -42,11 +43,11 @@ class _EditCardPageState extends State<EditCardPage> {
     super.initState();
     profileImageBloc = ImageBloc();
     companyLogoImageBloc = ImageBloc();
-    cardTitle = TextEditingController();
-    fullName = TextEditingController();
-    firstName = TextEditingController();
-    middleName = TextEditingController();
-    lastName = TextEditingController();
+    cardTitle = TextEditingController(text: widget.card.settings.cardTitle);
+    fullName = TextEditingController(text: '${widget.card.generalInfo.firstName} ${widget.card.generalInfo.middleName} ${widget.card.generalInfo.lastName}'.trim());
+    firstName = TextEditingController(text: widget.card.generalInfo.firstName);
+    middleName = TextEditingController(text: widget.card.generalInfo.middleName);
+    lastName = TextEditingController(text: widget.card.generalInfo.lastName);
     firstName.addListener(() {
       fullName.text =
           '${firstName.text} ${middleName.text} ${lastName.text}'.trim();
@@ -62,14 +63,23 @@ class _EditCardPageState extends State<EditCardPage> {
     // firstName = TextEditingController();
     // middleName = TextEditingController();
     // lastName = TextEditingController();
-    jobTitle = TextEditingController();
-    department = TextEditingController();
-    companyName = TextEditingController();
-    headLine = TextEditingController();
+    jobTitle = TextEditingController(text: widget.card.generalInfo.jobTitle);
+    department = TextEditingController(text: widget.card.generalInfo.department);
+    companyName = TextEditingController(text: widget.card.generalInfo.companyName);
+    headLine = TextEditingController(text: widget.card.generalInfo.headLine);
   }
 
   @override
   void dispose() {
+    cardTitle.dispose();
+    fullName.dispose();
+    firstName.dispose();
+    middleName.dispose();
+    lastName.dispose();
+    jobTitle.dispose();
+    department.dispose();
+    companyName.dispose();
+    headLine.dispose();
     _controllerMap.forEach((_, controller) => controller.dispose());
     super.dispose();
   }
@@ -160,7 +170,7 @@ class _EditCardPageState extends State<EditCardPage> {
               onPressed: () {
                 final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(context);
                 final cardColorBloc =
-                BlocProvider.of<SelectCardColorBloc>(context);
+                    BlocProvider.of<SelectCardColorBloc>(context);
 
                 final cardsInfoState = cardsInfoBloc.state;
 
@@ -213,6 +223,14 @@ class _EditCardPageState extends State<EditCardPage> {
               ),
             ],
           ),
+        //   cardTitle.text = state.cards[widget.cardIndex].settings.cardTitle;
+        //   firstName.text = state.cards[widget.cardIndex].generalInfo.firstName;
+        //   middleName.text = state.cards[widget.cardIndex].generalInfo.middleName;
+        //   lastName.text = state.cards[widget.cardIndex].generalInfo.lastName;
+        //   jobTitle.text = state.cards[widget.cardIndex].generalInfo.jobTitle;
+        //   department.text = state.cards[widget.cardIndex].generalInfo.department;
+        //   companyName.text = state.cards[widget.cardIndex].generalInfo.companyName;
+        // headLine.text = state.cards[widget.cardIndex].generalInfo.headLine;
           body: SingleChildScrollView(
             child: Column(
               //crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -220,8 +238,9 @@ class _EditCardPageState extends State<EditCardPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: CustomTextField(
-                      hintText: 'Set a title (e.g. Work or Personal)',
-                      controller: cardTitle),
+                    hintText: 'Set a title (e.g. Work or Personal)',
+                    controller: cardTitle,
+                  ),
                 ),
 
                 // SizedBox(
@@ -266,7 +285,8 @@ class _EditCardPageState extends State<EditCardPage> {
                         children: [
                           if (state is ImagePickLoadedState)
                             Expanded(
-                                child: Image.file(state.image, height: 150)),
+                                child:
+                                Image.file(state.image, height: 150)),
                           Padding(
                             padding: const EdgeInsets.only(left: 15.0),
                             child: Column(
@@ -297,7 +317,8 @@ class _EditCardPageState extends State<EditCardPage> {
                                 ),
                                 if (state is ImagePickLoadedState)
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 20.0),
+                                    padding:
+                                    const EdgeInsets.only(top: 20.0),
                                     child: GestureDetector(
                                       onTap: () {
                                         profileImageBloc
@@ -335,7 +356,8 @@ class _EditCardPageState extends State<EditCardPage> {
                         children: [
                           if (state is ImagePickLoadedState)
                             Expanded(
-                                child: Image.file(state.image, height: 150)),
+                                child:
+                                Image.file(state.image, height: 150)),
                           Padding(
                             padding: const EdgeInsets.only(left: 15.0),
                             child: Column(
@@ -347,7 +369,8 @@ class _EditCardPageState extends State<EditCardPage> {
                                       backgroundColor: Colors.transparent,
                                       builder: (BuildContext context) {
                                         return ImagePickSourceBottomSheet(
-                                            imageBloc: companyLogoImageBloc);
+                                            imageBloc:
+                                            companyLogoImageBloc);
                                       },
                                     );
                                   },
@@ -363,7 +386,8 @@ class _EditCardPageState extends State<EditCardPage> {
                                 ),
                                 if (state is ImagePickLoadedState)
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 20.0),
+                                    padding:
+                                    const EdgeInsets.only(top: 20.0),
                                     child: GestureDetector(
                                       onTap: () {
                                         companyLogoImageBloc
@@ -395,7 +419,8 @@ class _EditCardPageState extends State<EditCardPage> {
                       GestureDetector(
                         onTap: () {
                           final fullNameDropdownBloc =
-                          BlocProvider.of<FullNameDropdownBloc>(context);
+                          BlocProvider.of<FullNameDropdownBloc>(
+                              context);
 
                           final fullNameDropdownState =
                               fullNameDropdownBloc.state;
@@ -438,11 +463,13 @@ class _EditCardPageState extends State<EditCardPage> {
                           ],
                         ),
                       ),
-                      BlocBuilder<FullNameDropdownBloc, FullNameDropdownState>(
+                      BlocBuilder<FullNameDropdownBloc,
+                          FullNameDropdownState>(
                         builder: (context, state) {
                           if (state is FullNameDropdownOpenState) {
                             return Padding(
-                              padding: const EdgeInsets.only(left: 20, top: 15),
+                              padding:
+                              const EdgeInsets.only(left: 20, top: 15),
                               child: Column(
                                 children: [
                                   CustomTextField(
@@ -482,7 +509,8 @@ class _EditCardPageState extends State<EditCardPage> {
                         height: 15,
                       ),
                       CustomTextField(
-                          hintText: 'Company Name', controller: companyName),
+                          hintText: 'Company Name',
+                          controller: companyName),
                       SizedBox(
                         height: 15,
                       ),
@@ -514,7 +542,8 @@ class _EditCardPageState extends State<EditCardPage> {
                               shrinkWrap: true,
                               itemCount: _controllerMap.length,
                               //padding: EdgeInsets.only(top: 15),
-                              itemBuilder: (BuildContext context, int index) {
+                              itemBuilder:
+                                  (BuildContext context, int index) {
                                 //final controller = _getControllerOf(data[index]);
 
                                 // final textField = TextField(
@@ -532,9 +561,12 @@ class _EditCardPageState extends State<EditCardPage> {
                                   icon: getIcon(
                                       _controllerMap.keys.elementAt(index)),
                                   onTextFieldRemove: () {
-                                    _controllerMap.remove(
-                                        _controllerMap.keys.elementAt(index));
-                                    final textFieldBloc = BlocProvider.of<TextFieldBloc>(context);
+                                    _controllerMap.remove(_controllerMap
+                                        .keys
+                                        .elementAt(index));
+                                    final textFieldBloc =
+                                    BlocProvider.of<TextFieldBloc>(
+                                        context);
                                     textFieldBloc.add(AddTextFieldEvent());
                                   },
                                 );
@@ -564,7 +596,8 @@ class _EditCardPageState extends State<EditCardPage> {
 
                 Container(
                   margin: EdgeInsets.all(50),
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  padding:
+                  EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -681,14 +714,12 @@ class _EditCardPageState extends State<EditCardPage> {
                 )
               ],
             ),
-          ),
+          )
         );
       }),
     );
   }
 }
-
-
 
 class ImagePickSourceBottomSheet extends StatelessWidget {
   final ImageBloc imageBloc;
@@ -796,12 +827,12 @@ class ExtraInfoFooterWidget extends StatelessWidget {
 
   const ExtraInfoFooterWidget(
       {Key? key,
-        required this.phoneNumber,
-        required this.email,
-        required this.link,
-        required this.linkedIn,
-        required this.github,
-        required this.telegram})
+      required this.phoneNumber,
+      required this.email,
+      required this.link,
+      required this.linkedIn,
+      required this.github,
+      required this.telegram})
       : super(key: key);
 
   @override
@@ -840,9 +871,9 @@ class ExtraInfoWidget extends StatelessWidget {
 
   const ExtraInfoWidget(
       {Key? key,
-        required this.title,
-        required this.icon,
-        required this.onPressed})
+      required this.title,
+      required this.icon,
+      required this.onPressed})
       : super(key: key);
 
   @override
@@ -930,11 +961,11 @@ class CustomTextField extends StatelessWidget {
 
   const CustomTextField(
       {Key? key,
-        required this.controller,
-        required this.hintText,
-        this.enabled = true,
-        this.icon,
-        this.onTextFieldRemove})
+      required this.controller,
+      required this.hintText,
+      this.enabled = true,
+      this.icon,
+      this.onTextFieldRemove})
       : super(key: key);
 
   @override
@@ -961,14 +992,14 @@ class CustomTextField extends StatelessWidget {
                 decoration: InputDecoration(
                   //contentPadding: EdgeInsets.all(0),
                   suffixIcon:
-                  BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
+                      BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
                     builder: (context, state) {
                       if (state is ClearButtonEnableState) {
                         return IconButton(
                           onPressed: () {
                             controller.clear();
                             final clearButtonBloc =
-                            BlocProvider.of<TextClearButtonBloc>(context);
+                                BlocProvider.of<TextClearButtonBloc>(context);
                             clearButtonBloc.add(ClearButtonDisableEvent());
                           },
                           icon: Icon(Icons.highlight_remove_outlined),
@@ -985,18 +1016,18 @@ class CustomTextField extends StatelessWidget {
                 onTap: () {
                   if (controller.text.isNotEmpty) {
                     final clearButtonBloc =
-                    BlocProvider.of<TextClearButtonBloc>(context);
+                        BlocProvider.of<TextClearButtonBloc>(context);
                     clearButtonBloc.add(ClearButtonEnableEvent());
                   }
                 },
                 onChanged: (text) {
                   if (controller.text.isEmpty) {
                     final clearButtonBloc =
-                    BlocProvider.of<TextClearButtonBloc>(context);
+                        BlocProvider.of<TextClearButtonBloc>(context);
                     clearButtonBloc.add(ClearButtonDisableEvent());
                   } else if (controller.text.length == 1) {
                     final clearButtonBloc =
-                    BlocProvider.of<TextClearButtonBloc>(context);
+                        BlocProvider.of<TextClearButtonBloc>(context);
                     clearButtonBloc.add(ClearButtonEnableEvent());
                   }
                 },
