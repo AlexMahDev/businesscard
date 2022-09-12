@@ -260,7 +260,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                         children: [
                           if (state is ImagePickLoadedState)
                             Expanded(
-                                child: Image.file(state.image, height: 200)),
+                                child: Image.file(state.image, height: 150)),
                           Padding(
                             padding: const EdgeInsets.only(left: 15.0),
                             child: Column(
@@ -329,7 +329,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                         children: [
                           if (state is ImagePickLoadedState)
                             Expanded(
-                                child: Image.file(state.image, height: 200)),
+                                child: Image.file(state.image, height: 150)),
                           Padding(
                             padding: const EdgeInsets.only(left: 15.0),
                             child: Column(
