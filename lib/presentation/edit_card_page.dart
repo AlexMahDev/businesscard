@@ -638,9 +638,11 @@ class _EditCardPageState extends State<EditCardPage> {
                               final state = textFieldBloc.state;
 
                               if (state is TextFieldInitialState) {
-                                _controllerMap['phoneNumber'] =
-                                    TextEditingController();
-                                textFieldBloc.add(AddTextFieldEvent());
+                                if(_controllerMap['phoneNumber'] == null) {
+                                  _controllerMap['phoneNumber'] =
+                                      TextEditingController();
+                                  textFieldBloc.add(AddTextFieldEvent());
+                                }
                               }
                             }),
                         email: ExtraInfoWidget(
@@ -652,9 +654,11 @@ class _EditCardPageState extends State<EditCardPage> {
                               final state = textFieldBloc.state;
 
                               if (state is TextFieldInitialState) {
-                                _controllerMap['email'] =
-                                    TextEditingController();
-                                textFieldBloc.add(AddTextFieldEvent());
+                                if(_controllerMap['email'] == null) {
+                                  _controllerMap['email'] =
+                                      TextEditingController();
+                                  textFieldBloc.add(AddTextFieldEvent());
+                                }
                               }
                             }),
                         link: ExtraInfoWidget(
@@ -666,9 +670,11 @@ class _EditCardPageState extends State<EditCardPage> {
                               final state = textFieldBloc.state;
 
                               if (state is TextFieldInitialState) {
-                                _controllerMap['link'] =
-                                    TextEditingController();
-                                textFieldBloc.add(AddTextFieldEvent());
+                                if(_controllerMap['link'] == null) {
+                                  _controllerMap['link'] =
+                                      TextEditingController();
+                                  textFieldBloc.add(AddTextFieldEvent());
+                                }
                               }
                             }),
                         linkedIn: ExtraInfoWidget(
@@ -683,9 +689,11 @@ class _EditCardPageState extends State<EditCardPage> {
                               final state = textFieldBloc.state;
 
                               if (state is TextFieldInitialState) {
-                                _controllerMap['linkedIn'] =
-                                    TextEditingController();
-                                textFieldBloc.add(AddTextFieldEvent());
+                                if(_controllerMap['linkedIn'] == null) {
+                                  _controllerMap['linkedIn'] =
+                                      TextEditingController();
+                                  textFieldBloc.add(AddTextFieldEvent());
+                                }
                               }
                             }),
                         github: ExtraInfoWidget(
@@ -700,9 +708,11 @@ class _EditCardPageState extends State<EditCardPage> {
                               final state = textFieldBloc.state;
 
                               if (state is TextFieldInitialState) {
-                                _controllerMap['gitHub'] =
-                                    TextEditingController();
-                                textFieldBloc.add(AddTextFieldEvent());
+                                if(_controllerMap['gitHub'] != null) {
+                                  _controllerMap['gitHub'] =
+                                      TextEditingController();
+                                  textFieldBloc.add(AddTextFieldEvent());
+                                }
                               }
                             }),
                         telegram: ExtraInfoWidget(
@@ -714,9 +724,11 @@ class _EditCardPageState extends State<EditCardPage> {
                               final state = textFieldBloc.state;
 
                               if (state is TextFieldInitialState) {
-                                _controllerMap['telegram'] =
-                                    TextEditingController();
-                                textFieldBloc.add(AddTextFieldEvent());
+                                if(_controllerMap['telegram'] == null) {
+                                  _controllerMap['telegram'] =
+                                      TextEditingController();
+                                  textFieldBloc.add(AddTextFieldEvent());
+                                }
                               }
                             }));
                   },
