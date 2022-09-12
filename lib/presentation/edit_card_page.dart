@@ -67,6 +67,15 @@ class _EditCardPageState extends State<EditCardPage> {
     department = TextEditingController(text: widget.card.generalInfo.department);
     companyName = TextEditingController(text: widget.card.generalInfo.companyName);
     headLine = TextEditingController(text: widget.card.generalInfo.headLine);
+
+    for(TextFieldModel textField in widget.card.extraInfo.listOfFields) {
+
+      TextEditingController controller = TextEditingController(text: textField.value);
+
+      _controllerMap[textField.key] = controller;
+
+    }
+
   }
 
   @override
@@ -84,11 +93,11 @@ class _EditCardPageState extends State<EditCardPage> {
     super.dispose();
   }
 
-  TextEditingController _getControllerOf(String name) {
-    var controller = _controllerMap[name];
+  TextEditingController _getControllerOf(String controllerKey) {
+    var controller = _controllerMap[controllerKey];
     if (controller == null) {
       controller = TextEditingController();
-      _controllerMap[name] = controller;
+      _controllerMap[controllerKey] = controller;
     }
     //print(_controllerMap.length);
     return controller;
