@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:businesscard/blocs/card_info_bloc/card_info_bloc.dart';
 import 'package:businesscard/blocs/full_name_dropdown_bloc/full_name_dropdown_bloc.dart';
+import 'package:businesscard/blocs/image_bloc/image_bloc.dart';
 import 'package:businesscard/blocs/new_card_bloc/new_card_bloc.dart';
 import 'package:businesscard/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import 'package:businesscard/blocs/text_clear_button_bloc/text_clear_button_bloc.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../data/models/card_model.dart';
-
 
 class CreateCardPage extends StatefulWidget {
   const CreateCardPage({Key? key}) : super(key: key);
@@ -31,23 +31,30 @@ class _CreateCardPageState extends State<CreateCardPage> {
   late final TextEditingController department;
   late final TextEditingController companyName;
   late final TextEditingController headLine;
+  late final ImageBloc profileImageBloc;
+  late final ImageBloc companyLogoImageBloc;
 
   @override
   void initState() {
     super.initState();
+    profileImageBloc = ImageBloc();
+    companyLogoImageBloc = ImageBloc();
     cardTitle = TextEditingController();
     fullName = TextEditingController();
     firstName = TextEditingController();
     middleName = TextEditingController();
     lastName = TextEditingController();
     firstName.addListener(() {
-      fullName.text = '${firstName.text} ${middleName.text} ${lastName.text}'.trim();
+      fullName.text =
+          '${firstName.text} ${middleName.text} ${lastName.text}'.trim();
     });
     lastName.addListener(() {
-      fullName.text = '${firstName.text} ${middleName.text} ${lastName.text}'.trim();
+      fullName.text =
+          '${firstName.text} ${middleName.text} ${lastName.text}'.trim();
     });
     middleName.addListener(() {
-      fullName.text = '${firstName.text} ${middleName.text} ${lastName.text}'.trim();
+      fullName.text =
+          '${firstName.text} ${middleName.text} ${lastName.text}'.trim();
     });
     // firstName = TextEditingController();
     // middleName = TextEditingController();
@@ -74,48 +81,47 @@ class _CreateCardPageState extends State<CreateCardPage> {
     return controller;
   }
 
-
   String getHintText(String key) {
-
-    if(key == 'phoneNumber') {
+    if (key == 'phoneNumber') {
       return 'Phone Number';
-    } else if(key == 'email'){
+    } else if (key == 'email') {
       return 'Email';
-    } else if(key == 'link'){
+    } else if (key == 'link') {
       return 'Link';
-    } else if(key == 'linkedIn'){
+    } else if (key == 'linkedIn') {
       return 'LinkedIn';
-    } else if(key == 'gitHub'){
+    } else if (key == 'gitHub') {
       return 'GitHub';
-    } else if(key == 'telegram'){
+    } else if (key == 'telegram') {
       return 'Telegram';
     } else {
       return '';
     }
-
   }
 
   Widget getIcon(String key) {
-    if(key == 'phoneNumber') {
+    if (key == 'phoneNumber') {
       return Icon(Icons.phone, color: Colors.white);
-    } else if(key == 'email'){
+    } else if (key == 'email') {
       return Icon(Icons.email, color: Colors.white);
-    } else if(key == 'link'){
+    } else if (key == 'link') {
       return Icon(Icons.link, color: Colors.white);
-    } else if(key == 'linkedIn'){
-      return Image.asset('assets/images/icons/linkedin-icon.png', color: Colors.white, height: 20);
-    } else if(key == 'gitHub'){
-      return Image.asset('assets/images/icons/github-icon.png', color: Colors.white, height: 20);
-    } else if(key == 'telegram'){
+    } else if (key == 'linkedIn') {
+      return Image.asset('assets/images/icons/linkedin-icon.png',
+          color: Colors.white, height: 20);
+    } else if (key == 'gitHub') {
+      return Image.asset('assets/images/icons/github-icon.png',
+          color: Colors.white, height: 20);
+    } else if (key == 'telegram') {
       return Icon(Icons.telegram, color: Colors.white);
     } else {
       return Icon(Icons.add_circle_outline_rounded, color: Colors.white);
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<NewCardBloc>(
@@ -127,6 +133,16 @@ class _CreateCardPageState extends State<CreateCardPage> {
         BlocProvider<FullNameDropdownBloc>(
           create: (BuildContext context) => FullNameDropdownBloc(),
         ),
+        // BlocProvider<ImageBloc>(
+        //   create: (BuildContext context) => imageBloc
+        // ),
+        BlocProvider<ImageBloc>(
+            create: (BuildContext context) => profileImageBloc
+        ),
+        BlocProvider<ImageBloc>(
+            create: (BuildContext context) => companyLogoImageBloc
+        ),
+
         // BlocProvider<CardInfoBloc>(
         //   create: (BuildContext context) =>  CardInfoBloc(),
         // ),
@@ -139,20 +155,20 @@ class _CreateCardPageState extends State<CreateCardPage> {
               icon: const Icon(Icons.check),
               splashRadius: 20,
               onPressed: () {
-
                 final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(context);
                 final cardColorBloc =
                 BlocProvider.of<SelectCardColorBloc>(context);
 
                 final cardsInfoState = cardsInfoBloc.state;
 
-
                 if (cardsInfoState is CardInfoLoadedState) {
                   List<CardModel> currentCards = cardsInfoState.cards;
 
                   CardModel newCard = CardModel(
                       settings: SettingsModel(
-                          cardTitle: cardTitle.text.isNotEmpty ? cardTitle.text : 'Card',
+                          cardTitle: cardTitle.text.isNotEmpty
+                              ? cardTitle.text
+                              : 'Card',
                           cardColor: cardColorBloc.state.value),
                       generalInfo: GeneralInfoModel(
                           firstName: firstName.text,
@@ -168,7 +184,6 @@ class _CreateCardPageState extends State<CreateCardPage> {
                     newCard.extraInfo.listOfFields
                         .add(TextFieldModel(key: key, value: value.text));
                   });
-
 
                   currentCards.add(newCard);
 
@@ -238,104 +253,128 @@ class _CreateCardPageState extends State<CreateCardPage> {
                   },
                 ),
 
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet<void>(
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            builder: (BuildContext context) {
-                              return Container(
-                                height: 250,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 35),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    children: [
-                                      Container(
-                                        height: 110,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white.withOpacity(0.9),
-                                            borderRadius: BorderRadius.all(Radius.circular(10))
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                                          children: [
-                                            Expanded(
-                                              child: Container(
-                                                child: Center(child: Text('Select from photo library', style: TextStyle(color: Colors.redAccent, fontSize: 18))),
-                                                //color: Colors.redAccent,
-                                              ),
-                                            ),
-                                            Divider(height: 1,),
-                                            Expanded(
-                                              child: Container(
-                                                child: Center(child: Text('Take photo', style: TextStyle(color: Colors.redAccent, fontSize: 18))),
-                                                //color: Colors.redAccent,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Container(
-                                          height: 55,
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                            borderRadius: BorderRadius.all(Radius.circular(10))
-                                          ),
-                                          child: Center(child: Text('Cancel', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 18))),
-                                        ),
-                                      ),
-                                    ],
+
+                BlocBuilder<ImageBloc, ImageState>(
+                  bloc: profileImageBloc,
+                  builder: (context, state) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if(state is ImagePickLoadedState)
+                            Expanded(child: Image.file(state.image)),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    showModalBottomSheet<void>(
+                                      context: context,
+                                      backgroundColor: Colors.transparent,
+                                      builder: (BuildContext context) {
+                                        return BlocProvider.value(
+                                          value: profileImageBloc,
+                                          child: ImagePickSourceBottomSheet(imageBloc: profileImageBloc),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Text(state is ImagePickLoadedState ?
+                                  'Edit Profile Picture' : 'Add Profile Picture',
+                                    style: TextStyle(
+                                        color: Colors.redAccent,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                // child: Center(
-                                //   child: Column(
-                                //     mainAxisAlignment: MainAxisAlignment.center,
-                                //     mainAxisSize: MainAxisSize.min,
-                                //     children: <Widget>[
-                                //       const Text('Modal BottomSheet'),
-                                //       ElevatedButton(
-                                //         child: const Text('Close BottomSheet'),
-                                //         onPressed: () => Navigator.pop(context),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
-                              );
-                            },
-                          );
-                        },
-                        child: Text(
-                          'Add Profile Picture',
-                          style: TextStyle(
-                              color: Colors.redAccent,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold),
-                        )),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    GestureDetector(
-                        onTap: () {},
-                        child: Text(
-                          'Add Company Logo',
-                          style: TextStyle(
-                              color: Colors.redAccent,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold),
-                        )),
-                  ],
+                                if(state is ImagePickLoadedState)
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 20.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        profileImageBloc.add(RemoveImageEvent());
+                                      },
+                                      child: Text(
+                                        'Remove Profile Picture',
+                                        style: TextStyle(
+                                            color: Colors.redAccent,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+
+                SizedBox(
+                  height: 30,
+                ),
+
+                BlocBuilder<ImageBloc, ImageState>(
+                  bloc: companyLogoImageBloc,
+                  builder: (context, state) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if(state is ImagePickLoadedState)
+                            Expanded(child: Image.file(state.image)),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    showModalBottomSheet<void>(
+                                      context: context,
+                                      backgroundColor: Colors.transparent,
+                                      builder: (BuildContext context) {
+                                        return ImagePickSourceBottomSheet(imageBloc: companyLogoImageBloc);
+                                      },
+                                    );
+                                  },
+                                  child: Text(state is ImagePickLoadedState ?
+                                  'Edit Company Logo' : 'Add Company Logo',
+                                    style: TextStyle(
+                                        color: Colors.redAccent,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                if(state is ImagePickLoadedState)
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 20.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        companyLogoImageBloc.add(RemoveImageEvent());
+                                      },
+                                      child: Text(
+                                        'Remove Company Logo',
+                                        style: TextStyle(
+                                            color: Colors.redAccent,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
 
                 Padding(
@@ -455,7 +494,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                   builder: (context, state) {
                     return BlocBuilder<NewCardBloc, NewCardState>(
                       builder: (context, state) {
-                        if (state is NewCardInitialState && _controllerMap.isNotEmpty) {
+                        if (state is NewCardInitialState &&
+                            _controllerMap.isNotEmpty) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 30),
@@ -475,16 +515,19 @@ class _CreateCardPageState extends State<CreateCardPage> {
                                 //   ),
                                 // );
                                 return CustomTextField(
-                                  controller: _getControllerOf(_controllerMap.keys.elementAt(index)),
-                                  hintText: getHintText(_controllerMap.keys.elementAt(index)),
-                                  icon: getIcon(_controllerMap.keys.elementAt(index)),
+                                  controller: _getControllerOf(
+                                      _controllerMap.keys.elementAt(index)),
+                                  hintText: getHintText(
+                                      _controllerMap.keys.elementAt(index)),
+                                  icon: getIcon(
+                                      _controllerMap.keys.elementAt(index)),
                                   onTextFieldRemove: () {
-
-                                    _controllerMap.remove(_controllerMap.keys.elementAt(index));
-                                    final newCardBloc = BlocProvider.of<NewCardBloc>(context);
+                                    _controllerMap.remove(
+                                        _controllerMap.keys.elementAt(index));
+                                    final newCardBloc =
+                                    BlocProvider.of<NewCardBloc>(context);
                                     CardModel card = state.card;
                                     newCardBloc.add(AddCardInfoEvent(card));
-
                                   },
                                 );
                                 //   Container(
@@ -545,7 +588,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
-                                _controllerMap['phoneNumber'] = TextEditingController();
+                                _controllerMap['phoneNumber'] =
+                                    TextEditingController();
                                 CardModel card = state.card;
                                 newCardBloc.add(AddCardInfoEvent(card));
                               }
@@ -559,7 +603,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
-                                _controllerMap['email'] = TextEditingController();
+                                _controllerMap['email'] =
+                                    TextEditingController();
                                 CardModel card = state.card;
                                 newCardBloc.add(AddCardInfoEvent(card));
                               }
@@ -573,35 +618,44 @@ class _CreateCardPageState extends State<CreateCardPage> {
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
-                                _controllerMap['link'] = TextEditingController();
+                                _controllerMap['link'] =
+                                    TextEditingController();
                                 CardModel card = state.card;
                                 newCardBloc.add(AddCardInfoEvent(card));
                               }
                             }),
                         linkedIn: ExtraInfoWidget(
                             title: 'LinkedIn',
-                            icon: Image.asset('assets/images/icons/linkedin-icon.png', color: Colors.white, height: 20),
+                            icon: Image.asset(
+                                'assets/images/icons/linkedin-icon.png',
+                                color: Colors.white,
+                                height: 20),
                             onPressed: () {
                               final newCardBloc =
                               BlocProvider.of<NewCardBloc>(context);
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
-                                _controllerMap['linkedIn'] = TextEditingController();
+                                _controllerMap['linkedIn'] =
+                                    TextEditingController();
                                 CardModel card = state.card;
                                 newCardBloc.add(AddCardInfoEvent(card));
                               }
                             }),
                         github: ExtraInfoWidget(
                             title: 'GitHub',
-                            icon: Image.asset('assets/images/icons/github-icon.png', color: Colors.white, height: 20),
+                            icon: Image.asset(
+                                'assets/images/icons/github-icon.png',
+                                color: Colors.white,
+                                height: 20),
                             onPressed: () {
                               final newCardBloc =
                               BlocProvider.of<NewCardBloc>(context);
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
-                                _controllerMap['gitHub'] = TextEditingController();
+                                _controllerMap['gitHub'] =
+                                    TextEditingController();
                                 CardModel card = state.card;
                                 newCardBloc.add(AddCardInfoEvent(card));
                               }
@@ -615,7 +669,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                               final state = newCardBloc.state;
 
                               if (state is NewCardInitialState) {
-                                _controllerMap['telegram'] = TextEditingController();
+                                _controllerMap['telegram'] =
+                                    TextEditingController();
                                 CardModel card = state.card;
                                 newCardBloc.add(AddCardInfoEvent(card));
                               }
@@ -631,8 +686,121 @@ class _CreateCardPageState extends State<CreateCardPage> {
   }
 }
 
-class ExtraInfoFooterWidget extends StatelessWidget {
 
+class ImagePickSourceBottomSheet extends StatelessWidget {
+
+  final ImageBloc imageBloc;
+
+  const ImagePickSourceBottomSheet({Key? key, required this.imageBloc}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    //final imageBloc = BlocProvider.of<ImageBloc>(context);
+
+    return SizedBox(
+      height: 250,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: 10, vertical: 35),
+        child: Column(
+          mainAxisAlignment:
+          MainAxisAlignment.end,
+          crossAxisAlignment:
+          CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              height: 110,
+              decoration: BoxDecoration(
+                  color: Colors.white
+                      .withOpacity(0.9),
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(10))),
+              child: Column(
+                crossAxisAlignment:
+                CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        imageBloc.add(PickImageEvent(true));
+                        Navigator.pop(context);
+                      },
+                      child: Center(
+                          child: Text(
+                              'Select from photo library',
+                              style: TextStyle(
+                                  color: Colors
+                                      .redAccent,
+                                  fontSize: 18))),
+                    ),
+                  ),
+                  Divider(
+                    height: 1,
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        imageBloc.add(PickImageEvent(false));
+                        Navigator.pop(context);
+                      },
+                      child: Center(
+                          child: Text(
+                              'Take photo',
+                              style: TextStyle(
+                                  color: Colors
+                                      .redAccent,
+                                  fontSize: 18))),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 55,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                    BorderRadius.all(
+                        Radius.circular(10))),
+                child: Center(
+                    child: Text('Cancel',
+                        style: TextStyle(
+                            color:
+                            Colors.redAccent,
+                            fontWeight:
+                            FontWeight.bold,
+                            fontSize: 18))),
+              ),
+            ),
+          ],
+        ),
+      ),
+      // child: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     mainAxisSize: MainAxisSize.min,
+      //     children: <Widget>[
+      //       const Text('Modal BottomSheet'),
+      //       ElevatedButton(
+      //         child: const Text('Close BottomSheet'),
+      //         onPressed: () => Navigator.pop(context),
+      //       ),
+      //     ],
+      //   ),
+      // ),
+    );
+  }
+}
+
+
+class ExtraInfoFooterWidget extends StatelessWidget {
   final ExtraInfoWidget phoneNumber;
   final ExtraInfoWidget email;
   final ExtraInfoWidget link;
@@ -679,7 +847,6 @@ class ExtraInfoFooterWidget extends StatelessWidget {
 }
 
 class ExtraInfoWidget extends StatelessWidget {
-
   final String title;
   final Widget icon;
   final VoidCallback onPressed;
@@ -703,10 +870,9 @@ class ExtraInfoWidget extends StatelessWidget {
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             CircleAvatar(
-              radius: 20,
-              backgroundColor: selectCardColor.state,
-              child: icon
-            ),
+                radius: 20,
+                backgroundColor: selectCardColor.state,
+                child: icon),
             // SizedBox(
             //   height: 10,
             // ),
@@ -766,22 +932,20 @@ class ChooseColorWidget extends StatelessWidget {
   }
 }
 
-
 class CustomTextField extends StatelessWidget {
-
   final TextEditingController controller;
   final String hintText;
   final bool enabled;
 
-
   final Widget? icon;
   final VoidCallback? onTextFieldRemove;
-
 
   const CustomTextField({Key? key,
     required this.controller,
     required this.hintText,
-    this.enabled = true, this.icon, this.onTextFieldRemove})
+    this.enabled = true,
+    this.icon,
+    this.onTextFieldRemove})
       : super(key: key);
 
   @override
@@ -850,12 +1014,11 @@ class CustomTextField extends StatelessWidget {
                 //textAlign: TextAlign.center,
               ),
             ),
-            if(icon != null)
+            if (icon != null)
               IconButton(
                   splashRadius: 20,
                   onPressed: onTextFieldRemove,
-                  icon: Icon(Icons.remove_circle_outline)
-              )
+                  icon: Icon(Icons.remove_circle_outline))
           ],
         );
       }),

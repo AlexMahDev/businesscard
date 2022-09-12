@@ -3,8 +3,12 @@ part of 'image_bloc.dart';
 @immutable
 abstract class ImageEvent {}
 
-class ImagePickLoadingEvent extends ImageEvent {}
+class PickImageEvent extends ImageEvent {
 
-class ImagePickLoadedEvent extends ImageEvent {}
+  final bool isGallery;
 
-class ImagePickErrorEvent extends ImageEvent {}
+  PickImageEvent(this.isGallery);
+
+}
+
+class RemoveImageEvent extends ImageEvent {}
