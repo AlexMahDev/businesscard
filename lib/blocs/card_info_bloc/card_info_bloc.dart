@@ -35,7 +35,9 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
           "jobTitle": "Head Of Mobile",
           "department": "Mobile",
           "companyName": "Innowise",
-          "headLine": "Hi!"
+          "headLine": "Hi!",
+          "profileImage": "https://broncolor.swiss/assets/img/Stories/Inspiration/Daniel-Radcliffe/_contentWithShareBar23/DANIEL-RADCLIFFE-featured.jpg",
+          "logoImage": "https://media-exp1.licdn.com/dms/image/C4D22AQGXD38tJ3bl6g/feedshare-shrink_800/0/1658841071398?e=1663200000&v=beta&t=QmWAtDvMN4YTLIBg7RopEEuXO1PWq6VpeSkKbafqpb0"
         },
         "extraInfo": {
           "email": "myemail@gmail.com",
@@ -55,7 +57,9 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
           "jobTitle": "test",
           "department": "Mobile",
           "companyName": "test",
-          "headLine": "Hi!"
+          "headLine": "Hi!",
+          "profileImage": "https://broncolor.swiss/assets/img/Stories/Inspiration/Daniel-Radcliffe/_contentWithShareBar23/DANIEL-RADCLIFFE-featured.jpg",
+          "logoImage": "https://scontent-waw1-1.xx.fbcdn.net/v/t39.30808-6/215485554_10159431724164660_8100659849944415055_n.png?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=WUhRQ7j_fr8AX-aIi3O&_nc_ht=scontent-waw1-1.xx&oh=00_AT8EUagE3wtnp-EPMVpVE9x9GTcrmOsITCKpNEXC7zzVtA&oe=632456A9"
         },
         "extraInfo": {
           "email": "test@gmail.com",

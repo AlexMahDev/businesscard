@@ -173,10 +173,15 @@ class _CardsPageState extends State<CardsPage> {
                               children: [
                                 Column(
                                   children: [
-                                    SizedBox(
-                                        height: 120,
-                                        child: Image.asset(
-                                            'assets/images/innowise-logo.png')),
+                                    if(state.cards[position].generalInfo.logoImage.isNotEmpty)
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                                        child: SizedBox(
+                                            height: 200,
+                                            child: Image.network(state.cards[position].generalInfo.logoImage)),
+                                            // Image.asset(
+                                            //     'assets/images/innowise-logo.png')),
+                                      ),
                                     Divider(
                                       color: Color(state.cards[position]
                                           .settings.cardColor)
@@ -185,23 +190,26 @@ class _CardsPageState extends State<CardsPage> {
                                     ),
                                   ],
                                 ),
-                                Positioned(
-                                  top: 90,
-                                  right: 15,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      ClipOval(
-                                        child: Image.asset(
-                                          'assets/images/avatar.jpg',
-                                          width: 80,
-                                          height: 80,
-                                          fit: BoxFit.cover,
+                                if(state.cards[position].generalInfo.profileImage.isNotEmpty)
+                                  Positioned(
+                                    top: 170,
+                                    right: 15,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        ClipOval(
+                                          child: Image.network(state.cards[position].generalInfo.profileImage, width: 80, height: 80, fit: BoxFit.cover),
+
+                                          // Image.asset(
+                                          //   'assets/images/avatar.jpg',
+                                          //   width: 80,
+                                          //   height: 80,
+                                          //   fit: BoxFit.cover,
+                                          // ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                )
+                                      ],
+                                    ),
+                                  )
                               ],
                             ),
 

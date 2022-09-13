@@ -153,8 +153,10 @@ class GeneralInfoModel {
   final String department;
   final String companyName;
   final String headLine;
+  final String profileImage;
+  final String logoImage;
 
-  GeneralInfoModel({required this.cardTitle, required this.firstName, required this.middleName, required this.lastName, required this.jobTitle, required this.department, required this.companyName, required this.headLine});
+  GeneralInfoModel({required this.cardTitle, required this.firstName, required this.middleName, required this.lastName, required this.jobTitle, required this.department, required this.companyName, required this.headLine, required this.profileImage, required this.logoImage});
 
 
   factory GeneralInfoModel.fromJson(Map<String, dynamic> json) => GeneralInfoModel(
@@ -166,6 +168,8 @@ class GeneralInfoModel {
       department: json["department"],
       companyName: json["companyName"],
       headLine: json["headLine"],
+      profileImage: json["profileImage"],
+      logoImage: json["logoImage"]
   );
 
 

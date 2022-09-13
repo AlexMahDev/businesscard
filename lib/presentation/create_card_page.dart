@@ -193,7 +193,9 @@ class _CreateCardPageState extends State<CreateCardPage> {
                           jobTitle: jobTitle.text,
                           department: department.text,
                           companyName: companyName.text,
-                          headLine: headLine.text),
+                          headLine: headLine.text,
+                          profileImage: '',
+                          logoImage: ''),
                       extraInfo: ExtraInfoModel(listOfFields: []));
 
                   _controllerMap.forEach((key, value) {
