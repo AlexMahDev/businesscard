@@ -111,7 +111,7 @@ class _EditCardPageState extends State<EditCardPage> {
           create: (BuildContext context) => TextFieldBloc(),
         ),
         BlocProvider<SelectCardColorBloc>(
-          create: (BuildContext context) => SelectCardColorBloc(),
+          create: (BuildContext context) => SelectCardColorBloc()..add(SelectCardColorEvent(widget.card.settings.cardColor)),
         ),
         BlocProvider<FullNameDropdownBloc>(
           create: (BuildContext context) => FullNameDropdownBloc(),
