@@ -20,9 +20,10 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
 
     await Future.delayed(const Duration(seconds: 5), () {});
 
-    List<Map<String, Map<String, dynamic>>> listOfCards = [
+    List<Map<String, dynamic>> listOfCards = [
 
       {
+        "cardId": 1,
         "settings": {
           //"cardTitle": "Job",
           "cardColor": 4294922834,
@@ -46,6 +47,7 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
       },
 
       {
+        "cardId": 2,
         "settings": {
           "cardColor": 4294922834,
         },
