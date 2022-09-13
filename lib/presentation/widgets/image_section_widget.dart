@@ -30,7 +30,7 @@ class ImageSectionWidget extends StatelessWidget {
                     child: Image.file(state.image, height: 150)),
               if (state is ImageNetworkState)
                 Expanded(
-                    child: Image.network(state.networkImage, height: 150)),
+                    child: Image.network(state.networkImage, height: 150, errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {return Container();})),
               Padding(
                 padding: const EdgeInsets.only(left: 15.0),
                 child: Column(

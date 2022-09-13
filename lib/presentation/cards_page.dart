@@ -176,9 +176,7 @@ class _CardsPageState extends State<CardsPage> {
                                     if(state.cards[position].generalInfo.logoImage.isNotEmpty)
                                       Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                                        child: SizedBox(
-                                            height: 200,
-                                            child: Image.network(state.cards[position].generalInfo.logoImage)),
+                                        child: Image.network(state.cards[position].generalInfo.logoImage, height: 200, errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {return Container();}),
                                             // Image.asset(
                                             //     'assets/images/innowise-logo.png')),
                                       ),
@@ -198,7 +196,7 @@ class _CardsPageState extends State<CardsPage> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         ClipOval(
-                                          child: Image.network(state.cards[position].generalInfo.profileImage, width: 80, height: 80, fit: BoxFit.cover),
+                                          child: Image.network(state.cards[position].generalInfo.profileImage, width: 80, height: 80, fit: BoxFit.cover, errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {return Container();}),
 
                                           // Image.asset(
                                           //   'assets/images/avatar.jpg',
