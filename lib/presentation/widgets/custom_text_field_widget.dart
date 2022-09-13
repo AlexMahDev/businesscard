@@ -23,11 +23,14 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final cardColorBloc = BlocProvider.of<SelectCardColorBloc>(context);
+    //final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(context);
 
     return BlocProvider<TextClearButtonBloc>(
       create: (context) => TextClearButtonBloc(),
       child: Builder(builder: (context) {
+        final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(context);
         return Row(
           children: [
             if (icon != null)
@@ -39,52 +42,66 @@ class CustomTextField extends StatelessWidget {
                     child: icon),
               ),
             Expanded(
-              child: TextFormField(
-                controller: controller,
-                enabled: enabled,
-                decoration: InputDecoration(
-                  //contentPadding: EdgeInsets.all(0),
-                  suffixIcon:
-                  BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
-                    builder: (context, state) {
-                      if (state is ClearButtonEnableState) {
-                        return IconButton(
-                          onPressed: () {
-                            controller.clear();
-                            final clearButtonBloc =
-                            BlocProvider.of<TextClearButtonBloc>(context);
-                            clearButtonBloc.add(ClearButtonDisableEvent());
-                          },
-                          icon: Icon(Icons.highlight_remove_outlined),
-                          splashRadius: 20,
-                        );
-                      }
-
-                      return SizedBox();
-                    },
-                  ),
-                  hintText: hintText,
-                  //labelText: 'Name *',
-                ),
-                onTap: () {
-                  if (controller.text.isNotEmpty) {
-                    final clearButtonBloc =
-                    BlocProvider.of<TextClearButtonBloc>(context);
-                    clearButtonBloc.add(ClearButtonEnableEvent());
-                  }
-                },
-                onChanged: (text) {
-                  if (controller.text.isEmpty) {
-                    final clearButtonBloc =
-                    BlocProvider.of<TextClearButtonBloc>(context);
+              child: FocusScope(
+                onFocusChange: (focus) {
+                  //print(focus);
+                  final clearButtonBloc =
+                  BlocProvider.of<TextClearButtonBloc>(context);
+                  if(focus) {
+                    if (controller.text.isNotEmpty) {
+                      clearButtonBloc.add(ClearButtonEnableEvent());
+                    }
+                  } else {
                     clearButtonBloc.add(ClearButtonDisableEvent());
-                  } else if (controller.text.length == 1) {
-                    final clearButtonBloc =
-                    BlocProvider.of<TextClearButtonBloc>(context);
-                    clearButtonBloc.add(ClearButtonEnableEvent());
                   }
                 },
-                //textAlign: TextAlign.center,
+                child: TextFormField(
+                  controller: controller,
+                  enabled: enabled,
+                  decoration: InputDecoration(
+                    //contentPadding: EdgeInsets.all(0),
+                    suffixIcon:
+                    BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
+                      builder: (context, state) {
+                        if (state is ClearButtonEnableState) {
+                          return IconButton(
+                            onPressed: () {
+                              controller.clear();
+                              // final clearButtonBloc =
+                              // BlocProvider.of<TextClearButtonBloc>(context);
+                              clearButtonBloc.add(ClearButtonDisableEvent());
+                            },
+                            icon: Icon(Icons.highlight_remove_outlined),
+                            splashRadius: 20,
+                          );
+                        }
+
+                        return SizedBox();
+                      },
+                    ),
+                    hintText: hintText,
+                    //labelText: 'Name *',
+                  ),
+                  // onTap: () {
+                  //   if (controller.text.isNotEmpty) {
+                  //     final clearButtonBloc =
+                  //     BlocProvider.of<TextClearButtonBloc>(context);
+                  //     clearButtonBloc.add(ClearButtonEnableEvent());
+                  //   }
+                  // },
+                  onChanged: (text) {
+                    if (controller.text.isEmpty) {
+                      // final clearButtonBloc =
+                      // BlocProvider.of<TextClearButtonBloc>(context);
+                      clearButtonBloc.add(ClearButtonDisableEvent());
+                    } else if (controller.text.length == 1) {
+                      // final clearButtonBloc =
+                      // BlocProvider.of<TextClearButtonBloc>(context);
+                      clearButtonBloc.add(ClearButtonEnableEvent());
+                    }
+                  },
+                  //textAlign: TextAlign.center,
+                ),
               ),
             ),
             if (icon != null)
