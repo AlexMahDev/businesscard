@@ -11,4 +11,14 @@ class PickImageEvent extends ImageEvent {
 
 }
 
+class NetworkImageEvent extends ImageEvent {
+
+  final String imageUrl;
+
+  NetworkImageEvent(this.imageUrl);
+
+
+}
+
+
 class RemoveImageEvent extends ImageEvent {}

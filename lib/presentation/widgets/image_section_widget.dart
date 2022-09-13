@@ -28,6 +28,9 @@ class ImageSectionWidget extends StatelessWidget {
               if (state is ImagePickLoadedState)
                 Expanded(
                     child: Image.file(state.image, height: 150)),
+              if (state is ImageNetworkState)
+                Expanded(
+                    child: Image.network(state.networkImage, height: 150)),
               Padding(
                 padding: const EdgeInsets.only(left: 15.0),
                 child: Column(
@@ -46,7 +49,7 @@ class ImageSectionWidget extends StatelessWidget {
                         );
                       },
                       child: Text(
-                        state is ImagePickLoadedState
+                        state is ImagePickLoadedState || state is ImageNetworkState
                             ? editTitle
                             : addTitle,
                         style: TextStyle(
@@ -55,7 +58,7 @@ class ImageSectionWidget extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    if (state is ImagePickLoadedState)
+                    if (state is ImagePickLoadedState || state is ImageNetworkState)
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: GestureDetector(

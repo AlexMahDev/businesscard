@@ -48,8 +48,8 @@ class _EditCardPageState extends State<EditCardPage> {
   @override
   void initState() {
     super.initState();
-    profileImageBloc = ImageBloc();
-    companyLogoImageBloc = ImageBloc();
+    profileImageBloc = ImageBloc()..add(NetworkImageEvent(widget.card.generalInfo.profileImage));
+    companyLogoImageBloc = ImageBloc()..add(NetworkImageEvent(widget.card.generalInfo.logoImage));
     cardTitle = TextEditingController(text: widget.card.generalInfo.cardTitle);
     fullName = TextEditingController(text: '${widget.card.generalInfo.firstName} ${widget.card.generalInfo.middleName} ${widget.card.generalInfo.lastName}'.trim());
     firstName = TextEditingController(text: widget.card.generalInfo.firstName);
@@ -131,7 +131,7 @@ class _EditCardPageState extends State<EditCardPage> {
       child: Builder(builder: (context) {
         return Scaffold(
           appBar: CustomAppBar(
-            title: Text('Create A Card'),
+            title: Text('Edit Your Card'),
             leading: IconButton(
               icon: const Icon(Icons.check),
               splashRadius: 20,

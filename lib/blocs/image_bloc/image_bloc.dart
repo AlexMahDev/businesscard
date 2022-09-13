@@ -9,8 +9,9 @@ part 'image_event.dart';
 part 'image_state.dart';
 
 class ImageBloc extends Bloc<ImageEvent, ImageState> {
-  ImageBloc() : super(ImageInitial()) {
+  ImageBloc() : super(ImageInitialState()) {
     on<PickImageEvent>(_pickImage);
+    on<NetworkImageEvent>(_showNetworkImage);
     on<RemoveImageEvent>(_removeImage);
   }
 
@@ -34,10 +35,25 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
   }
 
 
-  _removeImage(ImageEvent event, Emitter<ImageState> emit) async {
+  _showNetworkImage(NetworkImageEvent event, Emitter<ImageState> emit) async {
 
-    emit(ImageInitial());
+    if(event.imageUrl.isNotEmpty) {
+      emit(ImageNetworkState(event.imageUrl));
+    } else {
+      emit(ImageInitialState());
+    }
 
   }
+
+
+  _removeImage(ImageEvent event, Emitter<ImageState> emit) async {
+
+    emit(ImageInitialState());
+
+  }
+
+
+
+
 
 }

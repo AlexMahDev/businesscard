@@ -3,7 +3,7 @@ part of 'image_bloc.dart';
 @immutable
 abstract class ImageState {}
 
-class ImageInitial extends ImageState {}
+class ImageInitialState extends ImageState {}
 
 //class ImagePickLoadingState extends ImageEvent {}
 
@@ -16,3 +16,12 @@ class ImagePickLoadedState extends ImageState {
 }
 
 class ImagePickErrorState extends ImageState {}
+
+
+class ImageNetworkState extends ImageState {
+
+  final String networkImage;
+
+  ImageNetworkState(this.networkImage);
+
+}
