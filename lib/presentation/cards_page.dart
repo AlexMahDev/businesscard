@@ -190,7 +190,8 @@ class _CardsPageState extends State<CardsPage> {
                                 ),
                                 if(state.cards[position].generalInfo.profileImage.isNotEmpty)
                                   Positioned(
-                                    top: 170,
+                                    //top: 170,
+                                    bottom: -30,
                                     right: 15,
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
