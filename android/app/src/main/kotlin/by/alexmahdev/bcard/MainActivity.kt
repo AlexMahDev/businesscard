@@ -1,4 +1,4 @@
-package com.example.businesscard
+package by.alexmahdev.bcard
 
 import io.flutter.embedding.android.FlutterActivity
 
