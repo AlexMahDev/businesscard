@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "513342553008",
+    "project_id": "bcard-f4f4b",
+    "storage_bucket": "bcard-f4f4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513342553008:android:47386ba509f426c109f475",
+        "android_client_info": {
+          "package_name": "by.alexmahdev.bcard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "513342553008-e545svcarfd7jpa7igargvhjahnth1rp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0GG9-SubPQVJqzg7GChs3lb9u2s08I7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "513342553008-e545svcarfd7jpa7igargvhjahnth1rp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

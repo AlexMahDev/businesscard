@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="by.alexmahdev.bcard">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="businesscard"
         android:name="${applicationName}"
