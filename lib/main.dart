@@ -1,6 +1,8 @@
 import 'package:businesscard/presentation/cards_page.dart';
+import 'package:businesscard/presentation/welcome_page.dart';
 import 'package:businesscard/presentation/widgets/bottom_navigation_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +15,9 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // final card = FirebaseFirestore.instance.collection('cards').doc('tvaV6VppRNfHVdEwQCSu');
+  // final snapshot = await card.get();
+  // print(snapshot.data());
   runApp(const MyApp());
 }
 
@@ -49,7 +54,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
         title: 'Flutter Demo',
-        home: const CustomBottomNavigationBar()
+        home: WelcomePage(),
+        //home: const CustomBottomNavigationBar()
       ),
     );
   }
