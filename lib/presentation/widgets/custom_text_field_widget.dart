@@ -24,7 +24,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final cardColorBloc = BlocProvider.of<SelectCardColorBloc>(context);
+    //final cardColorBloc = BlocProvider.of<SelectCardColorBloc>(context);
     //final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(context);
 
     return BlocProvider<TextClearButtonBloc>(
@@ -38,7 +38,7 @@ class CustomTextField extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 15.0),
                 child: CircleAvatar(
                     radius: 20,
-                    backgroundColor: Color(cardColorBloc.state),
+                    backgroundColor: Color(BlocProvider.of<SelectCardColorBloc>(context).state),
                     child: icon),
               ),
             Expanded(
