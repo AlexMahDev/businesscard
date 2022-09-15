@@ -12,6 +12,8 @@ class AuthRepository {
         throw Exception('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         throw Exception('The account already exists for that email.');
+      } else {
+        throw Exception('Something went wrong :(');
       }
     } catch (e) {
       throw Exception(e.toString());
@@ -30,7 +32,11 @@ class AuthRepository {
         throw Exception('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         throw Exception('Wrong password provided for that user.');
+      } else {
+        throw Exception('Something went wrong :(');
       }
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 

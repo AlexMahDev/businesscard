@@ -1,6 +1,7 @@
 import 'package:businesscard/presentation/cards_page.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_text_field_widget.dart';
+import 'package:businesscard/presentation/widgets/loading_overlay_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,12 +18,14 @@ class _SignInPageState extends State<SignInPage> {
 
   late final TextEditingController email;
   late final TextEditingController password;
+  late final LoadingOverlay loadingOverlay;
 
   @override
   void initState() {
     super.initState();
     email = TextEditingController();
     password = TextEditingController();
+    loadingOverlay = LoadingOverlay();
   }
 
   @override
@@ -46,6 +49,11 @@ class _SignInPageState extends State<SignInPage> {
       ),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
+          if(state is Loading) {
+            loadingOverlay.show(context);
+          } else {
+            loadingOverlay.hide();
+          }
           if (state is Authenticated) {
             // Navigating to the dashboard screen if the user is authenticated
             Navigator.pushReplacement(context,
@@ -59,16 +67,7 @@ class _SignInPageState extends State<SignInPage> {
         },
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
-
-            if (state is Loading) {
-              // Showing the loading indicator while the user is signing in
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is UnAuthenticated) {
-              // Showing the sign in form if the user is not authenticated
-              return Padding(
+            return Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -90,18 +89,9 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //   builder: (BuildContext context) =>
-                        //       // BlocProvider.value(
-                        //       //   value: BlocProvider.of<AuthPageBloc>(context)..add(SignInEvent()),
-                        //       //   child: AuthPage(),
-                        //       // ),
-                        // ));
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (BuildContext context) => const AuthPage(),
-                        //   ),
-                        // );
+                        BlocProvider.of<AuthBloc>(context).add(
+                          SignInRequested(email.text, password.text),
+                        );
                       },
                       child: Container(
                         height: 80,
@@ -121,9 +111,6 @@ class _SignInPageState extends State<SignInPage> {
                   ],
                 ),
               );
-            }
-                  //return Container();
-            return Container();
           },
         ),
       ),

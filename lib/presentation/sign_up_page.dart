@@ -1,6 +1,7 @@
 import 'package:businesscard/presentation/cards_page.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_text_field_widget.dart';
+import 'package:businesscard/presentation/widgets/loading_overlay_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,6 +19,7 @@ class _SignUpPageState extends State<SignUpPage> {
   late final TextEditingController email;
   late final TextEditingController password;
   late final TextEditingController confirmPassword;
+  late final LoadingOverlay loadingOverlay;
 
   @override
   void initState() {
@@ -25,6 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
     email = TextEditingController();
     password = TextEditingController();
     confirmPassword = TextEditingController();
+    loadingOverlay = LoadingOverlay();
   }
 
   @override
@@ -49,6 +52,11 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
+          if(state is Loading) {
+            loadingOverlay.show(context);
+          } else {
+            loadingOverlay.hide();
+          }
           if (state is Authenticated) {
             // Navigating to the dashboard screen if the user is authenticated
             Navigator.of(context).pushReplacement(
@@ -64,12 +72,6 @@ class _SignUpPageState extends State<SignUpPage> {
           }
         },
         builder: (context, state) {
-          if (state is Loading) {
-            // Displaying the loading indicator while the user is signing up
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (state is UnAuthenticated) {
-            // Displaying the sign up form if the user is not authenticated
             return Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
@@ -97,18 +99,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //   builder: (BuildContext context) =>
-                      //       // BlocProvider.value(
-                      //       //   value: BlocProvider.of<AuthPageBloc>(context)..add(SignInEvent()),
-                      //       //   child: AuthPage(),
-                      //       // ),
-                      // ));
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (BuildContext context) => const AuthPage(),
-                      //   ),
-                      // );
+                      BlocProvider.of<AuthBloc>(context).add(
+                        SignUpRequested(email.text, password.text),
+                      );
                     },
                     child: Container(
                       height: 80,
@@ -128,8 +121,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ],
               ),
             );
-          }
-          return Container();
+
         },
       ),
     );
