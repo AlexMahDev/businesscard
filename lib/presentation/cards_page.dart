@@ -1,11 +1,13 @@
 import 'package:businesscard/blocs/card_info_bloc/card_info_bloc.dart';
 import 'package:businesscard/blocs/card_page_bloc/card_page_bloc.dart';
 import 'package:businesscard/blocs/select_card_color_bloc/select_card_color_bloc.dart';
+import 'package:businesscard/presentation/welcome_page.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_float_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../blocs/auth_bloc/auth_bloc.dart';
 import '../data/models/card_model.dart';
 import 'create_card_page.dart';
 import 'edit_card_page.dart';
@@ -33,37 +35,37 @@ class _CardsPageState extends State<CardsPage> {
   }
 
   String getHintText(String key) {
-
-    if(key == 'phoneNumber') {
+    if (key == 'phoneNumber') {
       return 'Phone Number';
-    } else if(key == 'email'){
+    } else if (key == 'email') {
       return 'Email';
-    } else if(key == 'link'){
+    } else if (key == 'link') {
       return 'Link';
-    } else if(key == 'linkedIn'){
+    } else if (key == 'linkedIn') {
       return 'LinkedIn';
-    } else if(key == 'gitHub'){
+    } else if (key == 'gitHub') {
       return 'GitHub';
-    } else if(key == 'telegram'){
+    } else if (key == 'telegram') {
       return 'Telegram';
     } else {
       return '';
     }
-
   }
 
   Widget getIcon(String key) {
-    if(key == 'phoneNumber') {
+    if (key == 'phoneNumber') {
       return Icon(Icons.phone, color: Colors.white);
-    } else if(key == 'email'){
+    } else if (key == 'email') {
       return Icon(Icons.email, color: Colors.white);
-    } else if(key == 'link'){
+    } else if (key == 'link') {
       return Icon(Icons.link, color: Colors.white);
-    } else if(key == 'linkedIn'){
-      return Image.asset('assets/images/icons/linkedin-icon.png', color: Colors.white, height: 20);
-    } else if(key == 'gitHub'){
-      return Image.asset('assets/images/icons/github-icon.png', color: Colors.white, height: 20);
-    } else if(key == 'telegram'){
+    } else if (key == 'linkedIn') {
+      return Image.asset('assets/images/icons/linkedin-icon.png',
+          color: Colors.white, height: 20);
+    } else if (key == 'gitHub') {
+      return Image.asset('assets/images/icons/github-icon.png',
+          color: Colors.white, height: 20);
+    } else if (key == 'telegram') {
       return Icon(Icons.telegram, color: Colors.white);
     } else {
       return Icon(Icons.add_circle_outline_rounded, color: Colors.white);
@@ -81,8 +83,8 @@ class _CardsPageState extends State<CardsPage> {
               if (cardInfoState is CardInfoLoadedState) {
                 return BlocBuilder<CardPageBloc, int>(
                   builder: (context, cardPageState) {
-                    return Text(
-                        cardInfoState.cards[cardPageState].generalInfo.cardTitle);
+                    return Text(cardInfoState
+                        .cards[cardPageState].generalInfo.cardTitle);
                   },
                 );
               }
@@ -104,11 +106,9 @@ class _CardsPageState extends State<CardsPage> {
                     icon: const Icon(Icons.add),
                     splashRadius: 20,
                     onPressed: () {
-
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (BuildContext context) =>
-                          const CreateCardPage()));
-
+                              const CreateCardPage()));
                     },
                   );
                 }
@@ -117,251 +117,268 @@ class _CardsPageState extends State<CardsPage> {
             ),
             BlocBuilder<CardInfoBloc, CardInfoState>(
               builder: (context, state) {
-                if(state is CardInfoLoadedState) {
+                if (state is CardInfoLoadedState) {
                   return IconButton(
                     icon: const Icon(Icons.edit),
                     splashRadius: 20,
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => EditCardPage(card: state.cards[pageController.page?.round() ?? 0])));
+                          builder: (BuildContext context) => EditCardPage(
+                              card: state
+                                  .cards[pageController.page?.round() ?? 0])));
                     },
                   );
                 }
 
                 return Container();
-
               },
             ),
           ],
         ),
-        body: BlocBuilder<CardInfoBloc, CardInfoState>(
-          builder: (context, state) {
-            if (state is CardInfoLoadingState) {
-              return Center(child: CircularProgressIndicator());
-            }
-
-            if (state is CardInfoLoadedState) {
-              return Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  PageView.builder(
-                    controller: pageController,
-                    itemCount: state.cards.length,
-                    onPageChanged: (page) {
-                      final cardPageBloc =
-                      BlocProvider.of<CardPageBloc>(context);
-
-                      cardPageBloc.add(ChangeCardPageEvent(page));
-
-                    },
-                    itemBuilder: (context, position) {
-                      //print(state.cards[position].settings.cardColor);
-                      return SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            SizedBox(
-                                height: 250,
-                                child:
-                                Image.asset('assets/images/qr_code.png')),
-
-
-                            Stack(
-                              clipBehavior: Clip.none,
-                              alignment: Alignment.bottomRight,
-                              children: [
-                                Column(
-                                  children: [
-                                    if(state.cards[position].generalInfo.logoImage.isNotEmpty)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                                        child: Image.network(state.cards[position].generalInfo.logoImage, height: 200, errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {return Container();}),
-                                            // Image.asset(
-                                            //     'assets/images/innowise-logo.png')),
-                                      ),
-                                    Divider(
-                                      color: Color(state.cards[position]
-                                          .settings.cardColor)
-                                          .withOpacity(0.2),
-                                      thickness: 5,
-                                    ),
-                                  ],
-                                ),
-                                if(state.cards[position].generalInfo.profileImage.isNotEmpty)
-                                  Positioned(
-                                    //top: 170,
-                                    bottom: -30,
-                                    right: 15,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        ClipOval(
-                                          child: Image.network(state.cards[position].generalInfo.profileImage, width: 80, height: 80, fit: BoxFit.cover, errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {return Container();}),
-
-                                          // Image.asset(
-                                          //   'assets/images/avatar.jpg',
-                                          //   width: 80,
-                                          //   height: 80,
-                                          //   fit: BoxFit.cover,
-                                          // ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                              ],
-                            ),
-
-                            SizedBox(
-                              height: 40,
-                            ),
-
-                            Padding(
-                              padding:
-                              const EdgeInsets.symmetric(horizontal: 15.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  if (state.cards[position].generalInfo
-                                      .firstName.isNotEmpty ||
-                                      state.cards[position].generalInfo
-                                          .middleName.isNotEmpty ||
-                                      state.cards[position].generalInfo.lastName
-                                          .isNotEmpty)
-                                    GeneralTextWidget(
-                                        label: 'fullName',
-                                        value:
-                                        '${state.cards[position].generalInfo
-                                            .firstName} ${state.cards[position]
-                                            .generalInfo.middleName} ${state
-                                            .cards[position]
-                                            .generalInfo.lastName}'
-                                            .trim()),
-                                  if (state.cards[position].generalInfo.jobTitle
-                                      .isNotEmpty)
-                                    GeneralTextWidget(
-                                        value: state.cards[position].generalInfo
-                                            .jobTitle),
-                                  if (state.cards[position].generalInfo
-                                      .department.isNotEmpty)
-                                    GeneralTextWidget(
-                                        value: state.cards[position].generalInfo
-                                            .department),
-                                  if (state.cards[position].generalInfo
-                                      .companyName.isNotEmpty)
-                                    GeneralTextWidget(
-                                        value: state.cards[position].generalInfo
-                                            .companyName),
-                                  if (state.cards[position].generalInfo.headLine
-                                      .isNotEmpty)
-                                    GeneralTextWidget(
-                                        label: 'headline',
-                                        value: state.cards[position].generalInfo
-                                            .headLine),
-                                ],
-                              ),
-                            ),
-
-
-                            SizedBox(
-                              height: 10,
-                            ),
-
-                            ListView.separated(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              padding: EdgeInsets.symmetric(horizontal: 15),
-                              itemCount: state.cards[position].extraInfo
-                                  .listOfFields.length,
-                              //padding: EdgeInsets.only(top: 15),
-                              itemBuilder: (BuildContext context, int index) {
-
-                                return ExtraTextWidget(
-                                    label: getHintText(state.cards[position].extraInfo
-                                        .listOfFields[index].key),
-                                    value: state.cards[position].extraInfo
-                                        .listOfFields[index].value,
-                                    color: state
-                                        .cards[position].settings.cardColor, 
-                                  icon: getIcon(state.cards[position].extraInfo
-                                      .listOfFields[index].key)
-                                );
-                                
-
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) =>
-                                  SizedBox(height: 10),
-                            ),
-
-
-
-                            SizedBox(
-                              height: 100,
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                  BlocBuilder<CardPageBloc, int>(
-                    builder: (context, cardPageState) {
-                      return Container(
-                        height: 80,
-                        color: Colors.white.withOpacity(0.6),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  for (int cardNumber = 0;
-                                  cardNumber < state.cards.length;
-                                  cardNumber++)
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5.0),
-                                      child: Container(
-                                        width: 10.0,
-                                        height: 10.0,
-                                        decoration: BoxDecoration(
-                                          color: cardNumber != cardPageState
-                                              ? Colors.black
-                                              : Color(state.cards[cardPageState]
-                                              .settings.cardColor),
-                                          shape: BoxShape.circle,
-                                          //border: Border.all(color: Colors.black),
-                                        ),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 15.0),
-                              child: CustomFloatActionButton(
-                                  color: state
-                                      .cards[cardPageState].settings.cardColor),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  )
-                ],
+        body: BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is UnAuthenticated) {
+              // Navigate to the sign in screen when the user Signs Out
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => WelcomePage()),
+                (route) => false,
               );
             }
-
-            return Container();
           },
+          child: BlocBuilder<CardInfoBloc, CardInfoState>(
+            builder: (context, state) {
+              if (state is CardInfoLoadingState) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              if (state is CardInfoLoadedState) {
+                return Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    PageView.builder(
+                      controller: pageController,
+                      itemCount: state.cards.length,
+                      onPageChanged: (page) {
+                        final cardPageBloc =
+                            BlocProvider.of<CardPageBloc>(context);
+
+                        cardPageBloc.add(ChangeCardPageEvent(page));
+                      },
+                      itemBuilder: (context, position) {
+                        //print(state.cards[position].settings.cardColor);
+                        return SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              SizedBox(
+                                  height: 250,
+                                  child:
+                                      Image.asset('assets/images/qr_code.png')),
+                              Stack(
+                                clipBehavior: Clip.none,
+                                alignment: Alignment.bottomRight,
+                                children: [
+                                  Column(
+                                    children: [
+                                      if (state.cards[position].generalInfo
+                                          .logoImage.isNotEmpty)
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 40.0),
+                                          child: Image.network(
+                                              state.cards[position].generalInfo
+                                                  .logoImage,
+                                              height: 200, errorBuilder:
+                                                  (BuildContext context,
+                                                      Object exception,
+                                                      StackTrace? stackTrace) {
+                                            return Container();
+                                          }),
+                                          // Image.asset(
+                                          //     'assets/images/innowise-logo.png')),
+                                        ),
+                                      Divider(
+                                        color: Color(state.cards[position]
+                                                .settings.cardColor)
+                                            .withOpacity(0.2),
+                                        thickness: 5,
+                                      ),
+                                    ],
+                                  ),
+                                  if (state.cards[position].generalInfo
+                                      .profileImage.isNotEmpty)
+                                    Positioned(
+                                      //top: 170,
+                                      bottom: -30,
+                                      right: 15,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          ClipOval(
+                                            child: Image.network(
+                                                state.cards[position]
+                                                    .generalInfo.profileImage,
+                                                width: 80,
+                                                height: 80,
+                                                fit: BoxFit.cover, errorBuilder:
+                                                    (BuildContext context,
+                                                        Object exception,
+                                                        StackTrace?
+                                                            stackTrace) {
+                                              return Container();
+                                            }),
+
+                                            // Image.asset(
+                                            //   'assets/images/avatar.jpg',
+                                            //   width: 80,
+                                            //   height: 80,
+                                            //   fit: BoxFit.cover,
+                                            // ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if (state.cards[position].generalInfo
+                                            .firstName.isNotEmpty ||
+                                        state.cards[position].generalInfo
+                                            .middleName.isNotEmpty ||
+                                        state.cards[position].generalInfo
+                                            .lastName.isNotEmpty)
+                                      GeneralTextWidget(
+                                          label: 'fullName',
+                                          value:
+                                              '${state.cards[position].generalInfo.firstName} ${state.cards[position].generalInfo.middleName} ${state.cards[position].generalInfo.lastName}'
+                                                  .trim()),
+                                    if (state.cards[position].generalInfo
+                                        .jobTitle.isNotEmpty)
+                                      GeneralTextWidget(
+                                          value: state.cards[position]
+                                              .generalInfo.jobTitle),
+                                    if (state.cards[position].generalInfo
+                                        .department.isNotEmpty)
+                                      GeneralTextWidget(
+                                          value: state.cards[position]
+                                              .generalInfo.department),
+                                    if (state.cards[position].generalInfo
+                                        .companyName.isNotEmpty)
+                                      GeneralTextWidget(
+                                          value: state.cards[position]
+                                              .generalInfo.companyName),
+                                    if (state.cards[position].generalInfo
+                                        .headLine.isNotEmpty)
+                                      GeneralTextWidget(
+                                          label: 'headline',
+                                          value: state.cards[position]
+                                              .generalInfo.headLine),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              ListView.separated(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                padding: EdgeInsets.symmetric(horizontal: 15),
+                                itemCount: state.cards[position].extraInfo
+                                    .listOfFields.length,
+                                //padding: EdgeInsets.only(top: 15),
+                                itemBuilder: (BuildContext context, int index) {
+                                  return ExtraTextWidget(
+                                      label: getHintText(state.cards[position]
+                                          .extraInfo.listOfFields[index].key),
+                                      value: state.cards[position].extraInfo
+                                          .listOfFields[index].value,
+                                      color: state
+                                          .cards[position].settings.cardColor,
+                                      icon: getIcon(state.cards[position]
+                                          .extraInfo.listOfFields[index].key));
+                                },
+                                separatorBuilder:
+                                    (BuildContext context, int index) =>
+                                        SizedBox(height: 10),
+                              ),
+                              SizedBox(
+                                height: 100,
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    BlocBuilder<CardPageBloc, int>(
+                      builder: (context, cardPageState) {
+                        return Container(
+                          height: 80,
+                          color: Colors.white.withOpacity(0.6),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    for (int cardNumber = 0;
+                                        cardNumber < state.cards.length;
+                                        cardNumber++)
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5.0),
+                                        child: Container(
+                                          width: 10.0,
+                                          height: 10.0,
+                                          decoration: BoxDecoration(
+                                            color: cardNumber != cardPageState
+                                                ? Colors.black
+                                                : Color(state
+                                                    .cards[cardPageState]
+                                                    .settings
+                                                    .cardColor),
+                                            shape: BoxShape.circle,
+                                            //border: Border.all(color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                                child: CustomFloatActionButton(
+                                    color: state.cards[cardPageState].settings
+                                        .cardColor),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    )
+                  ],
+                );
+              }
+
+              return Container();
+            },
+          ),
         ),
         //floatingActionButton: const CustomFloatActionButton(), // This trailing comma makes auto-formatting nicer for build methods.
       ),
     );
   }
 }
-
 
 class GeneralTextWidget extends StatelessWidget {
   final String label;
@@ -390,23 +407,24 @@ class GeneralTextWidget extends StatelessWidget {
 }
 
 class ExtraTextWidget extends StatelessWidget {
-
   final String label;
   final String value;
   final int color;
   final Widget icon;
 
   const ExtraTextWidget(
-      {Key? key, required this.label, required this.value, required this.color, required this.icon})
+      {Key? key,
+      required this.label,
+      required this.value,
+      required this.color,
+      required this.icon})
       : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CircleAvatar(
-            radius: 20, backgroundColor: Color(color), child: icon),
+        CircleAvatar(radius: 20, backgroundColor: Color(color), child: icon),
         Expanded(
           child: ListTile(
             title: Text(value, style: TextStyle(fontWeight: FontWeight.bold)),
