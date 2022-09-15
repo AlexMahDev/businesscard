@@ -4,6 +4,7 @@ import 'package:businesscard/blocs/select_card_color_bloc/select_card_color_bloc
 import 'package:businesscard/presentation/welcome_page.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_float_action_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -74,6 +75,8 @@ class _CardsPageState extends State<CardsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+    print(user.email);
     return BlocProvider<CardPageBloc>(
       create: (context) => CardPageBloc(),
       child: Scaffold(
@@ -95,7 +98,7 @@ class _CardsPageState extends State<CardsPage> {
             icon: const Icon(Icons.menu),
             splashRadius: 20,
             onPressed: () {
-              print('gg');
+              context.read<AuthBloc>().add(SignOutRequested());
             },
           ),
           actions: [
@@ -106,9 +109,13 @@ class _CardsPageState extends State<CardsPage> {
                     icon: const Icon(Icons.add),
                     splashRadius: 20,
                     onPressed: () {
+                      final cardInfoBloc =
+                          BlocProvider.of<CardInfoBloc>(context);
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              const CreateCardPage()));
+                          builder: (BuildContext context) => BlocProvider.value(
+                                value: cardInfoBloc,
+                                child: CreateCardPage(),
+                              )));
                     },
                   );
                 }
@@ -122,10 +129,15 @@ class _CardsPageState extends State<CardsPage> {
                     icon: const Icon(Icons.edit),
                     splashRadius: 20,
                     onPressed: () {
+                      final cardInfoBloc =
+                          BlocProvider.of<CardInfoBloc>(context);
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => EditCardPage(
-                              card: state
-                                  .cards[pageController.page?.round() ?? 0])));
+                          builder: (BuildContext context) => BlocProvider.value(
+                                value: cardInfoBloc,
+                                child: EditCardPage(
+                                    card: state.cards[
+                                        pageController.page?.round() ?? 0]),
+                              )));
                     },
                   );
                 }

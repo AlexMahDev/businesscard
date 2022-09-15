@@ -32,10 +32,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider(
       create: (context) => AuthRepository(),
-      child: BlocProvider<AuthBloc>(
-        create: (context) => AuthBloc(
-            authRepository: RepositoryProvider.of<AuthRepository>(context),
-        ),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(
+            create: (context) =>
+                AuthBloc(
+                  authRepository: RepositoryProvider.of<AuthRepository>(
+                      context),
+                ),
+          ),
+          BlocProvider<CardInfoBloc>(
+            create: (context) => CardInfoBloc(),
+          ),
+        ],
         child: MaterialApp(
           theme: ThemeData(
             primarySwatch: Colors.red,
@@ -60,7 +69,10 @@ class MyApp extends StatelessWidget {
               builder: (context, snapshot) {
                 // If the snapshot has user data, then they're already signed in. So Navigating to the Dashboard.
                 if (snapshot.hasData) {
-                  return CardsPage();
+                  return BlocProvider<CardInfoBloc>.value(
+                    value: BlocProvider.of<CardInfoBloc>(context)..add(GetCardInfoEvent()),
+                    child: CustomBottomNavigationBar(),
+                  );
                 }
                 // Otherwise, they're not signed in. Show the sign in page.
                 return WelcomePage();
