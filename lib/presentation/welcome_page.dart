@@ -1,3 +1,4 @@
+import 'package:businesscard/presentation/auth_page.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -33,7 +34,11 @@ class WelcomePage extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-
+                      Navigator.of(context).push(
+                        MaterialPageRoute (
+                          builder: (BuildContext context) => const AuthPage(),
+                        ),
+                      );
                     },
                     child: Container(
                       height: 80,
