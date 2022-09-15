@@ -7,7 +7,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'blocs/auth_bloc/auth_bloc.dart';
 import 'blocs/card_info_bloc/card_info_bloc.dart';
+import 'data/repositories/auth_repository.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -27,39 +29,67 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<CardInfoBloc>(
-          create: (BuildContext context) => CardInfoBloc()..add(GetCardInfoEvent()),
+    return RepositoryProvider(
+      create: (context) => AuthRepository(),
+      child: BlocProvider<AuthBloc>(
+        create: (context) => AuthBloc(
+            authRepository: RepositoryProvider.of<AuthRepository>(context),
         ),
-      ],
-      child: MaterialApp(
-        theme: ThemeData(
-          primarySwatch: Colors.red, ///redAccent
-          //primaryColor: Colors.redAccent,
-          fontFamily: 'OpenSans',
-          appBarTheme: AppBarTheme(
-            centerTitle: true,
-            titleTextStyle: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.bold
+        child: MaterialApp(
+          theme: ThemeData(
+            primarySwatch: Colors.red,
+
+            ///redAccent
+            //primaryColor: Colors.redAccent,
+            fontFamily: 'OpenSans',
+            appBarTheme: AppBarTheme(
+              centerTitle: true,
+              titleTextStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+              iconTheme: IconThemeData(color: Colors.redAccent, size: 30),
+              foregroundColor: Colors.black, //<-- SEE HERE
+              //titleTextStyle: TextStyle()
             ),
-            iconTheme: IconThemeData(
-                color: Colors.redAccent,
-              size: 30
-            ),
-            foregroundColor: Colors.black, //<-- SEE HERE
-            //titleTextStyle: TextStyle()
           ),
+          title: 'Flutter Demo',
+          home: WelcomePage(),
+          //home: const CustomBottomNavigationBar()
         ),
-        title: 'Flutter Demo',
-        home: WelcomePage(),
-        //home: const CustomBottomNavigationBar()
       ),
+
+
+      // MultiBlocProvider(
+      //   providers: [
+      //     BlocProvider<CardInfoBloc>(
+      //       create: (BuildContext context) =>
+      //           CardInfoBloc()..add(GetCardInfoEvent()),
+      //     ),
+      //   ],
+      //   child: MaterialApp(
+      //     theme: ThemeData(
+      //       primarySwatch: Colors.red,
+      //
+      //       ///redAccent
+      //       //primaryColor: Colors.redAccent,
+      //       fontFamily: 'OpenSans',
+      //       appBarTheme: AppBarTheme(
+      //         centerTitle: true,
+      //         titleTextStyle: TextStyle(
+      //             color: Colors.black,
+      //             fontSize: 20,
+      //             fontWeight: FontWeight.bold),
+      //         iconTheme: IconThemeData(color: Colors.redAccent, size: 30),
+      //         foregroundColor: Colors.black, //<-- SEE HERE
+      //         //titleTextStyle: TextStyle()
+      //       ),
+      //     ),
+      //     title: 'Flutter Demo',
+      //     home: WelcomePage(),
+      //     //home: const CustomBottomNavigationBar()
+      //   ),
+      // ),
     );
   }
 }
-
-
-
