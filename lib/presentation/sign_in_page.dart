@@ -19,6 +19,7 @@ class _SignInPageState extends State<SignInPage> {
   late final TextEditingController email;
   late final TextEditingController password;
   late final LoadingOverlay loadingOverlay;
+  final _validation = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -67,50 +68,72 @@ class _SignInPageState extends State<SignInPage> {
         },
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
-            return Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Welcome back, let's sign in",
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold)),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    CustomTextField(controller: email, hintText: "Email"),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    CustomTextField(controller: password, hintText: "Password"),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        BlocProvider.of<AuthBloc>(context).add(
-                          SignInRequested(email.text, password.text),
-                        );
-                      },
-                      child: Container(
-                        height: 80,
-                        decoration: BoxDecoration(
-                            color: Colors.redAccent,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Center(
-                          child: Text("Sign In",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 16)),
+            return Form(
+              key: _validation,
+              child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Welcome back, let's sign in",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold)),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      CustomTextField(controller: email, hintText: "Email", validator: (text) {
+                        if(text == '') {
+                          return "Email is required";
+                        } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(text!)) {
+                          return "Enter valid email";
+                        }
+                        return null;
+                      }),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      CustomTextField(controller: password, hintText: "Password", isTextVisible: false, validator: (text) {
+                        if(text == '') {
+                          return "Password is required";
+                        } else if (text!.length < 8) {
+                          return "Your password is too short";
+                        }
+                        return null;
+                      }),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          if(_validation.currentState!.validate()) {
+                            BlocProvider.of<AuthBloc>(context).add(
+                              SignInRequested(email.text, password.text),
+                            );
+                          }
+                          // BlocProvider.of<AuthBloc>(context).add(
+                          //   SignInRequested(email.text, password.text),
+                          // );
+                        },
+                        child: Container(
+                          height: 80,
+                          decoration: BoxDecoration(
+                              color: Colors.redAccent,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Center(
+                            child: Text("Sign In",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 16)),
+                          ),
                         ),
                       ),
-                    ),
 
-                  ],
+                    ],
+                  ),
                 ),
-              );
+            );
           },
         ),
       ),

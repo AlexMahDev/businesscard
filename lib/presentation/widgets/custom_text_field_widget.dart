@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/select_card_color_bloc/select_card_color_bloc.dart';
@@ -13,12 +14,16 @@ class CustomTextField extends StatelessWidget {
   final Widget? icon;
   final VoidCallback? onTextFieldRemove;
 
+  final bool isTextVisible;
+
+  final  String? Function(String?)? validator;
+
   const CustomTextField({Key? key,
     required this.controller,
     required this.hintText,
     this.enabled = true,
     this.icon,
-    this.onTextFieldRemove})
+    this.onTextFieldRemove, this.validator, this.isTextVisible = true})
       : super(key: key);
 
   @override
@@ -58,6 +63,7 @@ class CustomTextField extends StatelessWidget {
                 child: TextFormField(
                   controller: controller,
                   enabled: enabled,
+                  obscureText: !isTextVisible,
                   decoration: InputDecoration(
                     //contentPadding: EdgeInsets.all(0),
                     suffixIcon:
@@ -100,6 +106,11 @@ class CustomTextField extends StatelessWidget {
                       clearButtonBloc.add(ClearButtonEnableEvent());
                     }
                   },
+                  validator: validator,
+                  //keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  // inputFormatters: <TextInputFormatter>[
+                  //   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                  // ],
                   //textAlign: TextAlign.center,
                 ),
               ),
