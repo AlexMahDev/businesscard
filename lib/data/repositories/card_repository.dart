@@ -117,7 +117,19 @@ class CardRepository {
 
     newCard.cardId = card.id;
 
-    print(newCard.timestamp);
+    try {
+      await card.set(newCard.toJson());
+    } catch (e) {
+      throw Exception(e);
+    }
+
+  }
+
+
+  Future<void> updateCard(String uid, CardModel newCard) async {
+
+    final card = FirebaseFirestore.instance.collection("users").doc(uid).collection("cards").doc(newCard.cardId);
+
     try {
       await card.set(newCard.toJson());
     } catch (e) {

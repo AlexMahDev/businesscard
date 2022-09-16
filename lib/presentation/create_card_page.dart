@@ -167,43 +167,46 @@ class _CreateCardPageState extends State<CreateCardPage> {
         // ),
       ],
       child: Builder(builder: (context) {
-        return Scaffold(
-          appBar: CustomAppBar(
-            title: Text('Create A Card'),
-            leading: BlocListener<CardInfoBloc, CardInfoState>(
-              listener: (context, state) {
-                if(state is CardInfoLoadingState) {
-                  loadingOverlay.show(context);
-                } else {
-                  loadingOverlay.hide();
-                }
-                if (state is CardInfoLoadedState) {
-                  Navigator.of(context).pop();
-                }
-                if (state is CardInfoErrorState) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('state.error')));
-                }
-              },
-              child: IconButton(
+        return BlocListener<CardInfoBloc, CardInfoState>(
+          listener: (context, state) {
+            if (state is CardInfoLoadingState) {
+              loadingOverlay.show(context);
+            } else {
+              loadingOverlay.hide();
+            }
+            if (state is CardInfoLoadedState) {
+              Navigator.of(context).pop();
+            }
+            if (state is CardInfoErrorState) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text('state.error')));
+            }
+          },
+          child: Scaffold(
+            appBar: CustomAppBar(
+              title: Text('Create A Card'),
+              leading: IconButton(
                 icon: const Icon(Icons.check),
                 splashRadius: 20,
                 onPressed: () {
-                  final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+                  final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(
+                      context);
                   final cardColorBloc =
                   BlocProvider.of<SelectCardColorBloc>(context);
 
                   final cardsInfoState = cardsInfoBloc.state;
 
                   CardModel newCard = CardModel(
-                      timestamp: DateTime.now().millisecondsSinceEpoch,
+                      timestamp: DateTime
+                          .now()
+                          .millisecondsSinceEpoch,
                       cardId: '',
                       settings: SettingsModel(
                           cardColor: cardColorBloc.state),
                       generalInfo: GeneralInfoModel(
                           cardTitle: cardTitle.text.isNotEmpty
                               ? cardTitle.text
-                              : 'Card',
+                              : 'BCard',
                           firstName: firstName.text,
                           middleName: middleName.text,
                           lastName: lastName.text,
@@ -225,119 +228,118 @@ class _CreateCardPageState extends State<CreateCardPage> {
 
                     cardsInfoBloc.add(AddCardEvent(currentCards, newCard));
                   } else if (cardsInfoState is CardInfoEmptyState) {
-
                     List<CardModel> currentCards = cardsInfoState.cards;
                     cardsInfoBloc.add(AddCardEvent(currentCards, newCard));
                   }
                 },
               ),
-            ),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.more_horiz),
-                splashRadius: 20,
-                onPressed: () {
-                  //Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => const CreateCardPage()));
-                },
-              ),
-            ],
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: CustomTextField(
-                      hintText: 'Set a title (e.g. Work or Personal)',
-                      controller: cardTitle),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.more_horiz),
+                  splashRadius: 20,
+                  onPressed: () {
+                    //Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => const CreateCardPage()));
+                  },
                 ),
-
-                // SizedBox(
-                //   height: 20,
-                // ),
-
-                ChooseColorWidget(),
-
-                // BlocBuilder<SelectCardColorBloc, Color>(
-                //   builder: (context, state) {
-                //     return SingleChildScrollView(
-                //       scrollDirection: Axis.horizontal,
-                //       child: Padding(
-                //         padding: const EdgeInsets.symmetric(
-                //             horizontal: 10.0, vertical: 20),
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.start,
-                //           children: [
-                //             ColorWidget(color: Colors.redAccent),
-                //             ColorWidget(color: Colors.orange),
-                //             ColorWidget(color: Colors.yellow),
-                //             ColorWidget(color: Colors.brown),
-                //             ColorWidget(color: Colors.green),
-                //             ColorWidget(color: Colors.lightBlueAccent),
-                //             ColorWidget(color: Colors.blue),
-                //             ColorWidget(color: Colors.purple),
-                //             ColorWidget(color: Colors.purpleAccent),
-                //             ColorWidget(color: Colors.black),
-                //             ColorWidget(color: Colors.grey)
-                //           ],
-                //         ),
-                //       ),
-                //     );
-                //   },
-                // ),
-
-                ImageSectionWidget(
-                    imageBloc: profileImageBloc,
-                    addTitle: 'Add Profile Picture',
-                    editTitle: 'Edit Profile Picture',
-                    removeTitle: 'Remove Profile Picture'),
-
-                SizedBox(
-                  height: 30,
-                ),
-
-                ImageSectionWidget(
-                    imageBloc: companyLogoImageBloc,
-                    addTitle: 'Add Company Logo',
-                    editTitle: 'Edit Company Logo',
-                    removeTitle: 'Remove Company Logo'),
-
-                GeneralInfoFieldsWidget(
-                  fullName: CustomTextField(
-                      hintText: 'Full Name',
-                      enabled: false,
-                      controller: fullName),
-                  firstName: CustomTextField(
-                      hintText: 'First Name', controller: firstName),
-                  middleName: CustomTextField(
-                      hintText: 'Middle Name', controller: middleName),
-                  lastName: CustomTextField(
-                      hintText: 'Last Name', controller: lastName),
-                  jobTitle: CustomTextField(
-                      hintText: 'Job Title', controller: jobTitle),
-                  department: CustomTextField(
-                      hintText: 'Department', controller: department),
-                  companyName: CustomTextField(
-                      hintText: 'Company Name', controller: companyName),
-                  headLine: CustomTextField(
-                      hintText: 'Headline', controller: headLine),
-                ),
-
-                // ///STATIC TEXT FIELDS
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(
-                //       horizontal: 15.0, vertical: 30),
-                //   child: GeneralTextFields(controller: TextEditingController())
-                // ),
-
-                ///DYNAMIC TEXT FIELDS
-                ExtraInfoFieldsWidget(controllerMap: _controllerMap),
-
-                TapFieldBelowWidget(),
-
-                ExtraInfoFooterWidget(controllerMap: _controllerMap)
               ],
+            ),
+            body: SingleChildScrollView(
+              child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: CustomTextField(
+                        hintText: 'Set a title (e.g. Work or Personal)',
+                        controller: cardTitle),
+                  ),
+
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
+
+                  ChooseColorWidget(),
+
+                  // BlocBuilder<SelectCardColorBloc, Color>(
+                  //   builder: (context, state) {
+                  //     return SingleChildScrollView(
+                  //       scrollDirection: Axis.horizontal,
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.symmetric(
+                  //             horizontal: 10.0, vertical: 20),
+                  //         child: Row(
+                  //           mainAxisAlignment: MainAxisAlignment.start,
+                  //           children: [
+                  //             ColorWidget(color: Colors.redAccent),
+                  //             ColorWidget(color: Colors.orange),
+                  //             ColorWidget(color: Colors.yellow),
+                  //             ColorWidget(color: Colors.brown),
+                  //             ColorWidget(color: Colors.green),
+                  //             ColorWidget(color: Colors.lightBlueAccent),
+                  //             ColorWidget(color: Colors.blue),
+                  //             ColorWidget(color: Colors.purple),
+                  //             ColorWidget(color: Colors.purpleAccent),
+                  //             ColorWidget(color: Colors.black),
+                  //             ColorWidget(color: Colors.grey)
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
+
+                  ImageSectionWidget(
+                      imageBloc: profileImageBloc,
+                      addTitle: 'Add Profile Picture',
+                      editTitle: 'Edit Profile Picture',
+                      removeTitle: 'Remove Profile Picture'),
+
+                  SizedBox(
+                    height: 30,
+                  ),
+
+                  ImageSectionWidget(
+                      imageBloc: companyLogoImageBloc,
+                      addTitle: 'Add Company Logo',
+                      editTitle: 'Edit Company Logo',
+                      removeTitle: 'Remove Company Logo'),
+
+                  GeneralInfoFieldsWidget(
+                    fullName: CustomTextField(
+                        hintText: 'Full Name',
+                        enabled: false,
+                        controller: fullName),
+                    firstName: CustomTextField(
+                        hintText: 'First Name', controller: firstName),
+                    middleName: CustomTextField(
+                        hintText: 'Middle Name', controller: middleName),
+                    lastName: CustomTextField(
+                        hintText: 'Last Name', controller: lastName),
+                    jobTitle: CustomTextField(
+                        hintText: 'Job Title', controller: jobTitle),
+                    department: CustomTextField(
+                        hintText: 'Department', controller: department),
+                    companyName: CustomTextField(
+                        hintText: 'Company Name', controller: companyName),
+                    headLine: CustomTextField(
+                        hintText: 'Headline', controller: headLine),
+                  ),
+
+                  // ///STATIC TEXT FIELDS
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(
+                  //       horizontal: 15.0, vertical: 30),
+                  //   child: GeneralTextFields(controller: TextEditingController())
+                  // ),
+
+                  ///DYNAMIC TEXT FIELDS
+                  ExtraInfoFieldsWidget(controllerMap: _controllerMap),
+
+                  TapFieldBelowWidget(),
+
+                  ExtraInfoFooterWidget(controllerMap: _controllerMap)
+                ],
+              ),
             ),
           ),
         );

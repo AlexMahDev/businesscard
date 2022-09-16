@@ -13,6 +13,7 @@ import 'package:businesscard/presentation/widgets/extra_info_fields_widget.dart'
 import 'package:businesscard/presentation/widgets/extra_info_footer_widget.dart';
 import 'package:businesscard/presentation/widgets/general_info_fields_widget.dart';
 import 'package:businesscard/presentation/widgets/image_section_widget.dart';
+import 'package:businesscard/presentation/widgets/loading_overlay_widget.dart';
 import 'package:businesscard/presentation/widgets/tap_field_below_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +25,7 @@ class EditCardPage extends StatefulWidget {
 
   final CardModel card;
 
-  const EditCardPage({Key? key,required this.card}) : super(key: key);
+  const EditCardPage({Key? key, required this.card}) : super(key: key);
 
   @override
   State<EditCardPage> createState() => _EditCardPageState();
@@ -44,16 +45,22 @@ class _EditCardPageState extends State<EditCardPage> {
   late final TextEditingController headLine;
   late final ImageBloc profileImageBloc;
   late final ImageBloc companyLogoImageBloc;
+  late final LoadingOverlay loadingOverlay;
 
   @override
   void initState() {
     super.initState();
-    profileImageBloc = ImageBloc()..add(NetworkImageEvent(widget.card.generalInfo.profileImage));
-    companyLogoImageBloc = ImageBloc()..add(NetworkImageEvent(widget.card.generalInfo.logoImage));
+    profileImageBloc = ImageBloc()
+      ..add(NetworkImageEvent(widget.card.generalInfo.profileImage));
+    companyLogoImageBloc = ImageBloc()
+      ..add(NetworkImageEvent(widget.card.generalInfo.logoImage));
     cardTitle = TextEditingController(text: widget.card.generalInfo.cardTitle);
-    fullName = TextEditingController(text: '${widget.card.generalInfo.firstName} ${widget.card.generalInfo.middleName} ${widget.card.generalInfo.lastName}'.trim());
+    fullName = TextEditingController(
+        text: '${widget.card.generalInfo.firstName} ${widget.card.generalInfo
+            .middleName} ${widget.card.generalInfo.lastName}'.trim());
     firstName = TextEditingController(text: widget.card.generalInfo.firstName);
-    middleName = TextEditingController(text: widget.card.generalInfo.middleName);
+    middleName =
+        TextEditingController(text: widget.card.generalInfo.middleName);
     lastName = TextEditingController(text: widget.card.generalInfo.lastName);
     firstName.addListener(() {
       fullName.text =
@@ -71,18 +78,19 @@ class _EditCardPageState extends State<EditCardPage> {
     // middleName = TextEditingController();
     // lastName = TextEditingController();
     jobTitle = TextEditingController(text: widget.card.generalInfo.jobTitle);
-    department = TextEditingController(text: widget.card.generalInfo.department);
-    companyName = TextEditingController(text: widget.card.generalInfo.companyName);
+    department =
+        TextEditingController(text: widget.card.generalInfo.department);
+    companyName =
+        TextEditingController(text: widget.card.generalInfo.companyName);
     headLine = TextEditingController(text: widget.card.generalInfo.headLine);
 
-    for(TextFieldModel textField in widget.card.extraInfo.listOfFields) {
-
-      TextEditingController controller = TextEditingController(text: textField.value);
+    for (TextFieldModel textField in widget.card.extraInfo.listOfFields) {
+      TextEditingController controller = TextEditingController(
+          text: textField.value);
 
       _controllerMap[textField.key] = controller;
-
     }
-
+    loadingOverlay = LoadingOverlay();
   }
 
   @override
@@ -111,7 +119,9 @@ class _EditCardPageState extends State<EditCardPage> {
           create: (BuildContext context) => TextFieldBloc(),
         ),
         BlocProvider<SelectCardColorBloc>(
-          create: (BuildContext context) => SelectCardColorBloc()..add(SelectCardColorEvent(widget.card.settings.cardColor)),
+          create: (BuildContext context) =>
+          SelectCardColorBloc()
+            ..add(SelectCardColorEvent(widget.card.settings.cardColor)),
         ),
         BlocProvider<FullNameDropdownBloc>(
           create: (BuildContext context) => FullNameDropdownBloc(),
@@ -129,155 +139,168 @@ class _EditCardPageState extends State<EditCardPage> {
         // ),
       ],
       child: Builder(builder: (context) {
-        return Scaffold(
-          appBar: CustomAppBar(
-            title: Text('Edit Your Card'),
-            leading: IconButton(
-              icon: const Icon(Icons.check),
-              splashRadius: 20,
-              onPressed: () {
-                final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(context);
-                final cardColorBloc =
+        return BlocListener<CardInfoBloc, CardInfoState>(
+          listener: (context, state) {
+            if(state is CardInfoLoadingState) {
+              loadingOverlay.show(context);
+            } else {
+              loadingOverlay.hide();
+            }
+            if (state is CardInfoLoadedState) {
+              Navigator.of(context).pop();
+            }
+            if (state is CardInfoErrorState) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text('state.error')));
+            }
+          },
+          child: Scaffold(
+              appBar: CustomAppBar(
+                title: Text('Edit Your Card'),
+                leading: IconButton(
+                  icon: const Icon(Icons.check),
+                  splashRadius: 20,
+                  onPressed: () {
+                    final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(
+                        context);
+                    final cardColorBloc =
                     BlocProvider.of<SelectCardColorBloc>(context);
 
-                final cardsInfoState = cardsInfoBloc.state;
+                    final cardsInfoState = cardsInfoBloc.state;
 
-                CardModel newCard = CardModel(
-                    timestamp: widget.card.timestamp,
-                    cardId: widget.card.cardId,
-                    settings: SettingsModel(
-                        cardColor: cardColorBloc.state),
-                    generalInfo: GeneralInfoModel(
-                        cardTitle: cardTitle.text.isNotEmpty
-                            ? cardTitle.text
-                            : 'Card',
-                        firstName: firstName.text,
-                        middleName: middleName.text,
-                        lastName: lastName.text,
-                        jobTitle: jobTitle.text,
-                        department: department.text,
-                        companyName: companyName.text,
-                        headLine: headLine.text,
-                        profileImage: '',
-                        logoImage: ''),
-                    extraInfo: ExtraInfoModel(listOfFields: []));
+                    CardModel newCard = CardModel(
+                        timestamp: widget.card.timestamp,
+                        cardId: widget.card.cardId,
+                        settings: SettingsModel(
+                            cardColor: cardColorBloc.state),
+                        generalInfo: GeneralInfoModel(
+                            cardTitle: cardTitle.text.isNotEmpty
+                                ? cardTitle.text
+                                : 'BCard',
+                            firstName: firstName.text,
+                            middleName: middleName.text,
+                            lastName: lastName.text,
+                            jobTitle: jobTitle.text,
+                            department: department.text,
+                            companyName: companyName.text,
+                            headLine: headLine.text,
+                            profileImage: '',
+                            logoImage: ''),
+                        extraInfo: ExtraInfoModel(listOfFields: []));
 
-                _controllerMap.forEach((key, value) {
-                  newCard.extraInfo.listOfFields
-                      .add(TextFieldModel(key: key, value: value.text));
-                });
+                    _controllerMap.forEach((key, value) {
+                      newCard.extraInfo.listOfFields
+                          .add(TextFieldModel(key: key, value: value.text));
+                    });
 
-                if (cardsInfoState is CardInfoLoadedState) {
+                    if (cardsInfoState is CardInfoLoadedState) {
+                      List<CardModel> currentCards = cardsInfoState.cards;
+                      cardsInfoBloc.add(UpdateCardEvent(currentCards, newCard));
+                    } else if (cardsInfoState is CardInfoEmptyState) {
+                      List<CardModel> currentCards = cardsInfoState.cards;
 
-                  List<CardModel> currentCards = cardsInfoState.cards;
+                      cardsInfoBloc.add(UpdateCardEvent(currentCards, newCard));
+                    }
 
-                  cardsInfoBloc.add(AddCardEvent(currentCards, newCard));
-
-                } else if (cardsInfoState is CardInfoEmptyState) {
-
-                  cardsInfoBloc.add(AddCardEvent(const [], newCard));
-
-                }
-
-                //Navigator.of(context).pop();
-              },
-            ),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.more_horiz),
-                splashRadius: 20,
-                onPressed: () {
-                  //Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => const CreateCardPage()));
-                },
-              ),
-            ],
-          ),
-        //   cardTitle.text = state.cards[widget.cardIndex].settings.cardTitle;
-        //   firstName.text = state.cards[widget.cardIndex].generalInfo.firstName;
-        //   middleName.text = state.cards[widget.cardIndex].generalInfo.middleName;
-        //   lastName.text = state.cards[widget.cardIndex].generalInfo.lastName;
-        //   jobTitle.text = state.cards[widget.cardIndex].generalInfo.jobTitle;
-        //   department.text = state.cards[widget.cardIndex].generalInfo.department;
-        //   companyName.text = state.cards[widget.cardIndex].generalInfo.companyName;
-        // headLine.text = state.cards[widget.cardIndex].generalInfo.headLine;
-          body: SingleChildScrollView(
-            child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: CustomTextField(
-                    hintText: 'Set a title (e.g. Work or Personal)',
-                    controller: cardTitle,
+                    //Navigator.of(context).pop();
+                  },
+                ),
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.more_horiz),
+                    splashRadius: 20,
+                    onPressed: () {
+                      //Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => const CreateCardPage()));
+                    },
                   ),
+                ],
+              ),
+              //   cardTitle.text = state.cards[widget.cardIndex].settings.cardTitle;
+              //   firstName.text = state.cards[widget.cardIndex].generalInfo.firstName;
+              //   middleName.text = state.cards[widget.cardIndex].generalInfo.middleName;
+              //   lastName.text = state.cards[widget.cardIndex].generalInfo.lastName;
+              //   jobTitle.text = state.cards[widget.cardIndex].generalInfo.jobTitle;
+              //   department.text = state.cards[widget.cardIndex].generalInfo.department;
+              //   companyName.text = state.cards[widget.cardIndex].generalInfo.companyName;
+              // headLine.text = state.cards[widget.cardIndex].generalInfo.headLine;
+              body: SingleChildScrollView(
+                child: Column(
+                  //crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: CustomTextField(
+                        hintText: 'Set a title (e.g. Work or Personal)',
+                        controller: cardTitle,
+                      ),
+                    ),
+
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
+
+                    ChooseColorWidget(),
+
+                    ImageSectionWidget(
+                        imageBloc: profileImageBloc,
+                        addTitle: 'Add Profile Picture',
+                        editTitle: 'Edit Profile Picture',
+                        removeTitle: 'Remove Profile Picture'),
+
+                    SizedBox(
+                      height: 30,
+                    ),
+
+                    ImageSectionWidget(
+                        imageBloc: companyLogoImageBloc,
+                        addTitle: 'Add Company Logo',
+                        editTitle: 'Edit Company Logo',
+                        removeTitle: 'Remove Company Logo'),
+
+
+                    GeneralInfoFieldsWidget(
+                      fullName: CustomTextField(
+                          hintText: 'Full Name',
+                          enabled: false,
+                          controller: fullName),
+                      firstName: CustomTextField(
+                          hintText: 'First Name',
+                          controller: firstName),
+                      middleName: CustomTextField(
+                          hintText: 'Middle Name',
+                          controller: middleName),
+                      lastName: CustomTextField(
+                          hintText: 'Last Name',
+                          controller: lastName),
+                      jobTitle: CustomTextField(
+                          hintText: 'Job Title', controller: jobTitle),
+                      department: CustomTextField(
+                          hintText: 'Department', controller: department),
+                      companyName: CustomTextField(
+                          hintText: 'Company Name', controller: companyName),
+                      headLine: CustomTextField(
+                          hintText: 'Headline', controller: headLine),
+                    ),
+
+                    // ///STATIC TEXT FIELDS
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(
+                    //       horizontal: 15.0, vertical: 30),
+                    //   child: GeneralTextFields(controller: TextEditingController())
+                    // ),
+
+                    ///DYNAMIC TEXT FIELDS
+                    ExtraInfoFieldsWidget(controllerMap: _controllerMap),
+
+                    TapFieldBelowWidget(),
+
+
+                    ExtraInfoFooterWidget(controllerMap: _controllerMap)
+
+                  ],
                 ),
-
-                // SizedBox(
-                //   height: 20,
-                // ),
-
-                ChooseColorWidget(),
-
-                ImageSectionWidget(
-                    imageBloc: profileImageBloc,
-                    addTitle: 'Add Profile Picture',
-                    editTitle: 'Edit Profile Picture',
-                    removeTitle: 'Remove Profile Picture'),
-
-                SizedBox(
-                  height: 30,
-                ),
-
-                ImageSectionWidget(
-                    imageBloc: companyLogoImageBloc,
-                    addTitle: 'Add Company Logo',
-                    editTitle: 'Edit Company Logo',
-                    removeTitle: 'Remove Company Logo'),
-
-
-
-                GeneralInfoFieldsWidget(
-                  fullName: CustomTextField(
-                      hintText: 'Full Name',
-                      enabled: false,
-                      controller: fullName),
-                  firstName: CustomTextField(
-                      hintText: 'First Name',
-                      controller: firstName),
-                  middleName: CustomTextField(
-                      hintText: 'Middle Name',
-                      controller: middleName),
-                  lastName: CustomTextField(
-                      hintText: 'Last Name',
-                      controller: lastName),
-                  jobTitle: CustomTextField(
-                      hintText: 'Job Title', controller: jobTitle),
-                  department: CustomTextField(
-                      hintText: 'Department', controller: department),
-                  companyName: CustomTextField(
-                      hintText: 'Company Name', controller: companyName),
-                  headLine: CustomTextField(
-                      hintText: 'Headline', controller: headLine),
-                ),
-
-                // ///STATIC TEXT FIELDS
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(
-                //       horizontal: 15.0, vertical: 30),
-                //   child: GeneralTextFields(controller: TextEditingController())
-                // ),
-
-                ///DYNAMIC TEXT FIELDS
-                ExtraInfoFieldsWidget(controllerMap: _controllerMap),
-
-                TapFieldBelowWidget(),
-
-
-                ExtraInfoFooterWidget(controllerMap: _controllerMap)
-
-              ],
-            ),
-          )
+              )
+          ),
         );
       }),
     );

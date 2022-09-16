@@ -14,6 +14,16 @@ class AddCardEvent extends CardInfoEvent {
 
 }
 
+
+class UpdateCardEvent extends CardInfoEvent {
+
+  final List<CardModel> cards;
+  final CardModel newCard;
+
+  UpdateCardEvent(this.cards, this.newCard);
+
+}
+
 // class AddExtraInfoEvent extends CardInfoEvent {
 //
 //   final List<CardModel> cards;

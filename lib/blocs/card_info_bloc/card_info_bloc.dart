@@ -16,6 +16,7 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
   CardInfoBloc({required this.cardRepository}) : super(CardInfoInitialState()) {
     on<GetCardInfoEvent>(_getCardInfo);
     on<AddCardEvent>(_addCard);
+    on<UpdateCardEvent>(_updateCard);
     //on<AddExtraInfoEvent>(_addExtraInfo);
   }
 
@@ -129,6 +130,26 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
       await cardRepository.createCard(user.uid, event.newCard);
       List<CardModel> cards = event.cards;
       cards.add(event.newCard);
+      emit(CardInfoLoadedState(cards));
+    } catch (e) {
+      emit(CardInfoErrorState());
+    }
+
+    //List<CardModel> cards = List.from(listOfCards.map((card) => CardModel.fromJson(card)));
+
+
+  }
+
+  _updateCard(UpdateCardEvent event, Emitter<CardInfoState> emit) async {
+
+    emit(CardInfoLoadingState());
+
+    final user = FirebaseAuth.instance.currentUser!;
+
+    try {
+      await cardRepository.updateCard(user.uid, event.newCard);
+      List<CardModel> cards = event.cards;
+      cards[cards.indexWhere((element) => element.cardId == event.newCard.cardId)] = event.newCard;
       emit(CardInfoLoadedState(cards));
     } catch (e) {
       emit(CardInfoErrorState());
