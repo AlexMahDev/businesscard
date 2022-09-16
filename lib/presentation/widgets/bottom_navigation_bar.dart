@@ -1,6 +1,10 @@
+import 'package:businesscard/blocs/card_page_bloc/card_page_bloc.dart';
 import 'package:businesscard/presentation/cards_page.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../blocs/card_info_bloc/card_info_bloc.dart';
 
 
 class CustomBottomNavigationBar extends StatefulWidget {
@@ -11,6 +15,13 @@ class CustomBottomNavigationBar extends StatefulWidget {
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<CardInfoBloc>(context).add(GetCardInfoEvent());
+    BlocProvider.of<CardPageBloc>(context).add(ChangeCardPageEvent(0));
+  }
 
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[

@@ -1,3 +1,4 @@
+import 'package:businesscard/blocs/card_page_bloc/card_page_bloc.dart';
 import 'package:businesscard/presentation/cards_page.dart';
 import 'package:businesscard/presentation/welcome_page.dart';
 import 'package:businesscard/presentation/widgets/bottom_navigation_bar.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final CardPageBloc cardPageBloc = CardPageBloc();
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
@@ -49,8 +51,11 @@ class MyApp extends StatelessWidget {
                       context),
                 ),
           ),
+          BlocProvider<CardPageBloc>(
+            create: (context) => cardPageBloc,
+          ),
           BlocProvider<CardInfoBloc>(
-            create: (context) => CardInfoBloc(cardRepository: RepositoryProvider.of<CardRepository>(context)),
+            create: (context) => CardInfoBloc(cardRepository: RepositoryProvider.of<CardRepository>(context), cardPageBloc: cardPageBloc),
           ),
         ],
         child: MaterialApp(
@@ -71,17 +76,23 @@ class MyApp extends StatelessWidget {
               //titleTextStyle: TextStyle()
             ),
           ),
-          title: 'Flutter Demo',
+          title: 'BCard',
           home: StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
                 // If the snapshot has user data, then they're already signed in. So Navigating to the Dashboard.
                 if (snapshot.hasData) {
-                  return BlocProvider<CardInfoBloc>.value(
-                    value: BlocProvider.of<CardInfoBloc>(context)
-                      ..add(GetCardInfoEvent()),
-                    child: CustomBottomNavigationBar(),
-                  );
+                  //print('h');
+                  //BlocProvider.of<CardInfoBloc>(context).add(GetCardInfoEvent());
+                  return CustomBottomNavigationBar();
+
+
+
+                  //   BlocProvider<CardInfoBloc>.value(
+                  //   value: BlocProvider.of<CardInfoBloc>(context)
+                  //     ..add(GetCardInfoEvent()),
+                  //   child: CustomBottomNavigationBar(),
+                  // );
                 }
                 // Otherwise, they're not signed in. Show the sign in page.
                 return WelcomePage();
