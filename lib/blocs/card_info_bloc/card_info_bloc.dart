@@ -16,7 +16,7 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
   CardInfoBloc({required this.cardRepository}) : super(CardInfoInitialState()) {
     on<GetCardInfoEvent>(_getCardInfo);
     on<AddCardEvent>(_addCard);
-    on<AddExtraInfoEvent>(_addExtraInfo);
+    //on<AddExtraInfoEvent>(_addExtraInfo);
   }
 
   _getCardInfo(CardInfoEvent event, Emitter<CardInfoState> emit) async {
@@ -139,14 +139,14 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
 
   }
 
-  _addExtraInfo(AddExtraInfoEvent event, Emitter<CardInfoState> emit) async {
-
-
-    //List<CardModel> cards = List.from(listOfCards.map((card) => CardModel.fromJson(card)));
-
-    emit(CardInfoLoadedState(event.cards));
-
-  }
+  // _addExtraInfo(AddExtraInfoEvent event, Emitter<CardInfoState> emit) async {
+  //
+  //
+  //   //List<CardModel> cards = List.from(listOfCards.map((card) => CardModel.fromJson(card)));
+  //
+  //   emit(CardInfoLoadedState(event.cards));
+  //
+  // }
 
 
 }
