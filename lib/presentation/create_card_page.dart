@@ -13,6 +13,7 @@ import 'package:businesscard/presentation/widgets/extra_info_fields_widget.dart'
 import 'package:businesscard/presentation/widgets/extra_info_footer_widget.dart';
 import 'package:businesscard/presentation/widgets/general_info_fields_widget.dart';
 import 'package:businesscard/presentation/widgets/image_section_widget.dart';
+import 'package:businesscard/presentation/widgets/loading_overlay_widget.dart';
 import 'package:businesscard/presentation/widgets/tap_field_below_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +41,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
   late final TextEditingController headLine;
   late final ImageBloc profileImageBloc;
   late final ImageBloc companyLogoImageBloc;
+  late final LoadingOverlay loadingOverlay;
 
   @override
   void initState() {
@@ -70,6 +72,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
     department = TextEditingController();
     companyName = TextEditingController();
     headLine = TextEditingController();
+    loadingOverlay = LoadingOverlay();
   }
 
   @override
@@ -167,21 +170,33 @@ class _CreateCardPageState extends State<CreateCardPage> {
         return Scaffold(
           appBar: CustomAppBar(
             title: Text('Create A Card'),
-            leading: IconButton(
-              icon: const Icon(Icons.check),
-              splashRadius: 20,
-              onPressed: () {
-                final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(context);
-                final cardColorBloc =
-                    BlocProvider.of<SelectCardColorBloc>(context);
+            leading: BlocListener<CardInfoBloc, CardInfoState>(
+              listener: (context, state) {
+                if(state is CardInfoLoadingState) {
+                  loadingOverlay.show(context);
+                } else {
+                  loadingOverlay.hide();
+                }
+                if (state is CardInfoLoadedState) {
+                  Navigator.of(context).pop();
+                }
+                if (state is CardInfoErrorState) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('state.error')));
+                }
+              },
+              child: IconButton(
+                icon: const Icon(Icons.check),
+                splashRadius: 20,
+                onPressed: () {
+                  final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+                  final cardColorBloc =
+                  BlocProvider.of<SelectCardColorBloc>(context);
 
-                final cardsInfoState = cardsInfoBloc.state;
-
-                if (cardsInfoState is CardInfoLoadedState) {
-                  List<CardModel> currentCards = cardsInfoState.cards;
+                  final cardsInfoState = cardsInfoBloc.state;
 
                   CardModel newCard = CardModel(
-                    cardId: '',
+                      cardId: '',
                       settings: SettingsModel(
                           cardColor: cardColorBloc.state),
                       generalInfo: GeneralInfoModel(
@@ -204,20 +219,17 @@ class _CreateCardPageState extends State<CreateCardPage> {
                         .add(TextFieldModel(key: key, value: value.text));
                   });
 
-                  currentCards.add(newCard);
+                  if (cardsInfoState is CardInfoLoadedState) {
+                    List<CardModel> currentCards = cardsInfoState.cards;
 
-                  // newCard.settings = SettingsModel(cardTitle: cardTitle.text, cardColor: cardColorBloc.state.toString());
-                  // newCard.generalInfo = GeneralInfoModel(firstName: firstName.text, middleName: middleName.text, lastName: lastName.text, jobTitle: jobTitle.text, department: department.text, companyName: companyName.text, headLine: headLine.text);
-                  // newCard.extraInfo.listOfFields.clear();
-                  // _controllerMap.forEach((key, value) {
-                  //   newCard.extraInfo.listOfFields.add(TextFieldModel(key: key, value: value.text));
-                  // });
+                    cardsInfoBloc.add(AddCardEvent(currentCards, newCard));
+                  } else if (cardsInfoState is CardInfoEmptyState) {
 
-                  cardsInfoBloc.add(AddCardEvent(currentCards));
-                }
-
-                Navigator.of(context).pop();
-              },
+                    List<CardModel> currentCards = cardsInfoState.cards;
+                    cardsInfoBloc.add(AddCardEvent(currentCards, newCard));
+                  }
+                },
+              ),
             ),
             actions: [
               IconButton(

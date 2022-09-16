@@ -142,46 +142,43 @@ class _EditCardPageState extends State<EditCardPage> {
 
                 final cardsInfoState = cardsInfoBloc.state;
 
+                CardModel newCard = CardModel(
+                    cardId: widget.card.cardId,
+                    settings: SettingsModel(
+                        cardColor: cardColorBloc.state),
+                    generalInfo: GeneralInfoModel(
+                        cardTitle: cardTitle.text.isNotEmpty
+                            ? cardTitle.text
+                            : 'Card',
+                        firstName: firstName.text,
+                        middleName: middleName.text,
+                        lastName: lastName.text,
+                        jobTitle: jobTitle.text,
+                        department: department.text,
+                        companyName: companyName.text,
+                        headLine: headLine.text,
+                        profileImage: '',
+                        logoImage: ''),
+                    extraInfo: ExtraInfoModel(listOfFields: []));
+
+                _controllerMap.forEach((key, value) {
+                  newCard.extraInfo.listOfFields
+                      .add(TextFieldModel(key: key, value: value.text));
+                });
+
                 if (cardsInfoState is CardInfoLoadedState) {
+
                   List<CardModel> currentCards = cardsInfoState.cards;
 
-                  CardModel newCard = CardModel(
-                    cardId: widget.card.cardId,
-                      settings: SettingsModel(
-                          cardColor: cardColorBloc.state),
-                      generalInfo: GeneralInfoModel(
-                          cardTitle: cardTitle.text.isNotEmpty
-                              ? cardTitle.text
-                              : 'Card',
-                          firstName: firstName.text,
-                          middleName: middleName.text,
-                          lastName: lastName.text,
-                          jobTitle: jobTitle.text,
-                          department: department.text,
-                          companyName: companyName.text,
-                          headLine: headLine.text,
-                          profileImage: '',
-                          logoImage: ''),
-                      extraInfo: ExtraInfoModel(listOfFields: []));
+                  cardsInfoBloc.add(AddCardEvent(currentCards, newCard));
 
-                  _controllerMap.forEach((key, value) {
-                    newCard.extraInfo.listOfFields
-                        .add(TextFieldModel(key: key, value: value.text));
-                  });
+                } else if (cardsInfoState is CardInfoEmptyState) {
 
-                  currentCards.add(newCard);
+                  cardsInfoBloc.add(AddCardEvent(const [], newCard));
 
-                  // newCard.settings = SettingsModel(cardTitle: cardTitle.text, cardColor: cardColorBloc.state.toString());
-                  // newCard.generalInfo = GeneralInfoModel(firstName: firstName.text, middleName: middleName.text, lastName: lastName.text, jobTitle: jobTitle.text, department: department.text, companyName: companyName.text, headLine: headLine.text);
-                  // newCard.extraInfo.listOfFields.clear();
-                  // _controllerMap.forEach((key, value) {
-                  //   newCard.extraInfo.listOfFields.add(TextFieldModel(key: key, value: value.text));
-                  // });
-
-                  cardsInfoBloc.add(AddCardEvent(currentCards));
                 }
 
-                Navigator.of(context).pop();
+                //Navigator.of(context).pop();
               },
             ),
             actions: [

@@ -16,4 +16,12 @@ class CardInfoLoadedState extends CardInfoState {
 
 }
 
+class CardInfoEmptyState extends CardInfoState {
+
+  final List<CardModel> cards;
+
+  CardInfoEmptyState(this.cards);
+
+}
+
 class CardInfoErrorState extends CardInfoState {}

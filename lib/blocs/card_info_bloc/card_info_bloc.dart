@@ -82,9 +82,17 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
     // List<CardModel> cards = List.from(listOfCards.map((card) => CardModel.fromJson(card)));
 
 
-    List<CardModel> cards = await cardRepository.getCards(user.uid);
+    try {
+      List<CardModel> cards = await cardRepository.getCards(user.uid);
+      if(cards.isNotEmpty) {
+        emit(CardInfoLoadedState(cards));
+      } else {
+        emit(CardInfoEmptyState(cards));
+      }
+    } catch (e) {
+      emit(CardInfoErrorState());
+    }
 
-    print(cards);
 
 
     //CardModel card = CardModel.fromJson(listOfCards[0]);
@@ -107,17 +115,27 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
     //
     // };
 
-    emit(CardInfoLoadedState(cards));
 
   }
 
 
   _addCard(AddCardEvent event, Emitter<CardInfoState> emit) async {
 
+    emit(CardInfoLoadingState());
+
+    final user = FirebaseAuth.instance.currentUser!;
+
+    try {
+      await cardRepository.createCard(user.uid, event.newCard);
+      List<CardModel> cards = event.cards;
+      cards.add(event.newCard);
+      emit(CardInfoLoadedState(cards));
+    } catch (e) {
+      emit(CardInfoErrorState());
+    }
 
     //List<CardModel> cards = List.from(listOfCards.map((card) => CardModel.fromJson(card)));
 
-    emit(CardInfoLoadedState(event.cards));
 
   }
 

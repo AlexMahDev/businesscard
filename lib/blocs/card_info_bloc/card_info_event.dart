@@ -8,8 +8,9 @@ class GetCardInfoEvent extends CardInfoEvent {}
 class AddCardEvent extends CardInfoEvent {
 
   final List<CardModel> cards;
+  final CardModel newCard;
 
-  AddCardEvent(this.cards);
+  AddCardEvent(this.cards, this.newCard);
 
 }
 
