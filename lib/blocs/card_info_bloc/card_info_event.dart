@@ -14,10 +14,10 @@ class AddCardEvent extends CardInfoEvent {
 
 }
 
-class AddExtraInfoEvent extends CardInfoEvent {
-
-  final List<CardModel> cards;
-
-  AddExtraInfoEvent(this.cards);
-
-}
+// class AddExtraInfoEvent extends CardInfoEvent {
+//
+//   final List<CardModel> cards;
+//
+//   AddExtraInfoEvent(this.cards);
+//
+// }
