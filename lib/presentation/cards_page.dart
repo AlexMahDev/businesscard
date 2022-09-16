@@ -4,6 +4,7 @@ import 'package:businesscard/blocs/select_card_color_bloc/select_card_color_bloc
 import 'package:businesscard/presentation/welcome_page.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_float_action_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -97,7 +98,14 @@ class _CardsPageState extends State<CardsPage> {
           leading: IconButton(
             icon: const Icon(Icons.menu),
             splashRadius: 20,
-            onPressed: () {
+            onPressed: () async {
+
+              // final doc = FirebaseFirestore.instance.collection("users").doc("S4lc2BkgjnPbjlnUPMmfMcb2F012").collection("contacts");
+              //
+              // await doc.doc().set({'test' : 'test'});
+
+              // final info = await FirebaseFirestore.instance.collection("users").doc('uid-1').collection("cards").get();
+              // print(info.docs.first.data());
               context.read<AuthBloc>().add(SignOutRequested());
             },
           ),

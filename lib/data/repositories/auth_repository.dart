@@ -1,3 +1,5 @@
+import 'package:businesscard/data/models/card_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepository {
@@ -5,8 +7,13 @@ class AuthRepository {
 
   Future<void> signUp({required String email, required String password}) async {
     try {
-      await FirebaseAuth.instance
+      final userInfo = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      final usersCollection = FirebaseFirestore.instance.collection("users").doc(userInfo.user!.uid);
+      await usersCollection.set({
+        "uid" : userInfo.user!.uid,
+        "email" : userInfo.user!.email
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw Exception('The password provided is too weak.');

@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/auth_bloc/auth_bloc.dart';
 import 'blocs/card_info_bloc/card_info_bloc.dart';
 import 'data/repositories/auth_repository.dart';
+import 'data/repositories/card_repository.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -30,8 +31,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => AuthRepository(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create: (context) => AuthRepository(),
+        ),
+        RepositoryProvider(
+          create: (context) => CardRepository(),
+        ),
+      ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(
@@ -42,7 +50,7 @@ class MyApp extends StatelessWidget {
                 ),
           ),
           BlocProvider<CardInfoBloc>(
-            create: (context) => CardInfoBloc(),
+            create: (context) => CardInfoBloc(cardRepository: RepositoryProvider.of<CardRepository>(context)),
           ),
         ],
         child: MaterialApp(
@@ -70,7 +78,8 @@ class MyApp extends StatelessWidget {
                 // If the snapshot has user data, then they're already signed in. So Navigating to the Dashboard.
                 if (snapshot.hasData) {
                   return BlocProvider<CardInfoBloc>.value(
-                    value: BlocProvider.of<CardInfoBloc>(context)..add(GetCardInfoEvent()),
+                    value: BlocProvider.of<CardInfoBloc>(context)
+                      ..add(GetCardInfoEvent()),
                     child: CustomBottomNavigationBar(),
                   );
                 }
@@ -80,38 +89,6 @@ class MyApp extends StatelessWidget {
           //home: const CustomBottomNavigationBar()
         ),
       ),
-
-
-      // MultiBlocProvider(
-      //   providers: [
-      //     BlocProvider<CardInfoBloc>(
-      //       create: (BuildContext context) =>
-      //           CardInfoBloc()..add(GetCardInfoEvent()),
-      //     ),
-      //   ],
-      //   child: MaterialApp(
-      //     theme: ThemeData(
-      //       primarySwatch: Colors.red,
-      //
-      //       ///redAccent
-      //       //primaryColor: Colors.redAccent,
-      //       fontFamily: 'OpenSans',
-      //       appBarTheme: AppBarTheme(
-      //         centerTitle: true,
-      //         titleTextStyle: TextStyle(
-      //             color: Colors.black,
-      //             fontSize: 20,
-      //             fontWeight: FontWeight.bold),
-      //         iconTheme: IconThemeData(color: Colors.redAccent, size: 30),
-      //         foregroundColor: Colors.black, //<-- SEE HERE
-      //         //titleTextStyle: TextStyle()
-      //       ),
-      //     ),
-      //     title: 'Flutter Demo',
-      //     home: WelcomePage(),
-      //     //home: const CustomBottomNavigationBar()
-      //   ),
-      // ),
     );
   }
 }

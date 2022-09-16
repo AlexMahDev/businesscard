@@ -181,6 +181,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                   List<CardModel> currentCards = cardsInfoState.cards;
 
                   CardModel newCard = CardModel(
+                    cardId: '',
                       settings: SettingsModel(
                           cardColor: cardColorBloc.state),
                       generalInfo: GeneralInfoModel(

@@ -146,6 +146,7 @@ class _EditCardPageState extends State<EditCardPage> {
                   List<CardModel> currentCards = cardsInfoState.cards;
 
                   CardModel newCard = CardModel(
+                    cardId: widget.card.cardId,
                       settings: SettingsModel(
                           cardColor: cardColorBloc.state),
                       generalInfo: GeneralInfoModel(

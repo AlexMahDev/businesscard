@@ -104,18 +104,21 @@
 
 class CardModel {
 
+  String cardId;
   SettingsModel settings;
   GeneralInfoModel generalInfo;
   ExtraInfoModel extraInfo;
 
 
   CardModel({
+    required this.cardId,
     required this.settings,
     required this.generalInfo,
     required this.extraInfo
   });
 
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
+      cardId: json['cardId'],
       settings: SettingsModel.fromJson(json['settings']),
       generalInfo: GeneralInfoModel.fromJson(json['generalInfo']),
       extraInfo: ExtraInfoModel.fromJson(json['extraInfo'])
@@ -123,9 +126,10 @@ class CardModel {
 
   Map<String, dynamic> toJson() =>
       {
-        "settings": settings,
-        "generalInfo": generalInfo,
-        "extraInfo": extraInfo
+        "cardId" : cardId,
+        "settings": settings.toJson(),
+        "generalInfo": generalInfo.toJson(),
+        "extraInfo": extraInfo.toJson()
       };
 }
 
@@ -139,6 +143,11 @@ class SettingsModel {
   factory SettingsModel.fromJson(Map<String, dynamic> json) => SettingsModel(
     cardColor: json["cardColor"],
   );
+
+  Map<String, dynamic> toJson() =>
+      {
+        "cardColor": cardColor
+      };
 
 }
 
@@ -172,6 +181,20 @@ class GeneralInfoModel {
       logoImage: json["logoImage"]
   );
 
+  Map<String, dynamic> toJson() =>
+      {
+        "cardTitle" : cardTitle,
+        "firstName" : firstName,
+        "middleName" : middleName,
+        "lastName" : lastName,
+        "jobTitle" : jobTitle,
+        "department" : department,
+        "companyName" : companyName,
+        "headLine" : headLine,
+        "profileImage" : profileImage,
+        "logoImage" : logoImage
+      };
+
 
 }
 
@@ -203,6 +226,22 @@ class ExtraInfoModel {
     //extraInfo: json["extraInfo"]
   );
 
+  Map<String, dynamic> toJson() {
+
+    Map<String, String> extraInfo = {};
+
+    for(TextFieldModel value in listOfFields) {
+
+      extraInfo[value.key] = value.value;
+
+    }
+
+    return extraInfo;
+
+
+  }
+
+
 
 }
 
@@ -217,5 +256,7 @@ class TextFieldModel {
       key: title,
       value: value
   );
+
+
 
 }
