@@ -104,6 +104,7 @@
 
 class CardModel {
 
+  int timestamp;
   String cardId;
   SettingsModel settings;
   GeneralInfoModel generalInfo;
@@ -111,6 +112,7 @@ class CardModel {
 
 
   CardModel({
+    required this.timestamp,
     required this.cardId,
     required this.settings,
     required this.generalInfo,
@@ -118,6 +120,7 @@ class CardModel {
   });
 
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
+      timestamp: json['timestamp'],
       cardId: json['cardId'],
       settings: SettingsModel.fromJson(json['settings']),
       generalInfo: GeneralInfoModel.fromJson(json['generalInfo']),
@@ -126,6 +129,7 @@ class CardModel {
 
   Map<String, dynamic> toJson() =>
       {
+        "timestamp" : timestamp,
         "cardId" : cardId,
         "settings": settings.toJson(),
         "generalInfo": generalInfo.toJson(),

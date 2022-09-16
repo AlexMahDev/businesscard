@@ -196,6 +196,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                   final cardsInfoState = cardsInfoBloc.state;
 
                   CardModel newCard = CardModel(
+                      timestamp: DateTime.now().millisecondsSinceEpoch,
                       cardId: '',
                       settings: SettingsModel(
                           cardColor: cardColorBloc.state),

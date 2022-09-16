@@ -143,6 +143,7 @@ class _EditCardPageState extends State<EditCardPage> {
                 final cardsInfoState = cardsInfoBloc.state;
 
                 CardModel newCard = CardModel(
+                    timestamp: widget.card.timestamp,
                     cardId: widget.card.cardId,
                     settings: SettingsModel(
                         cardColor: cardColorBloc.state),

@@ -172,6 +172,7 @@ class _CardsPageState extends State<CardsPage> {
               }
 
               if (state is CardInfoLoadedState) {
+                BlocProvider.of<CardPageBloc>(context).add(ChangeCardPageEvent(0));
                 return Stack(
                   alignment: Alignment.bottomCenter,
                   children: [

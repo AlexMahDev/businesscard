@@ -82,7 +82,7 @@ class CardRepository {
     // await card.set(newCard.toJson());
 
     try {
-      final cards = await FirebaseFirestore.instance.collection("users").doc(uid).collection("cards").get();
+      final cards = await FirebaseFirestore.instance.collection("users").doc(uid).collection("cards").orderBy('timestamp').get();
       //return List.from(listOfCards.map((e) => CardModel.fromJson(e)));
       return cards.docs.isNotEmpty ? List.from(cards.docs.map((e) => CardModel.fromJson(e.data()))) : [];
     } catch (e) {
@@ -117,6 +117,7 @@ class CardRepository {
 
     newCard.cardId = card.id;
 
+    print(newCard.timestamp);
     try {
       await card.set(newCard.toJson());
     } catch (e) {
