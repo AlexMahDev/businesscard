@@ -1,4 +1,5 @@
 import 'package:businesscard/presentation/cards_page.dart';
+import 'package:businesscard/presentation/widgets/bottom_navigation_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_text_field_widget.dart';
 import 'package:businesscard/presentation/widgets/loading_overlay_widget.dart';
@@ -59,7 +60,7 @@ class _SignInPageState extends State<SignInPage> {
           if (state is Authenticated) {
             // Navigating to the dashboard screen if the user is authenticated
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const CardsPage()));
+                MaterialPageRoute(builder: (context) => const CustomBottomNavigationBar()));
           }
           if (state is AuthError) {
             // Showing the error message if the user has entered invalid credentials

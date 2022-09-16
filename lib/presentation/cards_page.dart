@@ -75,8 +75,8 @@ class _CardsPageState extends State<CardsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
-    print(user.email);
+    // final user = FirebaseAuth.instance.currentUser!;
+    // print(user.uid);
     return BlocProvider<CardPageBloc>(
       create: (context) => CardPageBloc(),
       child: Scaffold(
