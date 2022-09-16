@@ -138,5 +138,17 @@ class CardRepository {
 
   }
 
+  Future<void> deleteCard(String uid, String cardId) async {
+
+    final card = FirebaseFirestore.instance.collection("users").doc(uid).collection("cards").doc(cardId);
+
+    try {
+      await card.delete();
+    } catch (e) {
+      throw Exception(e);
+    }
+
+  }
+
 
 }

@@ -24,6 +24,16 @@ class UpdateCardEvent extends CardInfoEvent {
 
 }
 
+
+class DeleteCardEvent extends CardInfoEvent {
+
+  final List<CardModel> cards;
+  final String cardId;
+
+  DeleteCardEvent(this.cards, this.cardId);
+
+}
+
 // class AddExtraInfoEvent extends CardInfoEvent {
 //
 //   final List<CardModel> cards;

@@ -146,7 +146,7 @@ class _EditCardPageState extends State<EditCardPage> {
             } else {
               loadingOverlay.hide();
             }
-            if (state is CardInfoLoadedState) {
+            if (state is CardInfoLoadedState || state is CardInfoEmptyState) {
               Navigator.of(context).pop();
             }
             if (state is CardInfoErrorState) {
@@ -210,6 +210,15 @@ class _EditCardPageState extends State<EditCardPage> {
                     icon: const Icon(Icons.more_horiz),
                     splashRadius: 20,
                     onPressed: () {
+                      final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+                      final cardInfoState = cardInfoBloc.state;
+                      if (cardInfoState is CardInfoLoadedState) {
+                        List<CardModel> currentCards = cardInfoState.cards;
+                        cardInfoBloc.add(DeleteCardEvent(currentCards, widget.card.cardId));
+                      } else if (cardInfoState is CardInfoEmptyState) {
+                        List<CardModel> currentCards = cardInfoState.cards;
+                        cardInfoBloc.add(DeleteCardEvent(currentCards, widget.card.cardId));
+                      }
                       //Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => const CreateCardPage()));
                     },
                   ),

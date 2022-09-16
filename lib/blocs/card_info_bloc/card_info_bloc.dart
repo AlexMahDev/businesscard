@@ -21,6 +21,7 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
     on<GetCardInfoEvent>(_getCardInfo);
     on<AddCardEvent>(_addCard);
     on<UpdateCardEvent>(_updateCard);
+    on<DeleteCardEvent>(_deleteCard);
     //on<AddExtraInfoEvent>(_addExtraInfo);
   }
 
@@ -156,6 +157,31 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
       List<CardModel> cards = event.cards;
       cards[cards.indexWhere((element) => element.cardId == event.newCard.cardId)] = event.newCard;
       emit(CardInfoLoadedState(cards));
+    } catch (e) {
+      emit(CardInfoErrorState());
+    }
+
+    //List<CardModel> cards = List.from(listOfCards.map((card) => CardModel.fromJson(card)));
+
+
+  }
+
+  _deleteCard(DeleteCardEvent event, Emitter<CardInfoState> emit) async {
+
+    emit(CardInfoLoadingState());
+
+    final user = FirebaseAuth.instance.currentUser!;
+
+    try {
+      await cardRepository.deleteCard(user.uid, event.cardId);
+      List<CardModel> cards = event.cards;
+      cards.removeAt(cards.indexWhere((element) => element.cardId == event.cardId));
+      cardPageBloc.add(ChangeCardPageEvent(0));
+      if(cards.isNotEmpty) {
+        emit(CardInfoLoadedState(cards));
+      } else {
+        emit(CardInfoEmptyState(cards));
+      }
     } catch (e) {
       emit(CardInfoErrorState());
     }
