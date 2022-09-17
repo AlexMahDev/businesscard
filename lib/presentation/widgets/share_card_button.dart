@@ -6,11 +6,11 @@ import 'custom_bottom_sheet.dart';
 
 
 
-class CustomFloatActionButton extends StatelessWidget {
+class ShareCardButton extends StatelessWidget {
 
   final int color;
 
-  const CustomFloatActionButton({Key? key, required this.color}) : super(key: key);
+  const ShareCardButton({Key? key, required this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
