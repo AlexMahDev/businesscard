@@ -1,4 +1,4 @@
-import 'package:businesscard/presentation/cards_page.dart';
+import 'package:businesscard/presentation/main_page.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_text_field_widget.dart';
 import 'package:businesscard/presentation/widgets/loading_overlay_widget.dart';
@@ -63,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
             // Navigating to the dashboard screen if the user is authenticated
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (context) => const CardsPage(),
+                builder: (context) => const MainPageNavigationBar(),
               ),
             );
           }

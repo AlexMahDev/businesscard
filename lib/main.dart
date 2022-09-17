@@ -1,9 +1,6 @@
 import 'package:businesscard/blocs/card_page_bloc/card_page_bloc.dart';
-import 'package:businesscard/presentation/cards_page.dart';
+import 'package:businesscard/presentation/main_page.dart';
 import 'package:businesscard/presentation/welcome_page.dart';
-import 'package:businesscard/presentation/widgets/bottom_navigation_bar.dart';
-import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +81,7 @@ class MyApp extends StatelessWidget {
                 if (snapshot.hasData) {
                   //print('h');
                   //BlocProvider.of<CardInfoBloc>(context).add(GetCardInfoEvent());
-                  return CustomBottomNavigationBar();
+                  return MainPageNavigationBar();
 
 
 
