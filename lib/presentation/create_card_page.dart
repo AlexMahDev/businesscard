@@ -6,6 +6,7 @@ import 'package:businesscard/blocs/image_bloc/image_bloc.dart';
 import 'package:businesscard/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import 'package:businesscard/blocs/text_clear_button_bloc/text_clear_button_bloc.dart';
 import 'package:businesscard/blocs/text_field_bloc/text_field_bloc.dart';
+import 'package:businesscard/data/repositories/storage_repository.dart';
 import 'package:businesscard/presentation/widgets/choose_color_widget.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_text_field_widget.dart';
@@ -42,12 +43,16 @@ class _CreateCardPageState extends State<CreateCardPage> {
   late final ImageBloc profileImageBloc;
   late final ImageBloc companyLogoImageBloc;
   late final LoadingOverlay loadingOverlay;
+  late final StorageRepository profileImageRepository;
+  late final StorageRepository companyLogoRepository;
 
   @override
   void initState() {
     super.initState();
-    profileImageBloc = ImageBloc();
-    companyLogoImageBloc = ImageBloc();
+    profileImageRepository = StorageRepository();
+    companyLogoRepository = StorageRepository();
+    profileImageBloc = ImageBloc(storageRepository: profileImageRepository);
+    companyLogoImageBloc = ImageBloc(storageRepository: companyLogoRepository);
     cardTitle = TextEditingController();
     fullName = TextEditingController();
     firstName = TextEditingController();
@@ -214,8 +219,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                           department: department.text,
                           companyName: companyName.text,
                           headLine: headLine.text,
-                          profileImage: '',
-                          logoImage: ''),
+                          profileImage: profileImageRepository.url,
+                          logoImage: companyLogoRepository.url),
                       extraInfo: ExtraInfoModel(listOfFields: []));
 
                   _controllerMap.forEach((key, value) {

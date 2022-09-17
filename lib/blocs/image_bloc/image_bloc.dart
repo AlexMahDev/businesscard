@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:businesscard/data/repositories/storage_repository.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,59 +13,94 @@ part 'image_event.dart';
 part 'image_state.dart';
 
 class ImageBloc extends Bloc<ImageEvent, ImageState> {
-  ImageBloc() : super(ImageInitialState()) {
-    on<PickImageEvent>(_pickImage);
-    on<NetworkImageEvent>(_showNetworkImage);
+
+  final StorageRepository storageRepository;
+
+  ImageBloc({required this.storageRepository}) : super(ImageInitialState()) {
+    on<UploadImageEvent>(_uploadImage);
+    on<GetImageEvent>(_getNetworkImage);
     on<RemoveImageEvent>(_removeImage);
   }
 
-  _pickImage(PickImageEvent event, Emitter<ImageState> emit) async {
+  _uploadImage(UploadImageEvent event, Emitter<ImageState> emit) async {
 
-    final ImagePicker picker = ImagePicker();
-    final XFile? image;
+    emit(ImageLoadingState());
 
     try {
-      if (event.isGallery) {
-        image = await picker.pickImage(source: ImageSource.gallery);
+      print('1hhhhhh');
+      await storageRepository.uploadImage(event.isGallery);
+      print('2hhhhhh');
+      if (storageRepository.url.isNotEmpty) {
+        emit(ImageNetworkLoadedState(storageRepository.url));
       } else {
-        image = await picker.pickImage(source: ImageSource.camera);
+        emit(ImageInitialState());
       }
-      if (image != null) {
-        CroppedFile? croppedFile = await ImageCropper().cropImage(
-          sourcePath: image.path,
-          aspectRatioPresets: [
-            CropAspectRatioPreset.square,
-            CropAspectRatioPreset.ratio3x2,
-            CropAspectRatioPreset.original,
-            CropAspectRatioPreset.ratio4x3,
-            CropAspectRatioPreset.ratio16x9
-          ],
-          uiSettings: [
-            AndroidUiSettings(
-                toolbarTitle: 'Crop Image',
-                toolbarColor: Colors.black,
-                toolbarWidgetColor: Colors.white,
-                initAspectRatio: CropAspectRatioPreset.original,
-                lockAspectRatio: false),
-            IOSUiSettings(
-              title: 'Crop Image',
-            ),
-          ],
-        );
-        if(croppedFile != null) {
-          emit(ImagePickLoadedState(File(croppedFile.path)));
-        }
-      }
-    } catch (_) {}
+    } catch (e) {
+      print(e);
+      emit(ImagePickErrorState());
+    }
+
+    // final ImagePicker picker = ImagePicker();
+    // final XFile? image;
+    //
+    // try {
+    //   if (event.isGallery) {
+    //     image = await picker.pickImage(source: ImageSource.gallery);
+    //   } else {
+    //     image = await picker.pickImage(source: ImageSource.camera);
+    //   }
+    //   if (image != null) {
+    //     CroppedFile? croppedFile = await ImageCropper().cropImage(
+    //       sourcePath: image.path,
+    //       aspectRatioPresets: [
+    //         CropAspectRatioPreset.square,
+    //         CropAspectRatioPreset.ratio3x2,
+    //         CropAspectRatioPreset.original,
+    //         CropAspectRatioPreset.ratio4x3,
+    //         CropAspectRatioPreset.ratio16x9
+    //       ],
+    //       uiSettings: [
+    //         AndroidUiSettings(
+    //             toolbarTitle: 'Crop Image',
+    //             toolbarColor: Colors.black,
+    //             toolbarWidgetColor: Colors.white,
+    //             initAspectRatio: CropAspectRatioPreset.original,
+    //             lockAspectRatio: false),
+    //         IOSUiSettings(
+    //           title: 'Crop Image',
+    //         ),
+    //       ],
+    //     );
+    //     if(croppedFile != null) {
+    //
+    //       final File file = File(croppedFile.path);
+    //       final String fileName = image.name;
+    //
+    //       final String path = 'files/${'timestamp${DateTime.now().millisecondsSinceEpoch}file$fileName'}';
+    //
+    //       //final ref = FirebaseStorage.instance.ref().child(path);
+    //
+    //       final ref = FirebaseStorage.instance.ref(path);
+    //
+    //       final upload = await ref.putFile(file);
+    //
+    //       final url = await upload.ref.getDownloadURL();
+    //
+    //
+    //
+    //       emit(ImagePickLoadedState(File(croppedFile.path)));
+    //     }
+    //   }
+    // } catch (_) {}
 
 
   }
 
 
-  _showNetworkImage(NetworkImageEvent event, Emitter<ImageState> emit) async {
+  _getNetworkImage(GetImageEvent event, Emitter<ImageState> emit) async {
 
-    if(event.imageUrl.isNotEmpty) {
-      emit(ImageNetworkState(event.imageUrl));
+    if(storageRepository.url.isNotEmpty) {
+      emit(ImageNetworkLoadedState(storageRepository.url));
     } else {
       emit(ImageInitialState());
     }
@@ -73,6 +110,7 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
 
   _removeImage(ImageEvent event, Emitter<ImageState> emit) async {
 
+    storageRepository.deleteImage();
     emit(ImageInitialState());
 
   }

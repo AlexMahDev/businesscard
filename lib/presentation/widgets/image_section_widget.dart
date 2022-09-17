@@ -25,10 +25,10 @@ class ImageSectionWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (state is ImagePickLoadedState)
-                Expanded(
-                    child: Image.file(state.image, height: 150)),
-              if (state is ImageNetworkState)
+              // if (state is ImagePickLoadedState)
+              //   Expanded(
+              //       child: Image.file(state.image, height: 150)),
+              if (state is ImageNetworkLoadedState)
                 Expanded(
                     child: Image.network(state.networkImage, height: 150, errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {return Container();})),
               Padding(
@@ -49,7 +49,7 @@ class ImageSectionWidget extends StatelessWidget {
                         );
                       },
                       child: Text(
-                        state is ImagePickLoadedState || state is ImageNetworkState
+                        state is ImageNetworkLoadedState
                             ? editTitle
                             : addTitle,
                         style: TextStyle(
@@ -58,7 +58,7 @@ class ImageSectionWidget extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    if (state is ImagePickLoadedState || state is ImageNetworkState)
+                    if (state is ImageNetworkLoadedState)
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: GestureDetector(
@@ -116,7 +116,7 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         final imageBloc = BlocProvider.of<ImageBloc>(context);
-                        imageBloc.add(PickImageEvent(true));
+                        imageBloc.add(UploadImageEvent(true));
                         Navigator.pop(context);
                       },
                       child: Center(
@@ -132,7 +132,7 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         final imageBloc = BlocProvider.of<ImageBloc>(context);
-                        imageBloc.add(PickImageEvent(false));
+                        imageBloc.add(UploadImageEvent(false));
                         Navigator.pop(context);
                       },
                       child: Center(

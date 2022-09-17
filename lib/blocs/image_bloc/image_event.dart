@@ -3,19 +3,19 @@ part of 'image_bloc.dart';
 @immutable
 abstract class ImageEvent {}
 
-class PickImageEvent extends ImageEvent {
+class UploadImageEvent extends ImageEvent {
 
   final bool isGallery;
 
-  PickImageEvent(this.isGallery);
+  UploadImageEvent(this.isGallery);
 
 }
 
-class NetworkImageEvent extends ImageEvent {
+class GetImageEvent extends ImageEvent {
 
-  final String imageUrl;
-
-  NetworkImageEvent(this.imageUrl);
+  // final String imageUrl;
+  //
+  // GetImageEvent(this.imageUrl);
 
 
 }

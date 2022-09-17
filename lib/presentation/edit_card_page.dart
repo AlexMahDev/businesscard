@@ -20,9 +20,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/text_field_bloc/text_field_bloc.dart';
 import '../data/models/card_model.dart';
+import '../data/repositories/storage_repository.dart';
 
 class EditCardPage extends StatefulWidget {
-
   final CardModel card;
 
   const EditCardPage({Key? key, required this.card}) : super(key: key);
@@ -46,18 +46,27 @@ class _EditCardPageState extends State<EditCardPage> {
   late final ImageBloc profileImageBloc;
   late final ImageBloc companyLogoImageBloc;
   late final LoadingOverlay loadingOverlay;
+  late final StorageRepository profileImageRepository;
+  late final StorageRepository companyLogoRepository;
 
   @override
   void initState() {
     super.initState();
-    profileImageBloc = ImageBloc()
-      ..add(NetworkImageEvent(widget.card.generalInfo.profileImage));
-    companyLogoImageBloc = ImageBloc()
-      ..add(NetworkImageEvent(widget.card.generalInfo.logoImage));
+    profileImageRepository = StorageRepository()
+      ..url = widget.card.generalInfo.profileImage;
+    companyLogoRepository = StorageRepository()
+      ..url = widget.card.generalInfo.logoImage;
+    profileImageBloc = ImageBloc(storageRepository: profileImageRepository)
+      ..add(GetImageEvent());
+    companyLogoImageBloc = ImageBloc(
+        storageRepository: companyLogoRepository
+          ..url = widget.card.generalInfo.logoImage)
+      ..add(GetImageEvent());
     cardTitle = TextEditingController(text: widget.card.generalInfo.cardTitle);
     fullName = TextEditingController(
-        text: '${widget.card.generalInfo.firstName} ${widget.card.generalInfo
-            .middleName} ${widget.card.generalInfo.lastName}'.trim());
+        text:
+            '${widget.card.generalInfo.firstName} ${widget.card.generalInfo.middleName} ${widget.card.generalInfo.lastName}'
+                .trim());
     firstName = TextEditingController(text: widget.card.generalInfo.firstName);
     middleName =
         TextEditingController(text: widget.card.generalInfo.middleName);
@@ -85,8 +94,8 @@ class _EditCardPageState extends State<EditCardPage> {
     headLine = TextEditingController(text: widget.card.generalInfo.headLine);
 
     for (TextFieldModel textField in widget.card.extraInfo.listOfFields) {
-      TextEditingController controller = TextEditingController(
-          text: textField.value);
+      TextEditingController controller =
+          TextEditingController(text: textField.value);
 
       _controllerMap[textField.key] = controller;
     }
@@ -119,8 +128,7 @@ class _EditCardPageState extends State<EditCardPage> {
           create: (BuildContext context) => TextFieldBloc(),
         ),
         BlocProvider<SelectCardColorBloc>(
-          create: (BuildContext context) =>
-          SelectCardColorBloc()
+          create: (BuildContext context) => SelectCardColorBloc()
             ..add(SelectCardColorEvent(widget.card.settings.cardColor)),
         ),
         BlocProvider<FullNameDropdownBloc>(
@@ -139,21 +147,39 @@ class _EditCardPageState extends State<EditCardPage> {
         // ),
       ],
       child: Builder(builder: (context) {
-        return BlocListener<CardInfoBloc, CardInfoState>(
-          listener: (context, state) {
-            if(state is CardInfoLoadingState) {
-              loadingOverlay.show(context);
-            } else {
-              loadingOverlay.hide();
-            }
-            if (state is CardInfoLoadedState || state is CardInfoEmptyState) {
-              Navigator.of(context).pop();
-            }
-            if (state is CardInfoErrorState) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text('state.error')));
-            }
-          },
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<CardInfoBloc, CardInfoState>(
+              listener: (context, state) {
+                if (state is CardInfoLoadingState) {
+                  loadingOverlay.show(context);
+                } else {
+                  loadingOverlay.hide();
+                }
+                if (state is CardInfoLoadedState ||
+                    state is CardInfoEmptyState) {
+                  Navigator.of(context).pop();
+                }
+                if (state is CardInfoErrorState) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('state.error')));
+                }
+              },
+            ),
+            BlocListener<ImageBloc, ImageState>(
+              listener: (context, state) {
+                if (state is ImageLoadingState) {
+                  loadingOverlay.show(context);
+                } else {
+                  loadingOverlay.hide();
+                }
+                // if (state is CardInfoErrorState) {
+                //   ScaffoldMessenger.of(context)
+                //       .showSnackBar(SnackBar(content: Text('state.error')));
+                // }
+              },
+            ),
+          ],
           child: Scaffold(
               appBar: CustomAppBar(
                 title: Text('Edit Your Card'),
@@ -161,18 +187,17 @@ class _EditCardPageState extends State<EditCardPage> {
                   icon: const Icon(Icons.check),
                   splashRadius: 20,
                   onPressed: () {
-                    final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(
-                        context);
+                    final cardsInfoBloc =
+                        BlocProvider.of<CardInfoBloc>(context);
                     final cardColorBloc =
-                    BlocProvider.of<SelectCardColorBloc>(context);
+                        BlocProvider.of<SelectCardColorBloc>(context);
 
                     final cardsInfoState = cardsInfoBloc.state;
 
                     CardModel newCard = CardModel(
                         timestamp: widget.card.timestamp,
                         cardId: widget.card.cardId,
-                        settings: SettingsModel(
-                            cardColor: cardColorBloc.state),
+                        settings: SettingsModel(cardColor: cardColorBloc.state),
                         generalInfo: GeneralInfoModel(
                             cardTitle: cardTitle.text.isNotEmpty
                                 ? cardTitle.text
@@ -184,8 +209,8 @@ class _EditCardPageState extends State<EditCardPage> {
                             department: department.text,
                             companyName: companyName.text,
                             headLine: headLine.text,
-                            profileImage: '',
-                            logoImage: ''),
+                            profileImage: profileImageRepository.url,
+                            logoImage: companyLogoRepository.url),
                         extraInfo: ExtraInfoModel(listOfFields: []));
 
                     _controllerMap.forEach((key, value) {
@@ -210,14 +235,17 @@ class _EditCardPageState extends State<EditCardPage> {
                     icon: const Icon(Icons.more_horiz),
                     splashRadius: 20,
                     onPressed: () {
-                      final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+                      final cardInfoBloc =
+                          BlocProvider.of<CardInfoBloc>(context);
                       final cardInfoState = cardInfoBloc.state;
                       if (cardInfoState is CardInfoLoadedState) {
                         List<CardModel> currentCards = cardInfoState.cards;
-                        cardInfoBloc.add(DeleteCardEvent(currentCards, widget.card.cardId));
+                        cardInfoBloc.add(
+                            DeleteCardEvent(currentCards, widget.card.cardId));
                       } else if (cardInfoState is CardInfoEmptyState) {
                         List<CardModel> currentCards = cardInfoState.cards;
-                        cardInfoBloc.add(DeleteCardEvent(currentCards, widget.card.cardId));
+                        cardInfoBloc.add(
+                            DeleteCardEvent(currentCards, widget.card.cardId));
                       }
                       //Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => const CreateCardPage()));
                     },
@@ -266,21 +294,17 @@ class _EditCardPageState extends State<EditCardPage> {
                         editTitle: 'Edit Company Logo',
                         removeTitle: 'Remove Company Logo'),
 
-
                     GeneralInfoFieldsWidget(
                       fullName: CustomTextField(
                           hintText: 'Full Name',
                           enabled: false,
                           controller: fullName),
                       firstName: CustomTextField(
-                          hintText: 'First Name',
-                          controller: firstName),
+                          hintText: 'First Name', controller: firstName),
                       middleName: CustomTextField(
-                          hintText: 'Middle Name',
-                          controller: middleName),
+                          hintText: 'Middle Name', controller: middleName),
                       lastName: CustomTextField(
-                          hintText: 'Last Name',
-                          controller: lastName),
+                          hintText: 'Last Name', controller: lastName),
                       jobTitle: CustomTextField(
                           hintText: 'Job Title', controller: jobTitle),
                       department: CustomTextField(
@@ -303,19 +327,15 @@ class _EditCardPageState extends State<EditCardPage> {
 
                     TapFieldBelowWidget(),
 
-
                     ExtraInfoFooterWidget(controllerMap: _controllerMap)
-
                   ],
                 ),
-              )
-          ),
+              )),
         );
       }),
     );
   }
 }
-
 
 // class ImagePickSourceBottomSheet extends StatelessWidget {
 //   final ImageBloc imageBloc;
