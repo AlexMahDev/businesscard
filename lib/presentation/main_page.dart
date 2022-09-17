@@ -14,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/auth_bloc/auth_bloc.dart';
 import '../data/models/card_model.dart';
+import 'contacts_page.dart';
 import 'create_card_page.dart';
 import 'edit_card_page.dart';
 
@@ -37,7 +38,7 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     CardsPage(),
-    CardsPage()
+    ContactsPage()
   ];
 
   void _onItemTapped(int index) {
