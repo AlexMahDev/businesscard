@@ -9,6 +9,7 @@ class CardRepository {
   //
   //   {
   //     "cardId": 1,
+  //     "timestamp": 123456
   //     "settings": {
   //       //"cardTitle": "Job",
   //       "cardColor": 4294922834,
@@ -33,6 +34,7 @@ class CardRepository {
   //
   //   {
   //     "cardId": 2,
+  //     "timestamp": 123456
   //     "settings": {
   //       "cardColor": 4294922834,
   //     },

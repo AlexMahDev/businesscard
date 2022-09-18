@@ -104,11 +104,11 @@
 
 class CardModel {
 
-  int timestamp;
+  final int timestamp;
   String cardId;
-  SettingsModel settings;
-  GeneralInfoModel generalInfo;
-  ExtraInfoModel extraInfo;
+  final SettingsModel settings;
+  final GeneralInfoModel generalInfo;
+  final ExtraInfoModel extraInfo;
 
 
   CardModel({

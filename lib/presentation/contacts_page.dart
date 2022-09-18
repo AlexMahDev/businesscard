@@ -88,3 +88,35 @@ class _ContactsPageState extends State<ContactsPage> {
     );
   }
 }
+
+
+// class ContactWidget extends StatelessWidget {
+//   const ContactWidget({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListTile(
+//       leading: ClipOval(
+//         child: Image.network(
+//             card
+//                 .generalInfo.profileImage,
+//             width: 80,
+//             height: 80,
+//             fit: BoxFit.cover, errorBuilder:
+//             (BuildContext context,
+//             Object exception,
+//             StackTrace?
+//             stackTrace) {
+//           return Container();
+//         }),
+//
+//         // Image.asset(
+//         //   'assets/images/avatar.jpg',
+//         //   width: 80,
+//         //   height: 80,
+//         //   fit: BoxFit.cover,
+//         // ),
+//       ),
+//     );
+//   }
+// }
