@@ -106,6 +106,7 @@ class CardModel {
 
   final int timestamp;
   String cardId;
+  String qrLink;
   final SettingsModel settings;
   final GeneralInfoModel generalInfo;
   final ExtraInfoModel extraInfo;
@@ -114,6 +115,7 @@ class CardModel {
   CardModel({
     required this.timestamp,
     required this.cardId,
+    required this.qrLink,
     required this.settings,
     required this.generalInfo,
     required this.extraInfo
@@ -122,6 +124,7 @@ class CardModel {
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
       timestamp: json['timestamp'],
       cardId: json['cardId'],
+      qrLink: json['qrLink'],
       settings: SettingsModel.fromJson(json['settings']),
       generalInfo: GeneralInfoModel.fromJson(json['generalInfo']),
       extraInfo: ExtraInfoModel.fromJson(json['extraInfo'])
@@ -131,6 +134,7 @@ class CardModel {
       {
         "timestamp" : timestamp,
         "cardId" : cardId,
+        "qrLink" : qrLink,
         "settings": settings.toJson(),
         "generalInfo": generalInfo.toJson(),
         "extraInfo": extraInfo.toJson()

@@ -2,6 +2,7 @@
 
 import 'package:businesscard/data/models/card_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class CardRepository {
 
@@ -60,29 +61,6 @@ class CardRepository {
 
   Future<List<CardModel>> getCards(String uid) async {
 
-    print(uid);
-
-    // final card = FirebaseFirestore.instance.collection("users").doc(uid).collection("cards").doc();
-    //
-    // CardModel newCard = CardModel(
-    //   cardId: card.id,
-    //     settings: SettingsModel(
-    //         cardColor: 4294922834),
-    //     generalInfo: GeneralInfoModel(
-    //         cardTitle: 'Title',
-    //         firstName: "firstName.text",
-    //         middleName: "middleName.text",
-    //         lastName: "lastName.text",
-    //         jobTitle: "jobTitle.text",
-    //         department: "department.text",
-    //         companyName: "companyName.text",
-    //         headLine: "headLine.text",
-    //         profileImage: '',
-    //         logoImage: ''),
-    //     extraInfo: ExtraInfoModel(listOfFields: []));
-    //
-    // await card.set(newCard.toJson());
-
     try {
       final cards = await FirebaseFirestore.instance.collection("users").doc(uid).collection("cards").orderBy('timestamp').get();
       //return List.from(listOfCards.map((e) => CardModel.fromJson(e)));
@@ -96,30 +74,33 @@ class CardRepository {
 
   Future<void> createCard(String uid, CardModel newCard) async {
 
-    //print(uid);
-
     final card = FirebaseFirestore.instance.collection("users").doc(uid).collection("cards").doc();
-
-    // CardModel newCard = CardModel(
-    //   cardId: card.id,
-    //     settings: SettingsModel(
-    //         cardColor: 4294922834),
-    //     generalInfo: GeneralInfoModel(
-    //         cardTitle: 'Title',
-    //         firstName: "firstName.text",
-    //         middleName: "middleName.text",
-    //         lastName: "lastName.text",
-    //         jobTitle: "jobTitle.text",
-    //         department: "department.text",
-    //         companyName: "companyName.text",
-    //         headLine: "headLine.text",
-    //         profileImage: '',
-    //         logoImage: ''),
-    //     extraInfo: ExtraInfoModel(listOfFields: []));
 
     newCard.cardId = card.id;
 
+    final DynamicLinkParameters dynamicLinkParams =
+    DynamicLinkParameters(
+      uriPrefix: 'https://alexmahdev.page.link',
+      link: Uri.parse('https://alexmahdev.page.link/$uid/${card.id}'),
+      androidParameters: AndroidParameters(
+        packageName: 'by.alexmahdev.bcard',
+        fallbackUrl: Uri.parse('https://github.com/AlexMahDev/businesscard'),
+      ),
+      iosParameters: IOSParameters(
+        bundleId: 'by.alexmahdev.bcard',
+        appStoreId: '962194608',
+        fallbackUrl: Uri.parse('https://github.com/AlexMahDev/businesscard'),
+      ),
+      socialMetaTagParameters: SocialMetaTagParameters(
+        title: "BCard",
+        imageUrl: Uri.parse("https://example.com/image.png"),
+      ),
+    );
+
     try {
+      final dynamicLink = await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
+      String qrLink = dynamicLink.shortUrl.toString();
+      newCard.qrLink = qrLink;
       await card.set(newCard.toJson());
     } catch (e) {
       throw Exception(e);

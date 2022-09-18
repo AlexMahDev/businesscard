@@ -16,6 +16,8 @@ import 'package:businesscard/presentation/widgets/general_info_fields_widget.dar
 import 'package:businesscard/presentation/widgets/image_section_widget.dart';
 import 'package:businesscard/presentation/widgets/loading_overlay_widget.dart';
 import 'package:businesscard/presentation/widgets/tap_field_below_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -206,6 +208,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                           .now()
                           .millisecondsSinceEpoch,
                       cardId: '',
+                      qrLink:  '',
                       settings: SettingsModel(
                           cardColor: cardColorBloc.state),
                       generalInfo: GeneralInfoModel(
