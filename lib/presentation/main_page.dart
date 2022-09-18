@@ -1,6 +1,7 @@
 import 'package:businesscard/blocs/card_info_bloc/card_info_bloc.dart';
 import 'package:businesscard/blocs/card_page_bloc/card_page_bloc.dart';
 import 'package:businesscard/blocs/select_card_color_bloc/select_card_color_bloc.dart';
+import 'package:businesscard/presentation/test_page.dart';
 import 'package:businesscard/presentation/welcome_page.dart';
 import 'package:businesscard/presentation/widgets/card_is_empty_widget.dart';
 import 'package:businesscard/presentation/widgets/card_page_view_widget.dart';
@@ -9,11 +10,13 @@ import 'package:businesscard/presentation/widgets/page_selector_widget.dart';
 import 'package:businesscard/presentation/widgets/share_card_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/auth_bloc/auth_bloc.dart';
 import '../data/models/card_model.dart';
+import '../data/repositories/dynamic_link_repository.dart';
 import 'contacts_page.dart';
 import 'create_card_page.dart';
 import 'edit_card_page.dart';
@@ -28,12 +31,57 @@ class MainPageNavigationBar extends StatefulWidget {
 
 class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
 
+  DynamicLinkRepository dynamicLinkRepository = DynamicLinkRepository();
+
   @override
   void initState() {
     super.initState();
     BlocProvider.of<CardInfoBloc>(context).add(GetCardInfoEvent());
     BlocProvider.of<CardPageBloc>(context).add(ChangeCardPageEvent(0));
+    dynamicLinkRepository.retrieveDynamicLink(context);
+    //retrieveDynamicLink();
+    //initDynamicLinks();
   }
+
+  // Future<void> retrieveDynamicLink() async {
+  //   try {
+  //     final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
+  //     if (data != null) {
+  //       print('first link check');
+  //       final Uri deepLink = data.link;
+  //       handleDynamicLink(deepLink);
+  //       Navigator.of(context).push(MaterialPageRoute (
+  //         builder: (BuildContext context) => const TestPage(),
+  //       ));
+  //     }
+  //     FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) {
+  //       print('second link check');
+  //       Navigator.of(context).push(MaterialPageRoute (
+  //         builder: (BuildContext context) => const TestPage(),
+  //       ));
+  //       //Navigator.pushNamed(context, dynamicLinkData.link.path);
+  //     }).onError((error) {
+  //       // Handle errors
+  //     });
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  //
+  // }
+
+
+
+  // handleDynamicLink(Uri url) {
+  //   print(url);
+  //   // List<String> separatedString = [];
+  //   // separatedString.addAll(url.path.split('/'));
+  //   // if (separatedString[1] == "post") {
+  //   //   Navigator.push(
+  //   //       context,
+  //   //       MaterialPageRoute(
+  //   //           builder: (context) => PostScreen(separatedString[2])));
+  //   // }
+  // }
 
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
