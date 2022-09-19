@@ -21,7 +21,6 @@ import 'contacts_page.dart';
 import 'create_card_page.dart';
 import 'edit_card_page.dart';
 
-
 class MainPageNavigationBar extends StatefulWidget {
   const MainPageNavigationBar({Key? key}) : super(key: key);
 
@@ -30,7 +29,6 @@ class MainPageNavigationBar extends StatefulWidget {
 }
 
 class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
-
   DynamicLinkRepository dynamicLinkRepository = DynamicLinkRepository();
 
   @override
@@ -69,8 +67,6 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
   //
   // }
 
-
-
   // handleDynamicLink(Uri url) {
   //   print(url);
   //   // List<String> separatedString = [];
@@ -105,8 +101,7 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
       bottomNavigationBar: Theme(
         data: ThemeData(
             splashColor: Colors.transparent,
-            highlightColor: Colors.transparent
-        ),
+            highlightColor: Colors.transparent),
         child: BottomNavigationBar(
           backgroundColor: Colors.white,
           selectedItemColor: Colors.redAccent,
@@ -129,7 +124,6 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
   }
 }
 
-
 class CardsPage extends StatelessWidget {
   const CardsPage({Key? key}) : super(key: key);
 
@@ -142,28 +136,28 @@ class CardsPage extends StatelessWidget {
             if (cardInfoState is CardInfoLoadedState) {
               return BlocBuilder<CardPageBloc, int>(
                 builder: (context, cardPageState) {
-                  return Text(cardInfoState
-                      .cards[cardPageState].generalInfo.cardTitle);
+                  return Text(
+                      cardInfoState.cards[cardPageState].generalInfo.cardTitle);
                 },
               );
             }
             return Text('BCard');
           },
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          splashRadius: 20,
-          onPressed: () async {
-
-            // final doc = FirebaseFirestore.instance.collection("users").doc("S4lc2BkgjnPbjlnUPMmfMcb2F012").collection("contacts");
-            //
-            // await doc.doc().set({'test' : 'test'});
-
-            // final info = await FirebaseFirestore.instance.collection("users").doc('uid-1').collection("cards").get();
-            // print(info.docs.first.data());
-            context.read<AuthBloc>().add(SignOutRequested());
-          },
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.menu),
+        //   splashRadius: 20,
+        //   onPressed: () async {
+        //
+        //     // final doc = FirebaseFirestore.instance.collection("users").doc("S4lc2BkgjnPbjlnUPMmfMcb2F012").collection("contacts");
+        //     //
+        //     // await doc.doc().set({'test' : 'test'});
+        //
+        //     // final info = await FirebaseFirestore.instance.collection("users").doc('uid-1').collection("cards").get();
+        //     // print(info.docs.first.data());
+        //     context.read<AuthBloc>().add(SignOutRequested());
+        //   },
+        // ),
         actions: [
           BlocBuilder<CardInfoBloc, CardInfoState>(
             builder: (context, state) {
@@ -172,13 +166,12 @@ class CardsPage extends StatelessWidget {
                   icon: const Icon(Icons.add),
                   splashRadius: 20,
                   onPressed: () {
-                    final cardInfoBloc =
-                    BlocProvider.of<CardInfoBloc>(context);
+                    final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (BuildContext context) => BlocProvider.value(
-                          value: cardInfoBloc,
-                          child: CreateCardPage(),
-                        )));
+                              value: cardInfoBloc,
+                              child: CreateCardPage(),
+                            )));
                   },
                 );
               }
@@ -192,18 +185,16 @@ class CardsPage extends StatelessWidget {
                   icon: const Icon(Icons.edit),
                   splashRadius: 20,
                   onPressed: () {
-                    final cardInfoBloc =
-                    BlocProvider.of<CardInfoBloc>(context);
+                    final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
 
                     final cardPageBloc = BlocProvider.of<CardPageBloc>(context);
 
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (BuildContext context) => BlocProvider.value(
-                          value: cardInfoBloc,
-                          child: EditCardPage(
-                              card: state.cards[cardPageBloc.state]),
-                        )));
-
+                              value: cardInfoBloc,
+                              child: EditCardPage(
+                                  card: state.cards[cardPageBloc.state]),
+                            )));
                   },
                 );
               }
@@ -213,13 +204,54 @@ class CardsPage extends StatelessWidget {
           ),
         ],
       ),
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            SizedBox(
+              height: 300,
+              child: DrawerHeader(
+                margin: EdgeInsets.zero,
+                padding: EdgeInsets.zero,
+                decoration: BoxDecoration(
+                  color: Colors.redAccent,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/business-card.png',
+                      color: Colors.white,
+                    ),
+                    Text("BCard",
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                        textAlign: TextAlign.center),
+                  ],
+                ),
+              ),
+            ),
+            ListTile(
+              textColor: Colors.grey,
+              leading: Image.asset('assets/images/crying.png'),
+              title: Text('Sign Out', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              onTap: () {
+                context.read<AuthBloc>().add(SignOutRequested());
+              },
+            )
+          ],
+        ),
+      ),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is UnAuthenticated) {
             // Navigate to the sign in screen when the user Signs Out
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => WelcomePage()),
-                  (route) => false,
+              (route) => false,
             );
           }
         },
@@ -233,16 +265,13 @@ class CardsPage extends StatelessWidget {
               return Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
-
                   CardPageViewWidget(cards: state.cards),
-
                   PageSelectorWidget(cards: state.cards)
-
                 ],
               );
             }
 
-            if(state is CardInfoEmptyState) {
+            if (state is CardInfoEmptyState) {
               return CardIsEmptyWidget();
             }
 
@@ -254,4 +283,3 @@ class CardsPage extends StatelessWidget {
     );
   }
 }
-
