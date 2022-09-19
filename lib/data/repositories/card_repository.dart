@@ -93,7 +93,7 @@ class CardRepository {
       ),
       socialMetaTagParameters: SocialMetaTagParameters(
         title: "BCard",
-        imageUrl: Uri.parse("https://example.com/image.png"),
+        imageUrl: Uri.parse("https://firebasestorage.googleapis.com/v0/b/bcard-f4f4b.appspot.com/o/dynamic-link%2Fpreview.png?alt=media&token=1b1aa88b-cef2-4ec3-90ee-845d978e1977"),
       ),
     );
 
