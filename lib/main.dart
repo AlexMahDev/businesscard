@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           theme: ThemeData(
             primarySwatch: Colors.red,
+            scaffoldBackgroundColor: Colors.white,
 
             ///redAccent
             //primaryColor: Colors.redAccent,

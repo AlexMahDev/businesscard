@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../blocs/share_card_bloc/share_card_bloc.dart';
 import 'change_card_method_bar.dart';
 
 class CustomBottomSheet extends StatelessWidget {
-  const CustomBottomSheet({Key? key}) : super(key: key);
+
+  final String qrLink;
+
+  const CustomBottomSheet({Key? key, required this.qrLink}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +43,15 @@ class CustomBottomSheet extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           color: Colors.white),
-                      child: Image.asset('assets/images/qr_code.png')),
+                      child: QrImage(
+                        data: qrLink,
+                        version: QrVersions.auto,
+                        //size: 250,
+                        gapless: false,
+                        errorStateBuilder: (cxt, err) {
+                          return Container();
+                        },
+                      )),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text(

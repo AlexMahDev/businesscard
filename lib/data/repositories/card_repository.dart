@@ -88,7 +88,7 @@ class CardRepository {
       ),
       iosParameters: IOSParameters(
         bundleId: 'by.alexmahdev.bcard',
-        appStoreId: '962194608',
+        //appStoreId: '962194608',
         fallbackUrl: Uri.parse('https://github.com/AlexMahDev/businesscard'),
       ),
       socialMetaTagParameters: SocialMetaTagParameters(

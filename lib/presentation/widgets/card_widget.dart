@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../blocs/card_page_bloc/card_page_bloc.dart';
 import '../../data/models/card_model.dart';
@@ -56,10 +57,21 @@ class CardWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          SizedBox(
-              height: 250,
-              child:
-              Image.asset('assets/images/qr_code.png')),
+          Center(
+            child: QrImage(
+              data: card.qrLink,
+              version: QrVersions.auto,
+              size: 250,
+              gapless: false,
+              errorStateBuilder: (cxt, err) {
+                return Container();
+              },
+            ),
+          ),
+          // SizedBox(
+          //     height: 250,
+          //     child:
+          //     Image.asset('assets/images/qr_code.png')),
           Stack(
             clipBehavior: Clip.none,
             alignment: Alignment.bottomRight,

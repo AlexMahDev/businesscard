@@ -108,6 +108,7 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
             highlightColor: Colors.transparent
         ),
         child: BottomNavigationBar(
+          backgroundColor: Colors.white,
           selectedItemColor: Colors.redAccent,
           enableFeedback: false,
           items: const <BottomNavigationBarItem>[

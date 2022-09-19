@@ -21,7 +21,7 @@ class DynamicLinkRepository {
         handleDynamicLink(navigator, deepLink);
       }
       FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) {
-        //print('second link check');
+        print('second link check');
         handleDynamicLink(navigator, dynamicLinkData.link);
         // Navigator.of(context).push(MaterialPageRoute (
         //   builder: (BuildContext context) => const TestPage(),

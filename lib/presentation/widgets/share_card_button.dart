@@ -8,9 +8,10 @@ import 'custom_bottom_sheet.dart';
 
 class ShareCardButton extends StatelessWidget {
 
+  final String qrLink;
   final int color;
 
-  const ShareCardButton({Key? key, required this.color}) : super(key: key);
+  const ShareCardButton({Key? key, required this.qrLink, required this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class ShareCardButton extends StatelessWidget {
               builder: (context) {
                 return FractionallySizedBox(
                   heightFactor: 0.9,
-                  child: CustomBottomSheet(),
+                  child: CustomBottomSheet(qrLink: qrLink),
                 );
               });
         }

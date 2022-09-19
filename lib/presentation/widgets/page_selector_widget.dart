@@ -52,7 +52,7 @@ class PageSelectorWidget extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.0),
-                child: ShareCardButton(
+                child: ShareCardButton(qrLink: cards[cardPageState].qrLink,
                     color: cards[cardPageState].settings
                         .cardColor),
               )
