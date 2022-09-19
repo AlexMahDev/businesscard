@@ -234,35 +234,54 @@ class _EditCardPageState extends State<EditCardPage> {
                   },
                 ),
                 actions: [
-                  IconButton(
+
+                  PopupMenuButton<int>(
                     icon: const Icon(Icons.more_horiz),
                     splashRadius: 20,
-                    onPressed: () {
-                      final cardInfoBloc =
+                    onSelected: (item) async {
+                      switch (item) {
+                        case 1:
+                          Navigator.pop(context);
+                          break;
+                        case 2:
+                          final cardInfoBloc =
                           BlocProvider.of<CardInfoBloc>(context);
-                      final cardInfoState = cardInfoBloc.state;
-                      if (cardInfoState is CardInfoLoadedState) {
-                        List<CardModel> currentCards = cardInfoState.cards;
-                        cardInfoBloc.add(
-                            DeleteCardEvent(currentCards, widget.card.cardId));
-                      } else if (cardInfoState is CardInfoEmptyState) {
-                        List<CardModel> currentCards = cardInfoState.cards;
-                        cardInfoBloc.add(
-                            DeleteCardEvent(currentCards, widget.card.cardId));
+                          final cardInfoState = cardInfoBloc.state;
+                          if (cardInfoState is CardInfoLoadedState) {
+                            List<CardModel> currentCards = cardInfoState.cards;
+                            cardInfoBloc.add(
+                                DeleteCardEvent(currentCards, widget.card.cardId));
+                          } else if (cardInfoState is CardInfoEmptyState) {
+                            List<CardModel> currentCards = cardInfoState.cards;
+                            cardInfoBloc.add(
+                                DeleteCardEvent(currentCards, widget.card.cardId));
+                          }
+                          break;
                       }
-                      //Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => const CreateCardPage()));
                     },
+                    itemBuilder: (context) => [
+                      const PopupMenuItem(
+                        value: 1,
+                        child: Text(
+                          "Not save",
+                          style: TextStyle(fontWeight: FontWeight.w700, color: Colors.redAccent),
+                        ),
+                      ),
+                      const PopupMenuDivider(),
+                      const PopupMenuItem(
+                        value: 2,
+                        child: Text(
+                          "Delete",
+                          style: TextStyle(fontWeight: FontWeight.w700, color: Colors.redAccent),
+                        ),
+                      ),
+                    ],
+                    //icon: Icon(Icons.menu),
+                    offset: const Offset(-15, 60),
                   ),
+
                 ],
               ),
-              //   cardTitle.text = state.cards[widget.cardIndex].settings.cardTitle;
-              //   firstName.text = state.cards[widget.cardIndex].generalInfo.firstName;
-              //   middleName.text = state.cards[widget.cardIndex].generalInfo.middleName;
-              //   lastName.text = state.cards[widget.cardIndex].generalInfo.lastName;
-              //   jobTitle.text = state.cards[widget.cardIndex].generalInfo.jobTitle;
-              //   department.text = state.cards[widget.cardIndex].generalInfo.department;
-              //   companyName.text = state.cards[widget.cardIndex].generalInfo.companyName;
-              // headLine.text = state.cards[widget.cardIndex].generalInfo.headLine;
               body: SingleChildScrollView(
                 child: Column(
                   //crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -339,328 +358,3 @@ class _EditCardPageState extends State<EditCardPage> {
     );
   }
 }
-
-// class ImagePickSourceBottomSheet extends StatelessWidget {
-//   final ImageBloc imageBloc;
-//
-//   const ImagePickSourceBottomSheet({Key? key, required this.imageBloc})
-//       : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     //final imageBloc = BlocProvider.of<ImageBloc>(context);
-//
-//     return SizedBox(
-//       height: 250,
-//       child: Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 35),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.end,
-//           crossAxisAlignment: CrossAxisAlignment.stretch,
-//           children: [
-//             Container(
-//               height: 110,
-//               decoration: BoxDecoration(
-//                   color: Colors.white.withOpacity(0.9),
-//                   borderRadius: BorderRadius.all(Radius.circular(10))),
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.stretch,
-//                 children: [
-//                   Expanded(
-//                     child: GestureDetector(
-//                       onTap: () {
-//                         imageBloc.add(PickImageEvent(true));
-//                         Navigator.pop(context);
-//                       },
-//                       child: Center(
-//                           child: Text('Select from photo library',
-//                               style: TextStyle(
-//                                   color: Colors.redAccent, fontSize: 18))),
-//                     ),
-//                   ),
-//                   Divider(
-//                     height: 1,
-//                   ),
-//                   Expanded(
-//                     child: GestureDetector(
-//                       onTap: () {
-//                         imageBloc.add(PickImageEvent(false));
-//                         Navigator.pop(context);
-//                       },
-//                       child: Center(
-//                           child: Text('Take photo',
-//                               style: TextStyle(
-//                                   color: Colors.redAccent, fontSize: 18))),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             SizedBox(
-//               height: 10,
-//             ),
-//             GestureDetector(
-//               onTap: () {
-//                 Navigator.pop(context);
-//               },
-//               child: Container(
-//                 height: 55,
-//                 decoration: BoxDecoration(
-//                     color: Colors.white,
-//                     borderRadius: BorderRadius.all(Radius.circular(10))),
-//                 child: Center(
-//                     child: Text('Cancel',
-//                         style: TextStyle(
-//                             color: Colors.redAccent,
-//                             fontWeight: FontWeight.bold,
-//                             fontSize: 18))),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//       // child: Center(
-//       //   child: Column(
-//       //     mainAxisAlignment: MainAxisAlignment.center,
-//       //     mainAxisSize: MainAxisSize.min,
-//       //     children: <Widget>[
-//       //       const Text('Modal BottomSheet'),
-//       //       ElevatedButton(
-//       //         child: const Text('Close BottomSheet'),
-//       //         onPressed: () => Navigator.pop(context),
-//       //       ),
-//       //     ],
-//       //   ),
-//       // ),
-//     );
-//   }
-// }
-//
-// class ExtraInfoFooterWidget extends StatelessWidget {
-//   final ExtraInfoWidget phoneNumber;
-//   final ExtraInfoWidget email;
-//   final ExtraInfoWidget link;
-//   final ExtraInfoWidget linkedIn;
-//   final ExtraInfoWidget github;
-//   final ExtraInfoWidget telegram;
-//
-//   const ExtraInfoFooterWidget(
-//       {Key? key,
-//       required this.phoneNumber,
-//       required this.email,
-//       required this.link,
-//       required this.linkedIn,
-//       required this.github,
-//       required this.telegram})
-//       : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final selectCardColor = BlocProvider.of<SelectCardColorBloc>(context);
-//
-//     return Container(
-//       padding: EdgeInsets.symmetric(horizontal: 35, vertical: 30),
-//       color: selectCardColor.state.withOpacity(0.2),
-//       child: Column(
-//         //crossAxisAlignment: CrossAxisAlignment.stretch,
-//         children: [
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [phoneNumber, email, link],
-//           ),
-//           SizedBox(
-//             height: 25,
-//           ),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [linkedIn, github, telegram],
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
-// class ExtraInfoWidget extends StatelessWidget {
-//   final String title;
-//   final Widget icon;
-//   final VoidCallback onPressed;
-//
-//   const ExtraInfoWidget(
-//       {Key? key,
-//       required this.title,
-//       required this.icon,
-//       required this.onPressed})
-//       : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final selectCardColor = BlocProvider.of<SelectCardColorBloc>(context);
-//
-//     return GestureDetector(
-//       onTap: onPressed,
-//       child: SizedBox(
-//         width: 90,
-//         height: 100,
-//         child: Column(
-//           //mainAxisAlignment: MainAxisAlignment.spaceAround,
-//           children: [
-//             CircleAvatar(
-//                 radius: 20,
-//                 backgroundColor: selectCardColor.state,
-//                 child: icon),
-//             // SizedBox(
-//             //   height: 10,
-//             // ),
-//             Expanded(
-//                 child: Center(
-//                     child: Text(title,
-//                         textAlign: TextAlign.center,
-//                         style: TextStyle(fontSize: 17))))
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// class ChooseColorWidget extends StatelessWidget {
-//   final Color color;
-//
-//   const ChooseColorWidget({Key? key, required this.color}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final selectCardColor = BlocProvider.of<SelectCardColorBloc>(context);
-//
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 5.0),
-//       child: GestureDetector(
-//         onTap: () {
-//           selectCardColor.add(SelectCardColorEvent(color));
-//         },
-//         child: Container(
-//           width: 50.0,
-//           height: 50.0,
-//           decoration: BoxDecoration(
-//             //color: Colors.redAccent,
-//             shape: BoxShape.circle,
-//             border: Border.all(
-//                 color: selectCardColor.state == color
-//                     ? Colors.grey
-//                     : Colors.transparent,
-//                 width: 2),
-//           ),
-//           child: Center(
-//             child: Container(
-//               width: 30.0,
-//               height: 30.0,
-//               decoration: BoxDecoration(
-//                 color: color,
-//                 shape: BoxShape.circle,
-//                 //border: Border.all(color: Colors.black),
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// class CustomTextField extends StatelessWidget {
-//   final TextEditingController controller;
-//   final String hintText;
-//   final bool enabled;
-//
-//   final Widget? icon;
-//   final VoidCallback? onTextFieldRemove;
-//
-//   const CustomTextField(
-//       {Key? key,
-//       required this.controller,
-//       required this.hintText,
-//       this.enabled = true,
-//       this.icon,
-//       this.onTextFieldRemove})
-//       : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final cardColorBloc = BlocProvider.of<SelectCardColorBloc>(context);
-//
-//     return BlocProvider<TextClearButtonBloc>(
-//       create: (context) => TextClearButtonBloc(),
-//       child: Builder(builder: (context) {
-//         return Row(
-//           children: [
-//             if (icon != null)
-//               Padding(
-//                 padding: const EdgeInsets.only(right: 15.0),
-//                 child: CircleAvatar(
-//                     radius: 20,
-//                     backgroundColor: cardColorBloc.state,
-//                     child: icon),
-//               ),
-//             Expanded(
-//               child: TextFormField(
-//                 controller: controller,
-//                 enabled: enabled,
-//                 decoration: InputDecoration(
-//                   //contentPadding: EdgeInsets.all(0),
-//                   suffixIcon:
-//                       BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
-//                     builder: (context, state) {
-//                       if (state is ClearButtonEnableState) {
-//                         return IconButton(
-//                           onPressed: () {
-//                             controller.clear();
-//                             final clearButtonBloc =
-//                                 BlocProvider.of<TextClearButtonBloc>(context);
-//                             clearButtonBloc.add(ClearButtonDisableEvent());
-//                           },
-//                           icon: Icon(Icons.highlight_remove_outlined),
-//                           splashRadius: 20,
-//                         );
-//                       }
-//
-//                       return SizedBox();
-//                     },
-//                   ),
-//                   hintText: hintText,
-//                   //labelText: 'Name *',
-//                 ),
-//                 onTap: () {
-//                   if (controller.text.isNotEmpty) {
-//                     final clearButtonBloc =
-//                         BlocProvider.of<TextClearButtonBloc>(context);
-//                     clearButtonBloc.add(ClearButtonEnableEvent());
-//                   }
-//                 },
-//                 onChanged: (text) {
-//                   if (controller.text.isEmpty) {
-//                     final clearButtonBloc =
-//                         BlocProvider.of<TextClearButtonBloc>(context);
-//                     clearButtonBloc.add(ClearButtonDisableEvent());
-//                   } else if (controller.text.length == 1) {
-//                     final clearButtonBloc =
-//                         BlocProvider.of<TextClearButtonBloc>(context);
-//                     clearButtonBloc.add(ClearButtonEnableEvent());
-//                   }
-//                 },
-//                 //textAlign: TextAlign.center,
-//               ),
-//             ),
-//             if (icon != null)
-//               IconButton(
-//                   splashRadius: 20,
-//                   onPressed: onTextFieldRemove,
-//                   icon: Icon(Icons.remove_circle_outline))
-//           ],
-//         );
-//       }),
-//     );
-//   }
-// }
