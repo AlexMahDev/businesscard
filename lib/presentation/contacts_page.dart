@@ -68,7 +68,18 @@ class _ContactsPageState extends State<ContactsPage> {
                           hintText: 'Search',
                           prefixIcon: Icon(Icons.search),
                           border: InputBorder.none
-                      )
+                      ),
+                    onChanged: (name) {
+                        if (searchController.text.isEmpty || searchController.text.length > 3) {
+                          final contactBloc = BlocProvider.of<ContactBloc>(context);
+                          final contactState = contactBloc.state;
+                          if (contactState is ContactLoadedState) {
+                            contactBloc.add(GetContactByNameEvent(searchController.text, contactState.contacts));
+                          } else if (contactState is ContactSearchState) {
+                            contactBloc.add(GetContactByNameEvent(searchController.text, contactState.contacts));
+                          }
+                        }
+                    },
                   ),
                 ),
               ),
@@ -92,6 +103,26 @@ class _ContactsPageState extends State<ContactsPage> {
                         child: ContactWidget(card: state.contacts[index].cardModel)
                       );
                     })
+
+                  // SliverChildListDelegate([
+                  //
+                  //   for (int i = 0; i != 50; i++)
+                  //     Text('Test $i')
+                  //
+                  // ]),
+                );
+              }
+
+              if(state is ContactSearchState) {
+                return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        childCount: state.foundContacts.length,
+                            (context, index) {
+                          return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: ContactWidget(card: state.foundContacts[index].cardModel)
+                          );
+                        })
 
                   // SliverChildListDelegate([
                   //

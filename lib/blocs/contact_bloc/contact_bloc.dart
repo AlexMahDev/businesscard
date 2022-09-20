@@ -17,6 +17,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
   ContactBloc({required this.contactRepository}) : super(ContactInitialState()) {
     on<GetContactEvent>(_getContacts);
     on<SaveContactEvent>(_saveContact);
+    on<GetContactByNameEvent>(_getContactsByName);
   }
 
   _getContacts(GetContactEvent event, Emitter<ContactState> emit) async {
@@ -43,6 +44,31 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     } catch (e) {
       emit(ContactErrorState());
     }
+
+
+  }
+
+  _getContactsByName(GetContactByNameEvent event, Emitter<ContactState> emit) async {
+
+    emit(ContactLoadingState());
+
+    bool isFullNameContainsSearchName(String fullName) {
+
+      if(fullName.contains(event.name)) {
+        return true;
+      } else {
+        return false;
+      }
+
+    }
+
+    if (event.name.isNotEmpty) {
+      List<ContactModel> foundContacts = event.contacts.where((element) => isFullNameContainsSearchName('${element.cardModel.generalInfo.firstName} ${element.cardModel.generalInfo.middleName} ${element.cardModel.generalInfo.lastName}')).toList();
+      emit(ContactSearchState(event.contacts, foundContacts));
+    } else {
+      emit(ContactLoadedState(event.contacts));
+    }
+
 
 
   }

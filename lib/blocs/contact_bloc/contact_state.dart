@@ -15,6 +15,15 @@ class ContactLoadedState extends ContactState {
 
 }
 
+class ContactSearchState extends ContactState {
+
+  final List<ContactModel> contacts;
+  final List<ContactModel> foundContacts;
+
+  ContactSearchState(this.contacts, this.foundContacts);
+
+}
+
 class ContactErrorState extends ContactState {}
 
 class ContactEmptyState extends ContactState {}
