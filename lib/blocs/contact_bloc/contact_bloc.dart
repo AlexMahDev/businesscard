@@ -50,8 +50,6 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
 
   _getContactsByName(GetContactByNameEvent event, Emitter<ContactState> emit) async {
 
-    emit(ContactLoadingState());
-
     bool isFullNameContainsSearchName(String fullName) {
 
       if(fullName.contains(event.name)) {
