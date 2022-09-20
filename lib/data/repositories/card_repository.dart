@@ -4,6 +4,8 @@ import 'package:businesscard/data/models/card_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
+import 'dynamic_link_repository.dart';
+
 class CardRepository {
 
   // List<Map<String, dynamic>> listOfCards = [
@@ -78,28 +80,29 @@ class CardRepository {
 
     newCard.cardId = card.id;
 
-    final DynamicLinkParameters dynamicLinkParams =
-    DynamicLinkParameters(
-      uriPrefix: 'https://alexmahdev.page.link',
-      link: Uri.parse('https://alexmahdev.page.link/$uid/${card.id}'),
-      androidParameters: AndroidParameters(
-        packageName: 'by.alexmahdev.bcard',
-        fallbackUrl: Uri.parse('https://github.com/AlexMahDev/businesscard'),
-      ),
-      iosParameters: IOSParameters(
-        bundleId: 'by.alexmahdev.bcard',
-        //appStoreId: '962194608',
-        fallbackUrl: Uri.parse('https://github.com/AlexMahDev/businesscard'),
-      ),
-      socialMetaTagParameters: SocialMetaTagParameters(
-        title: "BCard",
-        imageUrl: Uri.parse("https://firebasestorage.googleapis.com/v0/b/bcard-f4f4b.appspot.com/o/dynamic-link%2Fpreview.png?alt=media&token=1b1aa88b-cef2-4ec3-90ee-845d978e1977"),
-      ),
-    );
+    // final DynamicLinkParameters dynamicLinkParams =
+    // DynamicLinkParameters(
+    //   uriPrefix: 'https://alexmahdev.page.link',
+    //   link: Uri.parse('https://alexmahdev.page.link/$uid/${card.id}'),
+    //   androidParameters: AndroidParameters(
+    //     packageName: 'by.alexmahdev.bcard',
+    //     fallbackUrl: Uri.parse('https://github.com/AlexMahDev/businesscard'),
+    //   ),
+    //   iosParameters: IOSParameters(
+    //     bundleId: 'by.alexmahdev.bcard',
+    //     //appStoreId: '962194608',
+    //     fallbackUrl: Uri.parse('https://github.com/AlexMahDev/businesscard'),
+    //   ),
+    //   socialMetaTagParameters: SocialMetaTagParameters(
+    //     title: "BCard",
+    //     imageUrl: Uri.parse("https://firebasestorage.googleapis.com/v0/b/bcard-f4f4b.appspot.com/o/dynamic-link%2Fpreview.png?alt=media&token=1b1aa88b-cef2-4ec3-90ee-845d978e1977"),
+    //   ),
+    // );
 
     try {
-      final dynamicLink = await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
-      String qrLink = dynamicLink.shortUrl.toString();
+      //final dynamicLink = await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
+      final dynamicLink = await DynamicLinkRepository().createDynamicLink(uid, card.id);
+      String qrLink = dynamicLink!.shortUrl.toString();
       newCard.qrLink = qrLink;
       await card.set(newCard.toJson());
     } catch (e) {
