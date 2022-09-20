@@ -57,7 +57,7 @@ class DynamicLinkRepository {
         final CardModel? card = await CardRepository().getCard(uid, cardId);
         if(card != null) {
           navigator.push(MaterialPageRoute (
-            builder: (BuildContext context) => ContactInfoPage(card: card),
+            builder: (BuildContext context) => ContactInfoPage(card: card, isNewCard: true),
           ));
         }
       } catch (_) {}

@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
             create: (context) => CardInfoBloc(cardRepository: RepositoryProvider.of<CardRepository>(context), cardPageBloc: cardPageBloc),
           ),
           BlocProvider<ContactBloc>(
-            create: (context) => ContactBloc(contactRepository: RepositoryProvider.of<ContactRepository>(context)),
+            create: (context) => ContactBloc(contactRepository: RepositoryProvider.of<ContactRepository>(context))..add(GetContactEvent()),
           ),
         ],
         child: MaterialApp(

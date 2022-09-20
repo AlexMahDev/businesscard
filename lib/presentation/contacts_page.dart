@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/contact_bloc/contact_bloc.dart';
+import '../data/models/card_model.dart';
+import 'contact_info_page.dart';
 
 
 class ContactsPage extends StatefulWidget {
@@ -22,7 +24,7 @@ class _ContactsPageState extends State<ContactsPage> {
   void initState() {
     super.initState();
     searchController = TextEditingController();
-    BlocProvider.of<ContactBloc>(context).add(GetContactEvent());
+    // BlocProvider.of<ContactBloc>(context).add(GetContactEvent());
   }
 
   @override
@@ -86,8 +88,8 @@ class _ContactsPageState extends State<ContactsPage> {
                         childCount: state.contacts.length,
                             (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Container(height: 30, color: Colors.purpleAccent),
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: ContactWidget(card: state.contacts[index].cardModel)
                       );
                     })
 
@@ -122,33 +124,74 @@ class _ContactsPageState extends State<ContactsPage> {
 }
 
 
-// class ContactWidget extends StatelessWidget {
-//   const ContactWidget({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListTile(
-//       leading: ClipOval(
-//         child: Image.network(
-//             card
-//                 .generalInfo.profileImage,
-//             width: 80,
-//             height: 80,
-//             fit: BoxFit.cover, errorBuilder:
-//             (BuildContext context,
-//             Object exception,
-//             StackTrace?
-//             stackTrace) {
-//           return Container();
-//         }),
-//
-//         // Image.asset(
-//         //   'assets/images/avatar.jpg',
-//         //   width: 80,
-//         //   height: 80,
-//         //   fit: BoxFit.cover,
-//         // ),
-//       ),
-//     );
-//   }
-// }
+class ContactWidget extends StatelessWidget {
+
+  final CardModel card;
+
+  const ContactWidget({Key? key, required this.card}) : super(key: key);
+
+  String getSubTitle() {
+
+    String subTitle = '';
+
+    if(card.generalInfo.jobTitle.isNotEmpty) {
+      subTitle += '${card.generalInfo.jobTitle}, ';
+    }
+
+    if(card.generalInfo.department.isNotEmpty) {
+      subTitle += '${card.generalInfo.department}, ';
+    }
+
+    if(card.generalInfo.companyName.isNotEmpty) {
+      subTitle += '${card.generalInfo.companyName}, ';
+    }
+
+    subTitle = subTitle.substring(0, subTitle.length - 2);
+
+    return subTitle;
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute (
+              builder: (BuildContext context) => ContactInfoPage(card: card),
+            ));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                ClipOval(
+                  child: Image.network(
+                      card
+                          .generalInfo.profileImage,
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover, errorBuilder:
+                      (BuildContext context,
+                      Object exception,
+                      StackTrace?
+                      stackTrace) {
+                    return Container();
+                  }),
+                ),
+                Expanded(
+                  child: ListTile(
+                    title: Text('${card.generalInfo.firstName} ${card.generalInfo.middleName} ${card.generalInfo.lastName}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    subtitle: Text(getSubTitle(), style: TextStyle(fontSize: 20, color: Colors.black)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const Divider(color: Colors.black)
+      ],
+    );
+  }
+}

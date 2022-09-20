@@ -8,9 +8,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/models/card_model.dart';
 
 class ContactInfoPage extends StatelessWidget {
-  final CardModel card;
 
-  const ContactInfoPage({Key? key, required this.card}) : super(key: key);
+  final CardModel card;
+  final bool isNewCard;
+
+  const ContactInfoPage({Key? key, required this.card, this.isNewCard = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +39,15 @@ class ContactInfoPage extends StatelessWidget {
           appBar: CustomAppBar(
             title: Text(card.generalInfo.cardTitle),
             actions: [
-              IconButton(
-                icon: const Icon(Icons.save_alt),
-                splashRadius: 20,
-                onPressed: () {
-                  BlocProvider.of<ContactBloc>(context).add(
-                      SaveContactEvent(card));
-                },
-              )
+              if(isNewCard)
+                IconButton(
+                  icon: const Icon(Icons.save_alt),
+                  splashRadius: 20,
+                  onPressed: () {
+                    BlocProvider.of<ContactBloc>(context).add(
+                        SaveContactEvent(card));
+                  },
+                )
             ],
           ),
           body: CardWidget(card: card)
