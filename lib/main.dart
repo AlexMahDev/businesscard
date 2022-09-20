@@ -1,4 +1,6 @@
 import 'package:businesscard/blocs/card_page_bloc/card_page_bloc.dart';
+import 'package:businesscard/blocs/contact_bloc/contact_bloc.dart';
+import 'package:businesscard/data/repositories/contact_repository.dart';
 import 'package:businesscard/presentation/main_page.dart';
 import 'package:businesscard/presentation/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,6 +40,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => CardRepository(),
         ),
+        RepositoryProvider(
+          create: (context) => ContactRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -53,6 +58,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<CardInfoBloc>(
             create: (context) => CardInfoBloc(cardRepository: RepositoryProvider.of<CardRepository>(context), cardPageBloc: cardPageBloc),
+          ),
+          BlocProvider<ContactBloc>(
+            create: (context) => ContactBloc(contactRepository: RepositoryProvider.of<ContactRepository>(context)),
           ),
         ],
         child: MaterialApp(

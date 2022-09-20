@@ -73,6 +73,20 @@ class CardRepository {
 
   }
 
+  Future<CardModel?> getCard(String uid, String cardId) async {
+
+    try {
+      final card = await FirebaseFirestore.instance.collection("users").doc(uid).collection("cards").doc(cardId).get();
+      //return List.from(listOfCards.map((e) => CardModel.fromJson(e)));
+      if(card.data() != null) {
+        return CardModel.fromJson(card.data()!);
+      }
+      return null;
+    } catch (e) {
+      throw Exception(e);
+    }
+
+  }
 
   Future<void> createCard(String uid, CardModel newCard) async {
 

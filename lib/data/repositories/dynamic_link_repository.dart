@@ -1,10 +1,17 @@
 
 
+import 'package:businesscard/data/models/contact_model.dart';
+import 'package:businesscard/data/repositories/card_repository.dart';
+import 'package:businesscard/data/repositories/contact_repository.dart';
+import 'package:businesscard/presentation/widgets/card_widget.dart';
+import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../presentation/contact_info_page.dart';
 import '../../presentation/test_page.dart';
+import '../models/card_model.dart';
 
 class DynamicLinkRepository {
 
@@ -37,14 +44,37 @@ class DynamicLinkRepository {
   }
 
 
-  void handleDynamicLink(NavigatorState navigator, Uri url) {
+  Future<void> handleDynamicLink(NavigatorState navigator, Uri url) async {
 
     print(url.path);
+    List<String> separatedString = [];
+    separatedString.addAll(url.path.split('/'));
+    if(separatedString.length == 3) {
+      final String uid = separatedString[1];
+      final String cardId = separatedString[2];
 
+      try {
+        final CardModel? card = await CardRepository().getCard(uid, cardId);
+        if(card != null) {
+          navigator.push(MaterialPageRoute (
+            builder: (BuildContext context) => ContactInfoPage(card: card),
+          ));
+        }
+      } catch (_) {}
 
-    navigator.push(MaterialPageRoute (
-      builder: (BuildContext context) => const TestPage(),
-    ));
+      // ContactRepository contactRepository = ContactRepository();
+      // try {
+      //   print('gggg1');
+      //   final CardModel? card = await contactRepository.saveContact(uid, cardId);
+      //   if(card != null) {
+      //     print('gggg2');
+      //     navigator.push(MaterialPageRoute (
+      //       builder: (BuildContext context) => ContactInfoPage(card: card),
+      //     ));
+      //   }
+      // } catch (_) {}
+
+    }
 
 
   }
