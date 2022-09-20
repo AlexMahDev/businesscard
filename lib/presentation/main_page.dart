@@ -6,6 +6,7 @@ import 'package:businesscard/presentation/welcome_page.dart';
 import 'package:businesscard/presentation/widgets/card_is_empty_widget.dart';
 import 'package:businesscard/presentation/widgets/card_page_view_widget.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
+import 'package:businesscard/presentation/widgets/custom_error_widget.dart';
 import 'package:businesscard/presentation/widgets/page_selector_widget.dart';
 import 'package:businesscard/presentation/widgets/share_card_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -206,7 +207,6 @@ class CardsPage extends StatelessWidget {
       ),
       drawer: Drawer(
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
             SizedBox(
@@ -271,8 +271,17 @@ class CardsPage extends StatelessWidget {
               );
             }
 
+
             if (state is CardInfoEmptyState) {
               return CardIsEmptyWidget();
+            }
+            
+            if (state is CardInfoErrorState) {
+              return CustomErrorWidget(
+                  onTap: () {
+                    BlocProvider.of<CardInfoBloc>(context).add(GetCardInfoEvent());
+                  }
+              );
             }
 
             return Container();
@@ -283,3 +292,5 @@ class CardsPage extends StatelessWidget {
     );
   }
 }
+
+

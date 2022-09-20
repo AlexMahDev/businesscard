@@ -174,21 +174,40 @@ class _CreateCardPageState extends State<CreateCardPage> {
         // ),
       ],
       child: Builder(builder: (context) {
-        return BlocListener<CardInfoBloc, CardInfoState>(
-          listener: (context, state) {
-            if (state is CardInfoLoadingState) {
-              loadingOverlay.show(context);
-            } else {
-              loadingOverlay.hide();
-            }
-            if (state is CardInfoLoadedState) {
-              Navigator.of(context).pop();
-            }
-            if (state is CardInfoErrorState) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text('state.error')));
-            }
-          },
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<CardInfoBloc, CardInfoState>(
+              listener: (context, state) {
+                if (state is CardInfoLoadingState) {
+                  loadingOverlay.show(context);
+                } else {
+                  loadingOverlay.hide();
+                }
+                if (state is CardInfoLoadedState) {
+                  Navigator.of(context).pop();
+                }
+                if (state is CardInfoErrorState) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(
+                      SnackBar(content: Text('Something went wrong :(')));
+                }
+              },
+            ),
+            BlocListener<ImageBloc, ImageState>(
+              listener: (context, state) {
+                if (state is ImageLoadingState) {
+                  loadingOverlay.show(context);
+                } else {
+                  loadingOverlay.hide();
+                }
+                if (state is ImagePickErrorState) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(
+                      SnackBar(content: Text('Something went wrong :(')));
+                }
+              },
+            ),
+          ],
           child: Scaffold(
             appBar: CustomAppBar(
               title: Text('Create A Card'),
@@ -208,7 +227,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                           .now()
                           .millisecondsSinceEpoch,
                       cardId: '',
-                      qrLink:  '',
+                      qrLink: '',
                       settings: SettingsModel(
                           cardColor: cardColorBloc.state),
                       generalInfo: GeneralInfoModel(
@@ -252,12 +271,14 @@ class _CreateCardPageState extends State<CreateCardPage> {
                         break;
                     }
                   },
-                  itemBuilder: (context) => [
+                  itemBuilder: (context) =>
+                  [
                     const PopupMenuItem(
                       value: 1,
                       child: Text(
                         "Not save",
-                        style: TextStyle(fontWeight: FontWeight.w700, color: Colors.redAccent),
+                        style: TextStyle(fontWeight: FontWeight.w700,
+                            color: Colors.redAccent),
                       ),
                     )
                   ],

@@ -27,16 +27,13 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
     emit(ImageLoadingState());
 
     try {
-      print('1hhhhhh');
       await storageRepository.uploadImage(event.isGallery);
-      print('2hhhhhh');
       if (storageRepository.url.isNotEmpty) {
         emit(ImageNetworkLoadedState(storageRepository.url));
       } else {
         emit(ImageInitialState());
       }
     } catch (e) {
-      print(e);
       emit(ImagePickErrorState());
     }
 

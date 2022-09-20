@@ -163,7 +163,7 @@ class _EditCardPageState extends State<EditCardPage> {
                 }
                 if (state is CardInfoErrorState) {
                   ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('state.error')));
+                      .showSnackBar(SnackBar(content: Text('Something went wrong :(')));
                 }
               },
             ),
@@ -174,10 +174,11 @@ class _EditCardPageState extends State<EditCardPage> {
                 } else {
                   loadingOverlay.hide();
                 }
-                // if (state is CardInfoErrorState) {
-                //   ScaffoldMessenger.of(context)
-                //       .showSnackBar(SnackBar(content: Text('state.error')));
-                // }
+                if (state is ImagePickErrorState) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(
+                      SnackBar(content: Text('Something went wrong :(')));
+                }
               },
             ),
           ],

@@ -5,10 +5,10 @@ import '../../blocs/share_card_bloc/share_card_bloc.dart';
 
 
 
-class ChangeCardMethodBar extends StatelessWidget {
+class ShareCardMethodBar extends StatelessWidget {
   final String shareMethodName;
 
-  const ChangeCardMethodBar({Key? key, required this.shareMethodName})
+  const ShareCardMethodBar({Key? key, required this.shareMethodName})
       : super(key: key);
 
   @override
