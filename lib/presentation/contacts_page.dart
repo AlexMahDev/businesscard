@@ -184,15 +184,16 @@ class ContactWidget extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                ClipOval(
-                  child: Image.network(card.generalInfo.profileImage,
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.cover, errorBuilder: (BuildContext context,
-                          Object exception, StackTrace? stackTrace) {
-                    return Container();
-                  }),
-                ),
+                if(card.generalInfo.profileImage.isNotEmpty)
+                  ClipOval(
+                    child: Image.network(card.generalInfo.profileImage,
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover, errorBuilder: (BuildContext context,
+                            Object exception, StackTrace? stackTrace) {
+                      return Container();
+                    }),
+                  ),
                 Expanded(
                   child: ListTile(
                     title: Text(
