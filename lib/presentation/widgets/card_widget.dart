@@ -6,11 +6,9 @@ import '../../blocs/card_page_bloc/card_page_bloc.dart';
 import '../../data/models/card_model.dart';
 
 class CardWidget extends StatelessWidget {
-
   final CardModel card;
 
   const CardWidget({Key? key, required this.card}) : super(key: key);
-
 
   String getHintText(String key) {
     if (key == 'phoneNumber') {
@@ -78,52 +76,36 @@ class CardWidget extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  if (card.generalInfo
-                      .logoImage.isNotEmpty)
+                  if (card.generalInfo.logoImage.isNotEmpty)
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40.0),
-                      child: Image.network(
-                          card.generalInfo
-                              .logoImage,
-                          height: 200, errorBuilder:
-                          (BuildContext context,
-                          Object exception,
-                          StackTrace? stackTrace) {
+                      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                      child: Image.network(card.generalInfo.logoImage,
+                          height: 200, errorBuilder: (BuildContext context,
+                              Object exception, StackTrace? stackTrace) {
                         return Container();
                       }),
                       // Image.asset(
                       //     'assets/images/innowise-logo.png')),
                     ),
                   Divider(
-                    color: Color(card
-                        .settings.cardColor)
-                        .withOpacity(0.2),
+                    color: Color(card.settings.cardColor).withOpacity(0.2),
                     thickness: 5,
                   ),
                 ],
               ),
-              if (card.generalInfo
-                  .profileImage.isNotEmpty)
+              if (card.generalInfo.profileImage.isNotEmpty)
                 Positioned(
                   //top: 170,
                   bottom: -30,
                   right: 15,
                   child: Row(
-                    mainAxisAlignment:
-                    MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ClipOval(
-                        child: Image.network(
-                            card
-                                .generalInfo.profileImage,
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover, errorBuilder:
-                            (BuildContext context,
-                            Object exception,
-                            StackTrace?
-                            stackTrace) {
+                        child: Image.network(card.generalInfo.profileImage,
+                            width: 80, height: 80, fit: BoxFit.cover,
+                            errorBuilder: (BuildContext context,
+                                Object exception, StackTrace? stackTrace) {
                           return Container();
                         }),
 
@@ -143,43 +125,27 @@ class CardWidget extends StatelessWidget {
             height: 40,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 15.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (card.generalInfo
-                    .firstName.isNotEmpty ||
-                    card.generalInfo
-                        .middleName.isNotEmpty ||
-                    card.generalInfo
-                        .lastName.isNotEmpty)
+                if (card.generalInfo.firstName.isNotEmpty ||
+                    card.generalInfo.middleName.isNotEmpty ||
+                    card.generalInfo.lastName.isNotEmpty)
                   GeneralTextWidget(
                       label: 'fullName',
                       value:
-                      '${card.generalInfo.firstName} ${card.generalInfo.middleName} ${card.generalInfo.lastName}'
-                          .trim()),
-                if (card.generalInfo
-                    .jobTitle.isNotEmpty)
+                          '${card.generalInfo.firstName} ${card.generalInfo.middleName} ${card.generalInfo.lastName}'
+                              .trim()),
+                if (card.generalInfo.jobTitle.isNotEmpty)
+                  GeneralTextWidget(value: card.generalInfo.jobTitle),
+                if (card.generalInfo.department.isNotEmpty)
+                  GeneralTextWidget(value: card.generalInfo.department),
+                if (card.generalInfo.companyName.isNotEmpty)
+                  GeneralTextWidget(value: card.generalInfo.companyName),
+                if (card.generalInfo.headLine.isNotEmpty)
                   GeneralTextWidget(
-                      value: card
-                          .generalInfo.jobTitle),
-                if (card.generalInfo
-                    .department.isNotEmpty)
-                  GeneralTextWidget(
-                      value: card
-                          .generalInfo.department),
-                if (card.generalInfo
-                    .companyName.isNotEmpty)
-                  GeneralTextWidget(
-                      value: card
-                          .generalInfo.companyName),
-                if (card.generalInfo
-                    .headLine.isNotEmpty)
-                  GeneralTextWidget(
-                      label: 'headline',
-                      value: card
-                          .generalInfo.headLine),
+                      label: 'headline', value: card.generalInfo.headLine),
               ],
             ),
           ),
@@ -190,21 +156,16 @@ class CardWidget extends StatelessWidget {
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             padding: EdgeInsets.symmetric(horizontal: 15),
-            itemCount: card.extraInfo
-                .listOfFields.length,
+            itemCount: card.extraInfo.listOfFields.length,
             //padding: EdgeInsets.only(top: 15),
             itemBuilder: (BuildContext context, int index) {
               return ExtraTextWidget(
-                  label: getHintText(card
-                      .extraInfo.listOfFields[index].key),
-                  value: card.extraInfo
-                      .listOfFields[index].value,
+                  label: getHintText(card.extraInfo.listOfFields[index].key),
+                  value: card.extraInfo.listOfFields[index].value,
                   color: card.settings.cardColor,
-                  icon: getIcon(card
-                      .extraInfo.listOfFields[index].key));
+                  icon: getIcon(card.extraInfo.listOfFields[index].key));
             },
-            separatorBuilder:
-                (BuildContext context, int index) =>
+            separatorBuilder: (BuildContext context, int index) =>
                 SizedBox(height: 10),
           ),
           SizedBox(
@@ -215,7 +176,6 @@ class CardWidget extends StatelessWidget {
     );
   }
 }
-
 
 class GeneralTextWidget extends StatelessWidget {
   final String label;
@@ -251,10 +211,10 @@ class ExtraTextWidget extends StatelessWidget {
 
   const ExtraTextWidget(
       {Key? key,
-        required this.label,
-        required this.value,
-        required this.color,
-        required this.icon})
+      required this.label,
+      required this.value,
+      required this.color,
+      required this.icon})
       : super(key: key);
 
   @override

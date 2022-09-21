@@ -25,7 +25,6 @@ class ContactRepository {
 
       //return contactsReq.docs.isNotEmpty ? List.from(contacts.docs.map((e) => ContactModel.fromJson(e.data()))) : [];
     } catch (e) {
-      print(e);
       throw Exception(e);
     }
 
