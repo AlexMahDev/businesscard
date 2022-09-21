@@ -24,7 +24,7 @@ class ContactInfoPage extends StatelessWidget {
         } else {
           loadingOverlay.hide();
         }
-        if (state is ContactLoadedState) {
+        if (state is SaveContactLoadedState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(
               SnackBar(content: Text('Contact is saved')));

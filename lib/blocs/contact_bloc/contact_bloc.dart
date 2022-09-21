@@ -40,6 +40,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
 
     try {
       await contactRepository.saveContact(event.newContact);
+      emit(SaveContactLoadedState());
       final List<ContactModel> contacts = await contactRepository.getContacts();
       emit(ContactLoadedState(contacts));
     } catch (e) {

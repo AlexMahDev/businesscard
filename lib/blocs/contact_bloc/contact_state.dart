@@ -32,3 +32,5 @@ class ContactEmptyState extends ContactState {}
 
 class DelContactLoadingState extends ContactState {}
 
+class SaveContactLoadedState extends ContactState {}
+
