@@ -105,10 +105,18 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
   }
 
 
-  _removeImage(ImageEvent event, Emitter<ImageState> emit) async {
+  _removeImage(RemoveImageEvent event, Emitter<ImageState> emit) async {
 
-    storageRepository.deleteImage();
-    emit(ImageInitialState());
+    emit(ImageDeletingState());
+
+    try {
+      final String fileName = event.fileUrl.substring(0, event.fileUrl.indexOf('?alt')).replaceAll('https://firebasestorage.googleapis.com/v0/b/bcard-f4f4b.appspot.com/o/files%2F', '').trim();
+      await storageRepository.deleteImage(fileName);
+      emit(ImageInitialState());
+    } catch (e) {
+      emit(ImageNetworkLoadedState(storageRepository.url));
+    }
+
 
   }
 

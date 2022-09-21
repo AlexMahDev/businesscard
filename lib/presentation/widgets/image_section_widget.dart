@@ -19,6 +19,12 @@ class ImageSectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ImageBloc, ImageState>(
       bloc: imageBloc,
+      buildWhen: (previous, current) {
+          if(current is ImageDeletingState) {
+            return false;
+          }
+          return true;
+        },
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -64,7 +70,7 @@ class ImageSectionWidget extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () {
                             imageBloc
-                                .add(RemoveImageEvent());
+                                .add(RemoveImageEvent(state.networkImage));
                           },
                           child: Text(
                             removeTitle,

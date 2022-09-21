@@ -68,9 +68,18 @@ class StorageRepository {
 
   }
 
-  void deleteImage() {
+  Future<void> deleteImage(String fileName) async {
 
-    url = '';
+    final String path = 'files/$fileName';
+
+    final ref = FirebaseStorage.instance.ref(path);
+
+    try {
+      await ref.delete();
+      url = '';
+    } catch (e) {
+      throw Exception(e);
+    }
 
   }
 

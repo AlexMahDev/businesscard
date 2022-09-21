@@ -21,4 +21,11 @@ class GetImageEvent extends ImageEvent {
 }
 
 
-class RemoveImageEvent extends ImageEvent {}
+class RemoveImageEvent extends ImageEvent {
+
+  final String fileUrl;
+
+  RemoveImageEvent(this.fileUrl);
+
+
+}

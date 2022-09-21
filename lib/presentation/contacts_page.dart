@@ -62,26 +62,33 @@ class _ContactsPageState extends State<ContactsPage> {
                     color: Colors.grey.shade200),
                 width: double.infinity,
                 child: Center(
-                  child: TextField(
-                    controller: searchController,
-                    decoration: InputDecoration(
-                        hintText: 'Search',
-                        prefixIcon: Icon(Icons.search),
-                        border: InputBorder.none),
-                    onChanged: (name) {
-                      if (searchController.text.isEmpty ||
-                          searchController.text.length > 3) {
-                        final contactBloc =
-                            BlocProvider.of<ContactBloc>(context);
-                        final contactState = contactBloc.state;
-                        if (contactState is ContactLoadedState) {
-                          contactBloc.add(GetContactByNameEvent(
-                              searchController.text, contactState.contacts));
-                        } else if (contactState is ContactSearchState) {
-                          contactBloc.add(GetContactByNameEvent(
-                              searchController.text, contactState.contacts));
-                        }
-                      }
+                  child: BlocBuilder<ContactBloc, ContactState>(
+                    builder: (context, state) {
+                      return TextField(
+                        enabled: state is ContactLoadingState ? false : true,
+                        controller: searchController,
+                        decoration: InputDecoration(
+                            hintText: 'Search',
+                            prefixIcon: Icon(Icons.search),
+                            border: InputBorder.none),
+                        onChanged: (name) {
+                          if (searchController.text.isEmpty ||
+                              searchController.text.length > 3) {
+                            final contactBloc =
+                                BlocProvider.of<ContactBloc>(context);
+                            final contactState = contactBloc.state;
+                            if (contactState is ContactLoadedState) {
+                              contactBloc.add(GetContactByNameEvent(
+                                  searchController.text,
+                                  contactState.contacts));
+                            } else if (contactState is ContactSearchState) {
+                              contactBloc.add(GetContactByNameEvent(
+                                  searchController.text,
+                                  contactState.contacts));
+                            }
+                          }
+                        },
+                      );
                     },
                   ),
                 ),
@@ -226,13 +233,16 @@ class ContactWidget extends StatelessWidget {
                       onSelected: (item) async {
                         switch (item) {
                           case 1:
-                          final contactBloc = BlocProvider.of<ContactBloc>(context);
-                          final contactState = contactBloc.state;
-                          if (contactState is ContactLoadedState) {
-                          contactBloc.add(DeleteContactEvent(card.cardId, contactState.contacts));
-                          } else if (contactState is ContactSearchState) {
-                          contactBloc.add(DeleteContactEvent(card.cardId, contactState.contacts));
-                          }
+                            final contactBloc =
+                                BlocProvider.of<ContactBloc>(context);
+                            final contactState = contactBloc.state;
+                            if (contactState is ContactLoadedState) {
+                              contactBloc.add(DeleteContactEvent(
+                                  card.cardId, contactState.contacts));
+                            } else if (contactState is ContactSearchState) {
+                              contactBloc.add(DeleteContactEvent(
+                                  card.cardId, contactState.contacts));
+                            }
                             break;
                         }
                       },
@@ -241,7 +251,9 @@ class ContactWidget extends StatelessWidget {
                           value: 1,
                           child: Text(
                             "Delete",
-                            style: TextStyle(fontWeight: FontWeight.w700, color: Colors.redAccent),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.redAccent),
                           ),
                         ),
                         const PopupMenuDivider(),
@@ -249,15 +261,15 @@ class ContactWidget extends StatelessWidget {
                           value: 2,
                           child: Text(
                             "Cancel",
-                            style: TextStyle(fontWeight: FontWeight.w700, color: Colors.redAccent),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.redAccent),
                           ),
                         ),
                       ],
                       //icon: Icon(Icons.menu),
                       //offset: const Offset(-15, 60),
                     ),
-
-
 
                     // IconButton(
                     //   splashRadius: 20,

@@ -27,3 +27,6 @@ class ImageNetworkLoadedState extends ImageState {
 }
 
 class ImageLoadingState extends ImageState {}
+
+
+class ImageDeletingState extends ImageState {}

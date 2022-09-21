@@ -168,12 +168,33 @@ class _EditCardPageState extends State<EditCardPage> {
               },
             ),
             BlocListener<ImageBloc, ImageState>(
+              bloc: profileImageBloc,
               listener: (context, state) {
                 if (state is ImageLoadingState) {
+                  loadingOverlay.show(context);
+                } else if (state is ImageDeletingState) {
+                  loadingOverlay.show(context);
+                  } else {
+                  loadingOverlay.hide();
+                  }
+                if (state is ImagePickErrorState) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(
+                      SnackBar(content: Text('Something went wrong :(')));
+                }
+              },
+            ),
+            BlocListener<ImageBloc, ImageState>(
+              bloc: companyLogoImageBloc,
+              listener: (context, state) {
+                if (state is ImageLoadingState) {
+                  loadingOverlay.show(context);
+                } else if (state is ImageDeletingState) {
                   loadingOverlay.show(context);
                 } else {
                   loadingOverlay.hide();
                 }
+
                 if (state is ImagePickErrorState) {
                   ScaffoldMessenger.of(context)
                       .showSnackBar(
