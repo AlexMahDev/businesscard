@@ -82,6 +82,19 @@ class ContactRepository {
   }
 
 
+  Future<void> deleteContact(String cardId) async {
+
+    final user = FirebaseAuth.instance.currentUser!;
+
+    try {
+      final contactFirebase = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("contacts").doc(cardId);
+      await contactFirebase.delete();
+    } catch (e) {
+      throw Exception(e);
+    }
+
+  }
+
 
 
 

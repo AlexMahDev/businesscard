@@ -1,6 +1,7 @@
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_error_widget.dart';
 import 'package:businesscard/presentation/widgets/custom_text_field_widget.dart';
+import 'package:businesscard/presentation/widgets/loading_overlay_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,11 +18,13 @@ class ContactsPage extends StatefulWidget {
 
 class _ContactsPageState extends State<ContactsPage> {
   late final TextEditingController searchController;
+  late final LoadingOverlay loadingOverlay;
 
   @override
   void initState() {
     super.initState();
     searchController = TextEditingController();
+    loadingOverlay = LoadingOverlay();
     // BlocProvider.of<ContactBloc>(context).add(GetContactEvent());
   }
 
@@ -86,56 +89,71 @@ class _ContactsPageState extends State<ContactsPage> {
             ),
           ),
           // Other Sliver Widgets
-          BlocBuilder<ContactBloc, ContactState>(
-            builder: (context, state) {
-              if (state is ContactLoadingState) {
-                return SliverFillRemaining(
-                  child: Center(child: CircularProgressIndicator()),
-                );
+          BlocListener<ContactBloc, ContactState>(
+            listener: (context, state) {
+              if (state is DelContactLoadingState) {
+                loadingOverlay.show(context);
+              } else {
+                loadingOverlay.hide();
               }
-              if (state is ContactLoadedState) {
-                return SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                        childCount: state.contacts.length, (context, index) {
-                  return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child:
-                          ContactWidget(card: state.contacts[index].cardModel));
-                }));
-              }
-
-              if (state is ContactSearchState) {
-                return SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                        childCount: state.foundContacts.length,
-                        (context, index) {
-                  return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child: ContactWidget(
-                          card: state.foundContacts[index].cardModel));
-                })
-
-                    // SliverChildListDelegate([
-                    //
-                    //   for (int i = 0; i != 50; i++)
-                    //     Text('Test $i')
-                    //
-                    // ]),
-                    );
-              }
-              if (state is ContactErrorState) {
-                return SliverFillRemaining(
-                  child: Center(
-                    child: CustomErrorWidget(onTap: () {
-                      BlocProvider.of<ContactBloc>(context)
-                          .add(GetContactEvent());
-                    }),
-                  ),
-                );
-              }
-
-              return SliverFillRemaining(child: Container());
             },
+            child: BlocBuilder<ContactBloc, ContactState>(
+              buildWhen: (previous, current) {
+                if (current is DelContactLoadingState) {
+                  return false;
+                }
+                return true;
+              },
+              builder: (context, state) {
+                if (state is ContactLoadingState) {
+                  return SliverFillRemaining(
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+                if (state is ContactLoadedState) {
+                  return SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                          childCount: state.contacts.length, (context, index) {
+                    return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: ContactWidget(
+                            card: state.contacts[index].cardModel));
+                  }));
+                }
+
+                if (state is ContactSearchState) {
+                  return SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                          childCount: state.foundContacts.length,
+                          (context, index) {
+                    return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: ContactWidget(
+                            card: state.foundContacts[index].cardModel));
+                  })
+
+                      // SliverChildListDelegate([
+                      //
+                      //   for (int i = 0; i != 50; i++)
+                      //     Text('Test $i')
+                      //
+                      // ]),
+                      );
+                }
+                if (state is ContactErrorState) {
+                  return SliverFillRemaining(
+                    child: Center(
+                      child: CustomErrorWidget(onTap: () {
+                        BlocProvider.of<ContactBloc>(context)
+                            .add(GetContactEvent());
+                      }),
+                    ),
+                  );
+                }
+
+                return SliverFillRemaining(child: Container());
+              },
+            ),
           ),
         ],
       ),
@@ -184,7 +202,7 @@ class ContactWidget extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                if(card.generalInfo.profileImage.isNotEmpty)
+                if (card.generalInfo.profileImage.isNotEmpty)
                   ClipOval(
                     child: Image.network(card.generalInfo.profileImage,
                         width: 80,
@@ -202,6 +220,58 @@ class ContactWidget extends StatelessWidget {
                             fontSize: 20, fontWeight: FontWeight.bold)),
                     subtitle: Text(getSubTitle(),
                         style: TextStyle(fontSize: 20, color: Colors.black)),
+                    trailing: PopupMenuButton<int>(
+                      icon: const Icon(Icons.more_vert, color: Colors.black),
+                      splashRadius: 20,
+                      onSelected: (item) async {
+                        switch (item) {
+                          case 1:
+                          final contactBloc = BlocProvider.of<ContactBloc>(context);
+                          final contactState = contactBloc.state;
+                          if (contactState is ContactLoadedState) {
+                          contactBloc.add(DeleteContactEvent(card.cardId, contactState.contacts));
+                          } else if (contactState is ContactSearchState) {
+                          contactBloc.add(DeleteContactEvent(card.cardId, contactState.contacts));
+                          }
+                            break;
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          value: 1,
+                          child: Text(
+                            "Delete",
+                            style: TextStyle(fontWeight: FontWeight.w700, color: Colors.redAccent),
+                          ),
+                        ),
+                        const PopupMenuDivider(),
+                        const PopupMenuItem(
+                          value: 2,
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(fontWeight: FontWeight.w700, color: Colors.redAccent),
+                          ),
+                        ),
+                      ],
+                      //icon: Icon(Icons.menu),
+                      //offset: const Offset(-15, 60),
+                    ),
+
+
+
+                    // IconButton(
+                    //   splashRadius: 20,
+                    //   onPressed: () {
+                    //     final contactBloc = BlocProvider.of<ContactBloc>(context);
+                    //     final contactState = contactBloc.state;
+                    //     if (contactState is ContactLoadedState) {
+                    //       contactBloc.add(DeleteContactEvent(card.cardId, contactState.contacts));
+                    //     } else if (contactState is ContactSearchState) {
+                    //       contactBloc.add(DeleteContactEvent(card.cardId, contactState.contacts));
+                    //     }
+                    //   },
+                    //   icon: Icon(Icons.more_vert, color: Colors.black),
+                    // ),
                   ),
                 ),
               ],

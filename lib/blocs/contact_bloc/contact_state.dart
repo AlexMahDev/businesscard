@@ -27,3 +27,8 @@ class ContactSearchState extends ContactState {
 class ContactErrorState extends ContactState {}
 
 class ContactEmptyState extends ContactState {}
+
+
+
+class DelContactLoadingState extends ContactState {}
+

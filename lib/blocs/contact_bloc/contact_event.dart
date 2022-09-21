@@ -23,3 +23,14 @@ class GetContactByNameEvent extends ContactEvent {
 }
 
 
+class DeleteContactEvent extends ContactEvent {
+
+  final String contactId;
+  final List<ContactModel> contacts;
+
+  DeleteContactEvent(this.contactId, this.contacts);
+
+}
+
+
+

@@ -18,6 +18,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     on<GetContactEvent>(_getContacts);
     on<SaveContactEvent>(_saveContact);
     on<GetContactByNameEvent>(_getContactsByName);
+    on<DeleteContactEvent>(_deleteContact);
   }
 
   _getContacts(GetContactEvent event, Emitter<ContactState> emit) async {
@@ -67,7 +68,20 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
       emit(ContactLoadedState(event.contacts));
     }
 
+  }
 
+  _deleteContact(DeleteContactEvent event, Emitter<ContactState> emit) async {
+
+    emit(DelContactLoadingState());
+
+    List<ContactModel> contacts = event.contacts;
+
+    try {
+      await contactRepository.deleteContact(event.contactId);
+      contacts.removeWhere((element) => element.contactId == event.contactId);
+    } catch (_) {}
+
+    emit(ContactLoadedState(contacts));
 
   }
 
