@@ -19,6 +19,7 @@ class DynamicLinkRepository {
   Future<void> retrieveDynamicLink(BuildContext context) async {
 
     final navigator = Navigator.of(context);
+    bool isOpening = false;
 
     try {
       final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
@@ -27,9 +28,14 @@ class DynamicLinkRepository {
         final Uri deepLink = data.link;
         handleDynamicLink(navigator, deepLink);
       }
-      FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) {
-        print('second link check');
-        handleDynamicLink(navigator, dynamicLinkData.link);
+      FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) async {
+
+        //FIXED BUG WITH FIREBASE: FirebaseDynamicLinks fired multiple times
+        if (isOpening == false){
+          isOpening = true;
+          await handleDynamicLink(navigator, dynamicLinkData.link);
+          isOpening = false;
+        }
         // Navigator.of(context).push(MaterialPageRoute (
         //   builder: (BuildContext context) => const TestPage(),
         // ));
