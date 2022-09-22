@@ -29,14 +29,12 @@ class _CardPageViewWidgetState extends State<CardPageViewWidget> {
 
   @override
   void dispose() {
-    print('gggggg');
     pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print('test');
     return PageView.builder(
       controller: pageController,
       itemCount: widget.cards.length,
