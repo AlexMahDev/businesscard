@@ -28,7 +28,7 @@
 
 
    <application
-        android:label="businesscard"
+        android:label="BCard"
         android:usesCleartextTraffic="true"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
