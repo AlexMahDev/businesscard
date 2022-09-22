@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:businesscard/data/models/contact_model.dart';
+import 'package:businesscard/data/repositories/dynamic_link_repository.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import '../../data/models/card_model.dart';
@@ -19,6 +22,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     on<SaveContactEvent>(_saveContact);
     on<GetContactByNameEvent>(_getContactsByName);
     on<DeleteContactEvent>(_deleteContact);
+    on<SaveContactManualEvent>(_saveContactManual);
   }
 
   _getContacts(GetContactEvent event, Emitter<ContactState> emit) async {
@@ -34,13 +38,20 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
 
   }
 
+
+
   _saveContact(SaveContactEvent event, Emitter<ContactState> emit) async {
 
-    emit(ContactLoadingState());
+    emit(SaveContactLoadingState());
 
     try {
       await contactRepository.saveContact(event.newContact);
-      emit(SaveContactLoadedState());
+      emit(SaveContactSuccessState());
+    } catch (e) {
+      emit(SaveContactErrorState());
+    }
+
+    try {
       final List<ContactModel> contacts = await contactRepository.getContacts();
       emit(ContactLoadedState(contacts));
     } catch (e) {
@@ -48,7 +59,37 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     }
 
 
+
   }
+
+
+
+
+  _saveContactManual(SaveContactManualEvent event, Emitter<ContactState> emit) async {
+
+    emit(SearchLinkLoadingState());
+
+    Uri url = Uri.parse(event.url);
+
+    try {
+      final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getDynamicLink(url);
+      if(data != null) {
+        CardModel? card = await DynamicLinkRepository().handleDynamicLinkManual(data.link);
+        if(card != null) {
+          emit(SearchLinkSuccessState(card));
+        }
+      }
+    } catch (e) {
+      emit(SearchLinkErrorState());
+    }
+
+    emit(ContactLoadedState(event.contacts));
+
+  }
+
+
+
+
 
   _getContactsByName(GetContactByNameEvent event, Emitter<ContactState> emit) async {
 
@@ -71,6 +112,10 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
 
   }
 
+
+
+
+
   _deleteContact(DeleteContactEvent event, Emitter<ContactState> emit) async {
 
     emit(DelContactLoadingState());
@@ -80,7 +125,10 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     try {
       await contactRepository.deleteContact(event.contactId);
       contacts.removeWhere((element) => element.contactId == event.contactId);
-    } catch (_) {}
+      emit(DelContactSuccessState());
+    } catch (e) {
+      emit(DelContactErrorState());
+    }
 
     emit(ContactLoadedState(contacts));
 

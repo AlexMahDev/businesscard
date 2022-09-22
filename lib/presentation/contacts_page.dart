@@ -1,3 +1,4 @@
+import 'package:businesscard/presentation/widgets/card_widget.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_error_widget.dart';
 import 'package:businesscard/presentation/widgets/custom_text_field_widget.dart';
@@ -18,12 +19,14 @@ class ContactsPage extends StatefulWidget {
 
 class _ContactsPageState extends State<ContactsPage> {
   late final TextEditingController searchController;
+  late final TextEditingController urlController;
   late final LoadingOverlay loadingOverlay;
 
   @override
   void initState() {
     super.initState();
     searchController = TextEditingController();
+    urlController = TextEditingController();
     loadingOverlay = LoadingOverlay();
     // BlocProvider.of<ContactBloc>(context).add(GetContactEvent());
   }
@@ -31,6 +34,7 @@ class _ContactsPageState extends State<ContactsPage> {
   @override
   void dispose() {
     searchController.dispose();
+    urlController.dispose();
     super.dispose();
   }
 
@@ -46,6 +50,58 @@ class _ContactsPageState extends State<ContactsPage> {
             snap: false,
             centerTitle: true,
             title: const Text('Contacts'),
+            actions: [
+              BlocBuilder<ContactBloc, ContactState>(
+                builder: (context, state) {
+
+                  if(state is ContactLoadedState)
+                    return IconButton(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        splashRadius: 20,
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                    title: Text("Add contact"),
+                                    content: SizedBox(
+                                      height: 120,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                              "Enter link you received from contact"),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          CustomTextField(
+                                              controller: urlController,
+                                              hintText: 'Link'),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            BlocProvider.of<ContactBloc>(context)
+                                                .add(SaveContactManualEvent(urlController.text, state.contacts));
+                                          },
+                                          child: Text('Add',
+                                              style: TextStyle(fontSize: 18))),
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('Cancel',
+                                              style: TextStyle(fontSize: 18))),
+                                    ],
+                                  ));
+                        },
+                        icon: Icon(Icons.add));
+
+                  return Container();
+                },
+              )
+            ],
             // actions: [
             //   IconButton(
             //     icon: const Icon(Icons.shopping_cart),
@@ -100,16 +156,50 @@ class _ContactsPageState extends State<ContactsPage> {
             listener: (context, state) {
               if (state is DelContactLoadingState) {
                 loadingOverlay.show(context);
+              } else if (state is SearchLinkLoadingState) {
+                loadingOverlay.show(context);
               } else {
                 loadingOverlay.hide();
               }
+
+              if(state is DelContactErrorState) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(
+                    SnackBar(content: Text('Something went wrong :(')));
+              }
+
+              if(state is SearchLinkSuccessState) {
+                Navigator.of(context).push(MaterialPageRoute (
+                  builder: (BuildContext context) => ContactInfoPage(card: state.card, isNewCard: true),
+                ));
+              }
+
+              if(state is SearchLinkErrorState) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(
+                    SnackBar(content: Text('Something went wrong :(')));
+              }
+
             },
             child: BlocBuilder<ContactBloc, ContactState>(
               buildWhen: (previous, current) {
-                if (current is DelContactLoadingState) {
-                  return false;
+                if (current is ContactLoadingState) {
+                  return true;
                 }
-                return true;
+                if (current is ContactLoadedState) {
+                  return true;
+                }
+                if (current is ContactErrorState) {
+                  return true;
+                }
+                if (current is ContactEmptyState) {
+                  return true;
+                }
+                if (current is ContactInitialState) {
+                  return true;
+                }
+
+                return false;
               },
               builder: (context, state) {
                 if (state is ContactLoadingState) {
@@ -164,6 +254,20 @@ class _ContactsPageState extends State<ContactsPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class AddContactByLinkWidget extends StatelessWidget {
+  const AddContactByLinkWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.9),
+          borderRadius: BorderRadius.all(Radius.circular(10))),
     );
   }
 }

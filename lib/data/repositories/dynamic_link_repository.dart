@@ -52,7 +52,6 @@ class DynamicLinkRepository {
 
   Future<void> handleDynamicLink(NavigatorState navigator, Uri url) async {
 
-    print(url.path);
     List<String> separatedString = [];
     separatedString.addAll(url.path.split('/'));
     if(separatedString.length == 3) {
@@ -82,6 +81,25 @@ class DynamicLinkRepository {
 
     }
 
+
+  }
+
+
+  Future<CardModel?> handleDynamicLinkManual(Uri url) async {
+
+    List<String> separatedString = [];
+    separatedString.addAll(url.path.split('/'));
+    if(separatedString.length == 3) {
+      final String uid = separatedString[1];
+      final String cardId = separatedString[2];
+
+      try {
+        final CardModel? card = await CardRepository().getCard(uid, cardId);
+        return card;
+      } catch (_) {}
+
+    }
+    return null;
 
   }
 

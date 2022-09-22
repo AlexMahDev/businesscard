@@ -19,17 +19,18 @@ class ContactInfoPage extends StatelessWidget {
     final LoadingOverlay loadingOverlay = LoadingOverlay();
     return BlocListener<ContactBloc, ContactState>(
       listener: (context, state) {
-        if (state is ContactLoadingState) {
+        if (state is SaveContactLoadingState) {
           loadingOverlay.show(context);
         } else {
           loadingOverlay.hide();
         }
-        if (state is SaveContactLoadedState) {
+
+        if (state is SaveContactSuccessState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(
               SnackBar(content: Text('Contact is saved')));
         }
-        if (state is ContactErrorState) {
+        if (state is SaveContactErrorState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(
               SnackBar(content: Text('Something went wrong :(')));

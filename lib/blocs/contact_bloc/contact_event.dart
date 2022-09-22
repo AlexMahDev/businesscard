@@ -13,6 +13,16 @@ class SaveContactEvent extends ContactEvent {
 
 }
 
+class SaveContactManualEvent extends ContactEvent {
+
+  final String url;
+  final List<ContactModel> contacts;
+
+
+  SaveContactManualEvent(this.url, this.contacts);
+
+}
+
 class GetContactByNameEvent extends ContactEvent {
 
   final String name;
