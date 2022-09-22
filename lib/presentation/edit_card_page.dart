@@ -152,16 +152,19 @@ class _EditCardPageState extends State<EditCardPage> {
           listeners: [
             BlocListener<CardInfoBloc, CardInfoState>(
               listener: (context, state) {
-                if (state is CardInfoLoadingState) {
+                if (state is UpdateCardLoadingState) {
                   loadingOverlay.show(context);
-                } else {
+                } else if (state is DeleteCardLoadingState) {
+                  loadingOverlay.show(context);
+                }  else {
                   loadingOverlay.hide();
                 }
-                if (state is CardInfoLoadedState ||
-                    state is CardInfoEmptyState) {
+
+                if (state is UpdateCardSuccessState ||
+                    state is DeleteCardSuccessState) {
                   Navigator.of(context).pop();
                 }
-                if (state is CardInfoErrorState) {
+                if (state is UpdateCardErrorState || state is DeleteCardErrorState) {
                   ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text('Something went wrong :(')));
                 }

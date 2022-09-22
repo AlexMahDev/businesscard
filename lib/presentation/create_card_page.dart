@@ -178,15 +178,15 @@ class _CreateCardPageState extends State<CreateCardPage> {
           listeners: [
             BlocListener<CardInfoBloc, CardInfoState>(
               listener: (context, state) {
-                if (state is CardInfoLoadingState) {
+                if (state is AddCardLoadingState) {
                   loadingOverlay.show(context);
                 } else {
                   loadingOverlay.hide();
                 }
-                if (state is CardInfoLoadedState) {
+                if (state is AddCardSuccessState) {
                   Navigator.of(context).pop();
                 }
-                if (state is CardInfoErrorState) {
+                if (state is AddCardErrorState) {
                   ScaffoldMessenger.of(context)
                       .showSnackBar(
                       SnackBar(content: Text('Something went wrong :(')));

@@ -128,18 +128,26 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
   _addCard(AddCardEvent event, Emitter<CardInfoState> emit) async {
 
     emit(CardInfoLoadingState());
+    emit(AddCardLoadingState());
 
     final user = FirebaseAuth.instance.currentUser!;
+    List<CardModel> cards = event.cards;
 
     try {
       await cardRepository.createCard(user.uid, event.newCard);
-      List<CardModel> cards = event.cards;
       cards.add(event.newCard);
       cardPageBloc.add(ChangeCardPageEvent(cards.length - 1));
-      emit(CardInfoLoadedState(cards));
+      emit(AddCardSuccessState());
     } catch (e) {
-      emit(CardInfoErrorState());
+      emit(AddCardErrorState());
     }
+
+    if(cards.isNotEmpty) {
+      emit(CardInfoLoadedState(cards));
+    } else {
+      emit(CardInfoEmptyState(cards));
+    }
+
 
     //List<CardModel> cards = List.from(listOfCards.map((card) => CardModel.fromJson(card)));
 
@@ -149,17 +157,21 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
   _updateCard(UpdateCardEvent event, Emitter<CardInfoState> emit) async {
 
     emit(CardInfoLoadingState());
+    emit(UpdateCardLoadingState());
 
     final user = FirebaseAuth.instance.currentUser!;
 
+    List<CardModel> cards = event.cards;
+
     try {
       await cardRepository.updateCard(user.uid, event.newCard);
-      List<CardModel> cards = event.cards;
       cards[cards.indexWhere((element) => element.cardId == event.newCard.cardId)] = event.newCard;
-      emit(CardInfoLoadedState(cards));
+      emit(UpdateCardSuccessState());
     } catch (e) {
-      emit(CardInfoErrorState());
+      emit(UpdateCardErrorState());
     }
+
+    emit(CardInfoLoadedState(cards));
 
     //List<CardModel> cards = List.from(listOfCards.map((card) => CardModel.fromJson(card)));
 
@@ -169,21 +181,25 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
   _deleteCard(DeleteCardEvent event, Emitter<CardInfoState> emit) async {
 
     emit(CardInfoLoadingState());
+    emit(DeleteCardLoadingState());
 
     final user = FirebaseAuth.instance.currentUser!;
 
+    List<CardModel> cards = event.cards;
+
     try {
       await cardRepository.deleteCard(user.uid, event.cardId);
-      List<CardModel> cards = event.cards;
       cards.removeAt(cards.indexWhere((element) => element.cardId == event.cardId));
       cardPageBloc.add(ChangeCardPageEvent(0));
-      if(cards.isNotEmpty) {
-        emit(CardInfoLoadedState(cards));
-      } else {
-        emit(CardInfoEmptyState(cards));
-      }
+      emit(DeleteCardSuccessState());
     } catch (e) {
-      emit(CardInfoErrorState());
+      emit(DeleteCardErrorState());
+    }
+
+    if(cards.isNotEmpty) {
+      emit(CardInfoLoadedState(cards));
+    } else {
+      emit(CardInfoEmptyState(cards));
     }
 
     //List<CardModel> cards = List.from(listOfCards.map((card) => CardModel.fromJson(card)));

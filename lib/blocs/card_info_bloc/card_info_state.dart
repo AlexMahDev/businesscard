@@ -25,3 +25,17 @@ class CardInfoEmptyState extends CardInfoState {
 }
 
 class CardInfoErrorState extends CardInfoState {}
+
+
+
+class AddCardLoadingState extends CardInfoState {}
+class AddCardSuccessState extends CardInfoState {}
+class AddCardErrorState extends CardInfoState {}
+
+class UpdateCardLoadingState extends CardInfoState {}
+class UpdateCardSuccessState extends CardInfoState {}
+class UpdateCardErrorState extends CardInfoState {}
+
+class DeleteCardLoadingState extends CardInfoState {}
+class DeleteCardSuccessState extends CardInfoState {}
+class DeleteCardErrorState extends CardInfoState {}

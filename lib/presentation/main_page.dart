@@ -256,6 +256,24 @@ class CardsPage extends StatelessWidget {
           }
         },
         child: BlocBuilder<CardInfoBloc, CardInfoState>(
+          buildWhen: (previous, current) {
+            if(current is CardInfoLoadingState) {
+              return true;
+            }
+            if(current is CardInfoLoadedState) {
+              return true;
+            }
+            if(current is CardInfoEmptyState) {
+              return true;
+            }
+            if(current is CardInfoErrorState) {
+              return true;
+            }
+            if(current is CardInfoInitialState) {
+              return true;
+            }
+            return false;
+          },
           builder: (context, state) {
             if (state is CardInfoLoadingState) {
               return Center(child: CircularProgressIndicator());
