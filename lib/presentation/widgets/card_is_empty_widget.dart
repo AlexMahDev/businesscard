@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../blocs/card_info_bloc/card_info_bloc.dart';
+import '../create_card_page.dart';
 
 
 class CardIsEmptyWidget extends StatelessWidget {
@@ -20,7 +24,12 @@ class CardIsEmptyWidget extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-
+              final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => BlocProvider.value(
+                    value: cardInfoBloc,
+                    child: CreateCardPage(),
+                  )));
             },
             child: Container(
               height: 90,
