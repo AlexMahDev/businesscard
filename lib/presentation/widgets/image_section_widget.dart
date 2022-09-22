@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/image_bloc/image_bloc.dart';
-import '../create_card_page.dart';
+
 
 class ImageSectionWidget extends StatelessWidget {
 
@@ -31,9 +30,6 @@ class ImageSectionWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // if (state is ImagePickLoadedState)
-              //   Expanded(
-              //       child: Image.file(state.image, height: 150)),
               if (state is ImageNetworkLoadedState)
                 Expanded(
                     child: Image.network(state.networkImage, height: 150, errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {return Container();})),
@@ -173,19 +169,7 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
           ],
         ),
       ),
-      // child: Center(
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     mainAxisSize: MainAxisSize.min,
-      //     children: <Widget>[
-      //       const Text('Modal BottomSheet'),
-      //       ElevatedButton(
-      //         child: const Text('Close BottomSheet'),
-      //         onPressed: () => Navigator.pop(context),
-      //       ),
-      //     ],
-      //   ),
-      // ),
+
     );
   }
 }

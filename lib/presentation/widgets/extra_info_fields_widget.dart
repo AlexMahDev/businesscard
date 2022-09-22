@@ -17,7 +17,6 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
       controller = TextEditingController();
       controllerMap[name] = controller;
     }
-    //print(_controllerMap.length);
     return controller;
   }
 
@@ -74,17 +73,7 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: controllerMap.length,
-                  //padding: EdgeInsets.only(top: 15),
                   itemBuilder: (BuildContext context, int index) {
-                    //final controller = _getControllerOf(data[index]);
-
-                    // final textField = TextField(
-                    //   controller: controller,
-                    //   decoration: InputDecoration(
-                    //     border: OutlineInputBorder(),
-                    //     labelText: "name${index + 1}",
-                    //   ),
-                    // );
                     return CustomTextField(
                       controller: _getControllerOf(
                           controllerMap.keys.elementAt(index)),
@@ -100,16 +89,6 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
                         textFieldBloc.add(AddTextFieldEvent());
                       },
                     );
-                    //   Container(
-                    //   child: TextField(
-                    //     controller: _getControllerOf(data.keys.elementAt(index)),
-                    //     decoration: InputDecoration(
-                    //       border: OutlineInputBorder(),
-                    //       labelText: data[index],
-                    //     ),
-                    //   ),
-                    //   padding: EdgeInsets.only(bottom: 10),
-                    // );
                   },
                   separatorBuilder:
                       (BuildContext context, int index) =>

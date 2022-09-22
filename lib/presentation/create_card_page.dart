@@ -1,10 +1,8 @@
-import 'dart:math';
 
 import 'package:businesscard/blocs/card_info_bloc/card_info_bloc.dart';
 import 'package:businesscard/blocs/full_name_dropdown_bloc/full_name_dropdown_bloc.dart';
 import 'package:businesscard/blocs/image_bloc/image_bloc.dart';
 import 'package:businesscard/blocs/select_card_color_bloc/select_card_color_bloc.dart';
-import 'package:businesscard/blocs/text_clear_button_bloc/text_clear_button_bloc.dart';
 import 'package:businesscard/blocs/text_field_bloc/text_field_bloc.dart';
 import 'package:businesscard/data/repositories/storage_repository.dart';
 import 'package:businesscard/presentation/widgets/choose_color_widget.dart';
@@ -16,8 +14,7 @@ import 'package:businesscard/presentation/widgets/general_info_fields_widget.dar
 import 'package:businesscard/presentation/widgets/image_section_widget.dart';
 import 'package:businesscard/presentation/widgets/loading_overlay_widget.dart';
 import 'package:businesscard/presentation/widgets/tap_field_below_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -72,9 +69,6 @@ class _CreateCardPageState extends State<CreateCardPage> {
       fullName.text =
           '${firstName.text} ${middleName.text} ${lastName.text}'.trim();
     });
-    // firstName = TextEditingController();
-    // middleName = TextEditingController();
-    // lastName = TextEditingController();
     jobTitle = TextEditingController();
     department = TextEditingController();
     companyName = TextEditingController();
@@ -97,61 +91,10 @@ class _CreateCardPageState extends State<CreateCardPage> {
     super.dispose();
   }
 
-  // TextEditingController _getControllerOf(String name) {
-  //   var controller = _controllerMap[name];
-  //   if (controller == null) {
-  //     controller = TextEditingController();
-  //     _controllerMap[name] = controller;
-  //   }
-  //   //print(_controllerMap.length);
-  //   return controller;
-  // }
-  //
-  // String getHintText(String key) {
-  //   if (key == 'phoneNumber') {
-  //     return 'Phone Number';
-  //   } else if (key == 'email') {
-  //     return 'Email';
-  //   } else if (key == 'link') {
-  //     return 'Link';
-  //   } else if (key == 'linkedIn') {
-  //     return 'LinkedIn';
-  //   } else if (key == 'gitHub') {
-  //     return 'GitHub';
-  //   } else if (key == 'telegram') {
-  //     return 'Telegram';
-  //   } else {
-  //     return '';
-  //   }
-  // }
-  //
-  // Widget getIcon(String key) {
-  //   if (key == 'phoneNumber') {
-  //     return Icon(Icons.phone, color: Colors.white);
-  //   } else if (key == 'email') {
-  //     return Icon(Icons.email, color: Colors.white);
-  //   } else if (key == 'link') {
-  //     return Icon(Icons.link, color: Colors.white);
-  //   } else if (key == 'linkedIn') {
-  //     return Image.asset('assets/images/icons/linkedin-icon.png',
-  //         color: Colors.white, height: 20);
-  //   } else if (key == 'gitHub') {
-  //     return Image.asset('assets/images/icons/github-icon.png',
-  //         color: Colors.white, height: 20);
-  //   } else if (key == 'telegram') {
-  //     return Icon(Icons.telegram, color: Colors.white);
-  //   } else {
-  //     return Icon(Icons.add_circle_outline_rounded, color: Colors.white);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        // BlocProvider<NewCardBloc>(
-        //   create: (BuildContext context) => NewCardBloc(),
-        // ),
         BlocProvider<TextFieldBloc>(
           create: (BuildContext context) => TextFieldBloc(),
         ),
@@ -161,17 +104,10 @@ class _CreateCardPageState extends State<CreateCardPage> {
         BlocProvider<FullNameDropdownBloc>(
           create: (BuildContext context) => FullNameDropdownBloc(),
         ),
-        // BlocProvider<ImageBloc>(
-        //   create: (BuildContext context) => imageBloc
-        // ),
         BlocProvider<ImageBloc>(
             create: (BuildContext context) => profileImageBloc),
         BlocProvider<ImageBloc>(
             create: (BuildContext context) => companyLogoImageBloc),
-
-        // BlocProvider<CardInfoBloc>(
-        //   create: (BuildContext context) =>  CardInfoBloc(),
-        // ),
       ],
       child: Builder(builder: (context) {
         return MultiBlocListener(
@@ -320,39 +256,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                         controller: cardTitle),
                   ),
 
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
 
                   ChooseColorWidget(),
-
-                  // BlocBuilder<SelectCardColorBloc, Color>(
-                  //   builder: (context, state) {
-                  //     return SingleChildScrollView(
-                  //       scrollDirection: Axis.horizontal,
-                  //       child: Padding(
-                  //         padding: const EdgeInsets.symmetric(
-                  //             horizontal: 10.0, vertical: 20),
-                  //         child: Row(
-                  //           mainAxisAlignment: MainAxisAlignment.start,
-                  //           children: [
-                  //             ColorWidget(color: Colors.redAccent),
-                  //             ColorWidget(color: Colors.orange),
-                  //             ColorWidget(color: Colors.yellow),
-                  //             ColorWidget(color: Colors.brown),
-                  //             ColorWidget(color: Colors.green),
-                  //             ColorWidget(color: Colors.lightBlueAccent),
-                  //             ColorWidget(color: Colors.blue),
-                  //             ColorWidget(color: Colors.purple),
-                  //             ColorWidget(color: Colors.purpleAccent),
-                  //             ColorWidget(color: Colors.black),
-                  //             ColorWidget(color: Colors.grey)
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     );
-                  //   },
-                  // ),
 
                   ImageSectionWidget(
                       imageBloc: profileImageBloc,
@@ -391,14 +296,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                         hintText: 'Headline', controller: headLine),
                   ),
 
-                  // ///STATIC TEXT FIELDS
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(
-                  //       horizontal: 15.0, vertical: 30),
-                  //   child: GeneralTextFields(controller: TextEditingController())
-                  // ),
 
-                  ///DYNAMIC TEXT FIELDS
+                  //DYNAMIC TEXT FIELDS
                   ExtraInfoFieldsWidget(controllerMap: _controllerMap),
 
                   TapFieldBelowWidget(),

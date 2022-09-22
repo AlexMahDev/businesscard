@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
-import '../../blocs/card_page_bloc/card_page_bloc.dart';
 import '../../data/models/card_model.dart';
 
 class CardWidget extends StatelessWidget {
@@ -68,10 +65,6 @@ class CardWidget extends StatelessWidget {
               },
             ),
           ),
-          // SizedBox(
-          //     height: 250,
-          //     child:
-          //     Image.asset('assets/images/qr_code.png')),
           Stack(
             clipBehavior: Clip.none,
             alignment: Alignment.bottomRight,
@@ -86,8 +79,7 @@ class CardWidget extends StatelessWidget {
                               Object exception, StackTrace? stackTrace) {
                         return Container();
                       }),
-                      // Image.asset(
-                      //     'assets/images/innowise-logo.png')),
+
                     ),
                   Divider(
                     color: Color(card.settings.cardColor).withOpacity(0.2),
@@ -97,7 +89,6 @@ class CardWidget extends StatelessWidget {
               ),
               if (card.generalInfo.profileImage.isNotEmpty)
                 Positioned(
-                  //top: 170,
                   bottom: -30,
                   right: 15,
                   child: Row(
@@ -111,12 +102,6 @@ class CardWidget extends StatelessWidget {
                           return Container();
                         }),
 
-                        // Image.asset(
-                        //   'assets/images/avatar.jpg',
-                        //   width: 80,
-                        //   height: 80,
-                        //   fit: BoxFit.cover,
-                        // ),
                       ),
                     ],
                   ),

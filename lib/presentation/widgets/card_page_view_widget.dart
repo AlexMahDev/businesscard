@@ -45,7 +45,6 @@ class _CardPageViewWidgetState extends State<CardPageViewWidget> {
         cardPageBloc.add(ChangeCardPageEvent(page));
       },
       itemBuilder: (context, position) {
-        //print(state.cards[position].settings.cardColor);
         return CardWidget(card: widget.cards[position]);
 
       },

@@ -115,9 +115,6 @@ class _SignInPageState extends State<SignInPage> {
                               SignInRequested(email.text, password.text),
                             );
                           }
-                          // BlocProvider.of<AuthBloc>(context).add(
-                          //   SignInRequested(email.text, password.text),
-                          // );
                         },
                         child: Container(
                           height: 80,

@@ -8,16 +8,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class ContactRepository {
 
-  //List<ContactModel> contacts = [];
-  //CardModel? contactCard;
 
   Future<List<ContactModel>> getContacts() async {
 
     final user = FirebaseAuth.instance.currentUser!;
-
-    // await Future.delayed(const Duration(seconds: 4), () {
-    //   print('One second has passed.'); // Prints after 1 second.
-    // });
 
     try {
       final contactsReq = await FirebaseFirestore.instance.collection("users").doc(user.uid).collection("contacts").orderBy('timestamp').get();
@@ -30,40 +24,6 @@ class ContactRepository {
 
   }
 
-
-  // Future<void> getContactInfo(String uid, String cardId) async {
-  //
-  //   try {
-  //     final contactCardReq = await FirebaseFirestore.instance.collection("users").doc(uid).collection("contacts").doc(cardId).get();
-  //     if (contactCardReq.exists) {
-  //       contactCard = CardModel.fromJson(contactCardReq.data()!);
-  //     }
-  //   } catch (e) {
-  //     throw Exception(e);
-  //   }
-  //
-  // }
-
-
-  // Future<CardModel?> saveContact(String uid, String cardId) async {
-  //
-  //   final user = FirebaseAuth.instance.currentUser!;
-  //
-  //   try {
-  //     final CardModel? card = await CardRepository().getCard(uid, cardId);
-  //     if(card != null) {
-  //       final contactFirebase = FirebaseFirestore.instance.collection("users").doc(user.uid).collection("contacts").doc();
-  //       final ContactModel contactModel = ContactModel(timestamp: DateTime.now().millisecondsSinceEpoch, contactId: contactFirebase.id, cardModel: card);
-  //       await contactFirebase.set(contactModel.toJson());
-  //       return card;
-  //     }
-  //   } catch (e) {
-  //     throw Exception(e);
-  //   }
-  //
-  //   return null;
-  //
-  // }
 
 
 

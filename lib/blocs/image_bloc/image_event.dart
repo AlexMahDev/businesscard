@@ -11,14 +11,7 @@ class UploadImageEvent extends ImageEvent {
 
 }
 
-class GetImageEvent extends ImageEvent {
-
-  // final String imageUrl;
-  //
-  // GetImageEvent(this.imageUrl);
-
-
-}
+class GetImageEvent extends ImageEvent {}
 
 
 class RemoveImageEvent extends ImageEvent {
@@ -26,6 +19,5 @@ class RemoveImageEvent extends ImageEvent {
   final String fileUrl;
 
   RemoveImageEvent(this.fileUrl);
-
 
 }

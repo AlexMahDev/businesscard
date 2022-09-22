@@ -29,13 +29,10 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    //final cardColorBloc = BlocProvider.of<SelectCardColorBloc>(context);
-    //final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(context);
-
     return BlocProvider<TextClearButtonBloc>(
       create: (context) => TextClearButtonBloc(),
       child: Builder(builder: (context) {
-        final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(context);
+        //final clearButtonBloc = BlocProvider.of<TextClearButtonBloc>(context);
         return Row(
           children: [
             if (icon != null)
@@ -49,7 +46,6 @@ class CustomTextField extends StatelessWidget {
             Expanded(
               child: FocusScope(
                 onFocusChange: (focus) {
-                  //print(focus);
                   final clearButtonBloc =
                   BlocProvider.of<TextClearButtonBloc>(context);
                   if(focus) {
@@ -65,7 +61,6 @@ class CustomTextField extends StatelessWidget {
                   enabled: enabled,
                   obscureText: !isTextVisible,
                   decoration: InputDecoration(
-                    //contentPadding: EdgeInsets.all(0),
                     suffixIcon:
                     BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
                       builder: (context, state) {
@@ -73,9 +68,7 @@ class CustomTextField extends StatelessWidget {
                           return IconButton(
                             onPressed: () {
                               controller.clear();
-                              // final clearButtonBloc =
-                              // BlocProvider.of<TextClearButtonBloc>(context);
-                              clearButtonBloc.add(ClearButtonDisableEvent());
+                              BlocProvider.of<TextClearButtonBloc>(context).add(ClearButtonDisableEvent());
                             },
                             icon: Icon(Icons.highlight_remove_outlined),
                             splashRadius: 20,
@@ -86,32 +79,16 @@ class CustomTextField extends StatelessWidget {
                       },
                     ),
                     hintText: hintText,
-                    //labelText: 'Name *',
                   ),
-                  // onTap: () {
-                  //   if (controller.text.isNotEmpty) {
-                  //     final clearButtonBloc =
-                  //     BlocProvider.of<TextClearButtonBloc>(context);
-                  //     clearButtonBloc.add(ClearButtonEnableEvent());
-                  //   }
-                  // },
+
                   onChanged: (text) {
                     if (controller.text.isEmpty) {
-                      // final clearButtonBloc =
-                      // BlocProvider.of<TextClearButtonBloc>(context);
-                      clearButtonBloc.add(ClearButtonDisableEvent());
+                      BlocProvider.of<TextClearButtonBloc>(context).add(ClearButtonDisableEvent());
                     } else if (controller.text.length == 1) {
-                      // final clearButtonBloc =
-                      // BlocProvider.of<TextClearButtonBloc>(context);
-                      clearButtonBloc.add(ClearButtonEnableEvent());
+                      BlocProvider.of<TextClearButtonBloc>(context).add(ClearButtonEnableEvent());
                     }
                   },
                   validator: validator,
-                  //keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  // inputFormatters: <TextInputFormatter>[
-                  //   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                  // ],
-                  //textAlign: TextAlign.center,
                 ),
               ),
             ),

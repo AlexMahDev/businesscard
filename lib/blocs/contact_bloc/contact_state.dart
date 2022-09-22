@@ -20,11 +20,7 @@ class ContactEmptyState extends ContactState {}
 
 
 
-
-
-
 class SearchLinkLoadingState extends ContactState {}
-
 class SearchLinkSuccessState extends ContactState {
 
   final CardModel card;
@@ -36,9 +32,6 @@ class SearchLinkErrorState extends ContactState {}
 
 
 
-
-
-
 class ContactSearchState extends ContactState {
 
   final List<ContactModel> contacts;
@@ -47,9 +40,6 @@ class ContactSearchState extends ContactState {
   ContactSearchState(this.contacts, this.foundContacts);
 
 }
-
-
-
 
 
 class SaveContactLoadingState extends ContactState {}

@@ -1,11 +1,9 @@
-import 'dart:math';
 
 import 'package:businesscard/blocs/card_info_bloc/card_info_bloc.dart';
 import 'package:businesscard/blocs/full_name_dropdown_bloc/full_name_dropdown_bloc.dart';
 import 'package:businesscard/blocs/image_bloc/image_bloc.dart';
 
 import 'package:businesscard/blocs/select_card_color_bloc/select_card_color_bloc.dart';
-import 'package:businesscard/blocs/text_clear_button_bloc/text_clear_button_bloc.dart';
 import 'package:businesscard/presentation/widgets/choose_color_widget.dart';
 import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
 import 'package:businesscard/presentation/widgets/custom_text_field_widget.dart';
@@ -15,7 +13,6 @@ import 'package:businesscard/presentation/widgets/general_info_fields_widget.dar
 import 'package:businesscard/presentation/widgets/image_section_widget.dart';
 import 'package:businesscard/presentation/widgets/loading_overlay_widget.dart';
 import 'package:businesscard/presentation/widgets/tap_field_below_widget.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -84,9 +81,6 @@ class _EditCardPageState extends State<EditCardPage> {
       fullName.text =
           '${firstName.text} ${middleName.text} ${lastName.text}'.trim();
     });
-    // firstName = TextEditingController();
-    // middleName = TextEditingController();
-    // lastName = TextEditingController();
     jobTitle = TextEditingController(text: widget.card.generalInfo.jobTitle);
     department =
         TextEditingController(text: widget.card.generalInfo.department);
@@ -122,9 +116,6 @@ class _EditCardPageState extends State<EditCardPage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        // BlocProvider<NewCardBloc>(
-        //   create: (BuildContext context) => NewCardBloc(),
-        // ),
         BlocProvider<TextFieldBloc>(
           create: (BuildContext context) => TextFieldBloc(),
         ),
@@ -135,17 +126,11 @@ class _EditCardPageState extends State<EditCardPage> {
         BlocProvider<FullNameDropdownBloc>(
           create: (BuildContext context) => FullNameDropdownBloc(),
         ),
-        // BlocProvider<ImageBloc>(
-        //   create: (BuildContext context) => imageBloc
-        // ),
+
         BlocProvider<ImageBloc>(
             create: (BuildContext context) => profileImageBloc),
         BlocProvider<ImageBloc>(
             create: (BuildContext context) => companyLogoImageBloc),
-
-        // BlocProvider<CardInfoBloc>(
-        //   create: (BuildContext context) =>  CardInfoBloc(),
-        // ),
       ],
       child: Builder(builder: (context) {
         return MultiBlocListener(
@@ -362,14 +347,8 @@ class _EditCardPageState extends State<EditCardPage> {
                           hintText: 'Headline', controller: headLine),
                     ),
 
-                    // ///STATIC TEXT FIELDS
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(
-                    //       horizontal: 15.0, vertical: 30),
-                    //   child: GeneralTextFields(controller: TextEditingController())
-                    // ),
 
-                    ///DYNAMIC TEXT FIELDS
+                    //DYNAMIC TEXT FIELDS
                     ExtraInfoFieldsWidget(controllerMap: _controllerMap),
 
                     TapFieldBelowWidget(),

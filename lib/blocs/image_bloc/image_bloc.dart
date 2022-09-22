@@ -3,10 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:businesscard/data/repositories/storage_repository.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 
 part 'image_event.dart';
@@ -37,59 +34,6 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
       emit(ImagePickErrorState());
     }
 
-    // final ImagePicker picker = ImagePicker();
-    // final XFile? image;
-    //
-    // try {
-    //   if (event.isGallery) {
-    //     image = await picker.pickImage(source: ImageSource.gallery);
-    //   } else {
-    //     image = await picker.pickImage(source: ImageSource.camera);
-    //   }
-    //   if (image != null) {
-    //     CroppedFile? croppedFile = await ImageCropper().cropImage(
-    //       sourcePath: image.path,
-    //       aspectRatioPresets: [
-    //         CropAspectRatioPreset.square,
-    //         CropAspectRatioPreset.ratio3x2,
-    //         CropAspectRatioPreset.original,
-    //         CropAspectRatioPreset.ratio4x3,
-    //         CropAspectRatioPreset.ratio16x9
-    //       ],
-    //       uiSettings: [
-    //         AndroidUiSettings(
-    //             toolbarTitle: 'Crop Image',
-    //             toolbarColor: Colors.black,
-    //             toolbarWidgetColor: Colors.white,
-    //             initAspectRatio: CropAspectRatioPreset.original,
-    //             lockAspectRatio: false),
-    //         IOSUiSettings(
-    //           title: 'Crop Image',
-    //         ),
-    //       ],
-    //     );
-    //     if(croppedFile != null) {
-    //
-    //       final File file = File(croppedFile.path);
-    //       final String fileName = image.name;
-    //
-    //       final String path = 'files/${'timestamp${DateTime.now().millisecondsSinceEpoch}file$fileName'}';
-    //
-    //       //final ref = FirebaseStorage.instance.ref().child(path);
-    //
-    //       final ref = FirebaseStorage.instance.ref(path);
-    //
-    //       final upload = await ref.putFile(file);
-    //
-    //       final url = await upload.ref.getDownloadURL();
-    //
-    //
-    //
-    //       emit(ImagePickLoadedState(File(croppedFile.path)));
-    //     }
-    //   }
-    // } catch (_) {}
-
 
   }
 
@@ -119,9 +63,6 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
 
 
   }
-
-
-
 
 
 }

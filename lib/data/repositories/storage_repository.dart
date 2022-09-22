@@ -50,8 +50,6 @@ class StorageRepository {
 
           final String path = 'files/${'timestamp-${DateTime.now().millisecondsSinceEpoch}-file-$fileName'}';
 
-          //print(path);
-          //final ref = FirebaseStorage.instance.ref().child(path);
 
           final ref = FirebaseStorage.instance.ref(path);
 
@@ -83,10 +81,5 @@ class StorageRepository {
 
   }
 
-  // Future<void> deleteImage() async {
-  //
-  //   url = '';
-  //
-  // }
 
 }

@@ -19,9 +19,6 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // final card = FirebaseFirestore.instance.collection('cards').doc('tvaV6VppRNfHVdEwQCSu');
-  // final snapshot = await card.get();
-  // print(snapshot.data());
   runApp(const MyApp());
 }
 
@@ -68,7 +65,6 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.red,
             scaffoldBackgroundColor: Colors.white,
 
-            ///redAccent
             //primaryColor: Colors.redAccent,
             fontFamily: 'OpenSans',
             appBarTheme: AppBarTheme(
@@ -88,11 +84,8 @@ class MyApp extends StatelessWidget {
               builder: (context, snapshot) {
                 // If the snapshot has user data, then they're already signed in. So Navigating to the Dashboard.
                 if (snapshot.hasData) {
-                  //print('h');
                   //BlocProvider.of<CardInfoBloc>(context).add(GetCardInfoEvent());
                   return MainPageNavigationBar();
-
-
 
                   //   BlocProvider<CardInfoBloc>.value(
                   //   value: BlocProvider.of<CardInfoBloc>(context)
