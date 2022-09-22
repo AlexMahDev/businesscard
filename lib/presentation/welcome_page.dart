@@ -22,9 +22,13 @@ class WelcomePage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        'assets/images/business-card.png',
-                        color: Colors.white,
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/logo/BCard-logo.png',
+                        ),
                       ),
                       Text("Welcome to BCard.",
                           style: TextStyle(

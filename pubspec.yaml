@@ -59,6 +59,15 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
+  flutter_native_splash: ^2.2.9
+
+flutter_native_splash:
+  color: "#ef534f"
+  image: "assets/images/logo/BCard-logo_text.png"
+  android_12:
+    color: "#ef534f"
+    #image: "assets/images/logo/BCard-logo.png"
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -74,6 +83,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/icons/
+    - assets/images/logo/
     - assets/fonts/
 
 
