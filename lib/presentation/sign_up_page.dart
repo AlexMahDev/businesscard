@@ -61,11 +61,9 @@ class _SignUpPageState extends State<SignUpPage> {
           }
           if (state is Authenticated) {
             // Navigating to the dashboard screen if the user is authenticated
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => const MainPageNavigationBar(),
-              ),
-            );
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => MainPageNavigationBar()),
+                    (route) => false);
           }
           if (state is AuthError) {
             // Displaying the error message if the user is not authenticated
