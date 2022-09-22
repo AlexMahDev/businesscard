@@ -10,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../presentation/contact_info_page.dart';
-import '../../presentation/test_page.dart';
 import '../models/card_model.dart';
 
 class DynamicLinkRepository {
