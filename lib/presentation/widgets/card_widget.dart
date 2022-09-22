@@ -65,6 +65,9 @@ class CardWidget extends StatelessWidget {
               },
             ),
           ),
+          SizedBox(
+            height: 30,
+          ),
           Stack(
             clipBehavior: Clip.none,
             alignment: Alignment.bottomRight,
