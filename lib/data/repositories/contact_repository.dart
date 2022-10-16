@@ -16,8 +16,6 @@ class ContactRepository {
     try {
       final contactsReq = await FirebaseFirestore.instance.collection("users").doc(user.uid).collection("contacts").orderBy('timestamp').get();
       return contactsReq.docs.isNotEmpty ? List.from(contactsReq.docs.map((e) => ContactModel.fromJson(e.data()))) : [];
-
-      //return contactsReq.docs.isNotEmpty ? List.from(contacts.docs.map((e) => ContactModel.fromJson(e.data()))) : [];
     } catch (e) {
       throw Exception(e);
     }

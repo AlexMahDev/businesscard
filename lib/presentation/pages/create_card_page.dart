@@ -12,6 +12,10 @@ import '../../core_ui/widgets/image_section_widget.dart';
 import '../../core_ui/widgets/loading_overlay_widget.dart';
 import '../../core_ui/widgets/tap_field_below_widget.dart';
 import '../../domain/models/card_model.dart';
+import '../../domain/models/extra_info_model.dart';
+import '../../domain/models/general_info_model.dart';
+import '../../domain/models/settings_model.dart';
+import '../../domain/models/text_field_model.dart';
 import '../blocs/card_info_bloc/card_info_bloc.dart';
 import '../blocs/full_name_dropdown_bloc/full_name_dropdown_bloc.dart';
 import '../blocs/image_bloc/image_bloc.dart';
@@ -43,6 +47,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
   late final LoadingOverlay loadingOverlay;
   late final StorageRepository profileImageRepository;
   late final StorageRepository companyLogoRepository;
+
+  final _validation = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -171,48 +177,50 @@ class _CreateCardPageState extends State<CreateCardPage> {
                 icon: const Icon(Icons.check),
                 splashRadius: 20,
                 onPressed: () {
-                  final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(
-                      context);
-                  final cardColorBloc =
-                  BlocProvider.of<SelectCardColorBloc>(context);
+                  if(_validation.currentState!.validate()) {
+                    final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(
+                        context);
+                    final cardColorBloc =
+                    BlocProvider.of<SelectCardColorBloc>(context);
 
-                  final cardsInfoState = cardsInfoBloc.state;
+                    final cardsInfoState = cardsInfoBloc.state;
 
-                  CardModel newCard = CardModel(
-                      timestamp: DateTime
-                          .now()
-                          .millisecondsSinceEpoch,
-                      cardId: '',
-                      qrLink: '',
-                      settings: SettingsModel(
-                          cardColor: cardColorBloc.state),
-                      generalInfo: GeneralInfoModel(
-                          cardTitle: cardTitle.text.isNotEmpty
-                              ? cardTitle.text
-                              : 'BCard',
-                          firstName: firstName.text,
-                          middleName: middleName.text,
-                          lastName: lastName.text,
-                          jobTitle: jobTitle.text,
-                          department: department.text,
-                          companyName: companyName.text,
-                          headLine: headLine.text,
-                          profileImage: profileImageRepository.url,
-                          logoImage: companyLogoRepository.url),
-                      extraInfo: ExtraInfoModel(listOfFields: []));
+                    CardModel newCard = CardModel(
+                        timestamp: DateTime
+                            .now()
+                            .millisecondsSinceEpoch,
+                        cardId: '',
+                        qrLink: '',
+                        settings: SettingsModel(
+                            cardColor: cardColorBloc.state),
+                        generalInfo: GeneralInfoModel(
+                            cardTitle: cardTitle.text.isNotEmpty
+                                ? cardTitle.text
+                                : 'BCard',
+                            firstName: firstName.text,
+                            middleName: middleName.text,
+                            lastName: lastName.text,
+                            jobTitle: jobTitle.text,
+                            department: department.text,
+                            companyName: companyName.text,
+                            headLine: headLine.text,
+                            profileImage: profileImageRepository.url,
+                            logoImage: companyLogoRepository.url),
+                        extraInfo: ExtraInfoModel(listOfFields: []));
 
-                  _controllerMap.forEach((key, value) {
-                    newCard.extraInfo.listOfFields
-                        .add(TextFieldModel(key: key, value: value.text));
-                  });
+                    _controllerMap.forEach((key, value) {
+                      newCard.extraInfo.listOfFields
+                          .add(TextFieldModel(key: key, value: value.text));
+                    });
 
-                  if (cardsInfoState is CardInfoLoadedState) {
-                    List<CardModel> currentCards = cardsInfoState.cards;
+                    if (cardsInfoState is CardInfoLoadedState) {
+                      List<CardModel> currentCards = cardsInfoState.cards;
 
-                    cardsInfoBloc.add(AddCardEvent(currentCards, newCard));
-                  } else if (cardsInfoState is CardInfoEmptyState) {
-                    List<CardModel> currentCards = cardsInfoState.cards;
-                    cardsInfoBloc.add(AddCardEvent(currentCards, newCard));
+                      cardsInfoBloc.add(AddCardEvent(currentCards, newCard));
+                    } else if (cardsInfoState is CardInfoEmptyState) {
+                      List<CardModel> currentCards = cardsInfoState.cards;
+                      cardsInfoBloc.add(AddCardEvent(currentCards, newCard));
+                    }
                   }
                 },
               ),
@@ -244,65 +252,95 @@ class _CreateCardPageState extends State<CreateCardPage> {
 
               ],
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: CustomTextField(
-                        hintText: 'Set a title (e.g. Work or Personal)',
-                        controller: cardTitle),
-                  ),
+            body: Form(
+              key: _validation,
+              child: SingleChildScrollView(
+                child: Column(
+                  //crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: CustomTextField(
+                          hintText: 'Set a title (e.g. Work or Personal)',
+                          controller: cardTitle),
+                    ),
 
 
-                  ChooseColorWidget(),
+                    ChooseColorWidget(),
 
-                  ImageSectionWidget(
-                      imageBloc: profileImageBloc,
-                      addTitle: 'Add Profile Picture',
-                      editTitle: 'Edit Profile Picture',
-                      removeTitle: 'Remove Profile Picture'),
+                    ImageSectionWidget(
+                        imageBloc: profileImageBloc,
+                        addTitle: 'Add Profile Picture',
+                        editTitle: 'Edit Profile Picture',
+                        removeTitle: 'Remove Profile Picture'),
 
-                  SizedBox(
-                    height: 30,
-                  ),
+                    SizedBox(
+                      height: 30,
+                    ),
 
-                  ImageSectionWidget(
-                      imageBloc: companyLogoImageBloc,
-                      addTitle: 'Add Company Logo',
-                      editTitle: 'Edit Company Logo',
-                      removeTitle: 'Remove Company Logo'),
+                    ImageSectionWidget(
+                        imageBloc: companyLogoImageBloc,
+                        addTitle: 'Add Company Logo',
+                        editTitle: 'Edit Company Logo',
+                        removeTitle: 'Remove Company Logo'),
 
-                  GeneralInfoFieldsWidget(
-                    fullName: CustomTextField(
-                        hintText: 'Full Name',
-                        enabled: false,
-                        controller: fullName),
-                    firstName: CustomTextField(
-                        hintText: 'First Name', controller: firstName),
-                    middleName: CustomTextField(
-                        hintText: 'Middle Name', controller: middleName),
-                    lastName: CustomTextField(
-                        hintText: 'Last Name', controller: lastName),
-                    jobTitle: CustomTextField(
-                        hintText: 'Job Title', controller: jobTitle),
-                    department: CustomTextField(
-                        hintText: 'Department', controller: department),
-                    companyName: CustomTextField(
-                        hintText: 'Company Name', controller: companyName),
-                    headLine: CustomTextField(
-                        hintText: 'Headline', controller: headLine),
-                  ),
+                    GeneralInfoFieldsWidget(
+                      fullName: CustomTextField(
+                          hintText: 'Full Name',
+                          enabled: false,
+                          controller: fullName,
+                          validator: (text) {
+                            if(text == '') {
+                              return "Name is required";
+                            }
+                            return null;
+                          }),
+                      firstName: CustomTextField(
+                          hintText: 'First Name', controller: firstName),
+                      middleName: CustomTextField(
+                          hintText: 'Middle Name', controller: middleName),
+                      lastName: CustomTextField(
+                          hintText: 'Last Name', controller: lastName),
+                      jobTitle: CustomTextField(
+                          hintText: 'Job Title',
+                          controller: jobTitle,
+                          validator: (text) {
+                            if(text == '') {
+                              return "Job title is required";
+                            }
+                            return null;
+                          }),
+                      department: CustomTextField(
+                          hintText: 'Department',
+                          controller: department,
+                          validator: (text) {
+                            if(text == '') {
+                              return "Department is required";
+                            }
+                            return null;
+                          }),
+                      companyName: CustomTextField(
+                          hintText: 'Company Name',
+                          controller: companyName,
+                          validator: (text) {
+                            if(text == '') {
+                              return "Company name is required";
+                            }
+                            return null;
+                          }),
+                      headLine: CustomTextField(
+                          hintText: 'Headline', controller: headLine),
+                    ),
 
 
-                  //DYNAMIC TEXT FIELDS
-                  ExtraInfoFieldsWidget(controllerMap: _controllerMap),
+                    //DYNAMIC TEXT FIELDS
+                    ExtraInfoFieldsWidget(controllerMap: _controllerMap),
 
-                  TapFieldBelowWidget(),
+                    TapFieldBelowWidget(),
 
-                  ExtraInfoFooterWidget(controllerMap: _controllerMap)
-                ],
+                    ExtraInfoFooterWidget(controllerMap: _controllerMap)
+                  ],
+                ),
               ),
             ),
           ),

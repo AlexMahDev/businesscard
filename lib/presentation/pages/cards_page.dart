@@ -96,21 +96,6 @@ class CardsPage extends StatelessWidget {
                       'assets/images/logo/BCard-logo_text.png',
                     ),
 
-                    // Column(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Image.asset(
-                    //       'assets/images/business-card.png',
-                    //       color: Colors.white,
-                    //     ),
-                    //     Text("BCard",
-                    //         style: TextStyle(
-                    //             fontSize: 30,
-                    //             fontWeight: FontWeight.bold,
-                    //             color: Colors.white),
-                    //         textAlign: TextAlign.center),
-                    //   ],
-                    // ),
                   ),
                 ),
                 ListTile(
@@ -151,7 +136,6 @@ class CardsPage extends StatelessWidget {
                 ),
             ],
           ),
-          //floatingActionButton: const CustomFloatActionButton(), // This trailing comma makes auto-formatting nicer for build methods.
         );
       },
     );

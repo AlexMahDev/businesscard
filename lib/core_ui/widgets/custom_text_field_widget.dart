@@ -63,6 +63,7 @@ class CustomTextField extends StatelessWidget {
                   enabled: enabled,
                   obscureText: !isTextVisible,
                   decoration: InputDecoration(
+                    errorStyle: const TextStyle(color: Colors.red),
                     suffixIcon:
                     BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
                       builder: (context, state) {

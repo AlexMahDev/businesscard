@@ -46,24 +46,6 @@ class AuthRepository {
     }
   }
 
-  // Future<void> signInWithGoogle() async {
-  //   try {
-  //     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-  //
-  //     final GoogleSignInAuthentication? googleAuth =
-  //     await googleUser?.authentication;
-  //
-  //     final credential = GoogleAuthProvider.credential(
-  //       accessToken: googleAuth?.accessToken,
-  //       idToken: googleAuth?.idToken,
-  //     );
-  //
-  //     await FirebaseAuth.instance.signInWithCredential(credential);
-  //   } catch (e) {
-  //     throw Exception(e.toString());
-  //   }
-  // }
-
   Future<void> signOut() async {
     try {
       await _firebaseAuth.signOut();

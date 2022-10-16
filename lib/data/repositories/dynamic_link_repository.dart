@@ -30,9 +30,7 @@ class DynamicLinkRepository {
       }).onError((error) {
         // Handle errors
       });
-    } catch (e) {
-      print(e.toString());
-    }
+    } catch (_) {}
 
   }
 
@@ -93,7 +91,6 @@ class DynamicLinkRepository {
       ),
       iosParameters: IOSParameters(
         bundleId: 'by.alexmahdev.bcard',
-        //appStoreId: '962194608',
         fallbackUrl: Uri.parse('https://github.com/AlexMahDev/businesscard'),
       ),
       socialMetaTagParameters: SocialMetaTagParameters(

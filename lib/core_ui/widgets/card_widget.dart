@@ -4,6 +4,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../domain/models/card_model.dart';
+import 'extra_text_widget.dart';
+import 'general_text_widget.dart';
 
 class CardWidget extends StatelessWidget {
   final CardModel card;
@@ -168,96 +170,3 @@ class CardWidget extends StatelessWidget {
   }
 }
 
-class GeneralTextWidget extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const GeneralTextWidget({Key? key, this.label = '', required this.value})
-      : super(key: key);
-
-  TextStyle getTextStyle() {
-    if (label == "fullName") {
-      return TextStyle(fontSize: 28, fontWeight: FontWeight.bold);
-    } else if (label == "headline") {
-      return TextStyle(fontSize: 18, color: Colors.grey);
-    } else {
-      return TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Text(value, style: getTextStyle()),
-    );
-  }
-}
-
-class ExtraTextWidget extends StatelessWidget {
-  final String label;
-  final String value;
-  final int color;
-  final Widget icon;
-
-  const ExtraTextWidget(
-      {Key? key,
-      required this.label,
-      required this.value,
-      required this.color,
-      required this.icon})
-      : super(key: key);
-
-  Future<void> onTap() async {
-    if (label == 'Phone Number') {
-      final Uri launchUri = Uri(scheme: 'tel', path: value);
-
-      if (await canLaunchUrl(launchUri)) {
-        await launchUrl(launchUri);
-      }
-    } else if (label == 'Email') {
-      final Uri emailUri = Uri(scheme: 'mailto', path: value);
-
-      if (await canLaunchUrl(emailUri)) {
-        await launchUrl(emailUri);
-      }
-    } else if (label == 'Telegram') {
-      String url = value;
-
-      if (!value.contains('http')) {
-        url = 'https://t.me/${value.replaceFirst('@', '')}';
-        if (await canLaunchUrlString(url)) {
-          await launchUrlString(url, mode: LaunchMode.externalApplication);
-        }
-      } else {
-        if (await canLaunchUrlString(url)) {
-          await launchUrlString(url, mode: LaunchMode.externalApplication);
-        }
-      }
-    } else {
-      if (await canLaunchUrlString(value)) {
-        await launchUrlString(value);
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        await onTap();
-      },
-      child: Row(
-        children: [
-          CircleAvatar(radius: 20, backgroundColor: Color(color), child: icon),
-          Expanded(
-            child: ListTile(
-              title: Text(value, style: TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Text(label),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}

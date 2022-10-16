@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../core_ui/widgets/add_contact_by_link_widget.dart';
+import '../../core_ui/widgets/contact_widget.dart';
 import '../../core_ui/widgets/custom_error_widget.dart';
 import '../../core_ui/widgets/custom_text_field_widget.dart';
 import '../../core_ui/widgets/loading_overlay_widget.dart';
@@ -67,12 +69,6 @@ class _ContactsPageState extends State<ContactsPage> {
                 },
               )
             ],
-            // actions: [
-            //   IconButton(
-            //     icon: const Icon(Icons.shopping_cart),
-            //     onPressed: () {},
-            //   ),
-            // ],
             bottom: AppBar(
               elevation: 0,
               backgroundColor: Colors.white,
@@ -193,13 +189,6 @@ class _ContactsPageState extends State<ContactsPage> {
                         child: ContactWidget(
                             card: state.foundContacts[index].cardModel));
                   })
-
-                      // SliverChildListDelegate([
-                      //
-                      //   for (int i = 0; i != 50; i++)
-                      //     Text('Test $i')
-                      //
-                      // ]),
                       );
                 }
                 if (state is ContactErrorState) {
@@ -223,213 +212,4 @@ class _ContactsPageState extends State<ContactsPage> {
   }
 }
 
-class AddContactByLinkWidget extends StatefulWidget {
 
-  final List<ContactModel> contacts;
-
-  const AddContactByLinkWidget({Key? key, required this.contacts}) : super(key: key);
-
-  @override
-  State<AddContactByLinkWidget> createState() => _AddContactByLinkWidgetState();
-}
-
-class _AddContactByLinkWidgetState extends State<AddContactByLinkWidget> {
-
-  late final TextEditingController urlController;
-  final _validation = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-    urlController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    urlController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: _validation,
-      child: AlertDialog(
-        title: Text("Add contact"),
-        content: Container(
-          width: 400,
-          //constraints: BoxConstraints(minWidth: 500, maxWidth: 600),
-          height: 120,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                  "Enter link you received from contact"),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                child: CustomTextField(controller: urlController, hintText: "Link", validator: (text) {
-                  if(text == '') {
-                    return "URL is required";
-                  } else if (!RegExp(r"^https:\/\/alexmahdev\.page\.link\/\b").hasMatch(text!)) {
-                    return "Enter valid URL";
-                  }
-                  return null;
-                }),
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-              onPressed: () {
-                if(_validation.currentState!.validate()) {
-                  Navigator.pop(context);
-                  BlocProvider.of<ContactBloc>(context)
-                      .add(SaveContactManualEvent(urlController.text, widget.contacts));
-                }
-              },
-              child: Text('Add',
-                  style: TextStyle(fontSize: 18))),
-          TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Cancel',
-                  style: TextStyle(fontSize: 18))),
-        ],
-      ),
-    );
-  }
-}
-
-
-
-class ContactWidget extends StatelessWidget {
-  final CardModel card;
-
-  const ContactWidget({Key? key, required this.card}) : super(key: key);
-
-  String getSubTitle() {
-    String subTitle = '';
-
-    if (card.generalInfo.jobTitle.isNotEmpty) {
-      subTitle += '${card.generalInfo.jobTitle}, ';
-    }
-
-    if (card.generalInfo.department.isNotEmpty) {
-      subTitle += '${card.generalInfo.department}, ';
-    }
-
-    if (card.generalInfo.companyName.isNotEmpty) {
-      subTitle += '${card.generalInfo.companyName}, ';
-    }
-
-    if (subTitle.length > 1) {
-      subTitle = subTitle.substring(0, subTitle.length - 2);
-    }
-
-    return subTitle;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => ContactInfoPage(card: card),
-            ));
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                if (card.generalInfo.profileImage.isNotEmpty)
-                  ClipOval(
-                    child: Image.network(card.generalInfo.profileImage,
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover, errorBuilder: (BuildContext context,
-                            Object exception, StackTrace? stackTrace) {
-                      return Container();
-                    }),
-                  ),
-                Expanded(
-                  child: ListTile(
-                    title: Text(
-                        '${card.generalInfo.firstName} ${card.generalInfo.middleName} ${card.generalInfo.lastName}',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                    subtitle: Text(getSubTitle(),
-                        style: TextStyle(fontSize: 20, color: Colors.black)),
-                    trailing: PopupMenuButton<int>(
-                      icon: const Icon(Icons.more_vert, color: Colors.black),
-                      splashRadius: 20,
-                      onSelected: (item) async {
-                        switch (item) {
-                          case 1:
-                            final contactBloc =
-                                BlocProvider.of<ContactBloc>(context);
-                            final contactState = contactBloc.state;
-                            if (contactState is ContactLoadedState) {
-                              contactBloc.add(DeleteContactEvent(
-                                  card.cardId, contactState.contacts));
-                            } else if (contactState is ContactSearchState) {
-                              contactBloc.add(DeleteContactEvent(
-                                  card.cardId, contactState.contacts));
-                            }
-                            break;
-                        }
-                      },
-                      itemBuilder: (context) => [
-                        const PopupMenuItem(
-                          value: 1,
-                          child: Text(
-                            "Delete",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.redAccent),
-                          ),
-                        ),
-                        const PopupMenuDivider(),
-                        const PopupMenuItem(
-                          value: 2,
-                          child: Text(
-                            "Cancel",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.redAccent),
-                          ),
-                        ),
-                      ],
-                      //icon: Icon(Icons.menu),
-                      //offset: const Offset(-15, 60),
-                    ),
-
-                    // IconButton(
-                    //   splashRadius: 20,
-                    //   onPressed: () {
-                    //     final contactBloc = BlocProvider.of<ContactBloc>(context);
-                    //     final contactState = contactBloc.state;
-                    //     if (contactState is ContactLoadedState) {
-                    //       contactBloc.add(DeleteContactEvent(card.cardId, contactState.contacts));
-                    //     } else if (contactState is ContactSearchState) {
-                    //       contactBloc.add(DeleteContactEvent(card.cardId, contactState.contacts));
-                    //     }
-                    //   },
-                    //   icon: Icon(Icons.more_vert, color: Colors.black),
-                    // ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const Divider(color: Colors.black)
-      ],
-    );
-  }
-}

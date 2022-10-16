@@ -1,5 +1,3 @@
-
-
 import 'card_model.dart';
 
 class ContactModel{

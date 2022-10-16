@@ -13,7 +13,6 @@ class WelcomePage extends StatelessWidget {
           body: Padding(
             padding: const EdgeInsets.all(40.0),
             child: Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
@@ -94,8 +93,6 @@ class WelcomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                //Text("Developed by Aliaksandr Makhrachou", style: TextStyle(color: Colors.white, fontSize: 15), textAlign: TextAlign.center)
               ],
             ),
           ),

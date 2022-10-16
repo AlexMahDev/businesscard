@@ -40,7 +40,6 @@ class PageSelectorWidget extends StatelessWidget {
                                 .settings
                                 .cardColor),
                             shape: BoxShape.circle,
-                            //border: Border.all(color: Colors.black),
                           ),
                         ),
                       ),
