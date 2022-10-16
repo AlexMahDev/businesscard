@@ -87,6 +87,13 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
                             TextFieldBloc>(context);
                         textFieldBloc.add(AddTextFieldEvent());
                       },
+                        validator: (text) {
+                          if(text == '') {
+                            return "${getHintText(
+                                controllerMap.keys.elementAt(index))} is required";
+                          }
+                          return null;
+                        }
                     );
                   },
                   separatorBuilder:
