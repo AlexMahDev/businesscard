@@ -1,8 +1,6 @@
-
-import 'package:businesscard/presentation/sign_in_page.dart';
-import 'package:businesscard/presentation/sign_up_page.dart';
+import 'package:businesscard/presentation/pages/sign_in_page.dart';
+import 'package:businesscard/presentation/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);

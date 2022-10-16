@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/image_bloc/image_bloc.dart';
+import '../../presentation/blocs/image_bloc/image_bloc.dart';
 
 
 class ImageSectionWidget extends StatelessWidget {

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/select_card_color_bloc/select_card_color_bloc.dart';
-import '../../blocs/text_clear_button_bloc/text_clear_button_bloc.dart';
+import '../../presentation/blocs/select_card_color_bloc/select_card_color_bloc.dart';
+import '../../presentation/blocs/text_clear_button_bloc/text_clear_button_bloc.dart';
+
+
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;

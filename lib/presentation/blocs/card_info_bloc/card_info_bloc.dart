@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:businesscard/data/models/card_model.dart';
 import 'package:businesscard/data/repositories/card_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-
+import '../../../domain/models/card_model.dart';
 import '../card_page_bloc/card_page_bloc.dart';
 
 part 'card_info_event.dart';

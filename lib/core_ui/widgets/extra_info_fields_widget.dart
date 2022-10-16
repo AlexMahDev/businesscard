@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../blocs/select_card_color_bloc/select_card_color_bloc.dart';
-import '../../blocs/text_field_bloc/text_field_bloc.dart';
+import '../../presentation/blocs/select_card_color_bloc/select_card_color_bloc.dart';
+import '../../presentation/blocs/text_field_bloc/text_field_bloc.dart';
 import 'custom_text_field_widget.dart';
 
 class ExtraInfoFieldsWidget extends StatelessWidget {

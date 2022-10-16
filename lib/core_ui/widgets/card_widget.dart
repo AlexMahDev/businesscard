@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import '../../data/models/card_model.dart';
+
+import '../../domain/models/card_model.dart';
 
 class CardWidget extends StatelessWidget {
   final CardModel card;

@@ -1,10 +1,10 @@
-import 'package:businesscard/blocs/card_info_bloc/card_info_bloc.dart';
-import 'package:businesscard/blocs/card_page_bloc/card_page_bloc.dart';
-import 'package:businesscard/presentation/welcome_page.dart';
+import 'package:businesscard/presentation/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../data/repositories/dynamic_link_repository.dart';
 import '../blocs/auth_bloc/auth_bloc.dart';
-import '../data/repositories/dynamic_link_repository.dart';
+import '../blocs/card_info_bloc/card_info_bloc.dart';
+import '../blocs/card_page_bloc/card_page_bloc.dart';
 import 'cards_page.dart';
 import 'contacts_page.dart';
 

@@ -1,11 +1,11 @@
-import 'package:businesscard/presentation/widgets/card_is_empty_widget.dart';
-import 'package:businesscard/presentation/widgets/card_page_view_widget.dart';
-import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
-import 'package:businesscard/presentation/widgets/custom_error_widget.dart';
-import 'package:businesscard/presentation/widgets/page_selector_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core_ui/widgets/card_is_empty_widget.dart';
+import '../../core_ui/widgets/card_page_view_widget.dart';
+import '../../core_ui/widgets/custom_app_bar.dart';
+import '../../core_ui/widgets/custom_error_widget.dart';
+import '../../core_ui/widgets/page_selector_widget.dart';
 import '../blocs/auth_bloc/auth_bloc.dart';
 import '../blocs/card_info_bloc/card_info_bloc.dart';
 import '../blocs/card_page_bloc/card_page_bloc.dart';

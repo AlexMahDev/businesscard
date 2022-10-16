@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:businesscard/data/models/contact_model.dart';
 import 'package:businesscard/data/repositories/dynamic_link_repository.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-import '../../data/models/card_model.dart';
-import '../../data/repositories/contact_repository.dart';
+import '../../../data/repositories/contact_repository.dart';
+import '../../../domain/models/card_model.dart';
+import '../../../domain/models/contact_model.dart';
+
 
 part 'contact_event.dart';
 part 'contact_state.dart';

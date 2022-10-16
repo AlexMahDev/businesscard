@@ -1,9 +1,8 @@
 import 'package:businesscard/data/repositories/card_repository.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../presentation/contact_info_page.dart';
-import '../models/card_model.dart';
+import '../../domain/models/card_model.dart';
+import '../../presentation/pages/contact_info_page.dart';
 
 class DynamicLinkRepository {
 

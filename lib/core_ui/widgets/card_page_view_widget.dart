@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/card_page_bloc/card_page_bloc.dart';
-import '../../data/models/card_model.dart';
+import '../../domain/models/card_model.dart';
+import '../../presentation/blocs/card_page_bloc/card_page_bloc.dart';
 import 'card_widget.dart';
 
 

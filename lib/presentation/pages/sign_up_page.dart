@@ -1,11 +1,12 @@
-import 'package:businesscard/presentation/main_page.dart';
-import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
-import 'package:businesscard/presentation/widgets/custom_text_field_widget.dart';
-import 'package:businesscard/presentation/widgets/loading_overlay_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core_ui/widgets/custom_app_bar.dart';
+import '../../core_ui/widgets/custom_text_field_widget.dart';
+import '../../core_ui/widgets/loading_overlay_widget.dart';
 import '../blocs/auth_bloc/auth_bloc.dart';
+import 'main_page.dart';
+
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);

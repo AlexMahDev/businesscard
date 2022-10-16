@@ -1,5 +1,6 @@
-import 'package:businesscard/data/models/card_model.dart';
 
+
+import 'card_model.dart';
 
 class ContactModel{
 

@@ -1,24 +1,23 @@
-
-import 'package:businesscard/blocs/card_info_bloc/card_info_bloc.dart';
-import 'package:businesscard/blocs/full_name_dropdown_bloc/full_name_dropdown_bloc.dart';
-import 'package:businesscard/blocs/image_bloc/image_bloc.dart';
-import 'package:businesscard/blocs/select_card_color_bloc/select_card_color_bloc.dart';
-import 'package:businesscard/blocs/text_field_bloc/text_field_bloc.dart';
 import 'package:businesscard/data/repositories/storage_repository.dart';
-import 'package:businesscard/presentation/widgets/choose_color_widget.dart';
-import 'package:businesscard/presentation/widgets/custom_app_bar.dart';
-import 'package:businesscard/presentation/widgets/custom_text_field_widget.dart';
-import 'package:businesscard/presentation/widgets/extra_info_fields_widget.dart';
-import 'package:businesscard/presentation/widgets/extra_info_footer_widget.dart';
-import 'package:businesscard/presentation/widgets/general_info_fields_widget.dart';
-import 'package:businesscard/presentation/widgets/image_section_widget.dart';
-import 'package:businesscard/presentation/widgets/loading_overlay_widget.dart';
-import 'package:businesscard/presentation/widgets/tap_field_below_widget.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../data/models/card_model.dart';
+import '../../core_ui/widgets/choose_color_widget.dart';
+import '../../core_ui/widgets/custom_app_bar.dart';
+import '../../core_ui/widgets/custom_text_field_widget.dart';
+import '../../core_ui/widgets/extra_info_fields_widget.dart';
+import '../../core_ui/widgets/extra_info_footer_widget.dart';
+import '../../core_ui/widgets/general_info_fields_widget.dart';
+import '../../core_ui/widgets/image_section_widget.dart';
+import '../../core_ui/widgets/loading_overlay_widget.dart';
+import '../../core_ui/widgets/tap_field_below_widget.dart';
+import '../../domain/models/card_model.dart';
+import '../blocs/card_info_bloc/card_info_bloc.dart';
+import '../blocs/full_name_dropdown_bloc/full_name_dropdown_bloc.dart';
+import '../blocs/image_bloc/image_bloc.dart';
+import '../blocs/select_card_color_bloc/select_card_color_bloc.dart';
+import '../blocs/text_field_bloc/text_field_bloc.dart';
+
 
 class CreateCardPage extends StatefulWidget {
   const CreateCardPage({Key? key}) : super(key: key);

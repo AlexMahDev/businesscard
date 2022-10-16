@@ -1,12 +1,11 @@
-import 'package:businesscard/presentation/widgets/custom_error_widget.dart';
-import 'package:businesscard/presentation/widgets/custom_text_field_widget.dart';
-import 'package:businesscard/presentation/widgets/loading_overlay_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../core_ui/widgets/custom_error_widget.dart';
+import '../../core_ui/widgets/custom_text_field_widget.dart';
+import '../../core_ui/widgets/loading_overlay_widget.dart';
+import '../../domain/models/card_model.dart';
+import '../../domain/models/contact_model.dart';
 import '../blocs/contact_bloc/contact_bloc.dart';
-import '../data/models/card_model.dart';
-import '../data/models/contact_model.dart';
 import 'contact_info_page.dart';
 
 class ContactsPage extends StatefulWidget {

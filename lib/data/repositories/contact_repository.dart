@@ -1,10 +1,10 @@
 
-
-import 'package:businesscard/data/models/card_model.dart';
-import 'package:businesscard/data/models/contact_model.dart';
 import 'package:businesscard/data/repositories/card_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../domain/models/card_model.dart';
+import '../../domain/models/contact_model.dart';
 
 class ContactRepository {
 

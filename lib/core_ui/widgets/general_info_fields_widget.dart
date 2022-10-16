@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../blocs/full_name_dropdown_bloc/full_name_dropdown_bloc.dart';
+import '../../presentation/blocs/full_name_dropdown_bloc/full_name_dropdown_bloc.dart';
 import 'custom_text_field_widget.dart';
 
 class GeneralInfoFieldsWidget extends StatelessWidget {

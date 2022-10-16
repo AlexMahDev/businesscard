@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/card_info_bloc/card_info_bloc.dart';
-import '../create_card_page.dart';
+import '../../presentation/blocs/card_info_bloc/card_info_bloc.dart';
+import '../../presentation/pages/create_card_page.dart';
+
+
 
 
 class CardIsEmptyWidget extends StatelessWidget {
