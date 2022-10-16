@@ -59,43 +59,46 @@ class MyApp extends StatelessWidget {
             create: (context) => ContactBloc(contactRepository: RepositoryProvider.of<ContactRepository>(context))..add(GetContactEvent()),
           ),
         ],
-        child: MaterialApp(
-          theme: ThemeData(
-            primarySwatch: Colors.red,
-            scaffoldBackgroundColor: Colors.white,
+        child: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: MaterialApp(
+            theme: ThemeData(
+              primarySwatch: Colors.red,
+              scaffoldBackgroundColor: Colors.white,
 
-            //primaryColor: Colors.redAccent,
-            fontFamily: 'OpenSans',
-            appBarTheme: AppBarTheme(
-              centerTitle: true,
-              titleTextStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-              iconTheme: IconThemeData(color: Colors.redAccent, size: 30),
-              foregroundColor: Colors.black, //<-- SEE HERE
-              //titleTextStyle: TextStyle()
+              //primaryColor: Colors.redAccent,
+              fontFamily: 'OpenSans',
+              appBarTheme: AppBarTheme(
+                centerTitle: true,
+                titleTextStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+                iconTheme: IconThemeData(color: Colors.redAccent, size: 30),
+                foregroundColor: Colors.black, //<-- SEE HERE
+                //titleTextStyle: TextStyle()
+              ),
             ),
-          ),
-          title: 'BCard',
-          home: StreamBuilder<User?>(
-              stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (context, snapshot) {
-                // If the snapshot has user data, then they're already signed in. So Navigating to the Dashboard.
-                if (snapshot.hasData) {
-                  //BlocProvider.of<CardInfoBloc>(context).add(GetCardInfoEvent());
-                  return MainPageNavigationBar();
+            title: 'BCard',
+            home: StreamBuilder<User?>(
+                stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (context, snapshot) {
+                  // If the snapshot has user data, then they're already signed in. So Navigating to the Dashboard.
+                  if (snapshot.hasData) {
+                    //BlocProvider.of<CardInfoBloc>(context).add(GetCardInfoEvent());
+                    return MainPageNavigationBar();
 
-                  //   BlocProvider<CardInfoBloc>.value(
-                  //   value: BlocProvider.of<CardInfoBloc>(context)
-                  //     ..add(GetCardInfoEvent()),
-                  //   child: CustomBottomNavigationBar(),
-                  // );
-                }
-                // Otherwise, they're not signed in. Show the sign in page.
-                return WelcomePage();
-              }),
-          //home: const CustomBottomNavigationBar()
+                    //   BlocProvider<CardInfoBloc>.value(
+                    //   value: BlocProvider.of<CardInfoBloc>(context)
+                    //     ..add(GetCardInfoEvent()),
+                    //   child: CustomBottomNavigationBar(),
+                    // );
+                  }
+                  // Otherwise, they're not signed in. Show the sign in page.
+                  return WelcomePage();
+                }),
+            //home: const CustomBottomNavigationBar()
+          ),
         ),
       ),
     );
