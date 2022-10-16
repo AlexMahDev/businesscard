@@ -6,11 +6,11 @@ import '../../presentation/pages/contact_info_page.dart';
 
 class DynamicLinkRepository {
 
+  bool isOpening = false;
 
   Future<void> retrieveDynamicLink(BuildContext context) async {
 
     final navigator = Navigator.of(context);
-    bool isOpening = false;
 
     try {
       final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
