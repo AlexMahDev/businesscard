@@ -15,22 +15,8 @@ import 'cards_page.dart';
 import 'contact_info_page.dart';
 import 'contacts_page.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
-
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-
-  late final CardPageBloc cardPageBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    cardPageBloc = CardPageBloc();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +41,14 @@ class _MainPageState extends State<MainPage> {
         child: MultiBlocProvider(
           providers: [
             BlocProvider<CardPageBloc>(
-              create: (context) => cardPageBloc,
+              create: (context) => CardPageBloc(),
             ),
             BlocProvider<CardInfoBloc>(
               create: (context) =>
               CardInfoBloc(
                   cardRepository: RepositoryProvider.of<CardRepository>(
                       context),
-                  cardPageBloc: cardPageBloc)
+                  cardPageBloc: BlocProvider.of<CardPageBloc>(context))
                 ..add(GetCardInfoEvent()),
             ),
             BlocProvider<ContactBloc>(
