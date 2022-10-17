@@ -17,42 +17,48 @@ class PageSelectorWidget extends StatelessWidget {
         return Container(
           height: 80,
           color: Colors.white.withOpacity(0.6),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    for (int cardNumber = 0;
-                    cardNumber < cards.length;
-                    cardNumber++)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 5.0),
-                        child: Container(
-                          width: 10.0,
-                          height: 10.0,
-                          decoration: BoxDecoration(
-                            color: cardNumber != cardPageState
-                                ? Colors.black
-                                : Color(cards[cardPageState]
-                                .settings
-                                .cardColor),
-                            shape: BoxShape.circle,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            child: Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (int cardNumber = 0;
+                        cardNumber < cards.length;
+                        cardNumber++)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5.0),
+                            child: Container(
+                              width: 10.0,
+                              height: 10.0,
+                              decoration: BoxDecoration(
+                                color: cardNumber != cardPageState
+                                    ? Colors.black
+                                    : Color(cards[cardPageState]
+                                    .settings
+                                    .cardColor),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                  ],
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.0),
-                child: ShareCardButton(qrLink: cards[cardPageState].qrLink,
+                SizedBox(
+                  width: 15,
+                ),
+                ShareCardButton(qrLink: cards[cardPageState].qrLink,
                     color: cards[cardPageState].settings
-                        .cardColor),
-              )
-            ],
+                        .cardColor)
+              ],
+            ),
           ),
         );
       },
