@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../../domain/models/card_model.dart';
 import 'dynamic_link_repository.dart';
 

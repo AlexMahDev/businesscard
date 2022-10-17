@@ -55,11 +55,6 @@ class WelcomePage extends StatelessWidget {
                           Navigator.of(context).push(MaterialPageRoute (
                             builder: (BuildContext context) => SignUpPage(),
                           ));
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (BuildContext context) => const AuthPage(),
-                          //   ),
-                          // );
                         },
                         child: Container(
                           height: 80,

@@ -20,7 +20,7 @@ class DynamicLinkRepository {
       }
       FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) async {
 
-        //FIXED BUG WITH FIREBASE: FirebaseDynamicLinks fired multiple times
+        // TODO: FIXED BUG WITH FIREBASE: FirebaseDynamicLinks fired multiple times
         if (isOpening == false){
           isOpening = true;
           await handleDynamicLink(navigator, dynamicLinkData.link);
@@ -28,7 +28,7 @@ class DynamicLinkRepository {
         }
 
       }).onError((error) {
-        // Handle errors
+
       });
     } catch (_) {}
 

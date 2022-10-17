@@ -1,7 +1,5 @@
 import 'package:businesscard/domain/models/text_field_model.dart';
 
-import 'card_model.dart';
-
 class ExtraInfoModel {
 
   final List<TextFieldModel> listOfFields;

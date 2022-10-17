@@ -24,7 +24,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final CardPageBloc cardPageBloc = CardPageBloc();
@@ -65,8 +64,6 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.red,
               scaffoldBackgroundColor: Colors.white,
-
-              //primaryColor: Colors.redAccent,
               fontFamily: 'OpenSans',
               appBarTheme: AppBarTheme(
                 centerTitle: true,
@@ -75,29 +72,18 @@ class MyApp extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
                 iconTheme: IconThemeData(color: Colors.redAccent, size: 30),
-                foregroundColor: Colors.black, //<-- SEE HERE
-                //titleTextStyle: TextStyle()
+                foregroundColor: Colors.black,
               ),
             ),
             title: 'BCard',
             home: StreamBuilder<User?>(
                 stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (context, snapshot) {
-                  // If the snapshot has user data, then they're already signed in. So Navigating to the Dashboard.
                   if (snapshot.hasData) {
-                    //BlocProvider.of<CardInfoBloc>(context).add(GetCardInfoEvent());
                     return MainPageNavigationBar();
-
-                    //   BlocProvider<CardInfoBloc>.value(
-                    //   value: BlocProvider.of<CardInfoBloc>(context)
-                    //     ..add(GetCardInfoEvent()),
-                    //   child: CustomBottomNavigationBar(),
-                    // );
                   }
-                  // Otherwise, they're not signed in. Show the sign in page.
                   return WelcomePage();
                 }),
-            //home: const CustomBottomNavigationBar()
           ),
         ),
       ),

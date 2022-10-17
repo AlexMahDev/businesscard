@@ -54,7 +54,6 @@ class ContactInfoPage extends StatelessWidget {
             ],
           ),
           body: CardWidget(card: card)
-        //floatingActionButton: const CustomFloatActionButton(), // This trailing comma makes auto-formatting nicer for build methods.
       ),
     );
   }

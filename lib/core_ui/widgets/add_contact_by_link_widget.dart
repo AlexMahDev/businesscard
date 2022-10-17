@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../domain/models/contact_model.dart';
 import '../../presentation/blocs/contact_bloc/contact_bloc.dart';
 import 'custom_text_field_widget.dart';
@@ -40,7 +39,6 @@ class _AddContactByLinkWidgetState extends State<AddContactByLinkWidget> {
         title: Text("Add contact"),
         content: Container(
           width: 400,
-          //constraints: BoxConstraints(minWidth: 500, maxWidth: 600),
           height: 120,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -246,7 +246,6 @@ class _CreateCardPageState extends State<CreateCardPage> {
                       ),
                     )
                   ],
-                  //icon: Icon(Icons.menu),
                   offset: const Offset(-15, 60),
                 ),
 
@@ -256,7 +255,6 @@ class _CreateCardPageState extends State<CreateCardPage> {
               key: _validation,
               child: SingleChildScrollView(
                 child: Column(
-                  //crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -332,8 +330,6 @@ class _CreateCardPageState extends State<CreateCardPage> {
                           hintText: 'Headline', controller: headLine),
                     ),
 
-
-                    //DYNAMIC TEXT FIELDS
                     ExtraInfoFieldsWidget(controllerMap: _controllerMap),
 
                     TapFieldBelowWidget(),

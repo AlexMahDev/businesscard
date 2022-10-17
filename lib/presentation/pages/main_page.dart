@@ -45,7 +45,6 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is UnAuthenticated) {
-          // Navigate to the sign in screen when the user Signs Out
           Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => WelcomePage()),
             (route) => false,
@@ -53,7 +52,6 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
         }
       },
       child: Scaffold(
-        //appBar: const CustomAppBar(),
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),

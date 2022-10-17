@@ -33,11 +33,3 @@ class DeleteCardEvent extends CardInfoEvent {
   DeleteCardEvent(this.cards, this.cardId);
 
 }
-
-// class AddExtraInfoEvent extends CardInfoEvent {
-//
-//   final List<CardModel> cards;
-//
-//   AddExtraInfoEvent(this.cards);
-//
-// }

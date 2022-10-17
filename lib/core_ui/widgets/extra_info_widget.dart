@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../presentation/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 
 
@@ -26,7 +25,6 @@ class ExtraInfoWidget extends StatelessWidget {
         width: 90,
         height: 100,
         child: Column(
-          //mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             CircleAvatar(
                 radius: 20,

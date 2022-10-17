@@ -1,6 +1,4 @@
-
 import 'package:businesscard/domain/models/settings_model.dart';
-
 import 'extra_info_model.dart';
 import 'general_info_model.dart';
 

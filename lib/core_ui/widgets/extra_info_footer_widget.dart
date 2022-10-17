@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../presentation/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import '../../presentation/blocs/text_field_bloc/text_field_bloc.dart';
 import 'extra_info_widget.dart';
@@ -22,7 +21,6 @@ class ExtraInfoFooterWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 35, vertical: 30),
           color: Color(state).withOpacity(0.2),
           child: Column(
-            //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

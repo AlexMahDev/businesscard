@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:businesscard/data/repositories/dynamic_link_repository.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';

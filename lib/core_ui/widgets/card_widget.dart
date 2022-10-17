@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-
 import '../../domain/models/card_model.dart';
 import 'extra_text_widget.dart';
 import 'general_text_widget.dart';
@@ -150,7 +147,6 @@ class CardWidget extends StatelessWidget {
             shrinkWrap: true,
             padding: EdgeInsets.symmetric(horizontal: 15),
             itemCount: card.extraInfo.listOfFields.length,
-            //padding: EdgeInsets.only(top: 15),
             itemBuilder: (BuildContext context, int index) {
               return ExtraTextWidget(
                   label: getHintText(card.extraInfo.listOfFields[index].key),

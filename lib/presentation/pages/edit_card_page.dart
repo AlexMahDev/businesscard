@@ -293,7 +293,6 @@ class _EditCardPageState extends State<EditCardPage> {
                         ),
                       ),
                     ],
-                    //icon: Icon(Icons.menu),
                     offset: const Offset(-15, 60),
                   ),
 
@@ -303,7 +302,6 @@ class _EditCardPageState extends State<EditCardPage> {
                 key: _validation,
                 child: SingleChildScrollView(
                   child: Column(
-                    //crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -312,10 +310,6 @@ class _EditCardPageState extends State<EditCardPage> {
                           controller: cardTitle,
                         ),
                       ),
-
-                      // SizedBox(
-                      //   height: 20,
-                      // ),
 
                       ChooseColorWidget(),
 
@@ -383,8 +377,6 @@ class _EditCardPageState extends State<EditCardPage> {
                             hintText: 'Headline', controller: headLine),
                       ),
 
-
-                      //DYNAMIC TEXT FIELDS
                       ExtraInfoFieldsWidget(controllerMap: _controllerMap),
 
                       TapFieldBelowWidget(),
