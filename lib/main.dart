@@ -26,41 +26,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CardPageBloc cardPageBloc = CardPageBloc();
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider(
-          create: (context) => AuthRepository(),
-        ),
-        RepositoryProvider(
-          create: (context) => CardRepository(),
-        ),
-        RepositoryProvider(
-          create: (context) => ContactRepository(),
-        ),
-      ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<AuthBloc>(
-            create: (context) => AuthBloc(
-              authRepository: RepositoryProvider.of<AuthRepository>(context),
+    // final CardPageBloc cardPageBloc = CardPageBloc();
+    return RepositoryProvider(
+      create: (context) => AuthRepository(),
+      child: BlocProvider<AuthBloc>(
+        create: (context) =>
+            AuthBloc(
+              authRepository: RepositoryProvider.of<AuthRepository>(
+                  context),
             ),
-          ),
-          BlocProvider<CardPageBloc>(
-            create: (context) => cardPageBloc,
-          ),
-          BlocProvider<CardInfoBloc>(
-            create: (context) => CardInfoBloc(
-                cardRepository: RepositoryProvider.of<CardRepository>(context),
-                cardPageBloc: cardPageBloc),
-          ),
-          BlocProvider<ContactBloc>(
-            create: (context) => ContactBloc(
-                contactRepository:
-                    RepositoryProvider.of<ContactRepository>(context))
-              ..add(GetContactEvent()),
-          ),
-        ],
         child: GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: MaterialApp(
@@ -83,7 +57,8 @@ class MyApp extends StatelessWidget {
                 stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return const MainPageNavigationBar();
+                    return const MainPage();
+                    //return const MainPageNavigationBar();
                   }
                   return const WelcomePage();
                 }),

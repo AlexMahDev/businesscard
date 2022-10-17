@@ -60,13 +60,21 @@ class _ContactsPageState extends State<ContactsPage> {
                       showDialog(
                           context: context,
                           builder: (ctx) =>
-                              AddContactByLinkWidget(contacts: contacts));
-                    } else if (contactState is ContactSearchState){
+                              BlocProvider.value(
+                                value: contactBloc,
+                                child: AddContactByLinkWidget(
+                                    contacts: contacts),
+                              ));
+                    } else if (contactState is ContactSearchState) {
                       contacts = contactState.contacts;
                       showDialog(
                           context: context,
                           builder: (ctx) =>
-                              AddContactByLinkWidget(contacts: contacts));
+                              BlocProvider.value(
+                                value: contactBloc,
+                                child: AddContactByLinkWidget(
+                                    contacts: contacts),
+                              ));
                     }
                   },
                   icon: const Icon(Icons.add))
@@ -92,7 +100,7 @@ class _ContactsPageState extends State<ContactsPage> {
                             border: InputBorder.none),
                         onChanged: (name) {
                           final contactBloc =
-                              BlocProvider.of<ContactBloc>(context);
+                          BlocProvider.of<ContactBloc>(context);
                           final contactState = contactBloc.state;
                           if (contactState is ContactLoadedState) {
                             contactBloc.add(GetContactByNameEvent(
@@ -126,9 +134,14 @@ class _ContactsPageState extends State<ContactsPage> {
               }
 
               if (state is SearchLinkSuccessState) {
+                final contactBloc = BlocProvider.of<ContactBloc>(context);
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) =>
-                      ContactInfoPage(card: state.card, isNewCard: true),
+                      BlocProvider.value(
+                        value: contactBloc,
+                        child: ContactInfoPage(
+                            card: state.card, isNewCard: true),
+                      ),
                 ));
               }
 
@@ -169,23 +182,23 @@ class _ContactsPageState extends State<ContactsPage> {
                 if (state is ContactLoadedState) {
                   return SliverList(
                       delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return ContactWidget(
-                          card: state.contacts[index].cardModel);
-                    },
-                    childCount: state.contacts.length,
-                  ));
+                            (context, index) {
+                          return ContactWidget(
+                              card: state.contacts[index].cardModel);
+                        },
+                        childCount: state.contacts.length,
+                      ));
                 }
 
                 if (state is ContactSearchState) {
                   return SliverList(
                       delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return ContactWidget(
-                          card: state.foundContacts[index].cardModel);
-                    },
-                    childCount: state.foundContacts.length,
-                  ));
+                            (context, index) {
+                          return ContactWidget(
+                              card: state.foundContacts[index].cardModel);
+                        },
+                        childCount: state.foundContacts.length,
+                      ));
                 }
                 if (state is ContactErrorState) {
                   return SliverFillRemaining(

@@ -5,30 +5,30 @@ import '../../domain/models/card_model.dart';
 import '../../presentation/pages/contact_info_page.dart';
 
 class DynamicLinkRepository {
+
   bool isOpening = false;
 
-  Future<void> retrieveDynamicLink(BuildContext context) async {
-    final navigator = Navigator.of(context);
+  Future<CardModel?> retrieveDynamicLink() async {
+    //final navigator = Navigator.of(context);
+
+    CardModel? card;
 
     try {
       final PendingDynamicLinkData? data =
           await FirebaseDynamicLinks.instance.getInitialLink();
       if (data != null) {
         final Uri deepLink = data.link;
-        handleDynamicLink(navigator, deepLink);
+        card = await handleDynamicLink(deepLink);
       }
-      FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) async {
-        // TODO: FIXED BUG WITH FIREBASE: FirebaseDynamicLinks fired multiple times
-        if (isOpening == false) {
-          isOpening = true;
-          await handleDynamicLink(navigator, dynamicLinkData.link);
-          isOpening = false;
-        }
-      }).onError((error) {});
     } catch (_) {}
+
+    return card;
+
   }
 
-  Future<void> handleDynamicLink(NavigatorState navigator, Uri url) async {
+
+
+  Future<CardModel?> handleDynamicLink(Uri url) async {
     List<String> separatedString = [];
     separatedString.addAll(url.path.split('/'));
     if (separatedString.length == 3) {
@@ -38,13 +38,15 @@ class DynamicLinkRepository {
       try {
         final CardModel? card = await CardRepository().getCard(uid, cardId);
         if (card != null) {
-          navigator.push(MaterialPageRoute(
-            builder: (BuildContext context) =>
-                ContactInfoPage(card: card, isNewCard: true),
-          ));
+          return card;
+          // navigator.push(MaterialPageRoute(
+          //   builder: (BuildContext context) =>
+          //       ContactInfoPage(card: card, isNewCard: true),
+          // ));
         }
       } catch (_) {}
     }
+    return null;
   }
 
   Future<CardModel?> handleDynamicLinkManual(Uri url) async {

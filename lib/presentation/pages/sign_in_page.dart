@@ -56,7 +56,7 @@ class _SignInPageState extends State<SignInPage> {
           if (state is Authenticated) {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                    builder: (context) => const MainPageNavigationBar()),
+                    builder: (context) => const MainPage()),
                 (route) => false);
           }
           if (state is AuthError) {
