@@ -43,6 +43,7 @@ class ContactInfoPage extends StatelessWidget {
                   icon: const Icon(Icons.save_alt),
                   splashRadius: 20,
                   onPressed: () {
+                    ScaffoldMessenger.of(context).removeCurrentSnackBar();
                     BlocProvider.of<ContactBloc>(context)
                         .add(SaveContactEvent(card));
                   },

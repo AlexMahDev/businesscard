@@ -74,7 +74,7 @@ class _AddContactByLinkWidgetState extends State<AddContactByLinkWidget> {
                           urlController.text, widget.contacts));
                 }
               },
-              child: const Text('Add', style: TextStyle(fontSize: 18))),
+              child: const Text('Open', style: TextStyle(fontSize: 18))),
           TextButton(
               onPressed: () {
                 Navigator.pop(context);
