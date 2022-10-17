@@ -19,7 +19,7 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
               height: 110,
               decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.9),
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -30,13 +30,13 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                         imageBloc.add(UploadImageEvent(true));
                         Navigator.pop(context);
                       },
-                      child: Center(
+                      child: const Center(
                           child: Text('Select from photo library',
                               style: TextStyle(
                                   color: Colors.redAccent, fontSize: 18))),
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     height: 1,
                   ),
                   Expanded(
@@ -46,7 +46,7 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                         imageBloc.add(UploadImageEvent(false));
                         Navigator.pop(context);
                       },
-                      child: Center(
+                      child: const Center(
                           child: Text('Take photo',
                               style: TextStyle(
                                   color: Colors.redAccent, fontSize: 18))),
@@ -55,7 +55,7 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             GestureDetector(
@@ -64,10 +64,10 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
               },
               child: Container(
                 height: 55,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Center(
+                child: const Center(
                     child: Text('Cancel',
                         style: TextStyle(
                             color: Colors.redAccent,

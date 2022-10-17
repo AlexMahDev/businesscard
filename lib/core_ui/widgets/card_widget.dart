@@ -29,11 +29,11 @@ class CardWidget extends StatelessWidget {
 
   Widget getIcon(String key) {
     if (key == 'phoneNumber') {
-      return Icon(Icons.phone, color: Colors.white);
+      return const Icon(Icons.phone, color: Colors.white);
     } else if (key == 'email') {
-      return Icon(Icons.email, color: Colors.white);
+      return const Icon(Icons.email, color: Colors.white);
     } else if (key == 'link') {
-      return Icon(Icons.link, color: Colors.white);
+      return const Icon(Icons.link, color: Colors.white);
     } else if (key == 'linkedIn') {
       return Image.asset('assets/images/icons/linkedin-icon.png',
           color: Colors.white, height: 20);
@@ -41,9 +41,9 @@ class CardWidget extends StatelessWidget {
       return Image.asset('assets/images/icons/github-icon.png',
           color: Colors.white, height: 20);
     } else if (key == 'telegram') {
-      return Icon(Icons.telegram, color: Colors.white);
+      return const Icon(Icons.telegram, color: Colors.white);
     } else {
-      return Icon(Icons.add_circle_outline_rounded, color: Colors.white);
+      return const Icon(Icons.add_circle_outline_rounded, color: Colors.white);
     }
   }
 
@@ -65,7 +65,7 @@ class CardWidget extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Stack(
@@ -109,7 +109,7 @@ class CardWidget extends StatelessWidget {
                 )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           Padding(
@@ -137,13 +137,13 @@ class CardWidget extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           ListView.separated(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             itemCount: card.extraInfo.listOfFields.length,
             itemBuilder: (BuildContext context, int index) {
               return ExtraTextWidget(
@@ -153,9 +153,9 @@ class CardWidget extends StatelessWidget {
                   icon: getIcon(card.extraInfo.listOfFields[index].key));
             },
             separatorBuilder: (BuildContext context, int index) =>
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
           ),
-          SizedBox(
+          const SizedBox(
             height: 100,
           )
         ],

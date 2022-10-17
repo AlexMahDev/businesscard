@@ -19,7 +19,7 @@ class WelcomePage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Expanded(
@@ -27,16 +27,16 @@ class WelcomePage extends StatelessWidget {
                       'assets/images/logo/BCard-logo.png',
                     ),
                   ),
-                  Text("Welcome to BCard.",
+                  const Text("Welcome to BCard.",
                       style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                       textAlign: TextAlign.center),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
-                  Text("Let's get your new BCard set up",
+                  const Text("Let's get your new BCard set up",
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.white,
@@ -52,7 +52,7 @@ class WelcomePage extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => SignUpPage(),
+                        builder: (BuildContext context) => const SignUpPage(),
                       ));
                     },
                     child: Container(
@@ -60,7 +60,7 @@ class WelcomePage extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15)),
-                      child: Center(
+                      child: const Center(
                         child: Text("Create your card",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -69,16 +69,16 @@ class WelcomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => SignInPage(),
+                          builder: (BuildContext context) => const SignInPage(),
                         ));
                       },
-                      child: Text("Log in with existing account",
+                      child: const Text("Log in with existing account",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,

@@ -17,7 +17,7 @@ class PageSelectorWidget extends StatelessWidget {
           height: 80,
           color: Colors.white.withOpacity(0.6),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Row(
               children: [
                 Expanded(
@@ -49,7 +49,7 @@ class PageSelectorWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 ShareCardButton(

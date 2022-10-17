@@ -23,8 +23,8 @@ class CustomBottomSheet extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   splashRadius: 20,
-                  icon: Icon(Icons.close, color: Colors.white, size: 35)),
-              Center(
+                  icon: const Icon(Icons.close, color: Colors.white, size: 35)),
+              const Center(
                   child: Text('My Card',
                       style: TextStyle(color: Colors.white, fontSize: 25))),
               IconButton(
@@ -34,7 +34,8 @@ class CustomBottomSheet extends StatelessWidget {
                         'You can find my BCard following the link: $qrLink');
                   },
                   splashRadius: 20,
-                  icon: Icon(Icons.ios_share, color: Colors.white, size: 30)),
+                  icon: const Icon(Icons.ios_share,
+                      color: Colors.white, size: 30)),
             ],
           ),
         ),
@@ -44,8 +45,8 @@ class CustomBottomSheet extends StatelessWidget {
             children: [
               Container(
                   height: 250,
-                  margin: EdgeInsets.all(40),
-                  decoration: BoxDecoration(
+                  margin: const EdgeInsets.all(40),
+                  decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       color: Colors.white),
                   child: QrImage(
@@ -57,8 +58,8 @@ class CustomBottomSheet extends StatelessWidget {
                       return Container();
                     },
                   )),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                     'Point your camera at the QR code to receive the card!',
                     style: TextStyle(
@@ -70,7 +71,7 @@ class CustomBottomSheet extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 80,
         )
       ],

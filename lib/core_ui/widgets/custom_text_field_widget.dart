@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import '../../presentation/blocs/text_clear_button_bloc/text_clear_button_bloc.dart';
@@ -72,12 +71,12 @@ class CustomTextField extends StatelessWidget {
                               BlocProvider.of<TextClearButtonBloc>(context)
                                   .add(ClearButtonDisableEvent());
                             },
-                            icon: Icon(Icons.highlight_remove_outlined),
+                            icon: const Icon(Icons.highlight_remove_outlined),
                             splashRadius: 20,
                           );
                         }
 
-                        return SizedBox();
+                        return const SizedBox();
                       },
                     ),
                     hintText: hintText,
@@ -99,7 +98,7 @@ class CustomTextField extends StatelessWidget {
               IconButton(
                   splashRadius: 20,
                   onPressed: onTextFieldRemove,
-                  icon: Icon(Icons.remove_circle_outline))
+                  icon: const Icon(Icons.remove_circle_outline))
           ],
         );
       }),

@@ -49,17 +49,17 @@ class GeneralInfoFieldsWidget extends StatelessWidget {
                 Expanded(
                   child: fullName,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 BlocBuilder<FullNameDropdownBloc, FullNameDropdownState>(
                   builder: (context, state) {
                     if (state is FullNameDropdownOpenState) {
-                      return Icon(Icons.keyboard_arrow_up,
+                      return const Icon(Icons.keyboard_arrow_up,
                           size: 50, color: Colors.redAccent);
                     }
                     if (state is FullNameDropdownCloseState) {
-                      return Icon(Icons.keyboard_arrow_down,
+                      return const Icon(Icons.keyboard_arrow_down,
                           size: 50, color: Colors.redAccent);
                     }
 
@@ -77,11 +77,11 @@ class GeneralInfoFieldsWidget extends StatelessWidget {
                   child: Column(
                     children: [
                       firstName,
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       middleName,
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       lastName,
@@ -93,19 +93,19 @@ class GeneralInfoFieldsWidget extends StatelessWidget {
               return Container();
             },
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           jobTitle,
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           department,
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           companyName,
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           headLine

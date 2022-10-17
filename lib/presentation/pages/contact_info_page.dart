@@ -27,11 +27,11 @@ class ContactInfoPage extends StatelessWidget {
 
         if (state is SaveContactSuccessState) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Contact is saved')));
+              .showSnackBar(const SnackBar(content: Text('Contact is saved')));
         }
         if (state is SaveContactErrorState) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Something went wrong :(')));
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Something went wrong :(')));
         }
       },
       child: Scaffold(

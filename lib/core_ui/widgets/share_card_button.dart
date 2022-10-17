@@ -12,15 +12,15 @@ class ShareCardButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
         elevation: 5,
-        extendedPadding: EdgeInsets.symmetric(horizontal: 25),
+        extendedPadding: const EdgeInsets.symmetric(horizontal: 25),
         backgroundColor: Color(color),
-        icon: Icon(Icons.send),
-        label: Text('Send',
+        icon: const Icon(Icons.send),
+        label: const Text('Send',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         onPressed: () {
           showModalBottomSheet(
               backgroundColor: Colors.redAccent,
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)),

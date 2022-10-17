@@ -13,11 +13,11 @@ class CardIsEmptyWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
               "Looks like you don't have a card set up yet! Create a card to get started!",
               style: TextStyle(fontSize: 25),
               textAlign: TextAlign.center),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           GestureDetector(
@@ -26,7 +26,7 @@ class CardIsEmptyWidget extends StatelessWidget {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => BlocProvider.value(
                         value: cardInfoBloc,
-                        child: CreateCardPage(),
+                        child: const CreateCardPage(),
                       )));
             },
             child: Container(
@@ -37,7 +37,7 @@ class CardIsEmptyWidget extends StatelessWidget {
               child: Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Icon(Icons.add, color: Colors.white),
                     SizedBox(
                       width: 20,

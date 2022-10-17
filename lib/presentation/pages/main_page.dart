@@ -44,7 +44,7 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
       listener: (context, state) {
         if (state is UnAuthenticated) {
           Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => WelcomePage()),
+            MaterialPageRoute(builder: (context) => const WelcomePage()),
             (route) => false,
           );
         }

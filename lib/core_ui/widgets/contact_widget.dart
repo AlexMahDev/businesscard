@@ -60,10 +60,11 @@ class ContactWidget extends StatelessWidget {
                     child: ListTile(
                       title: Text(
                           '${card.generalInfo.firstName} ${card.generalInfo.middleName} ${card.generalInfo.lastName}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                       subtitle: Text(getSubTitle(),
-                          style: TextStyle(fontSize: 20, color: Colors.black)),
+                          style: const TextStyle(
+                              fontSize: 20, color: Colors.black)),
                       trailing: PopupMenuButton<int>(
                         icon: const Icon(Icons.more_vert, color: Colors.black),
                         splashRadius: 20,

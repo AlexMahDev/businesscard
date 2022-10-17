@@ -52,14 +52,14 @@ class ImageSectionWidget extends StatelessWidget {
                           builder: (BuildContext context) {
                             return BlocProvider.value(
                               value: imageBloc,
-                              child: ImagePickSourceBottomSheet(),
+                              child: const ImagePickSourceBottomSheet(),
                             );
                           },
                         );
                       },
                       child: Text(
                         state is ImageNetworkLoadedState ? editTitle : addTitle,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.redAccent,
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
@@ -74,7 +74,7 @@ class ImageSectionWidget extends StatelessWidget {
                           },
                           child: Text(
                             removeTitle,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.redAccent,
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold),

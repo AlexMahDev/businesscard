@@ -36,7 +36,7 @@ class ExtraInfoWidget extends StatelessWidget {
                 child: Center(
                     child: Text(title,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 17))))
+                        style: const TextStyle(fontSize: 17))))
           ],
         ),
       ),

@@ -60,7 +60,8 @@ class ExtraTextWidget extends StatelessWidget {
           CircleAvatar(radius: 20, backgroundColor: Color(color), child: icon),
           Expanded(
             child: ListTile(
-              title: Text(value, style: TextStyle(fontWeight: FontWeight.bold)),
+              title: Text(value,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(label),
             ),
           )

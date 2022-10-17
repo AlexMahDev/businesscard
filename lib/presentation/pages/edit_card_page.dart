@@ -155,7 +155,7 @@ class _EditCardPageState extends State<EditCardPage> {
                 if (state is UpdateCardErrorState ||
                     state is DeleteCardErrorState) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Something went wrong :(')));
+                      const SnackBar(content: Text('Something went wrong :(')));
                 }
               },
             ),
@@ -171,7 +171,7 @@ class _EditCardPageState extends State<EditCardPage> {
                 }
                 if (state is ImagePickErrorState) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Something went wrong :(')));
+                      const SnackBar(content: Text('Something went wrong :(')));
                 }
               },
             ),
@@ -188,14 +188,14 @@ class _EditCardPageState extends State<EditCardPage> {
 
                 if (state is ImagePickErrorState) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Something went wrong :(')));
+                      const SnackBar(content: Text('Something went wrong :(')));
                 }
               },
             ),
           ],
           child: Scaffold(
               appBar: CustomAppBar(
-                title: Text('Edit Your Card'),
+                title: const Text('Edit Your Card'),
                 leading: IconButton(
                   icon: const Icon(Icons.check),
                   splashRadius: 20,
@@ -309,13 +309,13 @@ class _EditCardPageState extends State<EditCardPage> {
                           controller: cardTitle,
                         ),
                       ),
-                      ChooseColorWidget(),
+                      const ChooseColorWidget(),
                       ImageSectionWidget(
                           imageBloc: profileImageBloc,
                           addTitle: 'Add Profile Picture',
                           editTitle: 'Edit Profile Picture',
                           removeTitle: 'Remove Profile Picture'),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       ImageSectionWidget(
@@ -371,7 +371,7 @@ class _EditCardPageState extends State<EditCardPage> {
                             hintText: 'Headline', controller: headLine),
                       ),
                       ExtraInfoFieldsWidget(controllerMap: _controllerMap),
-                      TapFieldBelowWidget(),
+                      const TapFieldBelowWidget(),
                       ExtraInfoFooterWidget(controllerMap: _controllerMap)
                     ],
                   ),

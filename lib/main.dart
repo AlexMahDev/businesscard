@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.red,
               scaffoldBackgroundColor: Colors.white,
               fontFamily: 'OpenSans',
-              appBarTheme: AppBarTheme(
+              appBarTheme: const AppBarTheme(
                 centerTitle: true,
                 titleTextStyle: TextStyle(
                     color: Colors.black,
@@ -83,9 +83,9 @@ class MyApp extends StatelessWidget {
                 stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return MainPageNavigationBar();
+                    return const MainPageNavigationBar();
                   }
-                  return WelcomePage();
+                  return const WelcomePage();
                 }),
           ),
         ),

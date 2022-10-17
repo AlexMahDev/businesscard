@@ -7,7 +7,7 @@ class LoadingOverlay {
     if (_overlay == null) {
       _overlay = OverlayEntry(
         // replace with your own layout
-        builder: (context) => ColoredBox(
+        builder: (context) => const ColoredBox(
           color: Color(0x80000000),
           child: Center(
             child: CircularProgressIndicator(

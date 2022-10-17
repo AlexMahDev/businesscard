@@ -49,9 +49,9 @@ class _ContactsPageState extends State<ContactsPage> {
             actions: [
               BlocBuilder<ContactBloc, ContactState>(
                 builder: (context, state) {
-                  if (state is ContactLoadedState)
+                  if (state is ContactLoadedState) {
                     return IconButton(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
                         splashRadius: 20,
                         onPressed: () {
                           showDialog(
@@ -59,7 +59,8 @@ class _ContactsPageState extends State<ContactsPage> {
                               builder: (ctx) => AddContactByLinkWidget(
                                   contacts: state.contacts));
                         },
-                        icon: Icon(Icons.add));
+                        icon: const Icon(Icons.add));
+                  }
 
                   return Container();
                 },
@@ -80,7 +81,7 @@ class _ContactsPageState extends State<ContactsPage> {
                       return TextField(
                         enabled: state is ContactLoadingState ? false : true,
                         controller: searchController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: 'Search',
                             prefixIcon: Icon(Icons.search),
                             border: InputBorder.none),
@@ -121,7 +122,7 @@ class _ContactsPageState extends State<ContactsPage> {
 
               if (state is DelContactErrorState) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Something went wrong :(')));
+                    const SnackBar(content: Text('Something went wrong :(')));
               }
 
               if (state is SearchLinkSuccessState) {
@@ -133,7 +134,7 @@ class _ContactsPageState extends State<ContactsPage> {
 
               if (state is SearchLinkErrorState) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Something went wrong :(')));
+                    const SnackBar(content: Text('Something went wrong :(')));
               }
             },
             child: BlocBuilder<ContactBloc, ContactState>(
@@ -158,7 +159,7 @@ class _ContactsPageState extends State<ContactsPage> {
               },
               builder: (context, state) {
                 if (state is ContactLoadingState) {
-                  return SliverFillRemaining(
+                  return const SliverFillRemaining(
                     child: Center(child: CircularProgressIndicator()),
                   );
                 }

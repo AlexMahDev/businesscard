@@ -14,7 +14,7 @@ class CustomErrorWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset('assets/images/error.png'),
-          Center(
+          const Center(
               child: Text('Tap to refresh...',
                   style: TextStyle(fontSize: 25, color: Colors.grey)))
         ],

@@ -56,7 +56,7 @@ class _SignInPageState extends State<SignInPage> {
           if (state is Authenticated) {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                    builder: (context) => MainPageNavigationBar()),
+                    builder: (context) => const MainPageNavigationBar()),
                 (route) => false);
           }
           if (state is AuthError) {
@@ -74,10 +74,10 @@ class _SignInPageState extends State<SignInPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Welcome back, let's sign in",
+                    const Text("Welcome back, let's sign in",
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold)),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     CustomTextField(
@@ -93,7 +93,7 @@ class _SignInPageState extends State<SignInPage> {
                           }
                           return null;
                         }),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     CustomTextField(
@@ -108,7 +108,7 @@ class _SignInPageState extends State<SignInPage> {
                           }
                           return null;
                         }),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     GestureDetector(
@@ -124,7 +124,7 @@ class _SignInPageState extends State<SignInPage> {
                         decoration: BoxDecoration(
                             color: Colors.redAccent,
                             borderRadius: BorderRadius.circular(15)),
-                        child: Center(
+                        child: const Center(
                           child: Text("Sign In",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,

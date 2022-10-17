@@ -15,7 +15,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
     return BlocBuilder<SelectCardColorBloc, int>(
       builder: (context, state) {
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 35, vertical: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 30),
           color: Color(state).withOpacity(0.2),
           child: Column(
             children: [
@@ -25,7 +25,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                 children: [
                   ExtraInfoWidget(
                       title: 'Phone Number',
-                      icon: Icon(Icons.phone, color: Colors.white),
+                      icon: const Icon(Icons.phone, color: Colors.white),
                       onPressed: () {
                         final textFieldBloc =
                             BlocProvider.of<TextFieldBloc>(context);
@@ -41,7 +41,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                       }),
                   ExtraInfoWidget(
                       title: 'Email',
-                      icon: Icon(Icons.email, color: Colors.white),
+                      icon: const Icon(Icons.email, color: Colors.white),
                       onPressed: () {
                         final textFieldBloc =
                             BlocProvider.of<TextFieldBloc>(context);
@@ -56,7 +56,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                       }),
                   ExtraInfoWidget(
                       title: 'Link',
-                      icon: Icon(Icons.link, color: Colors.white),
+                      icon: const Icon(Icons.link, color: Colors.white),
                       onPressed: () {
                         final textFieldBloc =
                             BlocProvider.of<TextFieldBloc>(context);
@@ -71,7 +71,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                       }),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               Row(
@@ -112,7 +112,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                       }),
                   ExtraInfoWidget(
                       title: 'Telegram',
-                      icon: Icon(Icons.telegram, color: Colors.white),
+                      icon: const Icon(Icons.telegram, color: Colors.white),
                       onPressed: () {
                         final textFieldBloc =
                             BlocProvider.of<TextFieldBloc>(context);

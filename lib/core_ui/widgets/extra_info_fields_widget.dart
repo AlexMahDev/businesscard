@@ -39,11 +39,11 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
 
   Widget getIcon(String key) {
     if (key == 'phoneNumber') {
-      return Icon(Icons.phone, color: Colors.white);
+      return const Icon(Icons.phone, color: Colors.white);
     } else if (key == 'email') {
-      return Icon(Icons.email, color: Colors.white);
+      return const Icon(Icons.email, color: Colors.white);
     } else if (key == 'link') {
-      return Icon(Icons.link, color: Colors.white);
+      return const Icon(Icons.link, color: Colors.white);
     } else if (key == 'linkedIn') {
       return Image.asset('assets/images/icons/linkedin-icon.png',
           color: Colors.white, height: 20);
@@ -51,9 +51,9 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
       return Image.asset('assets/images/icons/github-icon.png',
           color: Colors.white, height: 20);
     } else if (key == 'telegram') {
-      return Icon(Icons.telegram, color: Colors.white);
+      return const Icon(Icons.telegram, color: Colors.white);
     } else {
-      return Icon(Icons.add_circle_outline_rounded, color: Colors.white);
+      return const Icon(Icons.add_circle_outline_rounded, color: Colors.white);
     }
   }
 
@@ -68,7 +68,7 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15.0, vertical: 30),
                 child: ListView.separated(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: controllerMap.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -93,7 +93,7 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
                         });
                   },
                   separatorBuilder: (BuildContext context, int index) =>
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                 ),
               );
             }

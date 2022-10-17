@@ -60,7 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
           if (state is Authenticated) {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                    builder: (context) => MainPageNavigationBar()),
+                    builder: (context) => const MainPageNavigationBar()),
                 (route) => false);
           }
           if (state is AuthError) {
@@ -77,10 +77,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Welcome, let's sign up",
+                  const Text("Welcome, let's sign up",
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   CustomTextField(
@@ -96,7 +96,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         }
                         return null;
                       }),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   CustomTextField(
@@ -111,7 +111,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         }
                         return null;
                       }),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   CustomTextField(
@@ -126,7 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         }
                         return null;
                       }),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   GestureDetector(
@@ -142,7 +142,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       decoration: BoxDecoration(
                           color: Colors.redAccent,
                           borderRadius: BorderRadius.circular(15)),
-                      child: Center(
+                      child: const Center(
                         child: Text("Create your card",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,

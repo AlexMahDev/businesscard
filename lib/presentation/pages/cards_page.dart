@@ -46,7 +46,7 @@ class CardsPage extends StatelessWidget {
                           state.cards[cardPageState].generalInfo.cardTitle);
                     },
                   )
-                : Text('BCard'),
+                : const Text('BCard'),
             actions: [
               if (state is CardInfoLoadedState || state is CardInfoEmptyState)
                 IconButton(
@@ -57,7 +57,7 @@ class CardsPage extends StatelessWidget {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (BuildContext context) => BlocProvider.value(
                               value: cardInfoBloc,
-                              child: CreateCardPage(),
+                              child: const CreateCardPage(),
                             )));
                   },
                 ),
@@ -89,7 +89,7 @@ class CardsPage extends StatelessWidget {
                   child: DrawerHeader(
                     margin: EdgeInsets.zero,
                     padding: EdgeInsets.zero,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.redAccent,
                     ),
                     child: Image.asset(
@@ -100,7 +100,7 @@ class CardsPage extends StatelessWidget {
                 ListTile(
                   textColor: Colors.grey,
                   leading: Image.asset('assets/images/crying.png'),
-                  title: Text('Sign Out',
+                  title: const Text('Sign Out',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   onTap: () {
@@ -113,7 +113,8 @@ class CardsPage extends StatelessWidget {
           body: Column(
             children: [
               if (state is CardInfoLoadingState)
-                Expanded(child: Center(child: CircularProgressIndicator())),
+                const Expanded(
+                    child: Center(child: CircularProgressIndicator())),
               if (state is CardInfoLoadedState)
                 Expanded(
                   child: Stack(
@@ -125,7 +126,7 @@ class CardsPage extends StatelessWidget {
                   ),
                 ),
               if (state is CardInfoEmptyState)
-                Expanded(child: CardIsEmptyWidget()),
+                const Expanded(child: CardIsEmptyWidget()),
               if (state is CardInfoErrorState)
                 Expanded(
                   child: CustomErrorWidget(onTap: () {

@@ -9,11 +9,11 @@ class GeneralTextWidget extends StatelessWidget {
 
   TextStyle getTextStyle() {
     if (label == "fullName") {
-      return TextStyle(fontSize: 28, fontWeight: FontWeight.bold);
+      return const TextStyle(fontSize: 28, fontWeight: FontWeight.bold);
     } else if (label == "headline") {
-      return TextStyle(fontSize: 18, color: Colors.grey);
+      return const TextStyle(fontSize: 18, color: Colors.grey);
     } else {
-      return TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
+      return const TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
     }
   }
 
