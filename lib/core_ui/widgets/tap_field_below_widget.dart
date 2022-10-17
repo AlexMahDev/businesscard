@@ -16,8 +16,7 @@ class TapFieldBelowWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Tap a field below to add it',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20)),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
             SizedBox(
               width: 10,
             ),

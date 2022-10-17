@@ -41,11 +41,11 @@ class CardsPage extends StatelessWidget {
           appBar: CustomAppBar(
             title: state is CardInfoLoadedState
                 ? BlocBuilder<CardPageBloc, int>(
-              builder: (context, cardPageState) {
-                return Text(
-                    state.cards[cardPageState].generalInfo.cardTitle);
-              },
-            )
+                    builder: (context, cardPageState) {
+                      return Text(
+                          state.cards[cardPageState].generalInfo.cardTitle);
+                    },
+                  )
                 : Text('BCard'),
             actions: [
               if (state is CardInfoLoadedState || state is CardInfoEmptyState)
@@ -56,9 +56,9 @@ class CardsPage extends StatelessWidget {
                     final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (BuildContext context) => BlocProvider.value(
-                          value: cardInfoBloc,
-                          child: CreateCardPage(),
-                        )));
+                              value: cardInfoBloc,
+                              child: CreateCardPage(),
+                            )));
                   },
                 ),
               if (state is CardInfoLoadedState)
@@ -72,10 +72,10 @@ class CardsPage extends StatelessWidget {
 
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (BuildContext context) => BlocProvider.value(
-                          value: cardInfoBloc,
-                          child: EditCardPage(
-                              card: state.cards[cardPageBloc.state]),
-                        )));
+                              value: cardInfoBloc,
+                              child: EditCardPage(
+                                  card: state.cards[cardPageBloc.state]),
+                            )));
                   },
                 )
             ],
@@ -95,7 +95,6 @@ class CardsPage extends StatelessWidget {
                     child: Image.asset(
                       'assets/images/logo/BCard-logo_text.png',
                     ),
-
                   ),
                 ),
                 ListTile(
@@ -103,7 +102,7 @@ class CardsPage extends StatelessWidget {
                   leading: Image.asset('assets/images/crying.png'),
                   title: Text('Sign Out',
                       style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   onTap: () {
                     context.read<AuthBloc>().add(SignOutRequested());
                   },

@@ -1,12 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../presentation/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import 'color_widget.dart';
-
-
-
 
 class ChooseColorWidget extends StatelessWidget {
   const ChooseColorWidget({Key? key}) : super(key: key);
@@ -18,8 +14,7 @@ class ChooseColorWidget extends StatelessWidget {
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 10.0, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

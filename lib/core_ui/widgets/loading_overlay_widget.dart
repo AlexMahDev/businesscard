@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class LoadingOverlay {
-
   OverlayEntry? _overlay;
 
   void show(BuildContext context) {

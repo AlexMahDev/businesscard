@@ -11,9 +11,6 @@ class SelectCardColorBloc extends Bloc<SelectCardColorEvent, int> {
   }
 
   _selectColor(SelectCardColorEvent event, Emitter<int> emit) {
-
     emit(event.color);
-
   }
-
 }

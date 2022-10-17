@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '513342553008',
     projectId: 'bcard-f4f4b',
     storageBucket: 'bcard-f4f4b.appspot.com',
-    iosClientId: '513342553008-6ts6ef8huob09ph86rkb61jrs9se61st.apps.googleusercontent.com',
+    iosClientId:
+        '513342553008-6ts6ef8huob09ph86rkb61jrs9se61st.apps.googleusercontent.com',
     iosBundleId: 'by.alexmahdev.bcard',
   );
 }

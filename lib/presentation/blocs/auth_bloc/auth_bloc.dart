@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../data/repositories/auth_repository.dart';
 
-
 part 'auth_event.dart';
 part 'auth_state.dart';
 

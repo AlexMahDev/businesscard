@@ -42,20 +42,23 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(
-            create: (context) =>
-                AuthBloc(
-                  authRepository: RepositoryProvider.of<AuthRepository>(
-                      context),
-                ),
+            create: (context) => AuthBloc(
+              authRepository: RepositoryProvider.of<AuthRepository>(context),
+            ),
           ),
           BlocProvider<CardPageBloc>(
             create: (context) => cardPageBloc,
           ),
           BlocProvider<CardInfoBloc>(
-            create: (context) => CardInfoBloc(cardRepository: RepositoryProvider.of<CardRepository>(context), cardPageBloc: cardPageBloc),
+            create: (context) => CardInfoBloc(
+                cardRepository: RepositoryProvider.of<CardRepository>(context),
+                cardPageBloc: cardPageBloc),
           ),
           BlocProvider<ContactBloc>(
-            create: (context) => ContactBloc(contactRepository: RepositoryProvider.of<ContactRepository>(context))..add(GetContactEvent()),
+            create: (context) => ContactBloc(
+                contactRepository:
+                    RepositoryProvider.of<ContactRepository>(context))
+              ..add(GetContactEvent()),
           ),
         ],
         child: GestureDetector(

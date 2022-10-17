@@ -7,7 +7,6 @@ part 'image_event.dart';
 part 'image_state.dart';
 
 class ImageBloc extends Bloc<ImageEvent, ImageState> {
-
   final StorageRepository storageRepository;
 
   ImageBloc({required this.storageRepository}) : super(ImageInitialState()) {
@@ -17,7 +16,6 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
   }
 
   _uploadImage(UploadImageEvent event, Emitter<ImageState> emit) async {
-
     emit(ImageLoadingState());
 
     try {
@@ -30,36 +28,30 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
     } catch (e) {
       emit(ImagePickErrorState());
     }
-
-
   }
 
-
   _getNetworkImage(GetImageEvent event, Emitter<ImageState> emit) async {
-
-    if(storageRepository.url.isNotEmpty) {
+    if (storageRepository.url.isNotEmpty) {
       emit(ImageNetworkLoadedState(storageRepository.url));
     } else {
       emit(ImageInitialState());
     }
-
   }
 
-
   _removeImage(RemoveImageEvent event, Emitter<ImageState> emit) async {
-
     emit(ImageDeletingState());
 
     try {
-      final String fileName = event.fileUrl.substring(0, event.fileUrl.indexOf('?alt')).replaceAll('https://firebasestorage.googleapis.com/v0/b/bcard-f4f4b.appspot.com/o/files%2F', '').trim();
+      final String fileName = event.fileUrl
+          .substring(0, event.fileUrl.indexOf('?alt'))
+          .replaceAll(
+              'https://firebasestorage.googleapis.com/v0/b/bcard-f4f4b.appspot.com/o/files%2F',
+              '')
+          .trim();
       await storageRepository.deleteImage(fileName);
       emit(ImageInitialState());
     } catch (e) {
       emit(ImageNetworkLoadedState(storageRepository.url));
     }
-
-
   }
-
-
 }

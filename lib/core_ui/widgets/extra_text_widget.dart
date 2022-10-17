@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-
 class ExtraTextWidget extends StatelessWidget {
   final String label;
   final String value;
@@ -11,10 +10,10 @@ class ExtraTextWidget extends StatelessWidget {
 
   const ExtraTextWidget(
       {Key? key,
-        required this.label,
-        required this.value,
-        required this.color,
-        required this.icon})
+      required this.label,
+      required this.value,
+      required this.color,
+      required this.icon})
       : super(key: key);
 
   Future<void> onTap() async {

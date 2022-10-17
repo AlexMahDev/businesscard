@@ -7,14 +7,12 @@ import '../../core_ui/widgets/loading_overlay_widget.dart';
 import '../../domain/models/card_model.dart';
 import '../blocs/contact_bloc/contact_bloc.dart';
 
-
-
 class ContactInfoPage extends StatelessWidget {
-
   final CardModel card;
   final bool isNewCard;
 
-  const ContactInfoPage({Key? key, required this.card, this.isNewCard = false}) : super(key: key);
+  const ContactInfoPage({Key? key, required this.card, this.isNewCard = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,32 +27,29 @@ class ContactInfoPage extends StatelessWidget {
 
         if (state is SaveContactSuccessState) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(
-              SnackBar(content: Text('Contact is saved')));
+              .showSnackBar(SnackBar(content: Text('Contact is saved')));
         }
         if (state is SaveContactErrorState) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(
-              SnackBar(content: Text('Something went wrong :(')));
+              .showSnackBar(SnackBar(content: Text('Something went wrong :(')));
         }
       },
       child: Scaffold(
           appBar: CustomAppBar(
             title: Text(card.generalInfo.cardTitle),
             actions: [
-              if(isNewCard)
+              if (isNewCard)
                 IconButton(
                   icon: const Icon(Icons.save_alt),
                   splashRadius: 20,
                   onPressed: () {
-                    BlocProvider.of<ContactBloc>(context).add(
-                        SaveContactEvent(card));
+                    BlocProvider.of<ContactBloc>(context)
+                        .add(SaveContactEvent(card));
                   },
                 )
             ],
           ),
-          body: CardWidget(card: card)
-      ),
+          body: CardWidget(card: card)),
     );
   }
 }

@@ -8,8 +8,6 @@ import '../blocs/card_page_bloc/card_page_bloc.dart';
 import 'cards_page.dart';
 import 'contacts_page.dart';
 
-
-
 class MainPageNavigationBar extends StatefulWidget {
   const MainPageNavigationBar({Key? key}) : super(key: key);
 

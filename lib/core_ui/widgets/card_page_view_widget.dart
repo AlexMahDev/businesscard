@@ -4,10 +4,7 @@ import '../../domain/models/card_model.dart';
 import '../../presentation/blocs/card_page_bloc/card_page_bloc.dart';
 import 'card_widget.dart';
 
-
-
 class CardPageViewWidget extends StatefulWidget {
-
   final List<CardModel> cards;
 
   const CardPageViewWidget({Key? key, required this.cards}) : super(key: key);
@@ -17,13 +14,13 @@ class CardPageViewWidget extends StatefulWidget {
 }
 
 class _CardPageViewWidgetState extends State<CardPageViewWidget> {
-
   late final PageController pageController;
 
   @override
   void initState() {
     super.initState();
-    pageController = PageController(initialPage: BlocProvider.of<CardPageBloc>(context).state);
+    pageController = PageController(
+        initialPage: BlocProvider.of<CardPageBloc>(context).state);
   }
 
   @override
@@ -38,14 +35,12 @@ class _CardPageViewWidgetState extends State<CardPageViewWidget> {
       controller: pageController,
       itemCount: widget.cards.length,
       onPageChanged: (page) {
-        final cardPageBloc =
-        BlocProvider.of<CardPageBloc>(context);
+        final cardPageBloc = BlocProvider.of<CardPageBloc>(context);
 
         cardPageBloc.add(ChangeCardPageEvent(page));
       },
       itemBuilder: (context, position) {
         return CardWidget(card: widget.cards[position]);
-
       },
     );
   }

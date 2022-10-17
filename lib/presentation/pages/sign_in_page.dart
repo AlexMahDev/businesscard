@@ -14,7 +14,6 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-
   late final TextEditingController email;
   late final TextEditingController password;
   late final LoadingOverlay loadingOverlay;
@@ -41,24 +40,24 @@ class _SignInPageState extends State<SignInPage> {
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
           leading: IconButton(
-            icon: const Icon(Icons.close),
-            splashRadius: 20,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          )
-      ),
+        icon: const Icon(Icons.close),
+        splashRadius: 20,
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      )),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          if(state is Loading) {
+          if (state is Loading) {
             loadingOverlay.show(context);
           } else {
             loadingOverlay.hide();
           }
           if (state is Authenticated) {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => MainPageNavigationBar()),
-                    (route) => false);
+                MaterialPageRoute(
+                    builder: (context) => MainPageNavigationBar()),
+                (route) => false);
           }
           if (state is AuthError) {
             ScaffoldMessenger.of(context)
@@ -70,65 +69,73 @@ class _SignInPageState extends State<SignInPage> {
             return Form(
               key: _validation,
               child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Welcome back, let's sign in",
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.bold)),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      CustomTextField(controller: email, hintText: "Email", validator: (text) {
-                        if(text == '') {
-                          return "Email is required";
-                        } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(text!)) {
-                          return "Enter valid email";
-                        }
-                        return null;
-                      }),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CustomTextField(controller: password, hintText: "Password", isTextVisible: false, validator: (text) {
-                        if(text == '') {
-                          return "Password is required";
-                        } else if (text!.length < 8) {
-                          return "Your password is too short";
-                        }
-                        return null;
-                      }),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          if(_validation.currentState!.validate()) {
-                            BlocProvider.of<AuthBloc>(context).add(
-                              SignInRequested(email.text, password.text),
-                            );
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Welcome back, let's sign in",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold)),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    CustomTextField(
+                        controller: email,
+                        hintText: "Email",
+                        validator: (text) {
+                          if (text == '') {
+                            return "Email is required";
+                          } else if (!RegExp(
+                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              .hasMatch(text!)) {
+                            return "Enter valid email";
                           }
-                        },
-                        child: Container(
-                          height: 80,
-                          decoration: BoxDecoration(
-                              color: Colors.redAccent,
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Center(
-                            child: Text("Sign In",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 16)),
-                          ),
+                          return null;
+                        }),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    CustomTextField(
+                        controller: password,
+                        hintText: "Password",
+                        isTextVisible: false,
+                        validator: (text) {
+                          if (text == '') {
+                            return "Password is required";
+                          } else if (text!.length < 8) {
+                            return "Your password is too short";
+                          }
+                          return null;
+                        }),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (_validation.currentState!.validate()) {
+                          BlocProvider.of<AuthBloc>(context).add(
+                            SignInRequested(email.text, password.text),
+                          );
+                        }
+                      },
+                      child: Container(
+                        height: 80,
+                        decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Center(
+                          child: Text("Sign In",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 16)),
                         ),
                       ),
-
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+              ),
             );
           },
         ),
@@ -136,4 +143,3 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 }
-

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/card_info_bloc/card_info_bloc.dart';
 import '../../presentation/pages/create_card_page.dart';
 
-
 class CardIsEmptyWidget extends StatelessWidget {
   const CardIsEmptyWidget({Key? key}) : super(key: key);
 
@@ -14,9 +13,9 @@ class CardIsEmptyWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Looks like you don't have a card set up yet! Create a card to get started!",
-              style: TextStyle(
-                  fontSize: 25),
+          Text(
+              "Looks like you don't have a card set up yet! Create a card to get started!",
+              style: TextStyle(fontSize: 25),
               textAlign: TextAlign.center),
           SizedBox(
             height: 50,
@@ -26,9 +25,9 @@ class CardIsEmptyWidget extends StatelessWidget {
               final cardInfoBloc = BlocProvider.of<CardInfoBloc>(context);
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => BlocProvider.value(
-                    value: cardInfoBloc,
-                    child: CreateCardPage(),
-                  )));
+                        value: cardInfoBloc,
+                        child: CreateCardPage(),
+                      )));
             },
             child: Container(
               height: 90,

@@ -5,10 +5,10 @@ import '../../presentation/blocs/text_field_bloc/text_field_bloc.dart';
 import 'custom_text_field_widget.dart';
 
 class ExtraInfoFieldsWidget extends StatelessWidget {
-
   final Map<String, TextEditingController> controllerMap;
 
-  const ExtraInfoFieldsWidget({Key? key, required this.controllerMap}) : super(key: key);
+  const ExtraInfoFieldsWidget({Key? key, required this.controllerMap})
+      : super(key: key);
 
   TextEditingController _getControllerOf(String name) {
     var controller = controllerMap[name];
@@ -63,41 +63,36 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
       builder: (context, state) {
         return BlocBuilder<TextFieldBloc, TextFieldState>(
           builder: (context, state) {
-            if (state is TextFieldInitialState &&
-                controllerMap.isNotEmpty) {
+            if (state is TextFieldInitialState && controllerMap.isNotEmpty) {
               return Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 15.0, vertical: 30),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 30),
                 child: ListView.separated(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: controllerMap.length,
                   itemBuilder: (BuildContext context, int index) {
                     return CustomTextField(
-                      controller: _getControllerOf(
-                          controllerMap.keys.elementAt(index)),
-                      hintText: getHintText(
-                          controllerMap.keys.elementAt(index)),
-                      icon: getIcon(
-                          controllerMap.keys.elementAt(index)),
-                      onTextFieldRemove: () {
-                        controllerMap.remove(
-                            controllerMap.keys.elementAt(index));
-                        final textFieldBloc = BlocProvider.of<
-                            TextFieldBloc>(context);
-                        textFieldBloc.add(AddTextFieldEvent());
-                      },
+                        controller: _getControllerOf(
+                            controllerMap.keys.elementAt(index)),
+                        hintText:
+                            getHintText(controllerMap.keys.elementAt(index)),
+                        icon: getIcon(controllerMap.keys.elementAt(index)),
+                        onTextFieldRemove: () {
+                          controllerMap
+                              .remove(controllerMap.keys.elementAt(index));
+                          final textFieldBloc =
+                              BlocProvider.of<TextFieldBloc>(context);
+                          textFieldBloc.add(AddTextFieldEvent());
+                        },
                         validator: (text) {
-                          if(text == '') {
-                            return "${getHintText(
-                                controllerMap.keys.elementAt(index))} is required";
+                          if (text == '') {
+                            return "${getHintText(controllerMap.keys.elementAt(index))} is required";
                           }
                           return null;
-                        }
-                    );
+                        });
                   },
-                  separatorBuilder:
-                      (BuildContext context, int index) =>
+                  separatorBuilder: (BuildContext context, int index) =>
                       SizedBox(height: 15),
                 ),
               );

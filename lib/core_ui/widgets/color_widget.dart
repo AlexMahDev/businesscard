@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 
 class ColorWidget extends StatelessWidget {
-
   final int color;
 
   const ColorWidget({Key? key, required this.color}) : super(key: key);

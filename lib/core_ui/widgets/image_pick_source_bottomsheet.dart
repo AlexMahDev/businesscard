@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/image_bloc/image_bloc.dart';
 
 class ImagePickSourceBottomSheet extends StatelessWidget {
-  const ImagePickSourceBottomSheet({Key? key})
-      : super(key: key);
+  const ImagePickSourceBottomSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +78,6 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
           ],
         ),
       ),
-
     );
   }
 }

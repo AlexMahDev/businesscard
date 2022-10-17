@@ -49,15 +49,15 @@ class _ContactsPageState extends State<ContactsPage> {
             actions: [
               BlocBuilder<ContactBloc, ContactState>(
                 builder: (context, state) {
-
-                  if(state is ContactLoadedState)
+                  if (state is ContactLoadedState)
                     return IconButton(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         splashRadius: 20,
                         onPressed: () {
                           showDialog(
                               context: context,
-                              builder: (ctx) => AddContactByLinkWidget(contacts: state.contacts));
+                              builder: (ctx) => AddContactByLinkWidget(
+                                  contacts: state.contacts));
                         },
                         icon: Icon(Icons.add));
 
@@ -119,24 +119,22 @@ class _ContactsPageState extends State<ContactsPage> {
                 loadingOverlay.hide();
               }
 
-              if(state is DelContactErrorState) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(
+              if (state is DelContactErrorState) {
+                ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Something went wrong :(')));
               }
 
-              if(state is SearchLinkSuccessState) {
-                Navigator.of(context).push(MaterialPageRoute (
-                  builder: (BuildContext context) => ContactInfoPage(card: state.card, isNewCard: true),
+              if (state is SearchLinkSuccessState) {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      ContactInfoPage(card: state.card, isNewCard: true),
                 ));
               }
 
-              if(state is SearchLinkErrorState) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(
+              if (state is SearchLinkErrorState) {
+                ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Something went wrong :(')));
               }
-
             },
             child: BlocBuilder<ContactBloc, ContactState>(
               buildWhen: (previous, current) {
@@ -167,25 +165,23 @@ class _ContactsPageState extends State<ContactsPage> {
                 if (state is ContactLoadedState) {
                   return SliverList(
                       delegate: SliverChildBuilderDelegate(
-                          childCount: state.contacts.length, (context, index) {
-                    return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: ContactWidget(
-                            card: state.contacts[index].cardModel));
-                  }));
+                    (context, index) {
+                      return ContactWidget(
+                          card: state.contacts[index].cardModel);
+                    },
+                    childCount: state.contacts.length,
+                  ));
                 }
 
                 if (state is ContactSearchState) {
                   return SliverList(
                       delegate: SliverChildBuilderDelegate(
-                          childCount: state.foundContacts.length,
-                          (context, index) {
-                    return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: ContactWidget(
-                            card: state.foundContacts[index].cardModel));
-                  })
-                      );
+                    (context, index) {
+                      return ContactWidget(
+                          card: state.foundContacts[index].cardModel);
+                    },
+                    childCount: state.foundContacts.length,
+                  ));
                 }
                 if (state is ContactErrorState) {
                   return SliverFillRemaining(
@@ -207,5 +203,3 @@ class _ContactsPageState extends State<ContactsPage> {
     );
   }
 }
-
-

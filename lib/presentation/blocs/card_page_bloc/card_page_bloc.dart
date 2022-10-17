@@ -10,9 +10,6 @@ class CardPageBloc extends Bloc<CardPageEvent, int> {
   }
 
   _changePage(ChangeCardPageEvent event, Emitter<int> emit) {
-
     emit(event.cardPage);
-
   }
-
 }

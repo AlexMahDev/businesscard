@@ -5,12 +5,10 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class StorageRepository {
-
   final ImagePicker picker = ImagePicker();
   String url = '';
 
   Future<void> uploadImage(bool isGallery) async {
-
     final XFile? image;
 
     try {
@@ -41,32 +39,26 @@ class StorageRepository {
             ),
           ],
         );
-        if(croppedFile != null) {
-
-
+        if (croppedFile != null) {
           final File file = File(croppedFile.path);
           final String fileName = image.name;
 
-          final String path = 'files/${'timestamp-${DateTime.now().millisecondsSinceEpoch}-file-$fileName'}';
-
+          final String path =
+              'files/${'timestamp-${DateTime.now().millisecondsSinceEpoch}-file-$fileName'}';
 
           final ref = FirebaseStorage.instance.ref(path);
 
           final upload = await ref.putFile(file);
 
           url = await upload.ref.getDownloadURL();
-
         }
       }
     } catch (e) {
       throw Exception(e);
     }
-
-
   }
 
   Future<void> deleteImage(String fileName) async {
-
     final String path = 'files/$fileName';
 
     final ref = FirebaseStorage.instance.ref(path);
@@ -77,8 +69,5 @@ class StorageRepository {
     } catch (e) {
       throw Exception(e);
     }
-
   }
-
-
 }

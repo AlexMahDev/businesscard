@@ -22,7 +22,6 @@ import '../blocs/image_bloc/image_bloc.dart';
 import '../blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import '../blocs/text_field_bloc/text_field_bloc.dart';
 
-
 class CreateCardPage extends StatefulWidget {
   const CreateCardPage({Key? key}) : super(key: key);
 
@@ -128,8 +127,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                   Navigator.of(context).pop();
                 }
                 if (state is AddCardErrorState) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Something went wrong :(')));
                 }
               },
@@ -145,8 +143,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                   loadingOverlay.hide();
                 }
                 if (state is ImagePickErrorState) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Something went wrong :(')));
                 }
               },
@@ -163,8 +160,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                 }
 
                 if (state is ImagePickErrorState) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Something went wrong :(')));
                 }
               },
@@ -177,22 +173,19 @@ class _CreateCardPageState extends State<CreateCardPage> {
                 icon: const Icon(Icons.check),
                 splashRadius: 20,
                 onPressed: () {
-                  if(_validation.currentState!.validate()) {
-                    final cardsInfoBloc = BlocProvider.of<CardInfoBloc>(
-                        context);
+                  if (_validation.currentState!.validate()) {
+                    final cardsInfoBloc =
+                        BlocProvider.of<CardInfoBloc>(context);
                     final cardColorBloc =
-                    BlocProvider.of<SelectCardColorBloc>(context);
+                        BlocProvider.of<SelectCardColorBloc>(context);
 
                     final cardsInfoState = cardsInfoBloc.state;
 
                     CardModel newCard = CardModel(
-                        timestamp: DateTime
-                            .now()
-                            .millisecondsSinceEpoch,
+                        timestamp: DateTime.now().millisecondsSinceEpoch,
                         cardId: '',
                         qrLink: '',
-                        settings: SettingsModel(
-                            cardColor: cardColorBloc.state),
+                        settings: SettingsModel(cardColor: cardColorBloc.state),
                         generalInfo: GeneralInfoModel(
                             cardTitle: cardTitle.text.isNotEmpty
                                 ? cardTitle.text
@@ -235,20 +228,19 @@ class _CreateCardPageState extends State<CreateCardPage> {
                         break;
                     }
                   },
-                  itemBuilder: (context) =>
-                  [
+                  itemBuilder: (context) => [
                     const PopupMenuItem(
                       value: 1,
                       child: Text(
                         "Not save",
-                        style: TextStyle(fontWeight: FontWeight.w700,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
                             color: Colors.redAccent),
                       ),
                     )
                   ],
                   offset: const Offset(-15, 60),
                 ),
-
               ],
             ),
             body: Form(
@@ -262,33 +254,27 @@ class _CreateCardPageState extends State<CreateCardPage> {
                           hintText: 'Set a title (e.g. Work or Personal)',
                           controller: cardTitle),
                     ),
-
-
                     ChooseColorWidget(),
-
                     ImageSectionWidget(
                         imageBloc: profileImageBloc,
                         addTitle: 'Add Profile Picture',
                         editTitle: 'Edit Profile Picture',
                         removeTitle: 'Remove Profile Picture'),
-
                     SizedBox(
                       height: 30,
                     ),
-
                     ImageSectionWidget(
                         imageBloc: companyLogoImageBloc,
                         addTitle: 'Add Company Logo',
                         editTitle: 'Edit Company Logo',
                         removeTitle: 'Remove Company Logo'),
-
                     GeneralInfoFieldsWidget(
                       fullName: CustomTextField(
                           hintText: 'Full Name',
                           enabled: false,
                           controller: fullName,
                           validator: (text) {
-                            if(text == '') {
+                            if (text == '') {
                               return "Name is required";
                             }
                             return null;
@@ -303,7 +289,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                           hintText: 'Job Title',
                           controller: jobTitle,
                           validator: (text) {
-                            if(text == '') {
+                            if (text == '') {
                               return "Job title is required";
                             }
                             return null;
@@ -312,7 +298,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                           hintText: 'Department',
                           controller: department,
                           validator: (text) {
-                            if(text == '') {
+                            if (text == '') {
                               return "Department is required";
                             }
                             return null;
@@ -321,7 +307,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                           hintText: 'Company Name',
                           controller: companyName,
                           validator: (text) {
-                            if(text == '') {
+                            if (text == '') {
                               return "Company name is required";
                             }
                             return null;
@@ -329,11 +315,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                       headLine: CustomTextField(
                           hintText: 'Headline', controller: headLine),
                     ),
-
                     ExtraInfoFieldsWidget(controllerMap: _controllerMap),
-
                     TapFieldBelowWidget(),
-
                     ExtraInfoFooterWidget(controllerMap: _controllerMap)
                   ],
                 ),

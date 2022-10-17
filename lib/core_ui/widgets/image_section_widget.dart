@@ -3,15 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/image_bloc/image_bloc.dart';
 import 'image_pick_source_bottomsheet.dart';
 
-
 class ImageSectionWidget extends StatelessWidget {
-
   final ImageBloc imageBloc;
   final String addTitle;
   final String editTitle;
   final String removeTitle;
 
-  const ImageSectionWidget({Key? key, required this.imageBloc, required this.addTitle, required this.editTitle, required this.removeTitle})
+  const ImageSectionWidget(
+      {Key? key,
+      required this.imageBloc,
+      required this.addTitle,
+      required this.editTitle,
+      required this.removeTitle})
       : super(key: key);
 
   @override
@@ -19,11 +22,11 @@ class ImageSectionWidget extends StatelessWidget {
     return BlocBuilder<ImageBloc, ImageState>(
       bloc: imageBloc,
       buildWhen: (previous, current) {
-          if(current is ImageDeletingState) {
-            return false;
-          }
-          return true;
-        },
+        if (current is ImageDeletingState) {
+          return false;
+        }
+        return true;
+      },
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -32,7 +35,11 @@ class ImageSectionWidget extends StatelessWidget {
             children: [
               if (state is ImageNetworkLoadedState)
                 Expanded(
-                    child: Image.network(state.networkImage, height: 150, errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {return Container();})),
+                    child: Image.network(state.networkImage, height: 150,
+                        errorBuilder: (BuildContext context, Object exception,
+                            StackTrace? stackTrace) {
+                  return Container();
+                })),
               Padding(
                 padding: const EdgeInsets.only(left: 15.0),
                 child: Column(
@@ -51,9 +58,7 @@ class ImageSectionWidget extends StatelessWidget {
                         );
                       },
                       child: Text(
-                        state is ImageNetworkLoadedState
-                            ? editTitle
-                            : addTitle,
+                        state is ImageNetworkLoadedState ? editTitle : addTitle,
                         style: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 17,
@@ -65,8 +70,7 @@ class ImageSectionWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 20.0),
                         child: GestureDetector(
                           onTap: () {
-                            imageBloc
-                                .add(RemoveImageEvent(state.networkImage));
+                            imageBloc.add(RemoveImageEvent(state.networkImage));
                           },
                           child: Text(
                             removeTitle,

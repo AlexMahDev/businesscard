@@ -22,7 +22,6 @@ import '../blocs/image_bloc/image_bloc.dart';
 import '../blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import '../blocs/text_field_bloc/text_field_bloc.dart';
 
-
 class EditCardPage extends StatefulWidget {
   final CardModel card;
 
@@ -131,7 +130,6 @@ class _EditCardPageState extends State<EditCardPage> {
         BlocProvider<FullNameDropdownBloc>(
           create: (BuildContext context) => FullNameDropdownBloc(),
         ),
-
         BlocProvider<ImageBloc>(
             create: (BuildContext context) => profileImageBloc),
         BlocProvider<ImageBloc>(
@@ -146,7 +144,7 @@ class _EditCardPageState extends State<EditCardPage> {
                   loadingOverlay.show(context);
                 } else if (state is DeleteCardLoadingState) {
                   loadingOverlay.show(context);
-                }  else {
+                } else {
                   loadingOverlay.hide();
                 }
 
@@ -154,9 +152,10 @@ class _EditCardPageState extends State<EditCardPage> {
                     state is DeleteCardSuccessState) {
                   Navigator.of(context).pop();
                 }
-                if (state is UpdateCardErrorState || state is DeleteCardErrorState) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('Something went wrong :(')));
+                if (state is UpdateCardErrorState ||
+                    state is DeleteCardErrorState) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Something went wrong :(')));
                 }
               },
             ),
@@ -167,12 +166,11 @@ class _EditCardPageState extends State<EditCardPage> {
                   loadingOverlay.show(context);
                 } else if (state is ImageDeletingState) {
                   loadingOverlay.show(context);
-                  } else {
+                } else {
                   loadingOverlay.hide();
-                  }
+                }
                 if (state is ImagePickErrorState) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Something went wrong :(')));
                 }
               },
@@ -189,8 +187,7 @@ class _EditCardPageState extends State<EditCardPage> {
                 }
 
                 if (state is ImagePickErrorState) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Something went wrong :(')));
                 }
               },
@@ -203,21 +200,20 @@ class _EditCardPageState extends State<EditCardPage> {
                   icon: const Icon(Icons.check),
                   splashRadius: 20,
                   onPressed: () {
-
-                    if(_validation.currentState!.validate()) {
+                    if (_validation.currentState!.validate()) {
                       final cardsInfoBloc =
-                      BlocProvider.of<CardInfoBloc>(context);
+                          BlocProvider.of<CardInfoBloc>(context);
                       final cardColorBloc =
-                      BlocProvider.of<SelectCardColorBloc>(context);
+                          BlocProvider.of<SelectCardColorBloc>(context);
 
                       final cardsInfoState = cardsInfoBloc.state;
-
 
                       CardModel newCard = CardModel(
                           timestamp: widget.card.timestamp,
                           cardId: widget.card.cardId,
-                          qrLink:  widget.card.qrLink,
-                          settings: SettingsModel(cardColor: cardColorBloc.state),
+                          qrLink: widget.card.qrLink,
+                          settings:
+                              SettingsModel(cardColor: cardColorBloc.state),
                           generalInfo: GeneralInfoModel(
                               cardTitle: cardTitle.text.isNotEmpty
                                   ? cardTitle.text
@@ -240,18 +236,18 @@ class _EditCardPageState extends State<EditCardPage> {
 
                       if (cardsInfoState is CardInfoLoadedState) {
                         List<CardModel> currentCards = cardsInfoState.cards;
-                        cardsInfoBloc.add(UpdateCardEvent(currentCards, newCard));
+                        cardsInfoBloc
+                            .add(UpdateCardEvent(currentCards, newCard));
                       } else if (cardsInfoState is CardInfoEmptyState) {
                         List<CardModel> currentCards = cardsInfoState.cards;
 
-                        cardsInfoBloc.add(UpdateCardEvent(currentCards, newCard));
+                        cardsInfoBloc
+                            .add(UpdateCardEvent(currentCards, newCard));
                       }
                     }
-
                   },
                 ),
                 actions: [
-
                   PopupMenuButton<int>(
                     icon: const Icon(Icons.more_horiz),
                     splashRadius: 20,
@@ -262,16 +258,16 @@ class _EditCardPageState extends State<EditCardPage> {
                           break;
                         case 2:
                           final cardInfoBloc =
-                          BlocProvider.of<CardInfoBloc>(context);
+                              BlocProvider.of<CardInfoBloc>(context);
                           final cardInfoState = cardInfoBloc.state;
                           if (cardInfoState is CardInfoLoadedState) {
                             List<CardModel> currentCards = cardInfoState.cards;
-                            cardInfoBloc.add(
-                                DeleteCardEvent(currentCards, widget.card.cardId));
+                            cardInfoBloc.add(DeleteCardEvent(
+                                currentCards, widget.card.cardId));
                           } else if (cardInfoState is CardInfoEmptyState) {
                             List<CardModel> currentCards = cardInfoState.cards;
-                            cardInfoBloc.add(
-                                DeleteCardEvent(currentCards, widget.card.cardId));
+                            cardInfoBloc.add(DeleteCardEvent(
+                                currentCards, widget.card.cardId));
                           }
                           break;
                       }
@@ -281,7 +277,9 @@ class _EditCardPageState extends State<EditCardPage> {
                         value: 1,
                         child: Text(
                           "Not save",
-                          style: TextStyle(fontWeight: FontWeight.w700, color: Colors.redAccent),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Colors.redAccent),
                         ),
                       ),
                       const PopupMenuDivider(),
@@ -289,13 +287,14 @@ class _EditCardPageState extends State<EditCardPage> {
                         value: 2,
                         child: Text(
                           "Delete",
-                          style: TextStyle(fontWeight: FontWeight.w700, color: Colors.redAccent),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Colors.redAccent),
                         ),
                       ),
                     ],
                     offset: const Offset(-15, 60),
                   ),
-
                 ],
               ),
               body: Form(
@@ -310,32 +309,27 @@ class _EditCardPageState extends State<EditCardPage> {
                           controller: cardTitle,
                         ),
                       ),
-
                       ChooseColorWidget(),
-
                       ImageSectionWidget(
                           imageBloc: profileImageBloc,
                           addTitle: 'Add Profile Picture',
                           editTitle: 'Edit Profile Picture',
                           removeTitle: 'Remove Profile Picture'),
-
                       SizedBox(
                         height: 30,
                       ),
-
                       ImageSectionWidget(
                           imageBloc: companyLogoImageBloc,
                           addTitle: 'Add Company Logo',
                           editTitle: 'Edit Company Logo',
                           removeTitle: 'Remove Company Logo'),
-
                       GeneralInfoFieldsWidget(
                         fullName: CustomTextField(
                             hintText: 'Full Name',
                             enabled: false,
                             controller: fullName,
                             validator: (text) {
-                              if(text == '') {
+                              if (text == '') {
                                 return "Name is required";
                               }
                               return null;
@@ -350,7 +344,7 @@ class _EditCardPageState extends State<EditCardPage> {
                             hintText: 'Job Title',
                             controller: jobTitle,
                             validator: (text) {
-                              if(text == '') {
+                              if (text == '') {
                                 return "Job title is required";
                               }
                               return null;
@@ -359,7 +353,7 @@ class _EditCardPageState extends State<EditCardPage> {
                             hintText: 'Department',
                             controller: department,
                             validator: (text) {
-                              if(text == '') {
+                              if (text == '') {
                                 return "Department is required";
                               }
                               return null;
@@ -368,7 +362,7 @@ class _EditCardPageState extends State<EditCardPage> {
                             hintText: 'Company Name',
                             controller: companyName,
                             validator: (text) {
-                              if(text == '') {
+                              if (text == '') {
                                 return "Company name is required";
                               }
                               return null;
@@ -376,11 +370,8 @@ class _EditCardPageState extends State<EditCardPage> {
                         headLine: CustomTextField(
                             hintText: 'Headline', controller: headLine),
                       ),
-
                       ExtraInfoFieldsWidget(controllerMap: _controllerMap),
-
                       TapFieldBelowWidget(),
-
                       ExtraInfoFooterWidget(controllerMap: _controllerMap)
                     ],
                   ),

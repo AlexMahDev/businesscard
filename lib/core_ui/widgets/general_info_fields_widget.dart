@@ -4,7 +4,6 @@ import '../../presentation/blocs/full_name_dropdown_bloc/full_name_dropdown_bloc
 import 'custom_text_field_widget.dart';
 
 class GeneralInfoFieldsWidget extends StatelessWidget {
-
   final CustomTextField fullName;
   final CustomTextField firstName;
   final CustomTextField middleName;
@@ -14,33 +13,35 @@ class GeneralInfoFieldsWidget extends StatelessWidget {
   final CustomTextField companyName;
   final CustomTextField headLine;
 
-
   const GeneralInfoFieldsWidget(
-      {Key? key, required this.fullName, required this.firstName, required this.middleName, required this.lastName, required this.jobTitle, required this.department, required this.companyName, required this.headLine})
+      {Key? key,
+      required this.fullName,
+      required this.firstName,
+      required this.middleName,
+      required this.lastName,
+      required this.jobTitle,
+      required this.department,
+      required this.companyName,
+      required this.headLine})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: 15.0, vertical: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 30),
       child: Column(
         children: [
           GestureDetector(
             onTap: () {
               final fullNameDropdownBloc =
-              BlocProvider.of<FullNameDropdownBloc>(context);
+                  BlocProvider.of<FullNameDropdownBloc>(context);
 
-              final fullNameDropdownState =
-                  fullNameDropdownBloc.state;
+              final fullNameDropdownState = fullNameDropdownBloc.state;
 
-              if (fullNameDropdownState
-              is FullNameDropdownCloseState) {
-                fullNameDropdownBloc
-                    .add(FullNameDropdownOpenEvent());
+              if (fullNameDropdownState is FullNameDropdownCloseState) {
+                fullNameDropdownBloc.add(FullNameDropdownOpenEvent());
               } else {
-                fullNameDropdownBloc
-                    .add(FullNameDropdownCloseEvent());
+                fullNameDropdownBloc.add(FullNameDropdownCloseEvent());
               }
             },
             child: Row(
@@ -51,8 +52,7 @@ class GeneralInfoFieldsWidget extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                BlocBuilder<FullNameDropdownBloc,
-                    FullNameDropdownState>(
+                BlocBuilder<FullNameDropdownBloc, FullNameDropdownState>(
                   builder: (context, state) {
                     if (state is FullNameDropdownOpenState) {
                       return Icon(Icons.keyboard_arrow_up,

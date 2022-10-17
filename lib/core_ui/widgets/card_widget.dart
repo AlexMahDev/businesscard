@@ -82,7 +82,6 @@ class CardWidget extends StatelessWidget {
                               Object exception, StackTrace? stackTrace) {
                         return Container();
                       }),
-
                     ),
                   Divider(
                     color: Color(card.settings.cardColor).withOpacity(0.2),
@@ -104,7 +103,6 @@ class CardWidget extends StatelessWidget {
                                 Object exception, StackTrace? stackTrace) {
                           return Container();
                         }),
-
                       ),
                     ],
                   ),
@@ -165,4 +163,3 @@ class CardWidget extends StatelessWidget {
     );
   }
 }
-

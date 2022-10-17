@@ -10,11 +10,11 @@ part 'card_info_event.dart';
 part 'card_info_state.dart';
 
 class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
-
   final CardRepository cardRepository;
   final CardPageBloc cardPageBloc;
 
-  CardInfoBloc({required this.cardRepository, required this.cardPageBloc}) : super(CardInfoInitialState()) {
+  CardInfoBloc({required this.cardRepository, required this.cardPageBloc})
+      : super(CardInfoInitialState()) {
     on<GetCardInfoEvent>(_getCardInfo);
     on<AddCardEvent>(_addCard);
     on<UpdateCardEvent>(_updateCard);
@@ -22,14 +22,13 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
   }
 
   _getCardInfo(CardInfoEvent event, Emitter<CardInfoState> emit) async {
-
     emit(CardInfoLoadingState());
 
     final user = FirebaseAuth.instance.currentUser!;
 
     try {
       List<CardModel> cards = await cardRepository.getCards(user.uid);
-      if(cards.isNotEmpty) {
+      if (cards.isNotEmpty) {
         emit(CardInfoLoadedState(cards));
       } else {
         emit(CardInfoEmptyState(cards));
@@ -37,13 +36,9 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
     } catch (e) {
       emit(CardInfoErrorState());
     }
-
-
   }
 
-
   _addCard(AddCardEvent event, Emitter<CardInfoState> emit) async {
-
     emit(CardInfoLoadingState());
     emit(AddCardLoadingState());
 
@@ -59,17 +54,14 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
       emit(AddCardErrorState());
     }
 
-    if(cards.isNotEmpty) {
+    if (cards.isNotEmpty) {
       emit(CardInfoLoadedState(cards));
     } else {
       emit(CardInfoEmptyState(cards));
     }
-
-
   }
 
   _updateCard(UpdateCardEvent event, Emitter<CardInfoState> emit) async {
-
     emit(CardInfoLoadingState());
     emit(UpdateCardLoadingState());
 
@@ -79,19 +71,17 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
 
     try {
       await cardRepository.updateCard(user.uid, event.newCard);
-      cards[cards.indexWhere((element) => element.cardId == event.newCard.cardId)] = event.newCard;
+      cards[cards.indexWhere(
+          (element) => element.cardId == event.newCard.cardId)] = event.newCard;
       emit(UpdateCardSuccessState());
     } catch (e) {
       emit(UpdateCardErrorState());
     }
 
     emit(CardInfoLoadedState(cards));
-
-
   }
 
   _deleteCard(DeleteCardEvent event, Emitter<CardInfoState> emit) async {
-
     emit(CardInfoLoadingState());
     emit(DeleteCardLoadingState());
 
@@ -101,20 +91,18 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
 
     try {
       await cardRepository.deleteCard(user.uid, event.cardId);
-      cards.removeAt(cards.indexWhere((element) => element.cardId == event.cardId));
+      cards.removeAt(
+          cards.indexWhere((element) => element.cardId == event.cardId));
       cardPageBloc.add(ChangeCardPageEvent(0));
       emit(DeleteCardSuccessState());
     } catch (e) {
       emit(DeleteCardErrorState());
     }
 
-    if(cards.isNotEmpty) {
+    if (cards.isNotEmpty) {
       emit(CardInfoLoadedState(cards));
     } else {
       emit(CardInfoEmptyState(cards));
     }
-
   }
-
-
 }

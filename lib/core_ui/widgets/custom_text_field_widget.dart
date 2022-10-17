@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import '../../presentation/blocs/text_clear_button_bloc/text_clear_button_bloc.dart';
 
-
-
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
@@ -16,19 +14,21 @@ class CustomTextField extends StatelessWidget {
 
   final bool isTextVisible;
 
-  final  String? Function(String?)? validator;
+  final String? Function(String?)? validator;
 
-  const CustomTextField({Key? key,
-    required this.controller,
-    required this.hintText,
-    this.enabled = true,
-    this.icon,
-    this.onTextFieldRemove, this.validator, this.isTextVisible = true})
+  const CustomTextField(
+      {Key? key,
+      required this.controller,
+      required this.hintText,
+      this.enabled = true,
+      this.icon,
+      this.onTextFieldRemove,
+      this.validator,
+      this.isTextVisible = true})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider<TextClearButtonBloc>(
       create: (context) => TextClearButtonBloc(),
       child: Builder(builder: (context) {
@@ -39,15 +39,16 @@ class CustomTextField extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 15.0),
                 child: CircleAvatar(
                     radius: 20,
-                    backgroundColor: Color(BlocProvider.of<SelectCardColorBloc>(context).state),
+                    backgroundColor: Color(
+                        BlocProvider.of<SelectCardColorBloc>(context).state),
                     child: icon),
               ),
             Expanded(
               child: FocusScope(
                 onFocusChange: (focus) {
                   final clearButtonBloc =
-                  BlocProvider.of<TextClearButtonBloc>(context);
-                  if(focus) {
+                      BlocProvider.of<TextClearButtonBloc>(context);
+                  if (focus) {
                     if (controller.text.isNotEmpty) {
                       clearButtonBloc.add(ClearButtonEnableEvent());
                     }
@@ -62,13 +63,14 @@ class CustomTextField extends StatelessWidget {
                   decoration: InputDecoration(
                     errorStyle: const TextStyle(color: Colors.red),
                     suffixIcon:
-                    BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
+                        BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
                       builder: (context, state) {
                         if (state is ClearButtonEnableState) {
                           return IconButton(
                             onPressed: () {
                               controller.clear();
-                              BlocProvider.of<TextClearButtonBloc>(context).add(ClearButtonDisableEvent());
+                              BlocProvider.of<TextClearButtonBloc>(context)
+                                  .add(ClearButtonDisableEvent());
                             },
                             icon: Icon(Icons.highlight_remove_outlined),
                             splashRadius: 20,
@@ -80,12 +82,13 @@ class CustomTextField extends StatelessWidget {
                     ),
                     hintText: hintText,
                   ),
-
                   onChanged: (text) {
                     if (controller.text.isEmpty) {
-                      BlocProvider.of<TextClearButtonBloc>(context).add(ClearButtonDisableEvent());
+                      BlocProvider.of<TextClearButtonBloc>(context)
+                          .add(ClearButtonDisableEvent());
                     } else if (controller.text.length == 1) {
-                      BlocProvider.of<TextClearButtonBloc>(context).add(ClearButtonEnableEvent());
+                      BlocProvider.of<TextClearButtonBloc>(context)
+                          .add(ClearButtonEnableEvent());
                     }
                   },
                   validator: validator,

@@ -10,9 +10,6 @@ class TextFieldBloc extends Bloc<TextFieldEvent, TextFieldState> {
   }
 
   _addTextField(AddTextFieldEvent event, Emitter<TextFieldState> emit) {
-
     emit(TextFieldInitialState());
-
   }
-
 }

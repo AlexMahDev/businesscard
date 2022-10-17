@@ -5,7 +5,6 @@ import '../../domain/models/card_model.dart';
 import '../../presentation/blocs/card_page_bloc/card_page_bloc.dart';
 
 class PageSelectorWidget extends StatelessWidget {
-
   final List<CardModel> cards;
 
   const PageSelectorWidget({Key? key, required this.cards}) : super(key: key);
@@ -28,11 +27,11 @@ class PageSelectorWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         for (int cardNumber = 0;
-                        cardNumber < cards.length;
-                        cardNumber++)
+                            cardNumber < cards.length;
+                            cardNumber++)
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 5.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5.0),
                             child: Container(
                               width: 10.0,
                               height: 10.0,
@@ -40,8 +39,8 @@ class PageSelectorWidget extends StatelessWidget {
                                 color: cardNumber != cardPageState
                                     ? Colors.black
                                     : Color(cards[cardPageState]
-                                    .settings
-                                    .cardColor),
+                                        .settings
+                                        .cardColor),
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -53,9 +52,9 @@ class PageSelectorWidget extends StatelessWidget {
                 SizedBox(
                   width: 15,
                 ),
-                ShareCardButton(qrLink: cards[cardPageState].qrLink,
-                    color: cards[cardPageState].settings
-                        .cardColor)
+                ShareCardButton(
+                    qrLink: cards[cardPageState].qrLink,
+                    color: cards[cardPageState].settings.cardColor)
               ],
             ),
           ),

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
-
 class CustomBottomSheet extends StatelessWidget {
-
   final String qrLink;
 
   const CustomBottomSheet({Key? key, required this.qrLink}) : super(key: key);
@@ -32,7 +30,8 @@ class CustomBottomSheet extends StatelessWidget {
               IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {
-                    Share.share('You can find my BCard following the link: $qrLink');
+                    Share.share(
+                        'You can find my BCard following the link: $qrLink');
                   },
                   splashRadius: 20,
                   icon: Icon(Icons.ios_share, color: Colors.white, size: 30)),
@@ -71,11 +70,9 @@ class CustomBottomSheet extends StatelessWidget {
             ],
           ),
         ),
-
         SizedBox(
           height: 80,
         )
-
       ],
     );
   }

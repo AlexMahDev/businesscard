@@ -6,4 +6,3 @@ abstract class FullNameDropdownState {}
 class FullNameDropdownOpenState extends FullNameDropdownState {}
 
 class FullNameDropdownCloseState extends FullNameDropdownState {}
-

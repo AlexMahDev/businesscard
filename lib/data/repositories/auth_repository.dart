@@ -8,11 +8,11 @@ class AuthRepository {
     try {
       final userInfo = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      final usersCollection = FirebaseFirestore.instance.collection("users").doc(userInfo.user!.uid);
-      await usersCollection.set({
-        "uid" : userInfo.user!.uid,
-        "email" : userInfo.user!.email
-      });
+      final usersCollection = FirebaseFirestore.instance
+          .collection("users")
+          .doc(userInfo.user!.uid);
+      await usersCollection
+          .set({"uid": userInfo.user!.uid, "email": userInfo.user!.email});
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw Exception('The password provided is too weak.');
