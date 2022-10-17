@@ -17,7 +17,7 @@ class ChooseColorWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
+              children: [
                 ColorWidget(color: 4294922834), //Colors.redAccent
                 ColorWidget(color: 4294940672), //Colors.orange
                 ColorWidget(color: 4294961979), //Colors.yellow

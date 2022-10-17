@@ -4,6 +4,7 @@ import '../../core_ui/widgets/add_contact_by_link_widget.dart';
 import '../../core_ui/widgets/contact_widget.dart';
 import '../../core_ui/widgets/custom_error_widget.dart';
 import '../../core_ui/widgets/loading_overlay_widget.dart';
+import '../../domain/models/contact_model.dart';
 import '../blocs/contact_bloc/contact_bloc.dart';
 import 'contact_info_page.dart';
 
@@ -47,24 +48,28 @@ class _ContactsPageState extends State<ContactsPage> {
             centerTitle: true,
             title: const Text('Contacts'),
             actions: [
-              BlocBuilder<ContactBloc, ContactState>(
-                builder: (context, state) {
-                  if (state is ContactLoadedState) {
-                    return IconButton(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        splashRadius: 20,
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (ctx) => AddContactByLinkWidget(
-                                  contacts: state.contacts));
-                        },
-                        icon: const Icon(Icons.add));
-                  }
-
-                  return Container();
-                },
-              )
+              IconButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  splashRadius: 20,
+                  onPressed: () {
+                    final contactBloc = BlocProvider.of<ContactBloc>(context);
+                    final contactState = contactBloc.state;
+                    final List<ContactModel> contacts;
+                    if (contactState is ContactLoadedState) {
+                      contacts = contactState.contacts;
+                      showDialog(
+                          context: context,
+                          builder: (ctx) =>
+                              AddContactByLinkWidget(contacts: contacts));
+                    } else if (contactState is ContactSearchState){
+                      contacts = contactState.contacts;
+                      showDialog(
+                          context: context,
+                          builder: (ctx) =>
+                              AddContactByLinkWidget(contacts: contacts));
+                    }
+                  },
+                  icon: const Icon(Icons.add))
             ],
             bottom: AppBar(
               elevation: 0,
@@ -86,20 +91,15 @@ class _ContactsPageState extends State<ContactsPage> {
                             prefixIcon: Icon(Icons.search),
                             border: InputBorder.none),
                         onChanged: (name) {
-                          if (searchController.text.isEmpty ||
-                              searchController.text.length > 3) {
-                            final contactBloc =
-                                BlocProvider.of<ContactBloc>(context);
-                            final contactState = contactBloc.state;
-                            if (contactState is ContactLoadedState) {
-                              contactBloc.add(GetContactByNameEvent(
-                                  searchController.text,
-                                  contactState.contacts));
-                            } else if (contactState is ContactSearchState) {
-                              contactBloc.add(GetContactByNameEvent(
-                                  searchController.text,
-                                  contactState.contacts));
-                            }
+                          final contactBloc =
+                              BlocProvider.of<ContactBloc>(context);
+                          final contactState = contactBloc.state;
+                          if (contactState is ContactLoadedState) {
+                            contactBloc.add(GetContactByNameEvent(
+                                searchController.text, contactState.contacts));
+                          } else if (contactState is ContactSearchState) {
+                            contactBloc.add(GetContactByNameEvent(
+                                searchController.text, contactState.contacts));
                           }
                         },
                       );
@@ -143,6 +143,9 @@ class _ContactsPageState extends State<ContactsPage> {
                   return true;
                 }
                 if (current is ContactLoadedState) {
+                  return true;
+                }
+                if (current is ContactSearchState) {
                   return true;
                 }
                 if (current is ContactErrorState) {
