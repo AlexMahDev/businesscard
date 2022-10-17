@@ -14,8 +14,9 @@ class SaveContactEvent extends ContactEvent {
 class SaveContactManualEvent extends ContactEvent {
   final String url;
   final List<ContactModel> contacts;
+  final List<ContactModel>? foundContacts;
 
-  SaveContactManualEvent(this.url, this.contacts);
+  SaveContactManualEvent(this.url, this.contacts, [this.foundContacts]);
 }
 
 class GetContactByNameEvent extends ContactEvent {

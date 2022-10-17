@@ -17,21 +17,18 @@ class ContactsPage extends StatefulWidget {
 
 class _ContactsPageState extends State<ContactsPage> {
   late final TextEditingController searchController;
-  late final TextEditingController urlController;
   late final LoadingOverlay loadingOverlay;
 
   @override
   void initState() {
     super.initState();
     searchController = TextEditingController();
-    urlController = TextEditingController();
     loadingOverlay = LoadingOverlay();
   }
 
   @override
   void dispose() {
     searchController.dispose();
-    urlController.dispose();
     super.dispose();
   }
 
@@ -53,29 +50,13 @@ class _ContactsPageState extends State<ContactsPage> {
                   splashRadius: 20,
                   onPressed: () {
                     final contactBloc = BlocProvider.of<ContactBloc>(context);
-                    final contactState = contactBloc.state;
-                    final List<ContactModel> contacts;
-                    if (contactState is ContactLoadedState) {
-                      contacts = contactState.contacts;
-                      showDialog(
-                          context: context,
-                          builder: (ctx) =>
-                              BlocProvider.value(
-                                value: contactBloc,
-                                child: AddContactByLinkWidget(
-                                    contacts: contacts),
-                              ));
-                    } else if (contactState is ContactSearchState) {
-                      contacts = contactState.contacts;
-                      showDialog(
-                          context: context,
-                          builder: (ctx) =>
-                              BlocProvider.value(
-                                value: contactBloc,
-                                child: AddContactByLinkWidget(
-                                    contacts: contacts),
-                              ));
-                    }
+                    showDialog(
+                        context: context,
+                        builder: (ctx) =>
+                            BlocProvider.value(
+                              value: contactBloc,
+                              child: AddContactByLinkWidget(),
+                            ));
                   },
                   icon: const Icon(Icons.add))
             ],
@@ -140,7 +121,7 @@ class _ContactsPageState extends State<ContactsPage> {
                       BlocProvider.value(
                         value: contactBloc,
                         child: ContactInfoPage(
-                            card: state.card, isNewCard: true),
+                            card: state.card, isNewCard: true, searchController: searchController),
                       ),
                 ));
               }

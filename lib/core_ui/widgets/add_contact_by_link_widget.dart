@@ -5,9 +5,9 @@ import '../../presentation/blocs/contact_bloc/contact_bloc.dart';
 import 'custom_text_field_widget.dart';
 
 class AddContactByLinkWidget extends StatefulWidget {
-  final List<ContactModel> contacts;
+  //final List<ContactModel> contacts;
 
-  const AddContactByLinkWidget({Key? key, required this.contacts})
+  const AddContactByLinkWidget({Key? key})
       : super(key: key);
 
   @override
@@ -68,10 +68,23 @@ class _AddContactByLinkWidgetState extends State<AddContactByLinkWidget> {
           TextButton(
               onPressed: () {
                 if (_validation.currentState!.validate()) {
+                  final contactBloc = BlocProvider.of<ContactBloc>(context);
+                  final contactState = contactBloc.state;
                   Navigator.pop(context);
-                  BlocProvider.of<ContactBloc>(context).add(
-                      SaveContactManualEvent(
-                          urlController.text, widget.contacts));
+                  if (contactState is ContactLoadedState) {
+                    final List<ContactModel> contacts = contactState.contacts;
+                    BlocProvider.of<ContactBloc>(context).add(
+                        SaveContactManualEvent(urlController.text, contacts));
+                  } else if (contactState is ContactSearchState) {
+                    final List<ContactModel> contacts = contactState.contacts;
+                    final List<ContactModel> foundContacts = contactState.foundContacts;
+                    BlocProvider.of<ContactBloc>(context).add(
+                        SaveContactManualEvent(urlController.text, contacts, foundContacts));
+                  }
+                  // Navigator.pop(context);
+                  // BlocProvider.of<ContactBloc>(context).add(
+                  //     SaveContactManualEvent(
+                  //         urlController.text, widget.contacts));
                 }
               },
               child: const Text('Open', style: TextStyle(fontSize: 18))),

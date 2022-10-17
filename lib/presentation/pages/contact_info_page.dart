@@ -10,8 +10,9 @@ import '../blocs/contact_bloc/contact_bloc.dart';
 class ContactInfoPage extends StatelessWidget {
   final CardModel card;
   final bool isNewCard;
+  final TextEditingController? searchController;
 
-  const ContactInfoPage({Key? key, required this.card, this.isNewCard = false})
+  const ContactInfoPage({Key? key, required this.card, this.isNewCard = false, this.searchController})
       : super(key: key);
 
   @override
@@ -26,6 +27,7 @@ class ContactInfoPage extends StatelessWidget {
         }
 
         if (state is SaveContactSuccessState) {
+          searchController!.clear();
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text('Contact is saved')));
         }

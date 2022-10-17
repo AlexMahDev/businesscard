@@ -72,7 +72,12 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
       emit(SearchLinkErrorState());
     }
 
-    emit(ContactLoadedState(event.contacts));
+    if(event.foundContacts != null) {
+      emit(ContactSearchState(event.contacts, event.foundContacts!));
+    } else {
+      emit(ContactLoadedState(event.contacts));
+    }
+
   }
 
   _getContactsByName(
