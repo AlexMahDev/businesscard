@@ -335,11 +335,19 @@ class _EditCardPageState extends State<EditCardPage> {
                               return null;
                             }),
                         firstName: CustomTextField(
-                            hintText: 'First Name', controller: firstName),
+                            hintText: 'First Name',
+                            controller: firstName,
+                            inputPattern: r'[a-zA-ZА-Яа-яёЁ\s]',
+                        ),
                         middleName: CustomTextField(
-                            hintText: 'Middle Name', controller: middleName),
+                            hintText: 'Middle Name',
+                          controller: middleName,
+                          inputPattern: r'[a-zA-ZА-Яа-яёЁ\s]',),
                         lastName: CustomTextField(
-                            hintText: 'Last Name', controller: lastName),
+                            hintText: 'Last Name',
+                            controller: lastName,
+                          inputPattern: r'[a-zA-ZА-Яа-яёЁ\s]',
+                        ),
                         jobTitle: CustomTextField(
                             hintText: 'Job Title',
                             controller: jobTitle,
@@ -348,7 +356,9 @@ class _EditCardPageState extends State<EditCardPage> {
                                 return "Job title is required";
                               }
                               return null;
-                            }),
+                            },
+                          inputPattern: r'[a-zA-Z0-9А-Яа-яёЁ\s]',
+                            ),
                         department: CustomTextField(
                             hintText: 'Department',
                             controller: department,
@@ -357,7 +367,9 @@ class _EditCardPageState extends State<EditCardPage> {
                                 return "Department is required";
                               }
                               return null;
-                            }),
+                            },
+                          inputPattern: r'[a-zA-Z0-9А-Яа-яёЁ\s]',
+                        ),
                         companyName: CustomTextField(
                             hintText: 'Company Name',
                             controller: companyName,
@@ -366,7 +378,9 @@ class _EditCardPageState extends State<EditCardPage> {
                                 return "Company name is required";
                               }
                               return null;
-                            }),
+                            },
+                          inputPattern: r'[a-zA-Z0-9А-Яа-яёЁ\s]',
+                            ),
                         headLine: CustomTextField(
                             hintText: 'Headline', controller: headLine),
                       ),

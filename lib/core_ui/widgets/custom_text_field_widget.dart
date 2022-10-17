@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import '../../presentation/blocs/text_clear_button_bloc/text_clear_button_bloc.dart';
@@ -15,6 +16,8 @@ class CustomTextField extends StatelessWidget {
 
   final String? Function(String?)? validator;
 
+  final String? inputPattern;
+
   const CustomTextField(
       {Key? key,
       required this.controller,
@@ -23,7 +26,9 @@ class CustomTextField extends StatelessWidget {
       this.icon,
       this.onTextFieldRemove,
       this.validator,
-      this.isTextVisible = true})
+      this.isTextVisible = true,
+      this.inputPattern
+      })
       : super(key: key);
 
   @override
@@ -56,6 +61,9 @@ class CustomTextField extends StatelessWidget {
                   }
                 },
                 child: TextFormField(
+                  inputFormatters: inputPattern != null ? [
+                    FilteringTextInputFormatter.allow(RegExp(inputPattern!))
+                  ] : null,
                   controller: controller,
                   enabled: enabled,
                   obscureText: !isTextVisible,

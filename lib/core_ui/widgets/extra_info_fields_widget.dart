@@ -57,6 +57,14 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
     }
   }
 
+  String? getInputPattern(String key) {
+    if (key == 'phoneNumber') {
+      return r'[+0-9]';
+    } else {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SelectCardColorBloc, int>(
@@ -73,6 +81,7 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
                   itemCount: controllerMap.length,
                   itemBuilder: (BuildContext context, int index) {
                     return CustomTextField(
+                      inputPattern: getInputPattern(controllerMap.keys.elementAt(index)),
                         controller: _getControllerOf(
                             controllerMap.keys.elementAt(index)),
                         hintText:
