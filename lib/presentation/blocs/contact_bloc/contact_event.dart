@@ -27,8 +27,10 @@ class GetContactByNameEvent extends ContactEvent {
 }
 
 class DeleteContactEvent extends ContactEvent {
+
   final String contactId;
   final List<ContactModel> contacts;
+  final List<ContactModel>? foundContacts;
 
-  DeleteContactEvent(this.contactId, this.contacts);
+  DeleteContactEvent(this.contactId, this.contacts, [this.foundContacts]);
 }

@@ -85,7 +85,7 @@ class ContactWidget extends StatelessWidget {
                                     card.cardId, contactState.contacts));
                               } else if (contactState is ContactSearchState) {
                                 contactBloc.add(DeleteContactEvent(
-                                    card.cardId, contactState.contacts));
+                                    card.cardId, contactState.contacts, contactState.foundContacts));
                               }
                               break;
                           }

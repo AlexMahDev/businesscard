@@ -8,26 +8,27 @@ import '../blocs/contact_bloc/contact_bloc.dart';
 import 'contact_info_page.dart';
 
 class ContactsPage extends StatefulWidget {
-  const ContactsPage({Key? key}) : super(key: key);
+
+  final TextEditingController searchController;
+
+  const ContactsPage({Key? key, required this.searchController}) : super(key: key);
 
   @override
   State<ContactsPage> createState() => _ContactsPageState();
 }
 
 class _ContactsPageState extends State<ContactsPage> {
-  late final TextEditingController searchController;
   late final LoadingOverlay loadingOverlay;
 
   @override
   void initState() {
     super.initState();
-    searchController = TextEditingController();
     loadingOverlay = LoadingOverlay();
   }
 
   @override
   void dispose() {
-    searchController.dispose();
+    //searchController.dispose();
     super.dispose();
   }
 
@@ -73,7 +74,7 @@ class _ContactsPageState extends State<ContactsPage> {
                     builder: (context, state) {
                       return TextField(
                         enabled: state is ContactLoadingState ? false : true,
-                        controller: searchController,
+                        controller: widget.searchController,
                         decoration: const InputDecoration(
                             hintText: 'Search',
                             prefixIcon: Icon(Icons.search),
@@ -84,10 +85,10 @@ class _ContactsPageState extends State<ContactsPage> {
                           final contactState = contactBloc.state;
                           if (contactState is ContactLoadedState) {
                             contactBloc.add(GetContactByNameEvent(
-                                searchController.text, contactState.contacts));
+                                widget.searchController.text, contactState.contacts));
                           } else if (contactState is ContactSearchState) {
                             contactBloc.add(GetContactByNameEvent(
-                                searchController.text, contactState.contacts));
+                                widget.searchController.text, contactState.contacts));
                           }
                         },
                       );
@@ -120,7 +121,7 @@ class _ContactsPageState extends State<ContactsPage> {
                       BlocProvider.value(
                         value: contactBloc,
                         child: ContactInfoPage(
-                            card: state.card, isNewCard: true, searchController: searchController),
+                            card: state.card, isNewCard: true, searchController: widget.searchController),
                       ),
                 ));
               }

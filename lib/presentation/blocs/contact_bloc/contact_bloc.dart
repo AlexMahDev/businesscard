@@ -105,15 +105,24 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     emit(DelContactLoadingState());
 
     List<ContactModel> contacts = event.contacts;
+    List<ContactModel>? foundContacts = event.foundContacts;
 
     try {
       await contactRepository.deleteContact(event.contactId);
       contacts.removeWhere((element) => element.contactId == event.contactId);
+      if(foundContacts != null) {
+        foundContacts.removeWhere((element) => element.contactId == event.contactId);
+      }
       emit(DelContactSuccessState());
     } catch (e) {
       emit(DelContactErrorState());
     }
 
-    emit(ContactLoadedState(contacts));
+    if(foundContacts != null) {
+      emit(ContactSearchState(contacts, foundContacts));
+    } else {
+      emit(ContactLoadedState(contacts));
+    }
+
   }
 }
