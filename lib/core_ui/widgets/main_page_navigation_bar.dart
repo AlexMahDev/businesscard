@@ -32,7 +32,7 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
         navigator.push(MaterialPageRoute(
           builder: (BuildContext context) => BlocProvider.value(
             value: contactBloc,
-            child: ContactInfoPage(card: card, isNewCard: true),
+            child: ContactInfoPage(card: card, isNewCard: true, searchController: searchController),
           ),
         ));
       }
@@ -58,7 +58,7 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
             navigator.push(MaterialPageRoute(
               builder: (BuildContext context) => BlocProvider.value(
                 value: contactBloc,
-                child: ContactInfoPage(card: card, isNewCard: true),
+                child: ContactInfoPage(card: card, isNewCard: true, searchController: searchController),
               ),
             ));
           }

@@ -28,7 +28,6 @@ class _ContactsPageState extends State<ContactsPage> {
 
   @override
   void dispose() {
-    //searchController.dispose();
     super.dispose();
   }
 
