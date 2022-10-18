@@ -5,8 +5,6 @@ import '../../presentation/blocs/contact_bloc/contact_bloc.dart';
 import 'custom_text_field_widget.dart';
 
 class AddContactByLinkWidget extends StatefulWidget {
-  //final List<ContactModel> contacts;
-
   const AddContactByLinkWidget({Key? key})
       : super(key: key);
 
@@ -81,10 +79,6 @@ class _AddContactByLinkWidgetState extends State<AddContactByLinkWidget> {
                     BlocProvider.of<ContactBloc>(context).add(
                         SaveContactManualEvent(urlController.text, contacts, foundContacts));
                   }
-                  // Navigator.pop(context);
-                  // BlocProvider.of<ContactBloc>(context).add(
-                  //     SaveContactManualEvent(
-                  //         urlController.text, widget.contacts));
                 }
               },
               child: const Text('Open', style: TextStyle(fontSize: 18))),

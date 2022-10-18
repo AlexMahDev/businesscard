@@ -1,8 +1,4 @@
-import 'package:businesscard/data/repositories/contact_repository.dart';
 import 'package:businesscard/presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:businesscard/presentation/blocs/card_info_bloc/card_info_bloc.dart';
-import 'package:businesscard/presentation/blocs/card_page_bloc/card_page_bloc.dart';
-import 'package:businesscard/presentation/blocs/contact_bloc/contact_bloc.dart';
 import 'package:businesscard/presentation/pages/main_page.dart';
 import 'package:businesscard/presentation/pages/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +6,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'data/repositories/auth_repository.dart';
-import 'data/repositories/card_repository.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -26,7 +21,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final CardPageBloc cardPageBloc = CardPageBloc();
     return RepositoryProvider(
       create: (context) => AuthRepository(),
       child: BlocProvider<AuthBloc>(
@@ -58,7 +52,6 @@ class MyApp extends StatelessWidget {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return const MainPage();
-                    //return const MainPageNavigationBar();
                   }
                   return const WelcomePage();
                 }),

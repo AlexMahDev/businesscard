@@ -9,7 +9,6 @@ class DynamicLinkRepository {
   bool isOpening = false;
 
   Future<CardModel?> retrieveDynamicLink() async {
-    //final navigator = Navigator.of(context);
 
     CardModel? card;
 
@@ -39,10 +38,6 @@ class DynamicLinkRepository {
         final CardModel? card = await CardRepository().getCard(uid, cardId);
         if (card != null) {
           return card;
-          // navigator.push(MaterialPageRoute(
-          //   builder: (BuildContext context) =>
-          //       ContactInfoPage(card: card, isNewCard: true),
-          // ));
         }
       } catch (_) {}
     }

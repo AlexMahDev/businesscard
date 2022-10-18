@@ -21,7 +21,6 @@ class ColorWidget extends StatelessWidget {
           width: 50.0,
           height: 50.0,
           decoration: BoxDecoration(
-            //color: Colors.redAccent,
             shape: BoxShape.circle,
             border: Border.all(
                 color: selectCardColor.state == color
