@@ -5,8 +5,7 @@ import '../../presentation/blocs/contact_bloc/contact_bloc.dart';
 import 'custom_text_field_widget.dart';
 
 class AddContactByLinkWidget extends StatefulWidget {
-  const AddContactByLinkWidget({Key? key})
-      : super(key: key);
+  const AddContactByLinkWidget({Key? key}) : super(key: key);
 
   @override
   State<AddContactByLinkWidget> createState() => _AddContactByLinkWidgetState();
@@ -75,9 +74,11 @@ class _AddContactByLinkWidgetState extends State<AddContactByLinkWidget> {
                         SaveContactManualEvent(urlController.text, contacts));
                   } else if (contactState is ContactSearchState) {
                     final List<ContactModel> contacts = contactState.contacts;
-                    final List<ContactModel> foundContacts = contactState.foundContacts;
+                    final List<ContactModel> foundContacts =
+                        contactState.foundContacts;
                     BlocProvider.of<ContactBloc>(context).add(
-                        SaveContactManualEvent(urlController.text, contacts, foundContacts));
+                        SaveContactManualEvent(
+                            urlController.text, contacts, foundContacts));
                   }
                 }
               },

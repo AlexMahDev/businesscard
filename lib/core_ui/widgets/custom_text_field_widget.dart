@@ -27,8 +27,7 @@ class CustomTextField extends StatelessWidget {
       this.onTextFieldRemove,
       this.validator,
       this.isTextVisible = true,
-      this.inputPattern
-      })
+      this.inputPattern})
       : super(key: key);
 
   @override
@@ -61,9 +60,12 @@ class CustomTextField extends StatelessWidget {
                   }
                 },
                 child: TextFormField(
-                  inputFormatters: inputPattern != null ? [
-                    FilteringTextInputFormatter.allow(RegExp(inputPattern!))
-                  ] : null,
+                  inputFormatters: inputPattern != null
+                      ? [
+                          FilteringTextInputFormatter.allow(
+                              RegExp(inputPattern!))
+                        ]
+                      : null,
                   controller: controller,
                   enabled: enabled,
                   obscureText: !isTextVisible,

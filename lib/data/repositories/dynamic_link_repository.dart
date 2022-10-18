@@ -5,11 +5,9 @@ import '../../domain/models/card_model.dart';
 import '../../presentation/pages/contact_info_page.dart';
 
 class DynamicLinkRepository {
-
   bool isOpening = false;
 
   Future<CardModel?> retrieveDynamicLink() async {
-
     CardModel? card;
 
     try {
@@ -22,10 +20,7 @@ class DynamicLinkRepository {
     } catch (_) {}
 
     return card;
-
   }
-
-
 
   Future<CardModel?> handleDynamicLink(Uri url) async {
     List<String> separatedString = [];

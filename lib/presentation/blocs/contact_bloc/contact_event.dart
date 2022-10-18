@@ -27,7 +27,6 @@ class GetContactByNameEvent extends ContactEvent {
 }
 
 class DeleteContactEvent extends ContactEvent {
-
   final String contactId;
   final List<ContactModel> contacts;
   final List<ContactModel>? foundContacts;

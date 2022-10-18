@@ -12,7 +12,11 @@ class ContactInfoPage extends StatelessWidget {
   final bool isNewCard;
   final TextEditingController? searchController;
 
-  const ContactInfoPage({Key? key, required this.card, this.isNewCard = false, this.searchController})
+  const ContactInfoPage(
+      {Key? key,
+      required this.card,
+      this.isNewCard = false,
+      this.searchController})
       : super(key: key);
 
   @override

@@ -24,11 +24,9 @@ class MyApp extends StatelessWidget {
     return RepositoryProvider(
       create: (context) => AuthRepository(),
       child: BlocProvider<AuthBloc>(
-        create: (context) =>
-            AuthBloc(
-              authRepository: RepositoryProvider.of<AuthRepository>(
-                  context),
-            ),
+        create: (context) => AuthBloc(
+          authRepository: RepositoryProvider.of<AuthRepository>(context),
+        ),
         child: GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: MaterialApp(

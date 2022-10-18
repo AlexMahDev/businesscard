@@ -9,7 +9,6 @@ import '../../presentation/pages/cards_page.dart';
 import '../../presentation/pages/contact_info_page.dart';
 import '../../presentation/pages/contacts_page.dart';
 
-
 class MainPageNavigationBar extends StatefulWidget {
   const MainPageNavigationBar({Key? key}) : super(key: key);
 
@@ -18,7 +17,6 @@ class MainPageNavigationBar extends StatefulWidget {
 }
 
 class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
-
   DynamicLinkRepository dynamicLinkRepository = DynamicLinkRepository();
   late final TextEditingController searchController;
   late final LoadingOverlay loadingOverlay;
@@ -32,11 +30,10 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
       CardModel? card = await dynamicLinkRepository.retrieveDynamicLink();
       if (card != null) {
         navigator.push(MaterialPageRoute(
-          builder: (BuildContext context) =>
-              BlocProvider.value(
-                value: contactBloc,
-                child: ContactInfoPage(card: card, isNewCard: true),
-              ),
+          builder: (BuildContext context) => BlocProvider.value(
+            value: contactBloc,
+            child: ContactInfoPage(card: card, isNewCard: true),
+          ),
         ));
       }
     } catch (_) {
@@ -54,15 +51,15 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
         // TODO: FIXED BUG WITH FIREBASE: FirebaseDynamicLinks fired multiple times
         if (isOpening == false) {
           isOpening = true;
-          CardModel? card = await dynamicLinkRepository.handleDynamicLink(dynamicLinkData.link);
+          CardModel? card = await dynamicLinkRepository
+              .handleDynamicLink(dynamicLinkData.link);
           if (card != null) {
             loadingOverlay.hide();
             navigator.push(MaterialPageRoute(
-              builder: (BuildContext context) =>
-                  BlocProvider.value(
-                    value: contactBloc,
-                    child: ContactInfoPage(card: card, isNewCard: true),
-                  ),
+              builder: (BuildContext context) => BlocProvider.value(
+                value: contactBloc,
+                child: ContactInfoPage(card: card, isNewCard: true),
+              ),
             ));
           }
           isOpening = false;
@@ -74,8 +71,6 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
       loadingOverlay.hide();
     }
   }
-
-
 
   @override
   void initState() {
@@ -97,7 +92,7 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
   int _selectedIndex = 0;
 
   Widget _selectedScreen(int selectedIndex) {
-    switch(selectedIndex){
+    switch (selectedIndex) {
       case 0:
         return const CardsPage();
       case 1:
@@ -105,7 +100,6 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
       default:
         return const CardsPage();
     }
-
   }
 
   void _onItemTapped(int index) {

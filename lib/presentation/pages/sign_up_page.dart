@@ -59,8 +59,7 @@ class _SignUpPageState extends State<SignUpPage> {
           }
           if (state is Authenticated) {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (context) => const MainPage()),
+                MaterialPageRoute(builder: (context) => const MainPage()),
                 (route) => false);
           }
           if (state is AuthError) {

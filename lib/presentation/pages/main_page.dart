@@ -9,7 +9,6 @@ import '../blocs/card_info_bloc/card_info_bloc.dart';
 import '../blocs/card_page_bloc/card_page_bloc.dart';
 import '../blocs/contact_bloc/contact_bloc.dart';
 
-
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -20,7 +19,7 @@ class MainPage extends StatelessWidget {
         if (state is UnAuthenticated) {
           Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => const WelcomePage()),
-                (route) => false,
+            (route) => false,
           );
         }
       },
@@ -39,26 +38,22 @@ class MainPage extends StatelessWidget {
               create: (context) => CardPageBloc(),
             ),
             BlocProvider<CardInfoBloc>(
-              create: (context) =>
-              CardInfoBloc(
-                  cardRepository: RepositoryProvider.of<CardRepository>(
-                      context),
+              create: (context) => CardInfoBloc(
+                  cardRepository:
+                      RepositoryProvider.of<CardRepository>(context),
                   cardPageBloc: BlocProvider.of<CardPageBloc>(context))
                 ..add(GetCardInfoEvent()),
             ),
             BlocProvider<ContactBloc>(
-              create: (context) =>
-              ContactBloc(
+              create: (context) => ContactBloc(
                   contactRepository:
-                  RepositoryProvider.of<ContactRepository>(context))
+                      RepositoryProvider.of<ContactRepository>(context))
                 ..add(GetContactEvent()),
             ),
           ],
           child: const MainPageNavigationBar(),
         ),
-
       ),
     );
   }
 }
-

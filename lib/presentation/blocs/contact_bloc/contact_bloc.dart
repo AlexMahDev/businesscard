@@ -72,12 +72,11 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
       emit(SearchLinkErrorState());
     }
 
-    if(event.foundContacts != null) {
+    if (event.foundContacts != null) {
       emit(ContactSearchState(event.contacts, event.foundContacts!));
     } else {
       emit(ContactLoadedState(event.contacts));
     }
-
   }
 
   _getContactsByName(
@@ -110,19 +109,19 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     try {
       await contactRepository.deleteContact(event.contactId);
       contacts.removeWhere((element) => element.contactId == event.contactId);
-      if(foundContacts != null) {
-        foundContacts.removeWhere((element) => element.contactId == event.contactId);
+      if (foundContacts != null) {
+        foundContacts
+            .removeWhere((element) => element.contactId == event.contactId);
       }
       emit(DelContactSuccessState());
     } catch (e) {
       emit(DelContactErrorState());
     }
 
-    if(foundContacts != null) {
+    if (foundContacts != null) {
       emit(ContactSearchState(contacts, foundContacts));
     } else {
       emit(ContactLoadedState(contacts));
     }
-
   }
 }

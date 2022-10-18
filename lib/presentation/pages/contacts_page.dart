@@ -8,10 +8,10 @@ import '../blocs/contact_bloc/contact_bloc.dart';
 import 'contact_info_page.dart';
 
 class ContactsPage extends StatefulWidget {
-
   final TextEditingController searchController;
 
-  const ContactsPage({Key? key, required this.searchController}) : super(key: key);
+  const ContactsPage({Key? key, required this.searchController})
+      : super(key: key);
 
   @override
   State<ContactsPage> createState() => _ContactsPageState();
@@ -52,8 +52,7 @@ class _ContactsPageState extends State<ContactsPage> {
                     final contactBloc = BlocProvider.of<ContactBloc>(context);
                     showDialog(
                         context: context,
-                        builder: (ctx) =>
-                            BlocProvider.value(
+                        builder: (ctx) => BlocProvider.value(
                               value: contactBloc,
                               child: const AddContactByLinkWidget(),
                             ));
@@ -81,14 +80,16 @@ class _ContactsPageState extends State<ContactsPage> {
                             border: InputBorder.none),
                         onChanged: (name) {
                           final contactBloc =
-                          BlocProvider.of<ContactBloc>(context);
+                              BlocProvider.of<ContactBloc>(context);
                           final contactState = contactBloc.state;
                           if (contactState is ContactLoadedState) {
                             contactBloc.add(GetContactByNameEvent(
-                                widget.searchController.text, contactState.contacts));
+                                widget.searchController.text,
+                                contactState.contacts));
                           } else if (contactState is ContactSearchState) {
                             contactBloc.add(GetContactByNameEvent(
-                                widget.searchController.text, contactState.contacts));
+                                widget.searchController.text,
+                                contactState.contacts));
                           }
                         },
                       );
@@ -117,12 +118,13 @@ class _ContactsPageState extends State<ContactsPage> {
               if (state is SearchLinkSuccessState) {
                 final contactBloc = BlocProvider.of<ContactBloc>(context);
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      BlocProvider.value(
-                        value: contactBloc,
-                        child: ContactInfoPage(
-                            card: state.card, isNewCard: true, searchController: widget.searchController),
-                      ),
+                  builder: (BuildContext context) => BlocProvider.value(
+                    value: contactBloc,
+                    child: ContactInfoPage(
+                        card: state.card,
+                        isNewCard: true,
+                        searchController: widget.searchController),
+                  ),
                 ));
               }
 
@@ -163,23 +165,23 @@ class _ContactsPageState extends State<ContactsPage> {
                 if (state is ContactLoadedState) {
                   return SliverList(
                       delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                          return ContactWidget(
-                              card: state.contacts[index].cardModel);
-                        },
-                        childCount: state.contacts.length,
-                      ));
+                    (context, index) {
+                      return ContactWidget(
+                          card: state.contacts[index].cardModel);
+                    },
+                    childCount: state.contacts.length,
+                  ));
                 }
 
                 if (state is ContactSearchState) {
                   return SliverList(
                       delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                          return ContactWidget(
-                              card: state.foundContacts[index].cardModel);
-                        },
-                        childCount: state.foundContacts.length,
-                      ));
+                    (context, index) {
+                      return ContactWidget(
+                          card: state.foundContacts[index].cardModel);
+                    },
+                    childCount: state.foundContacts.length,
+                  ));
                 }
                 if (state is ContactErrorState) {
                   return SliverFillRemaining(

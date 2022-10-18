@@ -43,9 +43,9 @@ class ContactWidget extends StatelessWidget {
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) =>
                     BlocProvider<ContactBloc>.value(
-                      value: contactBloc,
-                      child: ContactInfoPage(card: card),
-                    ),
+                  value: contactBloc,
+                  child: ContactInfoPage(card: card),
+                ),
               ));
             },
             child: Padding(
@@ -58,14 +58,13 @@ class ContactWidget extends StatelessWidget {
                           width: 80, height: 80, fit: BoxFit.cover,
                           errorBuilder: (BuildContext context, Object exception,
                               StackTrace? stackTrace) {
-                            return Container();
-                          }),
+                        return Container();
+                      }),
                     ),
                   Expanded(
                     child: ListTile(
                       title: Text(
-                          '${card.generalInfo.firstName} ${card.generalInfo
-                              .middleName} ${card.generalInfo.lastName}',
+                          '${card.generalInfo.firstName} ${card.generalInfo.middleName} ${card.generalInfo.lastName}',
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                       subtitle: Text(getSubTitle(),
@@ -78,20 +77,21 @@ class ContactWidget extends StatelessWidget {
                           switch (item) {
                             case 1:
                               final contactBloc =
-                              BlocProvider.of<ContactBloc>(context);
+                                  BlocProvider.of<ContactBloc>(context);
                               final contactState = contactBloc.state;
                               if (contactState is ContactLoadedState) {
                                 contactBloc.add(DeleteContactEvent(
                                     card.cardId, contactState.contacts));
                               } else if (contactState is ContactSearchState) {
                                 contactBloc.add(DeleteContactEvent(
-                                    card.cardId, contactState.contacts, contactState.foundContacts));
+                                    card.cardId,
+                                    contactState.contacts,
+                                    contactState.foundContacts));
                               }
                               break;
                           }
                         },
-                        itemBuilder: (context) =>
-                        [
+                        itemBuilder: (context) => [
                           const PopupMenuItem(
                             value: 1,
                             child: Text(

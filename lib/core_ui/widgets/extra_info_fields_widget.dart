@@ -81,7 +81,8 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
                   itemCount: controllerMap.length,
                   itemBuilder: (BuildContext context, int index) {
                     return CustomTextField(
-                      inputPattern: getInputPattern(controllerMap.keys.elementAt(index)),
+                        inputPattern: getInputPattern(
+                            controllerMap.keys.elementAt(index)),
                         controller: _getControllerOf(
                             controllerMap.keys.elementAt(index)),
                         hintText:
