@@ -1,12 +1,15 @@
 import 'package:businesscard/presentation/pages/sign_in_page.dart';
 import 'package:businesscard/presentation/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.red.shade400,
@@ -27,8 +30,8 @@ class WelcomePage extends StatelessWidget {
                       'assets/images/logo/BCard-logo.png',
                     ),
                   ),
-                  const Text("Welcome to BCard.",
-                      style: TextStyle(
+                  Text(localText!.welcomeToBCard,
+                      style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
@@ -36,8 +39,8 @@ class WelcomePage extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  const Text("Let's get your new BCard set up",
-                      style: TextStyle(
+                  Text(localText.setUpNewCard,
+                      style: const TextStyle(
                           fontSize: 20,
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
@@ -60,9 +63,9 @@ class WelcomePage extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15)),
-                      child: const Center(
-                        child: Text("Create your card",
-                            style: TextStyle(
+                      child: Center(
+                        child: Text(localText.createCardButton,
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.redAccent,
                                 fontSize: 16)),
@@ -78,8 +81,8 @@ class WelcomePage extends StatelessWidget {
                           builder: (BuildContext context) => const SignInPage(),
                         ));
                       },
-                      child: const Text("Log in with existing account",
-                          style: TextStyle(
+                      child: Text(localText.logInButton,
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                               fontSize: 15),

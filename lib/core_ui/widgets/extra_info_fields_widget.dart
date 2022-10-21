@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import '../../presentation/blocs/text_field_bloc/text_field_bloc.dart';
 import 'custom_text_field_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ExtraInfoFieldsWidget extends StatelessWidget {
   final Map<String, TextEditingController> controllerMap;
@@ -17,24 +18,6 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
       controllerMap[name] = controller;
     }
     return controller;
-  }
-
-  String getHintText(String key) {
-    if (key == 'phoneNumber') {
-      return 'Phone Number';
-    } else if (key == 'email') {
-      return 'Email';
-    } else if (key == 'link') {
-      return 'Link';
-    } else if (key == 'linkedIn') {
-      return 'LinkedIn';
-    } else if (key == 'gitHub') {
-      return 'GitHub';
-    } else if (key == 'telegram') {
-      return 'Telegram';
-    } else {
-      return '';
-    }
   }
 
   Widget getIcon(String key) {
@@ -67,6 +50,24 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
+    String getHintText(String key) {
+      if (key == 'phoneNumber') {
+        return localText!.phoneNumber;
+      } else if (key == 'email') {
+        return localText!.email;
+      } else if (key == 'link') {
+        return localText!.link;
+      } else if (key == 'linkedIn') {
+        return localText!.linkedIn;
+      } else if (key == 'gitHub') {
+        return localText!.gitHub;
+      } else if (key == 'telegram') {
+        return localText!.telegram;
+      } else {
+        return '';
+      }
+    }
     return BlocBuilder<SelectCardColorBloc, int>(
       builder: (context, state) {
         return BlocBuilder<TextFieldBloc, TextFieldState>(
@@ -86,6 +87,7 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
                         controller: _getControllerOf(
                             controllerMap.keys.elementAt(index)),
                         hintText:
+
                             getHintText(controllerMap.keys.elementAt(index)),
                         icon: getIcon(controllerMap.keys.elementAt(index)),
                         onTextFieldRemove: () {
@@ -97,7 +99,7 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
                         },
                         validator: (text) {
                           if (text == '') {
-                            return "${getHintText(controllerMap.keys.elementAt(index))} is required";
+                            return "${getHintText(controllerMap.keys.elementAt(index))} ${localText!.isRequired}";
                           }
                           return null;
                         });

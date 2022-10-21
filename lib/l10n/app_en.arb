@@ -1,38 +1,77 @@
 {
+
   "welcomeToBCard": "Welcome to BCard.",
-  "setUpNewCard": "Let's get your new BCard set up",
-  "createCardButton": "Create your card",
-  "logInButton": "Log in with existing account",
-
   "welcomeSignUp": "Welcome, let's sign up",
-  "email": "Email",
-  "password": "Password",
-  "confirmPassword": "Confirm password",
-  "createYourCardButton": "Create your card",
-
   "welcomeBack": "Welcome back, let's sign in",
+
+
+  "setUpNewCard": "Let's get your new BCard set up",
   "signInButton": "Sign In",
-
   "signOutButton": "Sign Out",
-  "doNotHaveCards": "Looks like you don't have a card set up yet! Create a card to get started!",
-  "createCardButton": "Create a card",
-
-  "createCardTitle": "Create A Card",
   "setTitle": "Set a title (e.g. Work or Personal)",
+
+
+  "isRequired": "is required",
+
+  "passwordIsRequired": "Password is required",
+  "passwordIsShort": "Your password is too short",
+  "password": "Password",
+  "phoneNumber": "Phone Number",
+
+
   "addProfilePicture": "Add Profile Picture",
-  "editProfilePicture": "Edit Profile Picture",
-  "removeProfilePicture": "Remove Profile Picture",
   "addCompanyPicture": "Add Company Logo",
-  "editCompanyPicture": "Edit Company Logo",
+  "addContact": "Add contact",
+
+  "removeProfilePicture": "Remove Profile Picture",
   "removeCompanyPicture": "Remove Company Logo",
 
-
-  "contactsTitle": "Contacts",
-  "addContact": "Add contact",
   "enterLink": "Enter link you received from contact",
-  "link": "Link",
-  "open": "Open",
-  "cancel": "Cancel"
+  "editProfilePicture": "Edit Profile Picture",
+  "editCompanyPicture": "Edit Company Logo",
+  "enterValidEmail": "Enter valid email",
+  "emailIsRequired": "Email is required",
+  "email": "Email",
 
+  "link": "Link",
+  "linkedIn": "LinkedIn",
+  "lastName": "Last Name",
+  "logInButton": "Log in with existing account",
+
+  "open": "Open",
+
+
+  "cancel": "Cancel",
+  "createCardButton": "Create a card",
+  "createCardTitle": "Create A Card",
+  "checkPassword": "Check your password",
+  "confirmPassword": "Confirm password",
+  "createCardButton": "Create your card",
+  "contactsTitle": "Contacts",
+  "createYourCardButton": "Create your card",
+  "companyName": "Company Name",
+  "companyNameIsRequired": "Company name is required",
+
+
+  "fullName": "Full Name",
+  "firstName": "First Name",
+
+  "nameIsRequired": "Name is required",
+
+  "middleName": "Middle Name",
+
+  "jobTitle": "Job Title",
+  "jobTitleIsRequired": "Job title is required",
+
+  "department": "Department",
+  "departmentIsRequired": "Department is required",
+  "doNotHaveCards": "Looks like you don't have a card set up yet! Create a card to get started!",
+
+
+  "headline": "Headline",
+
+  "gitHub": "GitHub",
+
+  "telegram": "Telegram"
 
 }

@@ -5,6 +5,7 @@ import '../../core_ui/widgets/custom_text_field_widget.dart';
 import '../../core_ui/widgets/loading_overlay_widget.dart';
 import '../blocs/auth_bloc/auth_bloc.dart';
 import 'main_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -36,6 +37,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
@@ -73,22 +75,22 @@ class _SignInPageState extends State<SignInPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Welcome back, let's sign in",
-                        style: TextStyle(
+                    Text(localText!.welcomeBack,
+                        style: const TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold)),
                     const SizedBox(
                       height: 40,
                     ),
                     CustomTextField(
                         controller: email,
-                        hintText: "Email",
+                        hintText: localText.email,
                         validator: (text) {
                           if (text == '') {
-                            return "Email is required";
+                            return '${localText.email} ${localText.isRequired}';
                           } else if (!RegExp(
                                   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                               .hasMatch(text!)) {
-                            return "Enter valid email";
+                            return localText.enterValidEmail;
                           }
                           return null;
                         }),
@@ -97,13 +99,13 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     CustomTextField(
                         controller: password,
-                        hintText: "Password",
+                        hintText: localText.password,
                         isTextVisible: false,
                         validator: (text) {
                           if (text == '') {
-                            return "Password is required";
+                            return '${localText.password} ${localText.isRequired}';
                           } else if (text!.length < 8) {
-                            return "Your password is too short";
+                            return localText.passwordIsShort;
                           }
                           return null;
                         }),
@@ -123,9 +125,9 @@ class _SignInPageState extends State<SignInPage> {
                         decoration: BoxDecoration(
                             color: Colors.redAccent,
                             borderRadius: BorderRadius.circular(15)),
-                        child: const Center(
-                          child: Text("Sign In",
-                              style: TextStyle(
+                        child: Center(
+                          child: Text(localText.signInButton,
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                   fontSize: 16)),

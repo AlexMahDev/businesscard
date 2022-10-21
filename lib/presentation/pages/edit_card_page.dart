@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../core_ui/widgets/choose_color_widget.dart';
 import '../../core_ui/widgets/custom_app_bar.dart';
 import '../../core_ui/widgets/custom_text_field_widget.dart';
@@ -118,6 +118,7 @@ class _EditCardPageState extends State<EditCardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider<TextFieldBloc>(
@@ -305,85 +306,85 @@ class _EditCardPageState extends State<EditCardPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: CustomTextField(
-                          hintText: 'Set a title (e.g. Work or Personal)',
+                          hintText: localText!.setTitle,
                           controller: cardTitle,
                         ),
                       ),
                       const ChooseColorWidget(),
                       ImageSectionWidget(
                           imageBloc: profileImageBloc,
-                          addTitle: 'Add Profile Picture',
-                          editTitle: 'Edit Profile Picture',
-                          removeTitle: 'Remove Profile Picture'),
+                          addTitle: localText.addProfilePicture,
+                          editTitle: localText.editProfilePicture,
+                          removeTitle: localText.removeProfilePicture),
                       const SizedBox(
                         height: 30,
                       ),
                       ImageSectionWidget(
                           imageBloc: companyLogoImageBloc,
-                          addTitle: 'Add Company Logo',
-                          editTitle: 'Edit Company Logo',
-                          removeTitle: 'Remove Company Logo'),
+                          addTitle: localText.addCompanyPicture,
+                          editTitle: localText.editCompanyPicture,
+                          removeTitle: localText.removeCompanyPicture),
                       GeneralInfoFieldsWidget(
                         fullName: CustomTextField(
-                            hintText: 'Full Name',
+                            hintText: localText.fullName,
                             enabled: false,
                             controller: fullName,
                             validator: (text) {
                               if (text == '') {
-                                return "Name is required";
+                                return '${localText.fullName} ${localText.isRequired}';
                               }
                               return null;
                             }),
                         firstName: CustomTextField(
-                          hintText: 'First Name',
+                          hintText: localText.firstName,
                           controller: firstName,
                           inputPattern: r'[a-zA-ZА-Яа-яёЁ\s]',
                         ),
                         middleName: CustomTextField(
-                          hintText: 'Middle Name',
+                          hintText: localText.middleName,
                           controller: middleName,
                           inputPattern: r'[a-zA-ZА-Яа-яёЁ\s]',
                         ),
                         lastName: CustomTextField(
-                          hintText: 'Last Name',
+                          hintText: localText.lastName,
                           controller: lastName,
                           inputPattern: r'[a-zA-ZА-Яа-яёЁ\s]',
                         ),
                         jobTitle: CustomTextField(
-                          hintText: 'Job Title',
+                          hintText: localText.jobTitle,
                           controller: jobTitle,
                           validator: (text) {
                             if (text == '') {
-                              return "Job title is required";
+                              return '${localText.jobTitle} ${localText.isRequired}';
                             }
                             return null;
                           },
                           inputPattern: r'[a-zA-Z0-9А-Яа-яёЁ\s]',
                         ),
                         department: CustomTextField(
-                          hintText: 'Department',
+                          hintText: localText.department,
                           controller: department,
                           validator: (text) {
                             if (text == '') {
-                              return "Department is required";
+                              return '${localText.department} ${localText.isRequired}';
                             }
                             return null;
                           },
                           inputPattern: r'[a-zA-Z0-9А-Яа-яёЁ\s]',
                         ),
                         companyName: CustomTextField(
-                          hintText: 'Company Name',
+                          hintText: localText.companyName,
                           controller: companyName,
                           validator: (text) {
                             if (text == '') {
-                              return "Company name is required";
+                              return '${localText.companyName} ${localText.isRequired}';
                             }
                             return null;
                           },
                           inputPattern: r'[a-zA-Z0-9А-Яа-яёЁ\s]',
                         ),
                         headLine: CustomTextField(
-                            hintText: 'Headline', controller: headLine),
+                            hintText: localText.headline, controller: headLine),
                       ),
                       ExtraInfoFieldsWidget(controllerMap: _controllerMap),
                       const TapFieldBelowWidget(),

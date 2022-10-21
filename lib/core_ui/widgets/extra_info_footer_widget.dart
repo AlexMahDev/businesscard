@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import '../../presentation/blocs/text_field_bloc/text_field_bloc.dart';
 import 'extra_info_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ExtraInfoFooterWidget extends StatelessWidget {
   final Map<String, TextEditingController> controllerMap;
@@ -12,6 +14,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return BlocBuilder<SelectCardColorBloc, int>(
       builder: (context, state) {
         return Container(
@@ -24,7 +27,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ExtraInfoWidget(
-                      title: 'Phone Number',
+                      title: localText!.phoneNumber,
                       icon: const Icon(Icons.phone, color: Colors.white),
                       onPressed: () {
                         final textFieldBloc =
@@ -40,7 +43,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                         }
                       }),
                   ExtraInfoWidget(
-                      title: 'Email',
+                      title: localText.email,
                       icon: const Icon(Icons.email, color: Colors.white),
                       onPressed: () {
                         final textFieldBloc =
@@ -55,7 +58,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                         }
                       }),
                   ExtraInfoWidget(
-                      title: 'Link',
+                      title: localText.link,
                       icon: const Icon(Icons.link, color: Colors.white),
                       onPressed: () {
                         final textFieldBloc =
@@ -79,7 +82,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ExtraInfoWidget(
-                      title: 'LinkedIn',
+                      title: localText.linkedIn,
                       icon: Image.asset('assets/images/icons/linkedin-icon.png',
                           color: Colors.white, height: 20),
                       onPressed: () {
@@ -95,7 +98,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                         }
                       }),
                   ExtraInfoWidget(
-                      title: 'GitHub',
+                      title: localText.gitHub,
                       icon: Image.asset('assets/images/icons/github-icon.png',
                           color: Colors.white, height: 20),
                       onPressed: () {
@@ -111,7 +114,7 @@ class ExtraInfoFooterWidget extends StatelessWidget {
                         }
                       }),
                   ExtraInfoWidget(
-                      title: 'Telegram',
+                      title: localText.telegram,
                       icon: const Icon(Icons.telegram, color: Colors.white),
                       onPressed: () {
                         final textFieldBloc =
