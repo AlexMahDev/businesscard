@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class CustomErrorWidget extends StatelessWidget {
   final VoidCallback onTap;
@@ -7,6 +9,7 @@ class CustomErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return GestureDetector(
       onTap: onTap,
       child: Column(
@@ -14,9 +17,9 @@ class CustomErrorWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset('assets/images/error.png'),
-          const Center(
-              child: Text('Tap to refresh...',
-                  style: TextStyle(fontSize: 25, color: Colors.grey)))
+          Center(
+              child: Text(localText!.tapToRefresh,
+                  style: const TextStyle(fontSize: 25, color: Colors.grey)))
         ],
       ),
     );

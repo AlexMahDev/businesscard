@@ -156,7 +156,7 @@ class _EditCardPageState extends State<EditCardPage> {
                 if (state is UpdateCardErrorState ||
                     state is DeleteCardErrorState) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Something went wrong :(')));
+                      SnackBar(content: Text(localText!.errorText)));
                 }
               },
             ),
@@ -172,7 +172,7 @@ class _EditCardPageState extends State<EditCardPage> {
                 }
                 if (state is ImagePickErrorState) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Something went wrong :(')));
+                      SnackBar(content: Text(localText!.errorText)));
                 }
               },
             ),
@@ -189,14 +189,14 @@ class _EditCardPageState extends State<EditCardPage> {
 
                 if (state is ImagePickErrorState) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Something went wrong :(')));
+                      SnackBar(content: Text(localText!.errorText)));
                 }
               },
             ),
           ],
           child: Scaffold(
               appBar: CustomAppBar(
-                title: const Text('Edit Your Card'),
+                title: Text(localText!.editCard),
                 leading: IconButton(
                   icon: const Icon(Icons.check),
                   splashRadius: 20,
@@ -218,7 +218,7 @@ class _EditCardPageState extends State<EditCardPage> {
                           generalInfo: GeneralInfoModel(
                               cardTitle: cardTitle.text.isNotEmpty
                                   ? cardTitle.text
-                                  : 'BCard',
+                                  : localText.appTitle,
                               firstName: firstName.text,
                               middleName: middleName.text,
                               lastName: lastName.text,
@@ -274,21 +274,21 @@ class _EditCardPageState extends State<EditCardPage> {
                       }
                     },
                     itemBuilder: (context) => [
-                      const PopupMenuItem(
+                      PopupMenuItem(
                         value: 1,
                         child: Text(
-                          "Not save",
-                          style: TextStyle(
+                          localText.notSave,
+                          style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               color: Colors.redAccent),
                         ),
                       ),
                       const PopupMenuDivider(),
-                      const PopupMenuItem(
+                      PopupMenuItem(
                         value: 2,
                         child: Text(
-                          "Delete",
-                          style: TextStyle(
+                          localText.delete,
+                          style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               color: Colors.redAccent),
                         ),
@@ -306,7 +306,7 @@ class _EditCardPageState extends State<EditCardPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: CustomTextField(
-                          hintText: localText!.setTitle,
+                          hintText: localText.setTitle,
                           controller: cardTitle,
                         ),
                       ),

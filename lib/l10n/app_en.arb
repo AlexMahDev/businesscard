@@ -1,5 +1,7 @@
 {
 
+  "appTitle": "BCard",
+
   "welcomeToBCard": "Welcome to BCard.",
   "welcomeSignUp": "Welcome, let's sign up",
   "welcomeBack": "Welcome back, let's sign in",
@@ -9,11 +11,14 @@
   "signInButton": "Sign In",
   "signOutButton": "Sign Out",
   "setTitle": "Set a title (e.g. Work or Personal)",
+  "search": "Search",
+  "selectFromPhotoLibrary": "Select from photo library",
+
 
 
   "isRequired": "is required",
+  "infoArea": "Tap a field below to add it",
 
-  "passwordIsRequired": "Password is required",
   "passwordIsShort": "Your password is too short",
   "password": "Password",
   "phoneNumber": "Phone Number",
@@ -29,9 +34,11 @@
   "enterLink": "Enter link you received from contact",
   "editProfilePicture": "Edit Profile Picture",
   "editCompanyPicture": "Edit Company Logo",
+  "editCard": "Edit Your Card",
   "enterValidEmail": "Enter valid email",
-  "emailIsRequired": "Email is required",
   "email": "Email",
+  "errorText": "Something went wrong :(",
+  "enterValidUrl": "Enter valid URL",
 
   "link": "Link",
   "linkedIn": "LinkedIn",
@@ -50,28 +57,43 @@
   "contactsTitle": "Contacts",
   "createYourCardButton": "Create your card",
   "companyName": "Company Name",
-  "companyNameIsRequired": "Company name is required",
+  "contactIsSaved": "Contact is saved",
+  "contactsNavBar": "Contacts",
 
 
   "fullName": "Full Name",
   "firstName": "First Name",
 
-  "nameIsRequired": "Name is required",
-
   "middleName": "Middle Name",
+  "myCard": "My Card",
 
   "jobTitle": "Job Title",
-  "jobTitleIsRequired": "Job title is required",
 
   "department": "Department",
-  "departmentIsRequired": "Department is required",
   "doNotHaveCards": "Looks like you don't have a card set up yet! Create a card to get started!",
+  "delete": "Delete",
 
 
   "headline": "Headline",
 
   "gitHub": "GitHub",
 
-  "telegram": "Telegram"
+  "telegram": "Telegram",
+
+  "notSave": "Not save",
+
+  "url": "URL",
+  "useCameraToReceiveTheCard": "Point your camera at the QR code to receive the card!",
+
+  "findMyCardByLink": "You can find my BCard following the link:",
+
+  "tapToRefresh": "Tap to refresh...",
+  "takePhoto": "Take photo",
+
+  "yourCardNavBar": "Your Card",
+
+  "send": "Send"
+
+
 
 }

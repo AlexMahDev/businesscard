@@ -8,6 +8,8 @@ import '../../presentation/blocs/contact_bloc/contact_bloc.dart';
 import '../../presentation/pages/cards_page.dart';
 import '../../presentation/pages/contact_info_page.dart';
 import '../../presentation/pages/contacts_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class MainPageNavigationBar extends StatefulWidget {
   const MainPageNavigationBar({Key? key}) : super(key: key);
@@ -116,6 +118,7 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return Scaffold(
       body: Center(
         child: _selectedScreen(_selectedIndex),
@@ -128,14 +131,14 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
           backgroundColor: Colors.white,
           selectedItemColor: Colors.redAccent,
           enableFeedback: false,
-          items: const <BottomNavigationBarItem>[
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.contact_mail),
-              label: 'Your Card',
+              icon: const Icon(Icons.contact_mail),
+              label: localText!.yourCardNavBar,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.contacts),
-              label: 'Contacts',
+              icon: const Icon(Icons.contacts),
+              label: localText.contactsNavBar,
             ),
           ],
           currentIndex: _selectedIndex,

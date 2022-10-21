@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/models/contact_model.dart';
 import '../../presentation/blocs/contact_bloc/contact_bloc.dart';
 import 'custom_text_field_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class AddContactByLinkWidget extends StatefulWidget {
   const AddContactByLinkWidget({Key? key}) : super(key: key);
@@ -29,31 +31,32 @@ class _AddContactByLinkWidgetState extends State<AddContactByLinkWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return Form(
       key: _validation,
       child: AlertDialog(
-        title: const Text("Add contact"),
+        title: Text(localText!.addContact),
         content: SizedBox(
           width: 400,
           height: 120,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Enter link you received from contact"),
+              Text(localText.enterLink),
               const SizedBox(
                 height: 10,
               ),
               Expanded(
                 child: CustomTextField(
                     controller: urlController,
-                    hintText: "Link",
+                    hintText: localText.link,
                     validator: (text) {
                       if (text == '') {
-                        return "URL is required";
+                        return "${localText.url} ${localText.isRequired}";
                       } else if (!RegExp(
                               r"^https:\/\/alexmahdev\.page\.link\/\b")
                           .hasMatch(text!)) {
-                        return "Enter valid URL";
+                        return localText.enterValidUrl;
                       }
                       return null;
                     }),
@@ -82,12 +85,12 @@ class _AddContactByLinkWidgetState extends State<AddContactByLinkWidget> {
                   }
                 }
               },
-              child: const Text('Open', style: TextStyle(fontSize: 18))),
+              child: Text(localText.open, style: const TextStyle(fontSize: 18))),
           TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Cancel', style: TextStyle(fontSize: 18))),
+              child: Text(localText.cancel, style: const TextStyle(fontSize: 18))),
         ],
       ),
     );

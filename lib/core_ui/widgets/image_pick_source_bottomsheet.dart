@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/image_bloc/image_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ImagePickSourceBottomSheet extends StatelessWidget {
   const ImagePickSourceBottomSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return SizedBox(
       height: 250,
       child: Padding(
@@ -30,9 +33,9 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                         imageBloc.add(UploadImageEvent(true));
                         Navigator.pop(context);
                       },
-                      child: const Center(
-                          child: Text('Select from photo library',
-                              style: TextStyle(
+                      child: Center(
+                          child: Text(localText!.selectFromPhotoLibrary,
+                              style: const TextStyle(
                                   color: Colors.redAccent, fontSize: 18))),
                     ),
                   ),
@@ -46,9 +49,9 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                         imageBloc.add(UploadImageEvent(false));
                         Navigator.pop(context);
                       },
-                      child: const Center(
-                          child: Text('Take photo',
-                              style: TextStyle(
+                      child: Center(
+                          child: Text(localText.takePhoto,
+                              style: const TextStyle(
                                   color: Colors.redAccent, fontSize: 18))),
                     ),
                   ),
@@ -67,9 +70,9 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                 decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: const Center(
-                    child: Text('Cancel',
-                        style: TextStyle(
+                child: Center(
+                    child: Text(localText.cancel,
+                        style: const TextStyle(
                             color: Colors.redAccent,
                             fontWeight: FontWeight.bold,
                             fontSize: 18))),

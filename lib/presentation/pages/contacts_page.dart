@@ -6,6 +6,8 @@ import '../../core_ui/widgets/custom_error_widget.dart';
 import '../../core_ui/widgets/loading_overlay_widget.dart';
 import '../blocs/contact_bloc/contact_bloc.dart';
 import 'contact_info_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ContactsPage extends StatefulWidget {
   final TextEditingController searchController;
@@ -33,6 +35,7 @@ class _ContactsPageState extends State<ContactsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -42,7 +45,7 @@ class _ContactsPageState extends State<ContactsPage> {
             pinned: true,
             snap: false,
             centerTitle: true,
-            title: const Text('Contacts'),
+            title: Text(localText!.contactsTitle),
             actions: [
               IconButton(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -73,9 +76,9 @@ class _ContactsPageState extends State<ContactsPage> {
                       return TextField(
                         enabled: state is ContactLoadingState ? false : true,
                         controller: widget.searchController,
-                        decoration: const InputDecoration(
-                            hintText: 'Search',
-                            prefixIcon: Icon(Icons.search),
+                        decoration: InputDecoration(
+                            hintText: localText.search,
+                            prefixIcon: const Icon(Icons.search),
                             border: InputBorder.none),
                         onChanged: (name) {
                           final contactBloc =
@@ -111,7 +114,7 @@ class _ContactsPageState extends State<ContactsPage> {
 
               if (state is DelContactErrorState) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Something went wrong :(')));
+                    SnackBar(content: Text(localText.errorText)));
               }
 
               if (state is SearchLinkSuccessState) {
@@ -129,7 +132,7 @@ class _ContactsPageState extends State<ContactsPage> {
 
               if (state is SearchLinkErrorState) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Something went wrong :(')));
+                    SnackBar(content: Text(localText.errorText)));
               }
             },
             child: BlocBuilder<ContactBloc, ContactState>(

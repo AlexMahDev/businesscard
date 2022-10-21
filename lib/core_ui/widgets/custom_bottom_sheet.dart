@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class CustomBottomSheet extends StatelessWidget {
   final String qrLink;
@@ -9,6 +11,7 @@ class CustomBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return Column(
       children: [
         Padding(
@@ -24,14 +27,14 @@ class CustomBottomSheet extends StatelessWidget {
                   },
                   splashRadius: 20,
                   icon: const Icon(Icons.close, color: Colors.white, size: 35)),
-              const Center(
-                  child: Text('My Card',
-                      style: TextStyle(color: Colors.white, fontSize: 25))),
+              Center(
+                  child: Text(localText!.myCard,
+                      style: const TextStyle(color: Colors.white, fontSize: 25))),
               IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {
                     Share.share(
-                        'You can find my BCard following the link: $qrLink');
+                        '${localText.findMyCardByLink} $qrLink');
                   },
                   splashRadius: 20,
                   icon: const Icon(Icons.ios_share,
@@ -58,11 +61,11 @@ class CustomBottomSheet extends StatelessWidget {
                       return Container();
                     },
                   )),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                    'Point your camera at the QR code to receive the card!',
-                    style: TextStyle(
+                    localText.useCameraToReceiveTheCard,
+                    style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 20),

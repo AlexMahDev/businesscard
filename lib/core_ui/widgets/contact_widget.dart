@@ -3,36 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/models/card_model.dart';
 import '../../presentation/blocs/contact_bloc/contact_bloc.dart';
 import '../../presentation/pages/contact_info_page.dart';
+import '../ui_functions/ui_functions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ContactWidget extends StatelessWidget {
   final CardModel card;
 
   const ContactWidget({Key? key, required this.card}) : super(key: key);
 
-  String getSubTitle() {
-    String subTitle = '';
-
-    if (card.generalInfo.jobTitle.isNotEmpty) {
-      subTitle += '${card.generalInfo.jobTitle}, ';
-    }
-
-    if (card.generalInfo.department.isNotEmpty) {
-      subTitle += '${card.generalInfo.department}, ';
-    }
-
-    if (card.generalInfo.companyName.isNotEmpty) {
-      subTitle += '${card.generalInfo.companyName}, ';
-    }
-
-    if (subTitle.length > 1) {
-      subTitle = subTitle.substring(0, subTitle.length - 2);
-    }
-
-    return subTitle;
-  }
-
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Column(
@@ -67,7 +49,7 @@ class ContactWidget extends StatelessWidget {
                           '${card.generalInfo.firstName} ${card.generalInfo.middleName} ${card.generalInfo.lastName}',
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
-                      subtitle: Text(getSubTitle(),
+                      subtitle: Text(UiFunctions().getSubTitle(card),
                           style: const TextStyle(
                               fontSize: 20, color: Colors.black)),
                       trailing: PopupMenuButton<int>(
@@ -92,21 +74,21 @@ class ContactWidget extends StatelessWidget {
                           }
                         },
                         itemBuilder: (context) => [
-                          const PopupMenuItem(
+                          PopupMenuItem(
                             value: 1,
                             child: Text(
-                              "Delete",
-                              style: TextStyle(
+                              localText!.delete,
+                              style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   color: Colors.redAccent),
                             ),
                           ),
                           const PopupMenuDivider(),
-                          const PopupMenuItem(
+                          PopupMenuItem(
                             value: 2,
                             child: Text(
-                              "Cancel",
-                              style: TextStyle(
+                              localText.cancel,
+                              style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   color: Colors.redAccent),
                             ),

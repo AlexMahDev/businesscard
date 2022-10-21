@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'custom_bottom_sheet.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ShareCardButton extends StatelessWidget {
   final String qrLink;
@@ -10,13 +12,14 @@ class ShareCardButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return FloatingActionButton.extended(
         elevation: 5,
         extendedPadding: const EdgeInsets.symmetric(horizontal: 25),
         backgroundColor: Color(color),
         icon: const Icon(Icons.send),
-        label: const Text('Send',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        label: Text(localText!.send,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         onPressed: () {
           showModalBottomSheet(
               backgroundColor: Colors.redAccent,

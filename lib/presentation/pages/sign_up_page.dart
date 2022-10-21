@@ -67,7 +67,7 @@ class _SignUpPageState extends State<SignUpPage> {
           }
           if (state is AuthError) {
             ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.error)));
+                .showSnackBar(SnackBar(content: Text(localText!.errorText)));
           }
         },
         builder: (context, state) {

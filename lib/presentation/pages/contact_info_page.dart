@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../core_ui/widgets/card_widget.dart';
 import '../../core_ui/widgets/custom_app_bar.dart';
 import '../../core_ui/widgets/loading_overlay_widget.dart';
@@ -21,6 +21,7 @@ class ContactInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     final LoadingOverlay loadingOverlay = LoadingOverlay();
     return BlocListener<ContactBloc, ContactState>(
       listener: (context, state) {
@@ -33,11 +34,11 @@ class ContactInfoPage extends StatelessWidget {
         if (state is SaveContactSuccessState) {
           searchController!.clear();
           ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('Contact is saved')));
+              .showSnackBar(SnackBar(content: Text(localText!.contactIsSaved)));
         }
         if (state is SaveContactErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Something went wrong :(')));
+              SnackBar(content: Text(localText!.errorText)));
         }
       },
       child: Scaffold(

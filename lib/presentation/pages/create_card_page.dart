@@ -190,7 +190,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                         generalInfo: GeneralInfoModel(
                             cardTitle: cardTitle.text.isNotEmpty
                                 ? cardTitle.text
-                                : 'BCard',
+                                : localText.appTitle,
                             firstName: firstName.text,
                             middleName: middleName.text,
                             lastName: lastName.text,
@@ -230,11 +230,11 @@ class _CreateCardPageState extends State<CreateCardPage> {
                     }
                   },
                   itemBuilder: (context) => [
-                    const PopupMenuItem(
+                    PopupMenuItem(
                       value: 1,
                       child: Text(
-                        "Not save",
-                        style: TextStyle(
+                        localText.notSave,
+                        style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             color: Colors.redAccent),
                       ),

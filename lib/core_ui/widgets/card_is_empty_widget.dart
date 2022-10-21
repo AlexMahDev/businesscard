@@ -2,20 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/card_info_bloc/card_info_bloc.dart';
 import '../../presentation/pages/create_card_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class CardIsEmptyWidget extends StatelessWidget {
   const CardIsEmptyWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.all(40.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-              "Looks like you don't have a card set up yet! Create a card to get started!",
-              style: TextStyle(fontSize: 25),
+          Text(
+              localText!.doNotHaveCards,
+              style: const TextStyle(fontSize: 25),
               textAlign: TextAlign.center),
           const SizedBox(
             height: 50,
@@ -37,13 +40,13 @@ class CardIsEmptyWidget extends StatelessWidget {
               child: Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.add, color: Colors.white),
-                    SizedBox(
+                  children: [
+                    const Icon(Icons.add, color: Colors.white),
+                    const SizedBox(
                       width: 20,
                     ),
-                    Text("Create a card",
-                        style: TextStyle(
+                    Text(localText.createCardButton,
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                             fontSize: 16)),

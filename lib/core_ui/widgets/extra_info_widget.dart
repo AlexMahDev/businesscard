@@ -29,9 +29,6 @@ class ExtraInfoWidget extends StatelessWidget {
                 radius: 20,
                 backgroundColor: Color(selectCardColor.state),
                 child: icon),
-            // SizedBox(
-            //   height: 10,
-            // ),
             Expanded(
                 child: Center(
                     child: Text(title,

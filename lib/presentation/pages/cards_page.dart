@@ -11,12 +11,15 @@ import '../blocs/card_info_bloc/card_info_bloc.dart';
 import '../blocs/card_page_bloc/card_page_bloc.dart';
 import 'create_card_page.dart';
 import 'edit_card_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class CardsPage extends StatelessWidget {
   const CardsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return BlocBuilder<CardInfoBloc, CardInfoState>(
       buildWhen: (previous, current) {
         if (current is CardInfoLoadingState) {
@@ -46,7 +49,7 @@ class CardsPage extends StatelessWidget {
                           state.cards[cardPageState].generalInfo.cardTitle);
                     },
                   )
-                : const Text('BCard'),
+                : Text(localText!.appTitle),
             actions: [
               if (state is CardInfoLoadedState || state is CardInfoEmptyState)
                 IconButton(
@@ -100,9 +103,9 @@ class CardsPage extends StatelessWidget {
                 ListTile(
                   textColor: Colors.grey,
                   leading: Image.asset('assets/images/crying.png'),
-                  title: const Text('Sign Out',
+                  title: Text(localText!.signOutButton,
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                          const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   onTap: () {
                     context.read<AuthBloc>().add(SignOutRequested());
                   },

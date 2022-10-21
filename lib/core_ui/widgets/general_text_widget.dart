@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../ui_functions/ui_functions.dart';
+
 class GeneralTextWidget extends StatelessWidget {
   final String label;
   final String value;
@@ -7,21 +9,11 @@ class GeneralTextWidget extends StatelessWidget {
   const GeneralTextWidget({Key? key, this.label = '', required this.value})
       : super(key: key);
 
-  TextStyle getTextStyle() {
-    if (label == "fullName") {
-      return const TextStyle(fontSize: 28, fontWeight: FontWeight.bold);
-    } else if (label == "headline") {
-      return const TextStyle(fontSize: 18, color: Colors.grey);
-    } else {
-      return const TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: Text(value, style: getTextStyle()),
+      child: Text(value, style: UiFunctions().getTextStyle(label)),
     );
   }
 }

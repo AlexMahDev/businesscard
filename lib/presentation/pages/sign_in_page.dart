@@ -62,7 +62,7 @@ class _SignInPageState extends State<SignInPage> {
           }
           if (state is AuthError) {
             ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.error)));
+                .showSnackBar(SnackBar(content: Text(localText!.errorText)));
           }
         },
         child: BlocBuilder<AuthBloc, AuthState>(

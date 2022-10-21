@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class TapFieldBelowWidget extends StatelessWidget {
   const TapFieldBelowWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return Container(
       margin: const EdgeInsets.all(50),
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -14,13 +17,13 @@ class TapFieldBelowWidget extends StatelessWidget {
       child: FittedBox(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text('Tap a field below to add it',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-            SizedBox(
+          children: [
+            Text(localText!.infoArea,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+            const SizedBox(
               width: 10,
             ),
-            Icon(Icons.add, size: 30)
+            const Icon(Icons.add, size: 30)
           ],
         ),
       ),

@@ -1,54 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../domain/models/card_model.dart';
+import '../ui_functions/ui_functions.dart';
 import 'extra_text_widget.dart';
 import 'general_text_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CardWidget extends StatelessWidget {
   final CardModel card;
 
   const CardWidget({Key? key, required this.card}) : super(key: key);
 
-  String getHintText(String key) {
-    if (key == 'phoneNumber') {
-      return 'Phone Number';
-    } else if (key == 'email') {
-      return 'Email';
-    } else if (key == 'link') {
-      return 'Link';
-    } else if (key == 'linkedIn') {
-      return 'LinkedIn';
-    } else if (key == 'gitHub') {
-      return 'GitHub';
-    } else if (key == 'telegram') {
-      return 'Telegram';
-    } else {
-      return '';
-    }
-  }
-
-  Widget getIcon(String key) {
-    if (key == 'phoneNumber') {
-      return const Icon(Icons.phone, color: Colors.white);
-    } else if (key == 'email') {
-      return const Icon(Icons.email, color: Colors.white);
-    } else if (key == 'link') {
-      return const Icon(Icons.link, color: Colors.white);
-    } else if (key == 'linkedIn') {
-      return Image.asset('assets/images/icons/linkedin-icon.png',
-          color: Colors.white, height: 20);
-    } else if (key == 'gitHub') {
-      return Image.asset('assets/images/icons/github-icon.png',
-          color: Colors.white, height: 20);
-    } else if (key == 'telegram') {
-      return const Icon(Icons.telegram, color: Colors.white);
-    } else {
-      return const Icon(Icons.add_circle_outline_rounded, color: Colors.white);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final localText = AppLocalizations.of(context);
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -147,10 +112,10 @@ class CardWidget extends StatelessWidget {
             itemCount: card.extraInfo.listOfFields.length,
             itemBuilder: (BuildContext context, int index) {
               return ExtraTextWidget(
-                  label: getHintText(card.extraInfo.listOfFields[index].key),
+                  label: UiFunctions().getHintText(card.extraInfo.listOfFields[index].key, localText!),
                   value: card.extraInfo.listOfFields[index].value,
                   color: card.settings.cardColor,
-                  icon: getIcon(card.extraInfo.listOfFields[index].key));
+                  icon: UiFunctions().getIcon(card.extraInfo.listOfFields[index].key));
             },
             separatorBuilder: (BuildContext context, int index) =>
                 const SizedBox(height: 10),
