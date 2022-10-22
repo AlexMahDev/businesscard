@@ -1,3 +1,4 @@
+import 'package:businesscard/core_ui/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/models/contact_model.dart';
@@ -85,12 +86,12 @@ class _AddContactByLinkWidgetState extends State<AddContactByLinkWidget> {
                   }
                 }
               },
-              child: Text(localText.open, style: const TextStyle(fontSize: 18))),
+              child: Text(localText.open, style: TextThemeCustom.useUrlToReceiveCardTextTheme)),
           TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text(localText.cancel, style: const TextStyle(fontSize: 18))),
+              child: Text(localText.cancel, style: TextThemeCustom.useUrlToReceiveCardTextTheme)),
         ],
       ),
     );
