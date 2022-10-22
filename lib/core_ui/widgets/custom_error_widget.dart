@@ -1,3 +1,4 @@
+import 'package:businesscard/core_ui/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -19,7 +20,7 @@ class CustomErrorWidget extends StatelessWidget {
           Image.asset('assets/images/error.png'),
           Center(
               child: Text(localText!.tapToRefresh,
-                  style: const TextStyle(fontSize: 25, color: Colors.grey)))
+                  style: TextThemeCustom.tapToRefreshTextTheme))
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:businesscard/core_ui/themes/text_theme.dart';
 import 'package:businesscard/presentation/pages/sign_in_page.dart';
 import 'package:businesscard/presentation/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
@@ -31,19 +32,13 @@ class WelcomePage extends StatelessWidget {
                     ),
                   ),
                   Text(localText!.welcomeToBCard,
-                      style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                      style: TextThemeCustom.welcomeToBCardTextTheme,
                       textAlign: TextAlign.center),
                   const SizedBox(
                     height: 30,
                   ),
                   Text(localText.setUpNewCard,
-                      style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                      style: TextThemeCustom.setUpNewCardTextTheme,
                       textAlign: TextAlign.center),
                 ],
               ),
@@ -65,10 +60,7 @@ class WelcomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15)),
                       child: Center(
                         child: Text(localText.createCardButton,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.redAccent,
-                                fontSize: 16)),
+                            style: TextThemeCustom.createCardRedButtonTextTheme),
                       ),
                     ),
                   ),
@@ -82,10 +74,7 @@ class WelcomePage extends StatelessWidget {
                         ));
                       },
                       child: Text(localText.logInButton,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 15),
+                          style: TextThemeCustom.logInButtonTextTheme,
                           textAlign: TextAlign.center)),
                 ],
               ),

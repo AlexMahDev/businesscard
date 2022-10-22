@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core_ui/themes/text_theme.dart';
 import '../../core_ui/widgets/card_is_empty_widget.dart';
 import '../../core_ui/widgets/card_page_view_widget.dart';
 import '../../core_ui/widgets/custom_app_bar.dart';
@@ -104,8 +105,7 @@ class CardsPage extends StatelessWidget {
                   textColor: Colors.grey,
                   leading: Image.asset('assets/images/crying.png'),
                   title: Text(localText!.signOutButton,
-                      style:
-                          const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      style: TextThemeCustom.signOutButtonTextTheme),
                   onTap: () {
                     context.read<AuthBloc>().add(SignOutRequested());
                   },

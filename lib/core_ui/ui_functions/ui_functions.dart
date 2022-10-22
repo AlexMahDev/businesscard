@@ -1,3 +1,4 @@
+import 'package:businesscard/core_ui/themes/text_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -123,9 +124,9 @@ class UiFunctions {
 
   TextStyle getTextStyle(final String label) {
     if (label == "fullName") {
-      return const TextStyle(fontSize: 28, fontWeight: FontWeight.bold);
+      return TextThemeCustom.fullNameTextTheme;
     } else if (label == "headline") {
-      return const TextStyle(fontSize: 18, color: Colors.grey);
+      return TextThemeCustom.headlineTextTheme;
     } else {
       return const TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
     }

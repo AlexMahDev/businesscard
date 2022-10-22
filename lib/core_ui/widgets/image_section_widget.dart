@@ -1,3 +1,4 @@
+import 'package:businesscard/core_ui/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/image_bloc/image_bloc.dart';
@@ -59,10 +60,7 @@ class ImageSectionWidget extends StatelessWidget {
                       },
                       child: Text(
                         state is ImageNetworkLoadedState ? editTitle : addTitle,
-                        style: const TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
+                        style: TextThemeCustom.imageSectionTextTheme,
                       ),
                     ),
                     if (state is ImageNetworkLoadedState)
@@ -74,10 +72,7 @@ class ImageSectionWidget extends StatelessWidget {
                           },
                           child: Text(
                             removeTitle,
-                            style: const TextStyle(
-                                color: Colors.redAccent,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold),
+                            style: TextThemeCustom.imageSectionTextTheme,
                           ),
                         ),
                       )

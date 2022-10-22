@@ -1,3 +1,4 @@
+import 'package:businesscard/core_ui/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -278,9 +279,7 @@ class _EditCardPageState extends State<EditCardPage> {
                         value: 1,
                         child: Text(
                           localText.notSave,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Colors.redAccent),
+                          style: TextThemeCustom.popupMenuTextTheme,
                         ),
                       ),
                       const PopupMenuDivider(),
@@ -288,9 +287,7 @@ class _EditCardPageState extends State<EditCardPage> {
                         value: 2,
                         child: Text(
                           localText.delete,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Colors.redAccent),
+                          style: TextThemeCustom.popupMenuTextTheme,
                         ),
                       ),
                     ],

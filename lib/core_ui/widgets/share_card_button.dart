@@ -1,3 +1,4 @@
+import 'package:businesscard/core_ui/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'custom_bottom_sheet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,7 +20,7 @@ class ShareCardButton extends StatelessWidget {
         backgroundColor: Color(color),
         icon: const Icon(Icons.send),
         label: Text(localText!.send,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            style: TextThemeCustom.shareCardTextTheme),
         onPressed: () {
           showModalBottomSheet(
               backgroundColor: Colors.redAccent,

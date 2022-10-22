@@ -3,6 +3,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../themes/text_theme.dart';
+
 
 class CustomBottomSheet extends StatelessWidget {
   final String qrLink;
@@ -29,7 +31,7 @@ class CustomBottomSheet extends StatelessWidget {
                   icon: const Icon(Icons.close, color: Colors.white, size: 35)),
               Center(
                   child: Text(localText!.myCard,
-                      style: const TextStyle(color: Colors.white, fontSize: 25))),
+                      style: TextThemeCustom.myCardTextTheme)),
               IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {
@@ -65,10 +67,7 @@ class CustomBottomSheet extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                     localText.useCameraToReceiveTheCard,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                    style: TextThemeCustom.useCameraTextTheme,
                     textAlign: TextAlign.center),
               )
             ],

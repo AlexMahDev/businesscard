@@ -1,3 +1,4 @@
+import 'package:businesscard/core_ui/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/card_info_bloc/card_info_bloc.dart';
@@ -18,7 +19,7 @@ class CardIsEmptyWidget extends StatelessWidget {
         children: [
           Text(
               localText!.doNotHaveCards,
-              style: const TextStyle(fontSize: 25),
+              style: TextThemeCustom.doNotHaveCardsTextTheme,
               textAlign: TextAlign.center),
           const SizedBox(
             height: 50,
@@ -46,10 +47,7 @@ class CardIsEmptyWidget extends StatelessWidget {
                       width: 20,
                     ),
                     Text(localText.createCardButton,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 16)),
+                        style: TextThemeCustom.createCardButtonTextTheme),
                   ],
                 ),
               ),

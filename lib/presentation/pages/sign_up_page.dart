@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core_ui/themes/text_theme.dart';
 import '../../core_ui/widgets/custom_app_bar.dart';
 import '../../core_ui/widgets/custom_text_field_widget.dart';
 import '../../core_ui/widgets/loading_overlay_widget.dart';
@@ -80,8 +81,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(localText!.welcomeSignUp,
-                      style:
-                          const TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                      style: TextThemeCustom.welcomeTextTheme),
                   const SizedBox(
                     height: 40,
                   ),
@@ -146,10 +146,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           borderRadius: BorderRadius.circular(15)),
                       child: Center(
                         child: Text(localText.createYourCardButton,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 16)),
+                            style: TextThemeCustom.createCardButtonTextTheme),
                       ),
                     ),
                   ),

@@ -2,6 +2,7 @@ import 'package:businesscard/data/repositories/storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../core_ui/themes/text_theme.dart';
 import '../../core_ui/widgets/choose_color_widget.dart';
 import '../../core_ui/widgets/custom_app_bar.dart';
 import '../../core_ui/widgets/custom_text_field_widget.dart';
@@ -234,9 +235,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                       value: 1,
                       child: Text(
                         localText.notSave,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Colors.redAccent),
+                        style: TextThemeCustom.popupMenuTextTheme,
                       ),
                     )
                   ],

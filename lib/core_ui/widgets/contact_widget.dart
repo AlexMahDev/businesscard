@@ -1,3 +1,4 @@
+import 'package:businesscard/core_ui/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/models/card_model.dart';
@@ -47,11 +48,9 @@ class ContactWidget extends StatelessWidget {
                     child: ListTile(
                       title: Text(
                           '${card.generalInfo.firstName} ${card.generalInfo.middleName} ${card.generalInfo.lastName}',
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
+                          style: TextThemeCustom.userNameTextTheme),
                       subtitle: Text(UiFunctions().getSubTitle(card),
-                          style: const TextStyle(
-                              fontSize: 20, color: Colors.black)),
+                          style: TextThemeCustom.subTitleTextTheme),
                       trailing: PopupMenuButton<int>(
                         icon: const Icon(Icons.more_vert, color: Colors.black),
                         splashRadius: 20,
@@ -78,9 +77,7 @@ class ContactWidget extends StatelessWidget {
                             value: 1,
                             child: Text(
                               localText!.delete,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.redAccent),
+                              style: TextThemeCustom.popupMenuTextTheme,
                             ),
                           ),
                           const PopupMenuDivider(),
@@ -88,9 +85,7 @@ class ContactWidget extends StatelessWidget {
                             value: 2,
                             child: Text(
                               localText.cancel,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.redAccent),
+                              style: TextThemeCustom.popupMenuTextTheme,
                             ),
                           ),
                         ],

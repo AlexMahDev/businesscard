@@ -1,3 +1,4 @@
+import 'package:businesscard/core_ui/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -30,7 +31,7 @@ class ExtraTextWidget extends StatelessWidget {
           Expanded(
             child: ListTile(
               title: Text(value,
-                  style: const TextStyle(fontWeight: FontWeight.bold)),
+                  style: TextThemeCustom.extraInfoTextTheme),
               subtitle: Text(label),
             ),
           )

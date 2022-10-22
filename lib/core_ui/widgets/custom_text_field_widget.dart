@@ -1,3 +1,4 @@
+import 'package:businesscard/core_ui/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,7 +71,7 @@ class CustomTextField extends StatelessWidget {
                   enabled: enabled,
                   obscureText: !isTextVisible,
                   decoration: InputDecoration(
-                    errorStyle: const TextStyle(color: Colors.red),
+                    errorStyle: TextThemeCustom.errorTextTheme,
                     suffixIcon:
                         BlocBuilder<TextClearButtonBloc, TextClearButtonState>(
                       builder: (context, state) {

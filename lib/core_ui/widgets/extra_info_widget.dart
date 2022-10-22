@@ -1,3 +1,4 @@
+import 'package:businesscard/core_ui/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/select_card_color_bloc/select_card_color_bloc.dart';
@@ -33,7 +34,7 @@ class ExtraInfoWidget extends StatelessWidget {
                 child: Center(
                     child: Text(title,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 17))))
+                        style: TextThemeCustom.extraInfoTitleTextTheme)))
           ],
         ),
       ),
