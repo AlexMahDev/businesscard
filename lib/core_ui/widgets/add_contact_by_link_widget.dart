@@ -6,7 +6,6 @@ import '../../presentation/blocs/contact_bloc/contact_bloc.dart';
 import 'custom_text_field_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class AddContactByLinkWidget extends StatefulWidget {
   const AddContactByLinkWidget({Key? key}) : super(key: key);
 
@@ -86,12 +85,14 @@ class _AddContactByLinkWidgetState extends State<AddContactByLinkWidget> {
                   }
                 }
               },
-              child: Text(localText.open, style: TextThemeCustom.useUrlToReceiveCardTextTheme)),
+              child: Text(localText.open,
+                  style: TextThemeCustom.useUrlToReceiveCardTextTheme)),
           TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text(localText.cancel, style: TextThemeCustom.useUrlToReceiveCardTextTheme)),
+              child: Text(localText.cancel,
+                  style: TextThemeCustom.useUrlToReceiveCardTextTheme)),
         ],
       ),
     );

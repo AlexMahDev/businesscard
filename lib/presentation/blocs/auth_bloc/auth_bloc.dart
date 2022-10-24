@@ -9,13 +9,12 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-
   AuthBloc() : super(UnAuthenticated()) {
     on<SignInRequested>((event, emit) async {
       emit(Loading());
       try {
-        await getIt<AuthRepository>().signIn(
-            email: event.email, password: event.password);
+        await getIt<AuthRepository>()
+            .signIn(email: event.email, password: event.password);
         emit(Authenticated());
       } catch (e) {
         emit(AuthError(e.toString()));
@@ -25,8 +24,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignUpRequested>((event, emit) async {
       emit(Loading());
       try {
-        await getIt<AuthRepository>().signUp(
-            email: event.email, password: event.password);
+        await getIt<AuthRepository>()
+            .signUp(email: event.email, password: event.password);
         emit(Authenticated());
       } catch (e) {
         emit(AuthError(e.toString()));

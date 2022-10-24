@@ -2,8 +2,6 @@ import 'package:businesscard/presentation/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core_ui/widgets/main_page_navigation_bar.dart';
-import '../../data/repositories/card_repository.dart';
-import '../../data/repositories/contact_repository.dart';
 import '../blocs/auth_bloc/auth_bloc.dart';
 import '../blocs/card_info_bloc/card_info_bloc.dart';
 import '../blocs/card_page_bloc/card_page_bloc.dart';
@@ -34,8 +32,7 @@ class MainPage extends StatelessWidget {
               ..add(GetCardInfoEvent()),
           ),
           BlocProvider<ContactBloc>(
-            create: (context) => ContactBloc()
-              ..add(GetContactEvent()),
+            create: (context) => ContactBloc()..add(GetContactEvent()),
           ),
         ],
         child: const MainPageNavigationBar(),

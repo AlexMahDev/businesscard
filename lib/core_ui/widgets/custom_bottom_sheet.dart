@@ -5,7 +5,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../themes/text_theme.dart';
 
-
 class CustomBottomSheet extends StatelessWidget {
   final String qrLink;
 
@@ -35,8 +34,7 @@ class CustomBottomSheet extends StatelessWidget {
               IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {
-                    Share.share(
-                        '${localText.findMyCardByLink} $qrLink');
+                    Share.share('${localText.findMyCardByLink} $qrLink');
                   },
                   splashRadius: 20,
                   icon: const Icon(Icons.ios_share,
@@ -65,8 +63,7 @@ class CustomBottomSheet extends StatelessWidget {
                   )),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                    localText.useCameraToReceiveTheCard,
+                child: Text(localText.useCameraToReceiveTheCard,
                     style: TextThemeCustom.useCameraTextTheme,
                     textAlign: TextAlign.center),
               )

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../ui_functions/ui_functions.dart';
+import '../ui_functions/cardItemTextStyleUI.dart';
 
 class GeneralTextWidget extends StatelessWidget {
   final String label;
@@ -13,7 +12,7 @@ class GeneralTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: Text(value, style: UiFunctions().getTextStyle(label)),
+      child: Text(value, style: CardItemTextStyleUI().getTextStyle(label)),
     );
   }
 }

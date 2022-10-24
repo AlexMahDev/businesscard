@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'custom_bottom_sheet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class ShareCardButton extends StatelessWidget {
   final String qrLink;
   final int color;
@@ -19,8 +18,7 @@ class ShareCardButton extends StatelessWidget {
         extendedPadding: const EdgeInsets.symmetric(horizontal: 25),
         backgroundColor: Color(color),
         icon: const Icon(Icons.send),
-        label: Text(localText!.send,
-            style: TextThemeCustom.shareCardTextTheme),
+        label: Text(localText!.send, style: TextThemeCustom.shareCardTextTheme),
         onPressed: () {
           showModalBottomSheet(
               backgroundColor: Colors.redAccent,

@@ -5,7 +5,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../themes/text_theme.dart';
 
-
 class ImagePickSourceBottomSheet extends StatelessWidget {
   const ImagePickSourceBottomSheet({Key? key}) : super(key: key);
 
@@ -37,7 +36,8 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                       },
                       child: Center(
                           child: Text(localText!.selectFromPhotoLibrary,
-                              style: TextThemeCustom.imagePickBottomSheetMainTextTheme)),
+                              style: TextThemeCustom
+                                  .imagePickBottomSheetMainTextTheme)),
                     ),
                   ),
                   const Divider(
@@ -52,7 +52,8 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                       },
                       child: Center(
                           child: Text(localText.takePhoto,
-                              style: TextThemeCustom.imagePickBottomSheetMainTextTheme)),
+                              style: TextThemeCustom
+                                  .imagePickBottomSheetMainTextTheme)),
                     ),
                   ),
                 ],
@@ -72,7 +73,8 @@ class ImagePickSourceBottomSheet extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Center(
                     child: Text(localText.cancel,
-                        style: TextThemeCustom.imagePickBottomSheetCancelTextTheme)),
+                        style: TextThemeCustom
+                            .imagePickBottomSheetCancelTextTheme)),
               ),
             ),
           ],

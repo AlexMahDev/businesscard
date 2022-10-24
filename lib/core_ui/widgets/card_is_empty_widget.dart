@@ -5,7 +5,6 @@ import '../../presentation/blocs/card_info_bloc/card_info_bloc.dart';
 import '../../presentation/pages/create_card_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class CardIsEmptyWidget extends StatelessWidget {
   const CardIsEmptyWidget({Key? key}) : super(key: key);
 
@@ -17,8 +16,7 @@ class CardIsEmptyWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-              localText!.doNotHaveCards,
+          Text(localText!.doNotHaveCards,
               style: TextThemeCustom.doNotHaveCardsTextTheme,
               textAlign: TextAlign.center),
           const SizedBox(

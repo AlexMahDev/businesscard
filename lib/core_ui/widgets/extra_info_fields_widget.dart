@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../presentation/blocs/select_card_color_bloc/select_card_color_bloc.dart';
 import '../../presentation/blocs/text_field_bloc/text_field_bloc.dart';
-import '../ui_functions/ui_functions.dart';
+import '../ui_functions/cardControllerUI.dart';
+import '../ui_functions/cardHintTextUI.dart';
+import '../ui_functions/cardIconUI.dart';
+import '../ui_functions/cardInputPatternUI.dart';
 import 'custom_text_field_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -30,13 +33,14 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
                   itemCount: controllerMap.length,
                   itemBuilder: (BuildContext context, int index) {
                     return CustomTextField(
-                        inputPattern: UiFunctions().getInputPattern(
+                        inputPattern: InputPatternUI().getInputPattern(
                             controllerMap.keys.elementAt(index)),
-                        controller: UiFunctions().getControllerOf(
+                        controller: DynamicControllerUI().getControllerOf(
                             controllerMap.keys.elementAt(index), controllerMap),
-                        hintText:
-                            UiFunctions().getHintText(controllerMap.keys.elementAt(index), localText!),
-                        icon: UiFunctions().getIcon(controllerMap.keys.elementAt(index)),
+                        hintText: HintTextUI().getHintText(
+                            controllerMap.keys.elementAt(index), localText!),
+                        icon: IconUI()
+                            .getIcon(controllerMap.keys.elementAt(index)),
                         onTextFieldRemove: () {
                           controllerMap
                               .remove(controllerMap.keys.elementAt(index));
@@ -46,7 +50,7 @@ class ExtraInfoFieldsWidget extends StatelessWidget {
                         },
                         validator: (text) {
                           if (text == '') {
-                            return "${UiFunctions().getHintText(controllerMap.keys.elementAt(index), localText)} ${localText.isRequired}";
+                            return "${HintTextUI().getHintText(controllerMap.keys.elementAt(index), localText)} ${localText.isRequired}";
                           }
                           return null;
                         });

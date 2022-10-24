@@ -2,7 +2,6 @@ import 'package:businesscard/core_ui/themes/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class TapFieldBelowWidget extends StatelessWidget {
   const TapFieldBelowWidget({Key? key}) : super(key: key);
 
@@ -19,8 +18,7 @@ class TapFieldBelowWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(localText!.infoArea,
-                style: TextThemeCustom.infoAreaTextTheme),
+            Text(localText!.infoArea, style: TextThemeCustom.infoAreaTextTheme),
             const SizedBox(
               width: 10,
             ),

@@ -4,7 +4,6 @@ import 'package:businesscard/presentation/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
 
@@ -60,7 +59,8 @@ class WelcomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15)),
                       child: Center(
                         child: Text(localText.createCardButton,
-                            style: TextThemeCustom.createCardRedButtonTextTheme),
+                            style:
+                                TextThemeCustom.createCardRedButtonTextTheme),
                       ),
                     ),
                   ),

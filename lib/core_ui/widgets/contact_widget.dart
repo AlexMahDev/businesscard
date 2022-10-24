@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/models/card_model.dart';
 import '../../presentation/blocs/contact_bloc/contact_bloc.dart';
 import '../../presentation/pages/contact_info_page.dart';
-import '../ui_functions/ui_functions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../ui_functions/cardSubTitleUI.dart';
 
 class ContactWidget extends StatelessWidget {
   final CardModel card;
@@ -49,7 +49,7 @@ class ContactWidget extends StatelessWidget {
                       title: Text(
                           '${card.generalInfo.firstName} ${card.generalInfo.middleName} ${card.generalInfo.lastName}',
                           style: TextThemeCustom.userNameTextTheme),
-                      subtitle: Text(UiFunctions().getSubTitle(card),
+                      subtitle: Text(SubTitleUI().getSubTitle(card),
                           style: TextThemeCustom.subTitleTextTheme),
                       trailing: PopupMenuButton<int>(
                         icon: const Icon(Icons.more_vert, color: Colors.black),

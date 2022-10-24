@@ -251,8 +251,7 @@ class _CreateCardPageState extends State<CreateCardPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15.0),
                       child: CustomTextField(
-                          hintText: localText.setTitle,
-                          controller: cardTitle),
+                          hintText: localText.setTitle, controller: cardTitle),
                     ),
                     const ChooseColorWidget(),
                     ImageSectionWidget(
@@ -282,7 +281,8 @@ class _CreateCardPageState extends State<CreateCardPage> {
                       firstName: CustomTextField(
                           hintText: localText.firstName, controller: firstName),
                       middleName: CustomTextField(
-                          hintText: localText.middleName, controller: middleName),
+                          hintText: localText.middleName,
+                          controller: middleName),
                       lastName: CustomTextField(
                           hintText: localText.lastName, controller: lastName),
                       jobTitle: CustomTextField(

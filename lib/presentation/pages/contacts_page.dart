@@ -4,12 +4,9 @@ import '../../core_ui/widgets/add_contact_by_link_widget.dart';
 import '../../core_ui/widgets/contact_widget.dart';
 import '../../core_ui/widgets/custom_error_widget.dart';
 import '../../core_ui/widgets/loading_overlay_widget.dart';
-import '../../data/repositories/storage_repository.dart';
-import '../../setupInjection.dart';
 import '../blocs/contact_bloc/contact_bloc.dart';
 import 'contact_info_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 class ContactsPage extends StatefulWidget {
   final TextEditingController searchController;
@@ -115,8 +112,8 @@ class _ContactsPageState extends State<ContactsPage> {
               }
 
               if (state is DelContactErrorState) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(localText.errorText)));
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(localText.errorText)));
               }
 
               if (state is SearchLinkSuccessState) {
@@ -133,8 +130,8 @@ class _ContactsPageState extends State<ContactsPage> {
               }
 
               if (state is SearchLinkErrorState) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(localText.errorText)));
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(localText.errorText)));
               }
             },
             child: BlocBuilder<ContactBloc, ContactState>(

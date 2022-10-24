@@ -14,7 +14,6 @@ import 'create_card_page.dart';
 import 'edit_card_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class CardsPage extends StatelessWidget {
   const CardsPage({Key? key}) : super(key: key);
 

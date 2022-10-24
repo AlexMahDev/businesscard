@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../domain/models/card_model.dart';
-import '../ui_functions/ui_functions.dart';
+import '../ui_functions/cardHintTextUI.dart';
+import '../ui_functions/cardIconUI.dart';
 import 'extra_text_widget.dart';
 import 'general_text_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -112,10 +113,12 @@ class CardWidget extends StatelessWidget {
             itemCount: card.extraInfo.listOfFields.length,
             itemBuilder: (BuildContext context, int index) {
               return ExtraTextWidget(
-                  label: UiFunctions().getHintText(card.extraInfo.listOfFields[index].key, localText!),
+                  label: HintTextUI().getHintText(
+                      card.extraInfo.listOfFields[index].key, localText!),
                   value: card.extraInfo.listOfFields[index].value,
                   color: card.settings.cardColor,
-                  icon: UiFunctions().getIcon(card.extraInfo.listOfFields[index].key));
+                  icon:
+                      IconUI().getIcon(card.extraInfo.listOfFields[index].key));
             },
             separatorBuilder: (BuildContext context, int index) =>
                 const SizedBox(height: 10),

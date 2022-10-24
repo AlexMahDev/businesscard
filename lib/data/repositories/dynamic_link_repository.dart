@@ -3,9 +3,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import '../../domain/models/card_model.dart';
 import '../../setupInjection.dart';
 
-
 class DynamicLinkRepository {
-
   Future<CardModel?> retrieveDynamicLink() async {
     CardModel? card;
 
@@ -29,7 +27,8 @@ class DynamicLinkRepository {
       final String cardId = separatedString[2];
 
       try {
-        final CardModel? card = await getIt<CardRepository>().getCard(uid, cardId);
+        final CardModel? card =
+            await getIt<CardRepository>().getCard(uid, cardId);
         if (card != null) {
           return card;
         }
@@ -46,7 +45,8 @@ class DynamicLinkRepository {
       final String cardId = separatedString[2];
 
       try {
-        final CardModel? card = await getIt<CardRepository>().getCard(uid, cardId);
+        final CardModel? card =
+            await getIt<CardRepository>().getCard(uid, cardId);
         return card;
       } catch (_) {}
     }

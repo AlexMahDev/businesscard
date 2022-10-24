@@ -13,9 +13,7 @@ part 'contact_event.dart';
 part 'contact_state.dart';
 
 class ContactBloc extends Bloc<ContactEvent, ContactState> {
-
-  ContactBloc()
-      : super(ContactInitialState()) {
+  ContactBloc() : super(ContactInitialState()) {
     on<GetContactEvent>(_getContacts);
     on<SaveContactEvent>(_saveContact);
     on<GetContactByNameEvent>(_getContactsByName);
@@ -27,7 +25,8 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     emit(ContactLoadingState());
 
     try {
-      final List<ContactModel> contacts = await getIt<ContactRepository>().getContacts();
+      final List<ContactModel> contacts =
+          await getIt<ContactRepository>().getContacts();
       emit(ContactLoadedState(contacts));
     } catch (e) {
       emit(ContactErrorState());
@@ -45,7 +44,8 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     }
 
     try {
-      final List<ContactModel> contacts = await getIt<ContactRepository>().getContacts();
+      final List<ContactModel> contacts =
+          await getIt<ContactRepository>().getContacts();
       emit(ContactLoadedState(contacts));
     } catch (e) {
       emit(ContactErrorState());
@@ -62,8 +62,8 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
       final PendingDynamicLinkData? data =
           await FirebaseDynamicLinks.instance.getDynamicLink(url);
       if (data != null) {
-        CardModel? card =
-            await getIt<DynamicLinkRepository>().handleDynamicLinkManual(data.link);
+        CardModel? card = await getIt<DynamicLinkRepository>()
+            .handleDynamicLinkManual(data.link);
         if (card != null) {
           emit(SearchLinkSuccessState(card));
         }

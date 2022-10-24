@@ -9,7 +9,6 @@ import '../blocs/auth_bloc/auth_bloc.dart';
 import 'main_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 

@@ -5,7 +5,6 @@ import '../../presentation/blocs/text_field_bloc/text_field_bloc.dart';
 import 'extra_info_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class ExtraInfoFooterWidget extends StatelessWidget {
   final Map<String, TextEditingController> controllerMap;
 

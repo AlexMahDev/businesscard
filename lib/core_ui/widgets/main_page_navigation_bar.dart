@@ -12,7 +12,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../setupInjection.dart';
 
-
 class MainPageNavigationBar extends StatefulWidget {
   const MainPageNavigationBar({Key? key}) : super(key: key);
 
@@ -30,7 +29,8 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
     final contactBloc = BlocProvider.of<ContactBloc>(context);
     loadingOverlay.show(context);
     try {
-      CardModel? card = await getIt<DynamicLinkRepository>().retrieveDynamicLink();
+      CardModel? card =
+          await getIt<DynamicLinkRepository>().retrieveDynamicLink();
       if (card != null) {
         navigator.push(MaterialPageRoute(
           builder: (BuildContext context) => BlocProvider.value(

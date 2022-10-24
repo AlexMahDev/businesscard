@@ -37,8 +37,8 @@ class ContactInfoPage extends StatelessWidget {
               .showSnackBar(SnackBar(content: Text(localText!.contactIsSaved)));
         }
         if (state is SaveContactErrorState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(localText!.errorText)));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(localText!.errorText)));
         }
       },
       child: Scaffold(

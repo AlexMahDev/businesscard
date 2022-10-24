@@ -11,11 +11,9 @@ part 'card_info_event.dart';
 part 'card_info_state.dart';
 
 class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
-
   final CardPageBloc cardPageBloc;
 
-  CardInfoBloc({required this.cardPageBloc})
-      : super(CardInfoInitialState()) {
+  CardInfoBloc({required this.cardPageBloc}) : super(CardInfoInitialState()) {
     on<GetCardInfoEvent>(_getCardInfo);
     on<AddCardEvent>(_addCard);
     on<UpdateCardEvent>(_updateCard);
