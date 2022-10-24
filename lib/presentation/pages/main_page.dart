@@ -23,36 +23,22 @@ class MainPage extends StatelessWidget {
           );
         }
       },
-      child: MultiRepositoryProvider(
+      child: MultiBlocProvider(
         providers: [
-          RepositoryProvider(
-            create: (context) => CardRepository(),
+          BlocProvider<CardPageBloc>(
+            create: (context) => CardPageBloc(),
           ),
-          RepositoryProvider(
-            create: (context) => ContactRepository(),
+          BlocProvider<CardInfoBloc>(
+            create: (context) => CardInfoBloc(
+                cardPageBloc: BlocProvider.of<CardPageBloc>(context))
+              ..add(GetCardInfoEvent()),
+          ),
+          BlocProvider<ContactBloc>(
+            create: (context) => ContactBloc()
+              ..add(GetContactEvent()),
           ),
         ],
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider<CardPageBloc>(
-              create: (context) => CardPageBloc(),
-            ),
-            BlocProvider<CardInfoBloc>(
-              create: (context) => CardInfoBloc(
-                  cardRepository:
-                      RepositoryProvider.of<CardRepository>(context),
-                  cardPageBloc: BlocProvider.of<CardPageBloc>(context))
-                ..add(GetCardInfoEvent()),
-            ),
-            BlocProvider<ContactBloc>(
-              create: (context) => ContactBloc(
-                  contactRepository:
-                      RepositoryProvider.of<ContactRepository>(context))
-                ..add(GetContactEvent()),
-            ),
-          ],
-          child: const MainPageNavigationBar(),
-        ),
+        child: const MainPageNavigationBar(),
       ),
     );
   }

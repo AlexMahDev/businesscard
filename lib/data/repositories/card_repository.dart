@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/models/card_model.dart';
+import '../../setupInjection.dart';
 import 'dynamic_link_repository.dart';
 
 class CardRepository {
@@ -47,7 +48,7 @@ class CardRepository {
 
     try {
       final dynamicLink =
-          await DynamicLinkRepository().createDynamicLink(uid, card.id);
+          await getIt<DynamicLinkRepository>().createDynamicLink(uid, card.id);
       String qrLink = dynamicLink!.shortUrl.toString();
       newCard.qrLink = qrLink;
       await card.set(newCard.toJson());

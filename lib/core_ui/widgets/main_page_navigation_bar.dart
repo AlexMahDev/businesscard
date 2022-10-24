@@ -10,6 +10,8 @@ import '../../presentation/pages/contact_info_page.dart';
 import '../../presentation/pages/contacts_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../setupInjection.dart';
+
 
 class MainPageNavigationBar extends StatefulWidget {
   const MainPageNavigationBar({Key? key}) : super(key: key);
@@ -19,7 +21,6 @@ class MainPageNavigationBar extends StatefulWidget {
 }
 
 class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
-  DynamicLinkRepository dynamicLinkRepository = DynamicLinkRepository();
   late final TextEditingController searchController;
   late final LoadingOverlay loadingOverlay;
   bool isOpening = false;
@@ -29,7 +30,7 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
     final contactBloc = BlocProvider.of<ContactBloc>(context);
     loadingOverlay.show(context);
     try {
-      CardModel? card = await dynamicLinkRepository.retrieveDynamicLink();
+      CardModel? card = await getIt<DynamicLinkRepository>().retrieveDynamicLink();
       if (card != null) {
         navigator.push(MaterialPageRoute(
           builder: (BuildContext context) => BlocProvider.value(
@@ -56,7 +57,7 @@ class _MainPageNavigationBarState extends State<MainPageNavigationBar> {
         // TODO: FIXED BUG WITH FIREBASE: FirebaseDynamicLinks fired multiple times
         if (isOpening == false) {
           isOpening = true;
-          CardModel? card = await dynamicLinkRepository
+          CardModel? card = await getIt<DynamicLinkRepository>()
               .handleDynamicLink(dynamicLinkData.link);
           if (card != null) {
             loadingOverlay.hide();

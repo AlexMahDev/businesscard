@@ -4,16 +4,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import '../../../domain/models/card_model.dart';
+import '../../../setupInjection.dart';
 import '../card_page_bloc/card_page_bloc.dart';
 
 part 'card_info_event.dart';
 part 'card_info_state.dart';
 
 class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
-  final CardRepository cardRepository;
+
   final CardPageBloc cardPageBloc;
 
-  CardInfoBloc({required this.cardRepository, required this.cardPageBloc})
+  CardInfoBloc({required this.cardPageBloc})
       : super(CardInfoInitialState()) {
     on<GetCardInfoEvent>(_getCardInfo);
     on<AddCardEvent>(_addCard);
@@ -27,7 +28,7 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
     final user = FirebaseAuth.instance.currentUser!;
 
     try {
-      List<CardModel> cards = await cardRepository.getCards(user.uid);
+      List<CardModel> cards = await getIt<CardRepository>().getCards(user.uid);
       if (cards.isNotEmpty) {
         emit(CardInfoLoadedState(cards));
       } else {
@@ -46,7 +47,7 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
     List<CardModel> cards = event.cards;
 
     try {
-      await cardRepository.createCard(user.uid, event.newCard);
+      await getIt<CardRepository>().createCard(user.uid, event.newCard);
       cards.add(event.newCard);
       cardPageBloc.add(ChangeCardPageEvent(cards.length - 1));
       emit(AddCardSuccessState());
@@ -70,7 +71,7 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
     List<CardModel> cards = event.cards;
 
     try {
-      await cardRepository.updateCard(user.uid, event.newCard);
+      await getIt<CardRepository>().updateCard(user.uid, event.newCard);
       cards[cards.indexWhere(
           (element) => element.cardId == event.newCard.cardId)] = event.newCard;
       emit(UpdateCardSuccessState());
@@ -90,7 +91,7 @@ class CardInfoBloc extends Bloc<CardInfoEvent, CardInfoState> {
     List<CardModel> cards = event.cards;
 
     try {
-      await cardRepository.deleteCard(user.uid, event.cardId);
+      await getIt<CardRepository>().deleteCard(user.uid, event.cardId);
       cards.removeAt(
           cards.indexWhere((element) => element.cardId == event.cardId));
       cardPageBloc.add(ChangeCardPageEvent(0));

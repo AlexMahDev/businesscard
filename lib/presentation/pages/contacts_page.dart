@@ -4,6 +4,8 @@ import '../../core_ui/widgets/add_contact_by_link_widget.dart';
 import '../../core_ui/widgets/contact_widget.dart';
 import '../../core_ui/widgets/custom_error_widget.dart';
 import '../../core_ui/widgets/loading_overlay_widget.dart';
+import '../../data/repositories/storage_repository.dart';
+import '../../setupInjection.dart';
 import '../blocs/contact_bloc/contact_bloc.dart';
 import 'contact_info_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
