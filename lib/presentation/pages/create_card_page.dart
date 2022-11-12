@@ -279,39 +279,30 @@ class _CreateCardPageState extends State<CreateCardPage> {
                             return null;
                           }),
                       firstName: CustomTextField(
-                          hintText: localText.firstName, controller: firstName),
+                          hintText: localText.firstName,
+                          controller: firstName,
+                          inputPattern: r'[a-zA-ZА-Яа-яёЁ\s]'),
                       middleName: CustomTextField(
-                          hintText: localText.middleName,
-                          controller: middleName),
+                        hintText: localText.middleName,
+                        controller: middleName,
+                        inputPattern: r'[a-zA-ZА-Яа-яёЁ\s]',
+                      ),
                       lastName: CustomTextField(
-                          hintText: localText.lastName, controller: lastName),
+                          hintText: localText.lastName,
+                          controller: lastName,
+                          inputPattern: r'[a-zA-ZА-Яа-яёЁ\s]'),
                       jobTitle: CustomTextField(
                           hintText: localText.jobTitle,
                           controller: jobTitle,
-                          validator: (text) {
-                            if (text == '') {
-                              return '${localText.jobTitle} ${localText.isRequired}';
-                            }
-                            return null;
-                          }),
+                          inputPattern: r'[a-zA-Z0-9А-Яа-яёЁ\s,]'),
                       department: CustomTextField(
                           hintText: localText.department,
                           controller: department,
-                          validator: (text) {
-                            if (text == '') {
-                              return '${localText.department} ${localText.isRequired}';
-                            }
-                            return null;
-                          }),
+                          inputPattern: r'[a-zA-Z0-9А-Яа-яёЁ\s,]'),
                       companyName: CustomTextField(
                           hintText: localText.companyName,
                           controller: companyName,
-                          validator: (text) {
-                            if (text == '') {
-                              return '${localText.companyName} ${localText.isRequired}';
-                            }
-                            return null;
-                          }),
+                          inputPattern: r'[a-zA-Z0-9А-Яа-яёЁ\s,]'),
                       headLine: CustomTextField(
                           hintText: localText.headline, controller: headLine),
                     ),
